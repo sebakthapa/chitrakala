@@ -24,7 +24,7 @@ export const GET = async (request) => {
     }
 }
 
-// UPDATE => UPDATE a product
+// UPDATE => UPDATE a seller detail
 
 export const PATCH = async (request) => {
 
@@ -39,6 +39,31 @@ export const PATCH = async (request) => {
             {'user': userId},
             userDetailData,
             {new: true}
+        )
+
+        closeConnection("seller");
+        return new NextResponse(JSON.stringify(res))
+        
+    } catch (error) {
+        console.log("ERROR while creating product \n" + error )
+    }
+
+}
+
+
+// DELETE => DELETE a seller detail
+
+export const DELETE = async (request) => {
+
+    try {
+        const userDetailData = await request.json();
+      
+        await dbConnect("seller");
+        const params = request.url.split('/');
+        const userId = params[params.length-1];
+        
+        const res = await SellerDetails.deleteOne(
+            {'user': userId}
         )
 
         closeConnection("seller");

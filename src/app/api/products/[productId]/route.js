@@ -1,4 +1,4 @@
-import dbConnect from "@/lib/dbConnect";
+import dbConnect,{closeConnection} from "@/lib/dbConnect";
 import Products from "@/models/seller/products";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,7 +10,7 @@ export const GET = async (req, res) => {
 
         await dbConnect("seller");
         const product = await Products.findById(productId).populate("seller")
-
+        closeConnection("seller")
         return new NextResponse(JSON.stringify(product))
     } catch (error) {
         console.log("ERROR while getting single product" + error)
@@ -30,7 +30,7 @@ export const PUT = async () => {
 
         await dbConnect("seller");
         const newProduct = await Products.findByIdAndUpdate(productId, productData).populate("seller")
-
+        closeConnection("seller")
         return new NextResponse(JSON.stringify(newProduct))
     } catch (error) {
         console.log("ERROR while getting single product" + error)

@@ -1,4 +1,4 @@
-import dbConnect from "@/lib/dbConnect";
+import dbConnect,{closeConnection} from "@/lib/dbConnect";
 import Products from "@/models/seller/products";
 import { NextResponse } from "next/server";
 
@@ -12,7 +12,7 @@ export const GET = async () => {
         await dbConnect("seller");
 
         const res = await Products.find({}).populate("seller");
-        
+        closeConnection("seller");
         return new NextResponse(JSON.stringify(res))
         
     } catch (error) {
