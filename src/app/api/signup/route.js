@@ -27,3 +27,52 @@ export const POST = async (request) => {
     }
 
 }
+
+
+
+// PATCH => Update an existing user
+
+export const PATCH = async (request) => {
+
+    try {
+      const { id, updateData, type } = await request.json();
+  
+      await dbConnect(type); 
+  
+      const UserModel = type === "buyer"? UserBuyer : UserSeller;
+      
+      const updatedUser = await UserModel.findByIdAndUpdate(id, updateData, {
+        new: true
+      });
+  
+      closeConnection(type);
+  
+      return new NextResponse(JSON.stringify(updatedUser))
+  
+    } catch (error) {
+      console.log("ERROR while updating user \n" + error);
+    }
+  }
+
+  
+// DELETE => Delete a user
+
+export const DELETE = async (request) => {
+
+    try {
+      const { id, type } = await request.json();
+  
+      await dbConnect(type);
+  
+      const UserModel = type === "buyer"? UserBuyer : UserSeller;
+  
+      await UserModel.findByIdAndDelete(id);
+  
+      closeConnection(type);
+  
+      return new NextResponse(JSON.stringify({ message: "User deleted successfully" }));
+  
+    } catch (error) {
+      console.log("ERROR while deleting user \n" + error);
+    }
+  }
