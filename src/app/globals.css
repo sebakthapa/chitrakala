@@ -13,6 +13,7 @@
 
 *{
     font-family: 'Poppins', sans-serif;
+    color:#232323;
 }
 .saman{
     font-family: 'SAMAN',sans-serif;
@@ -27,4 +28,16 @@ li{
 }
 .link li:hover{
     color: #ed2945;
+}
+
+.b
+{
+    font-size: xx-large;
+    font-weight: 900;
+    animation: infinite abc;
+}
+
+.card-collection
+{
+    z-index: 100 !important;
 }
