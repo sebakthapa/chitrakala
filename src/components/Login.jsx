@@ -1,6 +1,7 @@
 "use client"
 import Input from './Input'
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 
 const Login = () => {
     const [loginId, setLoginId] = useState("")
@@ -16,7 +17,7 @@ const Login = () => {
                 <Input required type="text" label="username/email/phone" value={loginId} setValue={setLoginId} classLists="" />
                 <Input required type="password" label="password" value={password} setValue={setPassword} classLists="" />
             </div>
-            <button className='bg-green-500 text-white' type="submit" > Log In</button>
+            <motion.button whileHover={{ scale: 1.02}} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='bg-green-500 text-white hover:bg-green-600' type="submit" > Log In</motion.button>
         </form>
     )
 }

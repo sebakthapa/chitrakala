@@ -1,18 +1,28 @@
+"use client"
+import Link from 'next/link';
 import React from 'react'
 import { BsArrowRightShort, BsArrowsAngleExpand, BsBackspace, BsBagXFill, BsFacebook, BsInstagram, BsPinterest } from "react-icons/bs";
+import { motion } from 'framer-motion';
 
 function Navbar() {
   return (
     <nav className='border-[1px] lg:border-none border-b-[#556f5f] z-1 flex overflow-hidden flex-col gap-[1.5rem] min-h-[200px] h-[100px] bg-[#e5eee9] text-[#232323] p-5' >
       <div className=" flex justify-between brand">
         <span className='saman text-xl text-[#556f5f] font-semibold'>CHITRAKALA</span>
-       
+
         <div className="handlers text-[#556f5f] pt-0  flex gap-5 text-base ">
-          <li><BsFacebook /></li>
+          {/* <li><BsFacebook /></li>
           <li><BsPinterest /></li>
           <li><BsInstagram /></li>
           <li><BsBagXFill /></li>
-          <li><BsArrowRightShort /></li>
+          <li><BsArrowRightShort /></li> */}
+          <motion.button whileHover={{ scale: 1.1}} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='text-gray-600 py-[0.4rem] px-5 border-2 border-gray-500 rounded'>
+            <Link href="/auth?s=l">Log In</Link>
+          </motion.button>
+          <motion.button whileHover={{ scale: 1.1}} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='bg-gray-900 text-gray-200 py-[0.4rem] px-5 border-2 border-gray-900 rounded'>
+            <Link href="/auth?s=s">Sign Up</Link>
+          </motion.button>
+
         </div>
 
       </div>
@@ -28,11 +38,11 @@ function Navbar() {
 
         </div>
       </div>
-<div className='flex justify-end'>
+      <div className='flex justify-end'>
 
-      <input className='min-w-[100px] p-1 rounded-sm outline-none' type="text" name="search" id="search" placeholder='Search...' />
-</div>
- 
+        <input className='min-w-[100px] p-1 rounded-sm outline-none' type="text" name="search" id="search" placeholder='Search...' />
+      </div>
+
     </nav>
   )
 }
