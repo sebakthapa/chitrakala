@@ -7,7 +7,7 @@ const options = {
 };
 const connections = {};
 
-export default async function (dbName) {
+const dbConnect =  async function (dbName) {
   const uri = dbName === "seller" ?  process.env.MONGODB_URI_SELLER : process.env.MONGODB_URI_BUYER ;
 
   if (!uri) {
@@ -35,3 +35,5 @@ export function closeConnection(dbName) {
 
   return mongoose.connection.close();
 }
+
+export default dbConnect;
