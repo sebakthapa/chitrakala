@@ -2,16 +2,13 @@
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
 import Image from 'next/image'
-import {  useState } from 'react'
+import {  useEffect, useState } from 'react'
 import { FcGoogle } from "react-icons/fc"
 import { motion,  AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 
-const Page = () => {
-  const [isLogin, setIsLogin] = useState(false);
-
- 
-
+const Page = ({searchParams}) => {
+  const [isLogin, setIsLogin] = useState(searchParams.s == "l" ? true :false);
 
 
 
@@ -54,8 +51,8 @@ const Page = () => {
             </AnimatePresence>
           </div>
           <p className=' text-center'>OR</p>
-          <button className='p-[2px] pr-5 bg-[#4285F4] flex items-center gap-5'><FcGoogle className='bg-white h-10 w-10 p-2' /> <span className='text-white font-semibold'> Continue with Google </span> </button>
-          <button className='p-[2px] pr-5 bg-[#4267B2] flex items-center gap-5'><Image alt='facebook logo' src="/facebook.svg" width="20" height="20" className='bg-white h-10 w-10 p-[0.4rem]' /> <span className='text-white font-semibold'> Continue with Facebook </span> </button>
+          <motion.button whileHover={{ scale: 1.04}} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='p-[2px] pr-5 bg-[#4285F4] flex items-center gap-5 hover:bg-[#316ac6] group'><FcGoogle className='bg-white h-10 w-10 p-2' /> <span className='text-white font-semibold'> Continue with Google </span> </motion.button>
+          <motion.button whileHover={{ scale: 1.04}} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='mt-2 p-[2px] pr-5 bg-[#4267B2] flex items-center gap-5 hover:bg-[#31549b] group'><Image alt='facebook logo' src="/facebook.svg" width="20" height="20" className='bg-white h-10 w-10 p-[0.4rem]' /> <span className='text-white font-semibold'> Continue with Facebook </span> </motion.button>
         </div>
       </main>
 

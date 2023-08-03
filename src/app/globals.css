@@ -68,5 +68,5 @@ form .form_title{
 }
 
 form button[type="submit"]{
-    @apply py-3 px-5  rounded font-semibold 
+    @apply py-3 px-5  rounded font-semibold transition-colors duration-500
 }

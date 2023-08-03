@@ -12,7 +12,7 @@ const Input = ({ label, type, value, setValue, classLists, required }) => {
 
                 <input required={required} className={`${classLists} ${type == "password" ? "pr-[100px]" : ""} w-full`} value={value} onChange={(e) => setValue(e.target.value)} type={showPassword ? "text" : type} id={id} />
                 {
-                    type === "password" && (
+                    type === "password" && value && (
                         <span className="icon cursor-pointer absolute top-1/2 -translate-y-1/2 right-2 opacity-50 hover:opacity-70 transition duration-300 " onClick={() => setShowPassword((prev) => !prev)}>
                             {
                                 showPassword ? (

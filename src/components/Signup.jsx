@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react'
-import Input from './Input'
+import Input from './Input';
+import { motion } from 'framer-motion';
 
 const Signup = () => {
     const [fullName, setFullName] = useState("")
@@ -24,7 +25,7 @@ const Signup = () => {
                 <Input required type="password" label="password" value={password} setValue={setPassword} classLists=""/>
                 <Input required type="password" label="confirm password" value={confirmPassword} setValue={setConfirmPassword} classLists=""/>
             </div>
-            <button className='bg-green-500 text-white' type="submit" > Sign Up</button>
+            <motion.button whileHover={{ scale: 1.02}} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='bg-green-500 text-white hover:bg-green-600' type="submit" > Sign Up</motion.button>
         </form>
     )
 }
