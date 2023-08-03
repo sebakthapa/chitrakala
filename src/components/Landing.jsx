@@ -1,7 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar';
 import Image from 'next/image';
-import { BsBagXFill, BsFacebook, BsInstagram, BsPen, BsPenFill, BsPencilFill, BsPinterest } from "react-icons/bs";
 
 function Landing() {
     return (
@@ -38,10 +37,9 @@ function Landing() {
                 <div className="m-5 flex flex-1 min-w-[300px]  max-w-[500px]  min-h-[6rem] justify-center items-center p-10 bg-[#d5d0ed]">Sketch</div>
                 <div className="m-5 flex flex-1 min-w-[300px]  max-w-[500px]  min-h-[6rem] justify-center items-center p-10 bg-[#efefef]">Digital Art</div>
                 <div className="m-5 flex flex-[1] min-w-[300px]  max-w-[full]  min-h-[6rem] justify-center items-center p-10 bg-[#daebf1]">Carosel</div>
-
             </div>
 
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#e5eee9" fill-opacity="1" d="M0,224L48,240C96,256,192,288,288,256C384,224,480,128,576,117.3C672,107,768,181,864,197.3C960,213,1056,171,1152,176C1248,181,1344,235,1392,261.3L1440,288L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#e5eee9" fillOpacity="1" d="M0,224L48,240C96,256,192,288,288,256C384,224,480,128,576,117.3C672,107,768,181,864,197.3C960,213,1056,171,1152,176C1248,181,1344,235,1392,261.3L1440,288L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
 
 
             <div className='flex flex-wrap w-full h-[40rem] gap-1 justify-center bg-[#e5eee9]'>
