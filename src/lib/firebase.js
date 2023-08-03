@@ -24,7 +24,7 @@ export const app = initializeApp(firebaseConfig);
 
 
 
-export default async (path) => {
+const storeImage = async (path) => {
   try {
     const storage = getStorage(app);  
     const storageRef = ref(storage, path)
@@ -35,3 +35,5 @@ export default async (path) => {
 
 
 }
+
+export default storeImage

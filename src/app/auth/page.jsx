@@ -55,7 +55,7 @@ const Page = () => {
           </div>
           <p className=' text-center'>OR</p>
           <button className='p-[2px] pr-5 bg-[#4285F4] flex items-center gap-5'><FcGoogle className='bg-white h-10 w-10 p-2' /> <span className='text-white font-semibold'> Continue with Google </span> </button>
-          <button className='p-[2px] pr-5 bg-[#4267B2] flex items-center gap-5'><Image src="/facebook.svg" width="20" height="20" className='bg-white h-10 w-10 p-[0.4rem]' /> <span className='text-white font-semibold'> Continue with Facebook </span> </button>
+          <button className='p-[2px] pr-5 bg-[#4267B2] flex items-center gap-5'><Image alt='facebook logo' src="/facebook.svg" width="20" height="20" className='bg-white h-10 w-10 p-[0.4rem]' /> <span className='text-white font-semibold'> Continue with Facebook </span> </button>
         </div>
       </main>
 

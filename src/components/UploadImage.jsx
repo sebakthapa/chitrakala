@@ -2,6 +2,7 @@
 
 import { app } from '@/lib/firebase';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import Image from 'next/image';
 import { useState } from 'react'
 
 const UploadImage = () => {
@@ -48,7 +49,7 @@ const UploadImage = () => {
   return (
     <div className='p-5 m-5 bg-green-200 flex flex-wrap gap-4'>
       <input type="file" onChange={handleFileChange} />
-      {imageUrl && <img src={imageUrl} alt="Selected" width="200" />}
+      {imageUrl && <Image src={imageUrl} alt="Selected" width="200" />}
       <button className='bg-green-900 text-gray-100 rounded py-2 px-4 transition duration-300 hover:bg-green-700' onClick={handleFileUpload}>Upload</button>
     </div>
   );
