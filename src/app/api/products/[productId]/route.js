@@ -24,12 +24,14 @@ export const GET = async (req, res) => {
 // PUT a specific product by id
 export const PUT = async () => {
     try {
-        const productData = await req.json();
+        const { seller, name, price, description = "", category, photo} = await req.json();
         const query = req.url.split("/");
         const productId = query[query.length - 1];
 
+        const updatedData = { seller, name, price, description, category, photo, like };
+
         await dbConnect("seller");
-        const newProduct = await Products.findByIdAndUpdate(productId, productData).populate("seller")
+        const newProduct = await Products.findByIdAndUpdate(productId, updatedData).populate("seller")
         closeConnection("seller")
         return new NextResponse(JSON.stringify(newProduct))
     } catch (error) {

@@ -1,4 +1,4 @@
-import dbConnect,{closeConnection} from "@/lib/dbConnect";
+import dbConnect, { closeConnection } from "@/lib/dbConnect";
 import BuyerDetails from "@/models/seller/usersDetail";
 import { NextResponse } from "next/server";
 
@@ -11,15 +11,15 @@ export const GET = async (request) => {
     try {
         await dbConnect("buyer");
         const params = request.url.split('/');
-        const userId = params[params.length-1];
+        const userId = params[params.length - 1];
         const res = await BuyerDetails.findOne({
             'user': userId
         }).populate('user');
-        
+
 
         closeConnection("buyer");
         return new NextResponse(JSON.stringify(res))
-        
+
     } catch (error) {
         console.log("ERROR fetching user detail \n" + error)
         return new NextResponse(error);
@@ -31,23 +31,23 @@ export const GET = async (request) => {
 export const PATCH = async (request) => {
 
     try {
-        const userDetailData = await request.json();
-      
+        const { address = "", displayName = "", photo = "" } = await request.json();
+
         await dbConnect("buyer");
         const params = request.url.split('/');
-        const userId = params[params.length-1];
-        
+        const userId = params[params.length - 1];
+
         const res = await BuyerDetails.findOneAndUpdate(
-            {'user': userId},
-            userDetailData,
-            {new: true}
+            { 'user': userId },
+            { address, displayName, photo },
+            { new: true }
         )
 
         closeConnection("buyer");
         return new NextResponse(JSON.stringify(res))
-        
+
     } catch (error) {
-        console.log("ERROR while creating product \n" + error )
+        console.log("ERROR while creating product \n" + error)
     }
 
 }
@@ -59,20 +59,20 @@ export const DELETE = async (request) => {
 
     try {
         const userDetailData = await request.json();
-      
+
         await dbConnect("buyer");
         const params = request.url.split('/');
-        const userId = params[params.length-1];
-        
+        const userId = params[params.length - 1];
+
         const res = await BuyerDetails.deleteOne(
-            {'user': userId}
+            { 'user': userId }
         )
 
         closeConnection("buyer");
         return new NextResponse(JSON.stringify(res))
-        
+
     } catch (error) {
-        console.log("ERROR while creating product \n" + error )
+        console.log("ERROR while creating product \n" + error)
     }
 
 }

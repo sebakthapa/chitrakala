@@ -19,7 +19,7 @@ function Landing() {
                     </div>
                 </div>
 
-                <div className=' hidden  lg:flex justify-start  lg:visible  '>
+                <div className=' hidden  lg:flex justify-start '>
                     <div className='a mt-[-50px]  opacity-90  '>
                         <Image
                             alt='Painting of an old man'

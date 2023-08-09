@@ -28,12 +28,17 @@ const dbConnect =  async function (dbName) {
 
 export function closeConnection(dbName) {
 
-  const conn = connections[dbName];
-  if (!conn) {
-    throw new Error('No connection for ' + dbName);
+  try {
+    const conn = connections[dbName];
+    
+    if (!conn) {
+      throw new Error('No connection for ' + dbName);
+    }
+  
+    return mongoose.connection.close();
+  } catch (error) {
+    console.log(error)
   }
-
-  return mongoose.connection.close();
 }
 
 export default dbConnect;

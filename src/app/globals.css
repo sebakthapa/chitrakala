@@ -1,5 +1,5 @@
 
-  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins&family=Roboto&display=swap');
+  /* @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins&family=Roboto&display=swap'); */
   
 @tailwind base;
 @tailwind components;
@@ -10,6 +10,10 @@
     src: url('/SAMAN.TTF');
 }
 
+html{
+    @apply 2xl:text-[110%]
+}
+
 
 *{
     font-family: 'Poppins', sans-serif;
@@ -17,7 +21,10 @@
 }
 
 body{
-    background: #e5eee9;
+    /* background: #e5eee9; */
+    /* background: red; */
+
+    max-width: 2000px;
 }
 
 .saman{
@@ -27,6 +34,7 @@ body{
 li{
  list-style: none;
 }
+
 
 .link,.handlers li{
     cursor: pointer;
@@ -50,11 +58,11 @@ li{
 
 
 .input_field_container {
-    @apply flex flex-col gap-3
+    @apply flex flex-col gap-3 
 }
 
 .input_field_container .input_field{
-    @apply flex flex-col gap-0.5
+    @apply flex flex-col gap-0.5 
 }
 .input_field_container .input_field label{
     @apply capitalize opacity-80 
@@ -64,7 +72,7 @@ li{
 }
 
 form .form_title{
-    @apply capitalize font-extrabold text-3xl opacity-95
+    @apply capitalize font-extrabold text-2xl opacity-95
 }
 
 form button[type="submit"]{

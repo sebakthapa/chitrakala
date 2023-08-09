@@ -18,7 +18,7 @@ const page = () => {
 
       <div className='flex flex-wrap w-full h-[40rem] gap-1 justify-center bg-[#e5eee9]'>
         <div className=" border-2 border-[#556f5f]   rounded-lg m-5 flex flex-wrap-reverse flex-1 min-w-[300px] max-w-[700px] max-h-[30rem] justify-evenly items-center p-10 bg-[#e5eee9]">
-          
+
           <div className='flex flex-col gap-5 border-[1px] border-[#556f5f9c]  p-5 rounded-lg'>
             <span className='text-3xl font-extrabold'>Top Artist</span>
             <span>Details</span>
