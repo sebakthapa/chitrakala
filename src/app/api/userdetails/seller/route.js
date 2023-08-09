@@ -29,11 +29,11 @@ export const GET = async () => {
 export const POST = async (request) => {
 
     try {
-        const userDetailData = await request.json();
+        const {user, address="", photo="", displayName=""} = await request.json();
       
         await dbConnect("seller");
 
-        const newUserDetail = new SellerDetailsModel(userDetailData);
+        const newUserDetail = new SellerDetailsModel({user, address, photo, displayName});
 
         const savedUserDetail = await newUserDetail.save();
         closeConnection("seller");

@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 
 const productsSchema = new mongoose.Schema({
   seller: {
+    required:[true, "seller userId is required"],
+    unique:[true, "The seller userdetails already exists"],
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
