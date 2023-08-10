@@ -1,4 +1,7 @@
-import './globals.css'
+import { useDispatch } from 'react-redux';
+import './globals.css';
+import ReduxProvider from '@/components/ReduxProvider';
+
 
 export const metadata = {
   title: 'Chitrakala',
@@ -6,13 +9,16 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+ 
   return (
     <html lang="en">
       <body>
-        {children}
-        <div className='flex flex-wrap w-full h-[20rem] gap-1 justify-center items-center '>
-                <div>Footer</div>
-            </div>
+        <ReduxProvider>
+          {children}
+          <div className='flex flex-wrap w-full h-[20rem] gap-1 justify-center items-center '>
+            <div>Footer</div>
+          </div>
+        </ReduxProvider>
       </body>
     </html>
   )

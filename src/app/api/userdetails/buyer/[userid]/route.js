@@ -9,9 +9,9 @@ import { NextResponse } from "next/server";
 export const GET = async (request) => {
 
     try {
-        await dbConnect("buyer");
         const params = request.url.split('/');
         const userId = params[params.length - 1];
+        await dbConnect("buyer");
         const res = await BuyerDetails.findOne({
             'user': userId
         }).populate('user');

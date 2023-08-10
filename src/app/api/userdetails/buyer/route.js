@@ -11,7 +11,9 @@ export const GET = async () => {
     try {
         await dbConnect("buyer");
 
-        const res = await UserDetails.find({}).populate('user');
+        const res = await UserDetails.find({}).populate('user',{username:1,email:1,phone:1,_id:1});
+        console.log(res)
+        // const { username, _id: uid, email, phone="" } = res?.user;
 
         return new NextResponse(JSON.stringify(res))
 
