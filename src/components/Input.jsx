@@ -5,18 +5,28 @@ import { TiTick } from "react-icons/ti"
 import { MdOutlineVerifiedUser } from "react-icons/md"
 import { RxCross2 } from "react-icons/rx"
 
-const Input = ({ availabilityState, label, type, value, setValue, classLists, required, register, validation, error, customValidation }) => {
+const Input = ({clearErrors, availabilityState, label, type, value, setValue, classLists, required, register, validation, error, customValidation }) => {
 
     // password && console.log(label,validation)
 
     const [showPassword, setShowPassword] = useState(false)
-    const id = label?.replaceAll(" ", "")
+    const id = label?.replaceAll(" ", "").toLowerCase();
+
+    const handleChange = (e) => {
+        setValue(e.target.value);
+        customValidation && customValidation(e.target.value);
+        if (clearErrors) {
+            clearErrors(id);
+            
+        }  
+    }
+
     return (
         <div className="fullName input_field">
             <label htmlFor={id}>{label && label} {required && <span className="text-red-500 -ml-1">*</span>}</label>
             <div className="relative w-full">
 
-                <input {...register && { ...register(id, { ...validation, onChange: (e) => { setValue(e.target.value); customValidation && customValidation(e.target.value) }, value: value }) }} required={required} className={`${classLists} ${type == "password" ? "pr-[100px]" : ""} w-full`} type={showPassword ? "text" : type} id={id} />
+                <input {...register && { ...register(id, { ...validation, onChange: handleChange, value: value }) }} required={required} className={`${classLists} ${type == "password" ? "pr-[100px]" : ""} w-full`} type={showPassword ? "text" : type} id={id} />
                 {
                     type === "password" && value && (
                         <span className="icon cursor-pointer absolute top-1/2 -translate-y-1/2 right-2 opacity-50 hover:opacity-70 transition duration-300 " onClick={() => setShowPassword((prev) => !prev)}>

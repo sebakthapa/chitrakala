@@ -3,43 +3,66 @@ import Input from './Input'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
+import { login } from '@/redux/features/userSlice'
+import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
+    const dispatch = useDispatch();
+    const router = useRouter()
+
     const [loginId, setLoginId] = useState("")
-    const [password, setPassword] = useState("")
+    const [password, setPassword] = useState("password@123")
 
-    const { register, handleSubmit, watch,setError, formState: { errors } } = useForm();
+    const [isSubmitting, setIsSubmitting] = useState(false)
+
+    const { register, handleSubmit, watch, setError,clearErrors, formState: { errors } } = useForm();
 
 
-    const handleLogin = (e) => {
-        e.preventDefault()
-console.log("ak")
-        
-    }
+    const handleLogin = async ({ password, ...loginId }) => {
+        const loginID = loginId["username/email/phone"]
 
-    const validateErrors = () => {
-    //     if (loginId !== idFromDb) {
-    //         setError("username/email/phone", {message:"Username doesn't exists"})
-    //     } else {
-    //         setError("username/email/phone", { message: "" })
+        console.log(loginID, password)
+
+        try {
+            setIsSubmitting(true)
+            const res = await axios.post("/api/users/buyer/login", { loginID, password });
+            console.log(res)
+            if (res.status == 200) {
+                // setUsernameFetchStatus("notAvailable")
+                const userData = res.data;
+                console.log(userData);
+                dispatch(login(userData));
+                // router.back();
+
+
+            }
+        } catch (error) {
+            if (error?.response?.data?.field) {
+                const { field, message } = error?.response?.data;
+                setError(field, { message })
+            } else {
+                console.log(error)
+            }
+        } finally {
+            setIsSubmitting(false)
             
-    //         if (!/(?=.*[0-9])((?=.*[a-z])|(?=.*[A-Z]))((?=.*\W)|(?=.*_))^[^ ]+$/.test(password)) {
-    //             setError("password", {message:"Incorrect Password"})
-    //         } else {
-    //             setError("password", {message:""})
-    //         }
+        }
 
-    //    }
     }
+
+    
 
 
     return (
-        <form className='sm:border-green-500 sm:border-4 sm:p-5  flex flex-col gap-5 w-full sm:w-[500px] rounded'  onSubmit={handleLogin}>
+        <form className='sm:border-green-500 sm:border-4 sm:p-5  flex flex-col gap-5 w-full sm:w-[500px] rounded' onSubmit={handleSubmit(handleLogin)}>
             <h2 className='form_title '>Log in</h2>
             <div className="input_field_container">
                 <Input
                     register={register}
                     error={errors["username/email/phone"]}
+                    clearErrors={clearErrors}
                     required
                     type="text"
                     label="username/email/phone"
@@ -51,6 +74,7 @@ console.log("ak")
                 <Input
                     register={register}
                     error={errors.password}
+                    clearErrors={clearErrors}
                     required
                     type="password"
                     label="password"
@@ -59,7 +83,11 @@ console.log("ak")
                     classLists=""
                 />
             </div>
-            <motion.button onClick={validateErrors} whileHover={{ scale: 1.02}} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='bg-green-500 text-white hover:bg-green-600' type="submit" > Log In</motion.button>
+            <motion.button  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='bg-green-500 text-white hover:bg-green-600' type="submit" >
+                {
+                    isSubmitting ? "Logging In..." : "Log In"
+                }
+            </motion.button>
         </form>
     )
 }
