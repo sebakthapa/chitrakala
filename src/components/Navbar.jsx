@@ -36,10 +36,10 @@ function Navbar() {
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 200, damping: 10 }}
                 className=' border-2 border-gray-500 rounded'>
-                <Link className='inline-block text-gray-600 py-[0.4rem] px-5 ' href="/auth?s=l">Log In</Link>
+                <Link className='inline-block text-gray-600 py-[0.4rem] px-5 ' href="/auth/l">Log In</Link>
               </motion.button>
               <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='bg-gray-900 border-2 border-gray-900 rounded'>
-                <Link className='inline-block text-gray-200 py-[0.4rem] px-5 ' href="/auth?s=s">Sign Up</Link>
+                <Link className='inline-block text-gray-200 py-[0.4rem] px-5 ' href="/auth/s">Sign Up</Link>
               </motion.button>
 
             </div>
