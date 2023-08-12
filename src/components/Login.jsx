@@ -13,7 +13,7 @@ const Login = () => {
     const router = useRouter()
 
     const [loginId, setLoginId] = useState("")
-    const [password, setPassword] = useState("password@123")
+    const [password, setPassword] = useState("")
 
     const [isSubmitting, setIsSubmitting] = useState(false)
 

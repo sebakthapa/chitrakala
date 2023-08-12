@@ -11,12 +11,12 @@ import { useRouter } from 'next/navigation';
 const Signup = () => {
     const router = useRouter();
 
-    const [fullName, setFullName] = useState("sebak thapa")
+    const [fullName, setFullName] = useState("")
     const [username, setUsername] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("password@123")
-    const [confirmPassword, setConfirmPassword] = useState("password@123")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
     const [usernameFetchStatus, setUsernameFetchStatus] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false)
 

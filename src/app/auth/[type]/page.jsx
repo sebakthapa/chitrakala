@@ -9,11 +9,12 @@ import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 
-const Page = ({ searchParams }) => {
+const Page = ({ params }) => {
+  console.log()
   const router = useRouter()
   const user = useSelector(state => state.user)
   
-  const [isLogin, setIsLogin] = useState(searchParams?.s == "l" ? true : false);
+  const [isLogin, setIsLogin] = useState(params?.type =="l" ? true : false);
   
 
 
@@ -23,10 +24,6 @@ const Page = ({ searchParams }) => {
     }
   }, [user])
 
-  useEffect(() => {
-    searchParams.s == "l" ? setIsLogin(true) : setIsLogin(false)
-
-  },[searchParams])
 
   return (
           <div className='authPage  '>
