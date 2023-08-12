@@ -21,6 +21,11 @@ const Page = ({ searchParams }) => {
     }
   }, [user])
 
+  useEffect(() => {
+    searchParams.s == "l" ? setIsLogin(true) : setIsLogin(false)
+
+  },[])
+
   return (
           <div className='authPage  '>
             {/* <UserAuth title="sign up" /> */}

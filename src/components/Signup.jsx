@@ -164,8 +164,8 @@ const Signup = () => {
                     required
                     register={register}
                     validation={{
-                        maxLength: { value: 50, message: "Enter less than 50 characters" },
-                        minLength: { value: 3, message: "Minimum 3 characters required" },
+                        maxLength: { value: 30, message: "Enter less than 30 characters" },
+                        minLength: { value: 5, message: "Minimum 5 characters required" },
                         required: "This field is required",
                         pattern: {
                             value: /^[a-zA-Z][a-zA-Z0-9._]*$/,
