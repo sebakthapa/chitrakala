@@ -12,7 +12,9 @@ import { useRouter } from 'next/navigation'
 const Page = ({ searchParams }) => {
   const router = useRouter()
   const user = useSelector(state => state.user)
-  const [isLogin, setIsLogin] = useState(searchParams.s == "l" ? true : false);
+  
+  const [isLogin, setIsLogin] = useState(searchParams?.s == "l" ? true : false);
+  
 
 
   useEffect(() => {
@@ -24,7 +26,7 @@ const Page = ({ searchParams }) => {
   useEffect(() => {
     searchParams.s == "l" ? setIsLogin(true) : setIsLogin(false)
 
-  },[])
+  },[searchParams])
 
   return (
           <div className='authPage  '>
