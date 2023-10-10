@@ -124,7 +124,7 @@ const Signup = () => {
 
 
     return (
-        <form className='sm:border-green-500 sm:border-4 sm:p-10   mt-5 flex flex-col w-full gap-5 sm:w-[500px] rounded' onSubmit={handleSubmit(handleSignup)}>
+        <form className='sm:border-gray-700 sm:border-2 sm:p-5  flex flex-col gap-5 w-full sm:w-[500px] rounded' onSubmit={handleSubmit(handleSignup)}>
             <h2 className='form_title'>Sign Up</h2>
             <div className="input_field_container">
                 <Input
@@ -235,7 +235,7 @@ const Signup = () => {
                     classLists=""
                 />
             </div>
-            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className={`${isSubmitting || (errors?.email?.message || errors?.phone?.message || errors?.username?.message) && "pointer-events-none"} bg-green-500 text-white hover:bg-green-600`} type="submit" >
+            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className={`${isSubmitting || (errors?.email?.message || errors?.phone?.message || errors?.username?.message) && "pointer-events-none"} bg-gray-900 text-white hover:bg-gray-700`} type="submit" >
                 {
                     isSubmitting ? (
                         "Signing up..."

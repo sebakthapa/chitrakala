@@ -47,11 +47,13 @@ const UploadImage = () => {
   };
 
   return (
-    <div className='p-5 m-5 bg-green-200 flex flex-wrap gap-4'>
+    <>
+    <div className='p-5 mt-5 border-gray-400 border-2 rounded-md '>
       <input type="file" onChange={handleFileChange} />
-      {imageUrl && <Image src={imageUrl} alt="Selected" width="200" />}
-      <button className='bg-green-900 text-gray-100 rounded py-2 px-4 transition duration-300 hover:bg-green-700' onClick={handleFileUpload}>Upload</button>
+      {imageUrl && <Image src={imageUrl} alt="Selected" width="200" height="200" />}
     </div>
+      <button className='bg-green-900 text-gray-100 rounded py-2 px-4 transition duration-300 hover:bg-green-700' onClick={handleFileUpload}>Upload</button>
+    </>
   );
 }
 

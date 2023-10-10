@@ -1,7 +1,8 @@
 import { useDispatch } from 'react-redux';
 import './globals.css';
 import ReduxProvider from '@/components/ReduxProvider';
-
+import Footer from '@/components/Footer';
+import Navbar from '@/components/Navbar';
 
 export const metadata = {
   title: 'Chitrakala',
@@ -14,9 +15,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <ReduxProvider>
+        <Navbar/>
           {children}
           <div className='flex flex-wrap w-full h-[20rem] gap-1 justify-center items-center '>
-            <div>Footer</div>
+            <Footer/>
           </div>
         </ReduxProvider>
       </body>

@@ -12,7 +12,7 @@ function Navbar() {
   const user = useSelector(state => state.user)
   console.log(user)
   return (
-    <nav className='border-[1px] lg:border-none border-b-[#556f5f] z-1 flex overflow-hidden flex-col gap-[1.5rem] min-h-[200px] h-[100px] bg-[#e5eee9] text-[#232323] p-5' >
+    <nav className='  border-[1px] lg:border-none border-b-[#556f5f] z-1 flex overflow-hidden flex-col gap-[1.5rem] min-h-[200px] h-[100px] bg-[#e5eee9] text-[#232323] p-5' >
       <div className=" flex justify-between brand">
         <span className='saman text-xl text-[#556f5f] font-semibold'>CHITRAKALA</span>
 
@@ -54,10 +54,10 @@ function Navbar() {
       <div className='  flex  items-center justify-center h-full flex-col '>
         <div className="saman logo text-6xl font-extrabold text-center"> CHITRAKALA</div>
         <div className='link flex  gap-5 m-3 text-neutral-300'>
-          <li>Home</li>
-          <li>Product</li>
-          <li>About</li>
-          <li>Artist</li>
+        <Link href={"/"}>  <li>Home</li></Link>
+         <Link href={"/gallery"}>  <li>Gallery</li></Link>
+         <Link href={"/artist"}>  <li>Artist</li></Link>
+         <Link href={"/about"}>  <li>About</li></Link>
 
         </div>
       </div>
