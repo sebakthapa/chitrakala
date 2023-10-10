@@ -1,80 +1,88 @@
 
   /* @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins&family=Roboto&display=swap'); */
   
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@font-face {
-    font-family: 'SAMAN';
-    src: url('/SAMAN.TTF');
-}
-
-html{
-    @apply 2xl:text-[110%]
-}
-
-
-*{
-    font-family: 'Poppins', sans-serif;
-    color:#232323;
-}
-
-body{
-    /* background: #e5eee9; */
-    /* background: red; */
-
-    max-width: 2000px;
-}
-
-.saman{
-    font-family: 'SAMAN',sans-serif;
-}
-
-li{
- list-style: none;
-}
-
-
-.link,.handlers li{
-    cursor: pointer;
-}
-.link li:hover{
-    color: #ed2945;
-}
-
-.b
-{
-    font-size: xx-large;
-    font-weight: 900;
-    animation: infinite abc;
-}
-
-.card-collection
-{
-    z-index: 100 !important;
-}
-
-
-
-.input_field_container {
-    @apply flex flex-col gap-3 
-}
-
-.input_field_container .input_field{
-    @apply flex flex-col gap-0.5 
-}
-.input_field_container .input_field label{
-    @apply capitalize opacity-80 
-}
-.input_field_container .input_field input{
-    @apply bg-transparent border-2 border-gray-300 hover:border-gray-400 transition duration-300 rounded py-[0.4rem] pl-3 pr-9
-}
-
-form .form_title{
-    @apply capitalize font-extrabold text-2xl opacity-95
-}
-
-form button[type="submit"]{
-    @apply py-3 px-5  rounded font-semibold transition-colors duration-500
-}
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  
+  @font-face {
+      font-family: 'SAMAN';
+      src: url('/SAMAN.TTF');
+  }
+  
+  html{
+      @apply 2xl:text-[110%]
+  }
+  
+  
+  *{
+      font-family: 'Poppins', sans-serif;
+      color:#232323;
+  }
+  
+  body{
+      /* background: #e5eee9; */
+      /* background: red; */
+  
+      max-width: 2000px;
+  }
+  
+  .saman{
+      font-family: 'SAMAN',sans-serif;
+  }
+  
+  li{
+   list-style: none;
+  }
+  
+  
+  .link,.handlers li{
+      cursor: pointer;
+  }
+  .link li:hover{
+      color: #ed2945;
+  }
+  
+  .b
+  {
+      font-size: xx-large;
+      font-weight: 900;
+      animation: infinite abc;
+  }
+  
+  .card-collection
+  {
+      z-index: 100 !important;
+  }
+  
+  
+  
+  .input_field_container {
+      @apply flex flex-col gap-3 
+  }
+  
+  .input_field_container .input_field{
+      @apply flex flex-col gap-0.5 
+  }
+  .input_field_container .input_field label{
+      @apply capitalize opacity-80 
+  }
+  .input_field_container .input_field input{
+      @apply bg-transparent border-2 border-gray-300 hover:border-gray-400 transition duration-300 rounded py-[0.4rem] pl-3 pr-9
+  }
+  
+  form .form_title{
+      @apply capitalize font-extrabold text-2xl opacity-95
+  } 
+  
+  form button[type="submit"]{
+      @apply py-3 px-5  rounded font-semibold transition-colors duration-500 
+  }
+  
+  /* couresel */
+  
+  
+  
+  
+  
+  

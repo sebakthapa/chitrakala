@@ -27,9 +27,7 @@ const Page = ({ params }) => {
 
   return (
           <div className='authPage  '>
-            {/* <UserAuth title="sign up" /> */}
-            <Link href="/" className='saman text-4xl text-[#556f5f] font-semibold pt-5 pl-5 inline-block'>CHITRAKALA</Link>
-
+   
             <main className='flex flex-col lg:flex-row justify-center gap-5 lg:gap-10 xl:gap-20 items-center min-h-[100vh]'>
 
               <div className="formContainer relative flex justify-center items-center w-full lg:w-fit p-3 xxs:p-5 xs:p-7 ">
