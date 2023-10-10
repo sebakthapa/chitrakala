@@ -1,10 +1,9 @@
 "use client"
-
 import { app } from '@/lib/firebase';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import Image from 'next/image';
 import { useState } from 'react'
-const page = () => {
+const Page = () => {
 
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
@@ -88,4 +87,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
