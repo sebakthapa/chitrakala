@@ -57,6 +57,7 @@ function Navbar() {
         <Link href={"/"}>  <li>Home</li></Link>
          <Link href={"/gallery"}>  <li>Gallery</li></Link>
          <Link href={"/artist"}>  <li>Artist</li></Link>
+         <Link href={"/exhibition"}>  <li>Exhibition</li></Link>
          <Link href={"/about"}>  <li>About</li></Link>
 
         </div>

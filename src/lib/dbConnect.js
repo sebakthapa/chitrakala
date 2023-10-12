@@ -8,7 +8,7 @@ const options = {
 const connections = {};
 
 const dbConnect =  async function (dbName) {
-  const uri = dbName === "seller" ?  process.env.MONGODB_URI_SELLER : process.env.MONGODB_URI_BUYER ;
+  const uri = process.env[`MONGODB_URI_${dbName.toUpperCase()}`];
 
   if (!uri) {
     throw new Error(`N0  environment variable SET: "MONGODB_URI_${dbName.toUpperCase()}"`);
@@ -17,7 +17,7 @@ const dbConnect =  async function (dbName) {
   try {
     const conn = await mongoose.connect(uri, options);
     connections[dbName] = conn;
-    console.log("Connected to DB " + dbName);
+    console.log(`Connected to DB ${dbName}`);
   }
   catch (error) {
     console.log("ERROR connecting to DB \n" + error);
@@ -30,6 +30,7 @@ export function closeConnection(dbName) {
 
   try {
     const conn = connections[dbName];
+    console.log("Closed Connection"+ dbName)
     
     if (!conn) {
       throw new Error('No connection for ' + dbName);

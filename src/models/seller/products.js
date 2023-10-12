@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 const productsSchema = new mongoose.Schema({
   seller: {
     required:[true, "seller userId is required"],
-    unique:[true, "The seller userdetails already exists"],
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: "Users",
+    sparse: true
   },
   name: {
     type: String,
@@ -29,7 +29,7 @@ const productsSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: {
-      values: ['painting', 'photography', 'sculpture'],
+      values: ['oil', 'water', 'digital','sketch','other'],
       message: 'Category must be painting, photography or sculpture'
     }
   },

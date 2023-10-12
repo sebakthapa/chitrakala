@@ -7,9 +7,9 @@ function Landing() {
         <>
            
 
-            <div className='flex  overflow-hidden  bg-[#e5eee9] min-h-[50vh] h-[70vh]'>
+            <div className='flex  overflow-hidden  bg-[#fff] min-h-[50vh] h-[70vh]'>
 
-                <div className="flex-[80%] pl-20 pr-20 mt-20 flex items-center flex-col justify-center">
+                <div className="flex-[100%]  mt-20 flex items-center flex-col justify-center">
                     <span className='text-7xl p-5  font-extrabold'>The Art</span>
                     <span className='text-2xl text-center pb-3  font-extralight'>This is Marketplace & Gallery of Excleusive painting</span>
                     <span className='text-xl  text-center  font-extralight'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi repellat distinctio eligendi itaque illum. Inventore iste sunt perferendis hic,</span>

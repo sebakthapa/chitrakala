@@ -12,7 +12,7 @@ const page = () => {
 
 
 
-      <div className="card-collection z-200 flex flex-wrap w-full min-h-[40rem] gap-1 justify-center">
+      <div className="bg-[#e5eee9] card-collection z-200 flex flex-wrap w-full min-h-[40rem] gap-1 justify-center">
         <div className="shadow-xl  gap-5 m-5 flex flex-col flex-1 min-w-[300px] max-w-[500px] min-h-[6rem]  justify-center items-center p-10 bg-[#daebf1]">
         <motion.img
                 key={"oil"}

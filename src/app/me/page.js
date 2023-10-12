@@ -4,35 +4,34 @@ import { getDownloadURL, getStorage, ref, uploadBytes,deleteObject } from 'fireb
 import Image from 'next/image';
 import { useState } from 'react'
 import axios from 'axios';
-import Exhibition from '@/components/Exhibition';
-import { useRouter } from 'next/navigation';
 const Page = () => {
 
-  const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState('');
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [category, setCategory] = useState('');
-  const [loading, setLoading] = useState(false);
+    const [image, setImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
+    const [username, setUsername] = useState('');
+    const [address, setAddress] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [loading,setLoading]=useState(false)
+  
+  
+  
+  
+    const handleUsername = (e) => {
+      setUsername(e.target.value);
+    }
+    const handleEmail = (e) => {
+      setEmail(e.target.value);
+    }
+  
+    const handlePhone = (e) => {
+      setPhone(e.target.value);
+    }
+    const handleAddress = (e) => {
+      setAddress(e.target.value);
+    }
+  
 
-
-
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
-  }
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  }
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  }
-
-  const handlePriceChange = (e) => {
-    setPrice(e.target.value);
-  }
-  const router = useRouter();
 
 
 
@@ -74,8 +73,8 @@ const Page = () => {
 
 
         const data = {
-          seller: "652828d7c22ee1540aa99ad3",
-          name: title,
+          user: "6522700fced4bec98b1541b9",
+          username: title,
           price: price,
           description: description,
           category: category,
@@ -85,23 +84,15 @@ const Page = () => {
         const res = await axios.post("/api/products", data);
         if (res.status == 200) {
           console.log(" Uploadeed");
-          router.push('/gallery') 
-
-
         }
         else {
           console.error("Failed................................")
-        setLoading(false);
-
           await deleteObject(storageRef);
-
         }
 
         setLoading(false);
         // You can now save the downloadURL to your database or use it in your application as needed
       } catch (error) {
-        setLoading(false);
-
         console.error('Error uploading image:', error);
       }
     }
@@ -110,23 +101,34 @@ const Page = () => {
   return (
     <>
       <div className="container m-10 flex justify-center items-center ">
-
         <form action="#" className="flex flex-col gap-2 justify-center">
-      <h1 className='text-center font-extrabold text-2xl '>Post Your Work</h1>
 
           <input
             type="text"
-            placeholder="Title"
-            value={title}
-            onChange={handleTitleChange}
+            placeholder="Username"
+            value={username}
+            onChange={handleUsername}
             className=" border-gray-400 border-2 rounded-md p-2  "
           />
-
-          <textarea
+          <input
             type="text"
-            value={description}
-            onChange={handleDescriptionChange}
-            placeholder="Description"
+            placeholder="Email"
+            value={email}
+            onChange={handleEmail}
+            className=" border-gray-400 border-2 rounded-md p-2  "
+          />
+          <input
+            type="number"
+            placeholder="Phone"
+            value={phone}
+            onChange={handlePhone}
+            className=" border-gray-400 border-2 rounded-md p-2  "
+          />
+          <input
+            type="text"
+            placeholder="Address"
+            value={address}
+            onChange={handleAddress}
             className=" border-gray-400 border-2 rounded-md p-2  "
           />
 
@@ -137,44 +139,19 @@ const Page = () => {
           {imageUrl && <Image src={imageUrl} alt="Selected" width="100" height="100" />}
 
 
-          <div className="flex justify-between">
-
-            <select
-              className="p-5 border-gray-400 border-2 rounded-md "
-              value={category}
-              onChange={handleCategoryChange}
-              required
-            >
-              <option  disabled value="" >Category</option>
-              <option value="oil">Oil</option>
-              <option  value="water">Water</option>
-              <option value="sketch">Sketch</option>
-              <option value="digital">Digital</option>
-              <option value="other">Other</option>
-            </select>
-            <input
-              type="text"
-              placeholder="Price"
-              value={price}
-              onChange={handlePriceChange}
-              className=" border-gray-400 border-2 rounded-md p-2  "
-            />
-          </div>
 
           <button
             disabled={loading}
             className="bg-green-900 text-gray-100 rounded py-2 px-4 transition duration-300 hover:bg-green-700"
             onClick={handleFileUpload}
           >
-            {loading ? 'Uploading...' : 'Upload'}
+            {loading ? 'Updating...' : 'Update'}
           </button>
 
 
 
         </form>
       </div>
-
-      <Exhibition/>
 
     </>
   )
