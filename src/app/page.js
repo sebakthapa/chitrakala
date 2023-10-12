@@ -4,7 +4,7 @@ import Landing from "@/components/Landing";
 import Carousel from "@/components/Carousel";
 import { motion } from "framer-motion";
 import Image from "next/image";
-const page = () => {
+const Page = () => {
   return (
     <>
       <Landing />
@@ -96,4 +96,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

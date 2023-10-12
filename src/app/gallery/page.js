@@ -4,9 +4,9 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import axios from "axios";
 import Carousel from "@/components/Carousel";
-const page = () => {
+const Page = () => {
+  
   const [galleryData, setGalleryData] = useState([]);
-
   useEffect(() => {
     async function fetchGalleryData() {
       try {
@@ -65,4 +65,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

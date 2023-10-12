@@ -2,10 +2,11 @@
 import React,{ useState,useEffect } from "react";
 import Carousel from "@/components/Carousel";
 import { motion } from "framer-motion";
-import Image from "next/image";
-const page = () => {
-  const [exhibition,setExhibition] = useState([])
 
+
+const Page = () => {
+  
+  const [exhibition,setExhibition] = useState([])
   useEffect(() => {
     async function fetchData() {
       const response = await fetch('/api/exhibition');
@@ -59,4 +60,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
