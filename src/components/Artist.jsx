@@ -6,12 +6,7 @@ const Artist = () => {
 
   return (
     <>
-    <div className='bg-[#ecd0e7] flex  m-5 justify-center items-center overflow-hidden '>
-<div className='w-screen sm:w-1/2 m-10'>
 
-  <Carousel  />
-</div>
-    </div>
 
   
 

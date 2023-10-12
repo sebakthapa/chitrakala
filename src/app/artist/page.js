@@ -3,6 +3,8 @@ import Artist from '@/components/Artist'
 const page = () => {
   return (
     <>
+            <h1 className='text-center font-extrabold text-2xl '>Artists</h1>
+
         <Artist/>
     </>
   )
