@@ -5,19 +5,19 @@ const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
-const connections = {};
 
-const dbConnect =  async  (dbName)=> {
-  const uri = `${process.env.MONGODB_URI}/${dbName}?retryWrites=true&w=majority`;
+
+
+const dbConnect =  async  ()=> {
+  const uri = `${process.env.MONGODB_URI}/projectData?retryWrites=true&w=majority`;
 
   if (!uri) {
-    throw new Error(`N0  environment variable SET: "MONGODB_URI_${dbName.toUpperCase()}"`);
+    throw new Error(`N0  environment variable SET: "MONGODB_URI"`);
   }
 
   try {
     const conn = await mongoose.connect(uri, options);
-    connections[dbName] = conn;
-    console.log(`Connected to DB ${dbName}`);
+    console.log(`Connected to DB `);
   }
   catch (error) {
     console.log("ERROR connecting to DB \n" + error);
@@ -26,20 +26,6 @@ const dbConnect =  async  (dbName)=> {
   }
 }
 
-export function closeConnection(dbName) {
 
-  try {
-    const conn = connections[dbName];
-    console.log("Closed Connection"+ dbName)
-    
-    if (!conn) {
-      throw new Error('No connection for ' + dbName);
-    }
-  
-    return mongoose.connection.close();
-  } catch (error) {
-    console.log(error)
-  }
-}
 
 export default dbConnect;

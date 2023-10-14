@@ -22,7 +22,6 @@ const Page = () => {
 
 
   const handleCategoryChange = (e) => {
-    console.log(uid)
     setCategory(e.target.value);
   }
   const handleTitleChange = (e) => {

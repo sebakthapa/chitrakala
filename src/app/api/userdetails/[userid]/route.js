@@ -1,4 +1,4 @@
-import dbConnect, { closeConnection } from "@/lib/dbConnect";
+import dbConnect from "@/lib/dbConnect";
 import UsersDetails from "@/models/useraccounts/usersDetail";
 import { NextResponse } from "next/server";
 
@@ -11,13 +11,12 @@ export const GET = async (request) => {
     try {
         const params = request.url.split('/');
         const userId = params[params.length - 1];
-        await dbConnect("useraccounts");
+        await dbConnect();
         const res = await UsersDetails.findOne({
             'user': userId
         }).populate('user');
 
 
-        closeConnection("useraccounts");
         return new NextResponse(JSON.stringify(res))
 
     } catch (error) {
@@ -33,7 +32,7 @@ export const PATCH = async (request) => {
     try {
         const { address = "", displayName = "", photo = "" } = await request.json();
 
-        await dbConnect("useraccounts");
+        await dbConnect();
         const params = request.url.split('/');
         const userId = params[params.length - 1];
 
@@ -43,7 +42,6 @@ export const PATCH = async (request) => {
             { new: true }
         )
 
-        closeConnection("useraccounts");
         return new NextResponse(JSON.stringify(res))
 
     } catch (error) {
@@ -60,7 +58,7 @@ export const DELETE = async (request) => {
     try {
         const userDetailData = await request.json();
 
-        await dbConnect("useraccounts");
+        await dbConnect();
         const params = request.url.split('/');
         const userId = params[params.length - 1];
 
@@ -68,7 +66,6 @@ export const DELETE = async (request) => {
             { 'user': userId }
         )
 
-        closeConnection("useraccounts");
         return new NextResponse(JSON.stringify(res))
 
     } catch (error) {

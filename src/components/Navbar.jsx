@@ -20,10 +20,12 @@ function Navbar() {
 
         {
           user?.uid ? (
+            
             <motion.button onClick={() => dispatch(logout())} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='text-gray-100 bg-red-600 border-2 border-red-600 rounded py-[0.4rem] px-5 '>
                 Log Out
                 {/* <RiLogoutCircleRLine className='text-gray-100' /> */}
             </motion.button>
+            
           ) : (
             <div className="handlers text-[#556f5f] pt-0  flex gap-5 text-base ">
               {/* <li><BsFacebook /></li>

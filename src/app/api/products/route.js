@@ -1,4 +1,4 @@
-import dbConnect, { closeConnection } from "@/lib/dbConnect";
+import dbConnect from "@/lib/dbConnect";
 import Products from "@/models/useraccounts/products";
 import { NextResponse } from "next/server";
 
@@ -9,10 +9,9 @@ import { NextResponse } from "next/server";
 // GET => get all products
 export const GET = async () => {
     try {
-        await dbConnect("useraccounts");
+        await dbConnect();
 
-        const res = await Products.find({}).populate("seller");
-        closeConnection("useraccounts");
+        const res = await Products.find().populate("seller");
         return new NextResponse(JSON.stringify(res))
 
     } catch (error) {

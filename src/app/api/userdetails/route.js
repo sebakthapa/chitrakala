@@ -1,4 +1,4 @@
-import dbConnect, { closeConnection } from "@/lib/dbConnect";
+import dbConnect  from "@/lib/dbConnect";
 import UserDetails from "@/models/useraccounts/usersDetail";
 import { NextResponse } from "next/server";
 
@@ -9,7 +9,7 @@ import { NextResponse } from "next/server";
 export const GET = async () => {
 
     try {
-        await dbConnect("useraccounts");
+        await dbConnect();
 
         const res = await UserDetails.find({}).populate('user');
         console.log(res)
@@ -19,10 +19,7 @@ export const GET = async () => {
     } catch (error) {
         console.log("ERROR fetching all  user detail \n" + error)
         return new NextResponse.json({ error: error })
-    } finally {
-        closeConnection("useraccounts");
-
-    }
+    } 
 }
 
 
@@ -34,13 +31,12 @@ export const POST = async (request) => {
     try {
         const { user, address = "", photo = "", displayName = "" } = await request.json();
 
-        await dbConnect("useraccounts");
-        s
+        await dbConnect();
+        
         const newUserDetail = new UserDetails({ user, address, photo, displayName });
 
         const savedUserDetail = await newUserDetail.save();
 
-        closeConnection("useraccounts");
         return new NextResponse(JSON.stringify(savedUserDetail))
 
     } catch (error) {

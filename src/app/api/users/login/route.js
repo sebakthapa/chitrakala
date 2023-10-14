@@ -1,6 +1,6 @@
 // login handler
 
-import dbConnect ,{closeConnection} from "@/lib/dbConnect";
+import dbConnect  from "@/lib/dbConnect";
 import Users from "@/models/useraccounts/users";
 import UsersDetails from "@/models/useraccounts/usersDetail";
 import { NextResponse } from "next/server";
@@ -18,7 +18,7 @@ export const POST = async (request) => {
             return false;
         }
 
-        await dbConnect("useraccounts");
+        await dbConnect();
 
         if (loginID.indexOf("@") > 0) {
             // login ID is email so search with email field
@@ -55,7 +55,5 @@ export const POST = async (request) => {
     } catch (error) {
         console.log("ERROR trying to login" + error)
     }
-    finally{
-        closeConnection("useraccounts")
-    }
+
 }

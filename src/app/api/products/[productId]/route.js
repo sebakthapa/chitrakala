@@ -1,4 +1,4 @@
-import dbConnect,{closeConnection} from "@/lib/dbConnect";
+import dbConnect from "@/lib/dbConnect";
 import Products from "@/models/useraccounts/products";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,9 +8,8 @@ export const GET = async (req, res) => {
         const query = req.url.split("/");
         const productId = query[query.length - 1];
 
-        await dbConnect("useraccounts");
+        await dbConnect();
         const product = await Products.findById(productId).populate("seller")
-        closeConnection("useraccounts")
         return new NextResponse(JSON.stringify(product))
     } catch (error) {
         console.log("ERROR while getting single product" + error)
@@ -31,9 +30,9 @@ export const PUT = async () => {
 
         const updatedData = { seller, name, price, description, category, photo, like };
 
-        await dbConnect("seller");
+        await dbConnect();
         const newProduct = await Products.findByIdAndUpdate(productId, updatedData).populate("seller")
-        closeConnection("seller")
+    
         return new NextResponse(JSON.stringify(newProduct))
     } catch (error) {
         console.log("ERROR while getting single product" + error)
@@ -50,7 +49,7 @@ export const DELETE = async () => {
         const query = req.url.split("/");
         const productId = query[query.length - 1];
 
-        await dbConnect("seller");
+        await dbConnect();
         const product = await Products.findByIdAndDelete(productId)
 
         return new NextResponse(JSON.stringify(product))

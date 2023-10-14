@@ -1,4 +1,4 @@
-import dbConnect, { closeConnection } from "@/lib/dbConnect";
+import dbConnect  from "@/lib/dbConnect";
 import Users from "@/models/useraccounts/users";
 import UsersDetails from "@/models/useraccounts/usersDetail";
 import { NextResponse } from "next/server";
@@ -12,7 +12,7 @@ export const POST = async (request) => {
 
   try {
     const { username, email, password, phone, displayName } = await request.json();
-    await dbConnect("useraccounts");
+    await dbConnect();
 
 
     // validation part
@@ -45,19 +45,15 @@ export const POST = async (request) => {
       const data = await savedUserDetail.populate('user', { username: 1, email: 1, _id: 1, phone: 1, });
 
 
-      closeConnection("useraccounts");
 
       return new NextResponse(JSON.stringify(data))
     }
 
 
   } catch (error) {
-    closeConnection("useraccounts");
+   
     console.log("ERROR while creating user \n" + error)
-  } finally {
-    closeConnection("useraccounts");
-    
-  }
+  } 
 
 }
 
@@ -70,14 +66,14 @@ export const PATCH = async (request) => {
   try {
     const { id, updatedData } = await request.json();
 
-    await dbConnect("useraccounts");
+    await dbConnect();
 
 
     const updatedUser = await Users.findByIdAndUpdate(id, updatedData, {
       new: true
     });
 
-    closeConnection("useraccounts");
+    closeConnection();
 
     return new NextResponse(JSON.stringify(updatedUser))
 
@@ -94,12 +90,12 @@ export const DELETE = async (request) => {
   try {
     const { id } = await request.json();
 
-    await dbConnect("useraccounts");
+    await dbConnect();
 
 
     await Users.findByIdAndDelete(id);
 
-    closeConnection("useraccounts");
+   
 
     return new NextResponse(JSON.stringify({ message: "User deleted successfully" }));
 

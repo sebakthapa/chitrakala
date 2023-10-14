@@ -1,4 +1,4 @@
-import dbConnect,{closeConnection} from "@/lib/dbConnect";
+import dbConnect from "@/lib/dbConnect";
 import Users from "@/models/useraccounts/users";
 import { NextResponse } from "next/server";
 
@@ -8,14 +8,13 @@ import { NextResponse } from "next/server";
 export const GET = async (request) => {
 
     try {
-        await dbConnect("useraccounts");
+        await dbConnect();
         const params = request.url.split('/');
         const username = params[params.length-1];
         const res = await Users.findOne({
             'username': username
         });
         
-        closeConnection("useraccounts");
         console.log(res)
     
 
