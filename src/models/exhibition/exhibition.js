@@ -15,13 +15,7 @@ const exhibitionSchema = new mongoose.Schema({
     type: String,
     maxlength: [100, 'Location cannot exceed 100 characters']
   },
-  status: {
-    type: String,
-    enum: {
-        values: ['upcoming', 'closed', 'open',],
-        message: 'Category must be upcoming/closed/open'
-      }
-  },
+
   datetime: {
     type: Date,
     required: [true, 'Datetime is required']
@@ -30,8 +24,9 @@ const exhibitionSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Photo is required']
   }
-});
+},{timestamps:true});
+mongoose.models = {}
 
-const Exhibition = mongoose.models.Exhibition || mongoose.model("Exhibition", exhibitionSchema);
+const Exhibition =  mongoose.model("Exhibition", exhibitionSchema);
 
 export default Exhibition;

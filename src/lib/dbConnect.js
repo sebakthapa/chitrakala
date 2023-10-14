@@ -7,8 +7,8 @@ const options = {
 };
 const connections = {};
 
-const dbConnect =  async function (dbName) {
-  const uri = process.env[`MONGODB_URI_${dbName.toUpperCase()}`];
+const dbConnect =  async  (dbName)=> {
+  const uri = `${process.env.MONGODB_URI}/${dbName}?retryWrites=true&w=majority`;
 
   if (!uri) {
     throw new Error(`N0  environment variable SET: "MONGODB_URI_${dbName.toUpperCase()}"`);

@@ -2,12 +2,15 @@
 import { app } from '@/lib/firebase';
 import { getDownloadURL, getStorage, ref, uploadBytes,deleteObject } from 'firebase/storage';
 import Image from 'next/image';
-import { useState } from 'react'
+import { useState  } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+
 import axios from 'axios';
 import Exhibition from '@/components/Exhibition';
 import { useRouter } from 'next/navigation';
 const Page = () => {
 
+  const uid = useSelector(store=>store.user).uid;
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [title, setTitle] = useState('');
@@ -19,6 +22,7 @@ const Page = () => {
 
 
   const handleCategoryChange = (e) => {
+    console.log(uid)
     setCategory(e.target.value);
   }
   const handleTitleChange = (e) => {
@@ -72,9 +76,8 @@ const Page = () => {
         const downloadURL = await getDownloadURL(storageRef);
         console.log('Image uploaded:', downloadURL);
 
-
         const data = {
-          seller: "652828d7c22ee1540aa99ad3",
+          seller: uid,
           name: title,
           price: price,
           description: description,

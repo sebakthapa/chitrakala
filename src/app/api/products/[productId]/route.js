@@ -1,5 +1,5 @@
 import dbConnect,{closeConnection} from "@/lib/dbConnect";
-import Products from "@/models/seller/products";
+import Products from "@/models/useraccounts/products";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET a specific product by id
@@ -8,14 +8,15 @@ export const GET = async (req, res) => {
         const query = req.url.split("/");
         const productId = query[query.length - 1];
 
-        await dbConnect("seller");
+        await dbConnect("useraccounts");
         const product = await Products.findById(productId).populate("seller")
-        closeConnection("seller")
+        closeConnection("useraccounts")
         return new NextResponse(JSON.stringify(product))
     } catch (error) {
         console.log("ERROR while getting single product" + error)
         return new NextResponse(JSON.stringify({ error: "error occured" }))
     }
+    
 
 }
 

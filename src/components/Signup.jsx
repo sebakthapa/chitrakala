@@ -40,7 +40,7 @@ const Signup = () => {
         fullname && (data.displayName = fullname);
 
         try {
-            const res = await axios.post("/api/users/buyer", data);
+            const res = await axios.post("/api/users", data);
             // console.log("RESPONSE > \n", res);
             // console.log("RESPONSE STATUS > \n", res.status);
             if (res.status == 200) {
@@ -69,52 +69,7 @@ const Signup = () => {
     }
 
     const handleUsernameAvailavility = async (inputValue) => {
-        // setUsernameFetchStatus("");
 
-        // if (!/^[a-zA-Z].*$/.test(inputValue)) {
-        //     setUsernameFetchStatus("");
-        //     setError("username", { message: "Username must start with letter" });
-        //     return null;
-        // }
-
-        // if (inputValue == "") {
-        //     setUsernameFetchStatus("");
-        //     setError("username", { message: "This field is required" })
-        //     return null;
-        // }
-
-        // if (inputValue.length < 5) {
-        //     setUsernameFetchStatus("");
-        //     setError("username", { message: "Enter 5 or more characters" });
-        //     return null;
-        // }
-
-        // if (inputValue.length > 30) {
-        //     setUsernameFetchStatus("");
-        //     setError("username", { message: "Mustn't exceed 30 characters" });
-        //     return null;
-        // }
-
-        // if (!/^[a-zA-Z0-9_]*$/.test(inputValue)) {
-        //     setUsernameFetchStatus("");
-        //     setError("username", { message: "Only alphanumeric characters and _ allowed" });
-        //     return null;
-        // }
-
-        // setError("username", "")
-
-        // setUsernameFetchStatus("loading");
-        // try {
-        //     const res = await axios.get(`/api/users/buyer/username/${inputValue}`);
-        //     const message = res.data.message;
-        //     if (message == "available") {
-        //         setUsernameFetchStatus("available")
-        //     } else {
-        //         setUsernameFetchStatus("notAvailable")
-        //     }
-        // } catch (error) {
-        //     console.log(error)
-        // }
     }
 
 
