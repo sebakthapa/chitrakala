@@ -19,11 +19,30 @@ const usersDetailsSchema = new mongoose.Schema({
     type: String,
     maxlength: [30, "Name should not exceed 30 characters"],
     minLength: [3, "Minimum 3 characters required"],
+  },
+  bio:{
+
+    type: String,
+    maxlength: [30, "Bio should not exceed 30 characters"],
+    minLength: [3, "Minimum 3 characters required"],
+
+  },
+  dob: {
+    type: Date,
+    validate: {
+      validator: function(value) {
+        return value <= new Date();
+      },
+      message: 'Date of birth must be in the past'  
+    }
   }
 
 
-})
+},
+{timestamps:true})
 
-const UsersDetails = mongoose.models.UsersDetail || mongoose.model('UsersDetail', usersDetailsSchema)
+mongoose.models = {}
+
+const UsersDetails = mongoose.model('UsersDetail', usersDetailsSchema)
 
 export default UsersDetails;

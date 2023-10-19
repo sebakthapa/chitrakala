@@ -1,5 +1,5 @@
-import dbConnect, { closeConnection } from "@/lib/dbConnect";
-import BuyerDetails from "@/models/seller/usersDetail";
+import dbConnect from "@/lib/dbConnect";
+import UsersDetails from "@/models/useraccounts/usersDetail";
 import { NextResponse } from "next/server";
 
 
@@ -11,13 +11,12 @@ export const GET = async (request) => {
     try {
         const params = request.url.split('/');
         const userId = params[params.length - 1];
-        await dbConnect("buyer");
-        const res = await BuyerDetails.findOne({
+        await dbConnect();
+        const res = await UsersDetails.findOne({
             'user': userId
         }).populate('user');
 
 
-        closeConnection("buyer");
         return new NextResponse(JSON.stringify(res))
 
     } catch (error) {
@@ -33,17 +32,16 @@ export const PATCH = async (request) => {
     try {
         const { address = "", displayName = "", photo = "" } = await request.json();
 
-        await dbConnect("buyer");
+        await dbConnect();
         const params = request.url.split('/');
         const userId = params[params.length - 1];
 
-        const res = await BuyerDetails.findOneAndUpdate(
+        const res = await UsersDetails.findOneAndUpdate(
             { 'user': userId },
             { address, displayName, photo },
             { new: true }
         )
 
-        closeConnection("buyer");
         return new NextResponse(JSON.stringify(res))
 
     } catch (error) {
@@ -60,15 +58,14 @@ export const DELETE = async (request) => {
     try {
         const userDetailData = await request.json();
 
-        await dbConnect("buyer");
+        await dbConnect();
         const params = request.url.split('/');
         const userId = params[params.length - 1];
 
-        const res = await BuyerDetails.deleteOne(
+        const res = await UsersDetails.deleteOne(
             { 'user': userId }
         )
 
-        closeConnection("buyer");
         return new NextResponse(JSON.stringify(res))
 
     } catch (error) {

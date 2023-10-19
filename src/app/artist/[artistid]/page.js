@@ -1,7 +1,7 @@
 import ArtistCard from '@/components/ArtistCard'
 import React from 'react'
 import Reel from '@/components/Reel'
-const page = () => {
+const Page = () => {
   return (
     <>
     <ArtistCard />
@@ -10,4 +10,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

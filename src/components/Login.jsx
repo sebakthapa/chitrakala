@@ -27,7 +27,7 @@ const Login = () => {
 
         try {
             setIsSubmitting(true)
-            const res = await axios.post("/api/users/buyer/login", { loginID, password });
+            const res = await axios.post("/api/users/login", { loginID, password });
             console.log(res)
             if (res.status == 200) {
                 // setUsernameFetchStatus("notAvailable")

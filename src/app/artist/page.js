@@ -1,6 +1,6 @@
 import React from 'react'
 import Artist from '@/components/Artist'
-const page = () => {
+const Page = () => {
   return (
     <>
             <h1 className='text-center font-extrabold text-2xl '>Artists</h1>
@@ -10,4 +10,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

@@ -3,7 +3,6 @@ import React from "react";
 import Landing from "@/components/Landing";
 import Carousel from "@/components/Carousel";
 import { motion } from "framer-motion";
-import Image from "next/image";
 const Page = () => {
   return (
     <>
