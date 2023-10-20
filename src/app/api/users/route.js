@@ -5,6 +5,26 @@ import { NextResponse } from "next/server";
 
 
 
+// GET => get all products
+export const GET = async () => {
+  try {
+      await dbConnect();
+
+      const data = await UsersDetails.find()
+      .populate({
+        path: 'user',
+        select: '-password' // excludes password
+      })
+      const res = data.filter(doc => doc.user.isSeller );
+      return new NextResponse(JSON.stringify(res))
+
+  } catch (error) {
+      console.log("ERROR fetching products \n" + error)
+  }
+}
+
+
+
 
 // POST => POST a user
 
