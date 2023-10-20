@@ -30,7 +30,7 @@ export const GET = async (request) => {
 export const PATCH = async (request) => {
 
     try {
-        const { address = "", displayName = "", photo = "" } = await request.json();
+        const { address, displayName, bio,dob,photo  } = await request.json();
 
         await dbConnect();
         const params = request.url.split('/');
@@ -38,7 +38,7 @@ export const PATCH = async (request) => {
 
         const res = await UsersDetails.findOneAndUpdate(
             { 'user': userId },
-            { address, displayName, photo },
+            { address, displayName, photo ,bio,dob},
             { new: true }
         )
 

@@ -1,15 +1,16 @@
 "use client"
 import Link from 'next/link';
 import React from 'react'
-import { BsArrowRightShort, BsArrowsAngleExpand, BsBackspace, BsBagXFill, BsFacebook, BsInstagram, BsPinterest } from "react-icons/bs";
+import Image from 'next/image';
+import {BsBoxArrowRight} from "react-icons/bs";
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
-import { RiLogoutCircleRLine } from "react-icons/ri"
 import { logout } from '@/redux/features/userSlice';
 
 function Navbar() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user)
+
   console.log(user)
   return (
     <nav className='  border-[1px] lg:border-none border-b-[#556f5f] z-1 flex overflow-hidden flex-col gap-[1.5rem] min-h-[200px] h-[100px] bg-[#e5eee9] text-[#232323] p-5' >
@@ -20,12 +21,21 @@ function Navbar() {
 
         {
           user?.uid ? (
-            
-            <motion.button onClick={() => dispatch(logout())} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='text-gray-100 bg-red-600 border-2 border-red-600 rounded py-[0.4rem] px-5 '>
-                Log Out
-                {/* <RiLogoutCircleRLine className='text-gray-100' /> */}
+
+            <>
+            <div className='flex gap-2 justify-center items-center'>
+
+            <img
+            src={user.photo}
+            width ="50"
+            height= "50"/>
+          
+            <motion.button onClick={() => dispatch(logout())} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='text-gray-800 '>
+            <BsBoxArrowRight/>
             </motion.button>
-            
+            </div>
+            </>
+
           ) : (
             <div className="handlers text-[#556f5f] pt-0  flex gap-5 text-base ">
               {/* <li><BsFacebook /></li>

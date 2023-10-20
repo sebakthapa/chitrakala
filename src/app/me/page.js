@@ -4,14 +4,20 @@ import { getDownloadURL, getStorage, ref, uploadBytes,deleteObject } from 'fireb
 import Image from 'next/image';
 import { useState } from 'react'
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 const Page = () => {
 
+
+    const store = useSelector(store=>store.user);
     const [image, setImage] = useState(null);
-    const [imageUrl, setImageUrl] = useState('');
-    const [username, setUsername] = useState('');
-    const [address, setAddress] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
+    const [imageUrl, setImageUrl] = useState(store.photo);
+    const [username, setUsername] = useState(store.username);
+    const [address, setAddress] = useState(store.address);
+    const [email, setEmail] = useState(store.email);
+    const [phone, setPhone] = useState(store.phone);
+    const [dob, setDob] = useState(store.dob);
+    const [name, setName] = useState(store.displayName);
+    const [bio, setBio] = useState(store.bio);
     const [loading,setLoading]=useState(false)
   
   
@@ -29,6 +35,15 @@ const Page = () => {
     }
     const handleAddress = (e) => {
       setAddress(e.target.value);
+    }
+    const handleDob = (e) => {
+      setDob(e.target.value);
+    }
+    const handleName = (e) => {
+      setName(e.target.value);
+    }
+    const handleBio = (e) => {
+      setBio(e.target.value);
     }
   
 
@@ -73,15 +88,18 @@ const Page = () => {
 
 
         const data = {
-          user: "6522700fced4bec98b1541b9",
-          username: title,
-          price: price,
-          description: description,
-          category: category,
+          userId: store.uid,
+          username: username,
+          displayName: name,
+          dob:dob,
+          bio:bio,
+          email : email,
+          phone : phone,
+          address: address,
           photo: downloadURL
         };
 
-        const res = await axios.post("/api/products", data);
+        const res = await axios.patch("/api/userdetails", data);
         if (res.status == 200) {
           console.log(" Uploadeed");
         }
@@ -102,6 +120,14 @@ const Page = () => {
     <>
       <div className="container m-10 flex justify-center items-center ">
         <form action="#" className="flex flex-col gap-2 justify-center">
+
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={handleName}
+            className=" border-gray-400 border-2 rounded-md p-2  "
+          />
 
           <input
             type="text"
@@ -131,12 +157,26 @@ const Page = () => {
             onChange={handleAddress}
             className=" border-gray-400 border-2 rounded-md p-2  "
           />
+          <input
+            type="date"
+            placeholder="DOB"
+            value={dob}
+            onChange={handleDob}
+            className=" border-gray-400 border-2 rounded-md p-2  "
+          />
+          <textarea
+            type="text"
+            placeholder="Bio"
+            value={bio}
+            onChange={handleBio}
+            className=" border-gray-400 border-2 rounded-md p-2  "
+          />
 
 
 
 
           <input className='p-5 border-gray-400 border-2 rounded-md' type="file" onChange={handleFileChange} />
-          {imageUrl && <Image src={imageUrl} alt="Selected" width="100" height="100" />}
+          {imageUrl && <img src={imageUrl} alt="Selected" width="100" height="100" />}
 
 
 

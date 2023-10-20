@@ -45,4 +45,26 @@ export const POST = async (request) => {
 }
 
 
+export const PATCH = async (request) => {
+
+    try {
+        const { username,email,phone,address, displayName, bio,dob,photo ,userId } = await request.json();
+
+        await dbConnect();
+
+        const res = await UserDetails.findOneAndUpdate({'user':userId},{  address, displayName, photo ,bio , dob },{new:true})
+
+        if (!res) {
+            return new Response('User not found', {status: 404});
+          }
+
+        return new NextResponse(JSON.stringify(res))
+
+    } catch (error) {
+        console.log("ERROR while creating product \n" + error)
+    }
+
+}
+
+
 
