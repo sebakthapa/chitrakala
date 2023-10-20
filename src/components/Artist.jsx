@@ -26,10 +26,10 @@ const Artist = () => {
         <button className='border text-[#556f5f] border-[#556f5f] hover:bg-[#556f5f] hover:text-white py-2 px-6 rounded-full'>Filter</button>
     </div>
     <main className='bg-[#gagaga] m-5 flex flex-wrap  gap-7 '>
-    {users.map(user => (
+    {users.map((user,index) => (
 
     
-      <section className='bg-slate-300 w-full p-5 flex justify-between rounded-lg'>
+      <section key ={index} className='bg-slate-300 w-full p-5 flex justify-between rounded-lg'>
         <aside className='flex gap-5'>
           <div className='bg-red-50 w-[6rem] h-[6rem] flex justify-center items-center border rounded-full'>
             <img

@@ -31,7 +31,7 @@ const Page = () => {
         <div class="px-4">
           <div class="block md:flex  md:-mx-2">
             {galleryData.map((item, index) => (
-              <div class="w-full lg:w-1/4 md:mx-2 mb-4 md:mb-0">
+              <div key={index} class="w-full lg:w-1/4 md:mx-2 mb-4 md:mb-0">
                 <div class="bg-white rounded-lg overflow-hidden shadow relative">
                   <div className=" h-[30vh] overflow-hidden  ">
                     <motion.img
