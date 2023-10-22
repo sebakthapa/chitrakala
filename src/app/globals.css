@@ -54,7 +54,19 @@
   {
       z-index: 100 !important;
   }
-  
+
+  .pphoverDiv
+  {
+    display: hidden;
+  }
+
+
+  .active
+  {
+    @apply bg-gray-900 text-white
+  }
+
+
   
   
   .input_field_container {
@@ -94,3 +106,4 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
