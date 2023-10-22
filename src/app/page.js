@@ -10,7 +10,7 @@ const Page = () => {
     <>
       <Landing />
 
-      <div className="grid h-full grid-cols-12 gap-10 pb-10 m-8 sm:mt-16">
+      <div className="pb-10 m-5 sm:mt-16">
             
 
             <div className="grid grid-cols-12 col-span-12 gap-7">
@@ -92,7 +92,7 @@ const Page = () => {
                     </div>
                 </div>
 
-                <div className="flex  flex-col items-start col-span-12 overflow-hidden  rounded-xl md:col-span-6 lg:col-span-8">
+                <div className="flex  flex-col items-start col-span-12 overflow-hidden shadow rounded-xl md:col-span-6 lg:col-span-8">
                 <MiniCarousel />
                 </div>
             </div>

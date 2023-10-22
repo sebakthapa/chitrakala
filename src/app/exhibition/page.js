@@ -41,9 +41,7 @@ const Page = () => {
                       }}
                     />
 
-                    <div className="pp flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-12 text-center h-12 m-1 rounded-full absolute bottom-0">
-                      <Image src={"/a1.png"} width={50} height={50} />
-                    </div>
+            
                   </div>
 
                   <div class="p-4 h-auto md:h-40 lg:h-48">
