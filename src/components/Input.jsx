@@ -26,7 +26,17 @@ const Input = ({clearErrors, availabilityState, label, type, value, setValue, cl
             <label htmlFor={id}>{label && label} {required && <span className="text-red-500 -ml-1">*</span>}</label>
             <div className="relative w-full">
 
-                <input {...register && { ...register(id, { ...validation, onChange: handleChange, value: value }) }} required={required} className={`${classLists} ${type == "password" ? "pr-[100px]" : ""} w-full`} type={showPassword ? "text" : type} id={id} />
+                <input
+                    value={value}
+                    {...register && { ...register(id, { ...validation, onChange: handleChange }) } }
+                    
+                    {...register || {onChange:handleChange}}
+
+                    required={required}
+                    className={`${classLists} ${type == "password" ? "pr-[100px]" : ""} w-full`}
+                    type={showPassword ? "text" : type}
+                    id={id}
+                />
                 {
                     type === "password" && value && (
                         <span className="icon cursor-pointer absolute top-1/2 -translate-y-1/2 right-2 opacity-50 hover:opacity-70 transition duration-300 " onClick={() => setShowPassword((prev) => !prev)}>

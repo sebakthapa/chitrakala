@@ -1,23 +1,30 @@
 "use client"
 import Input from './Input'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { login } from '@/redux/features/userSlice'
 import { useDispatch } from 'react-redux'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter, useSearchParams } from 'next/navigation'
+import { signIn, useSession } from "next-auth/react"
+import { toast } from 'react-toastify'
 
-const Login = () => {
+const Login = (props) => {
     const dispatch = useDispatch();
+    const { data: session, status } = useSession();
+    // toast(session?.user)
     const router = useRouter()
+    
+
+
 
     const [loginId, setLoginId] = useState("")
     const [password, setPassword] = useState("")
 
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-    const { register, handleSubmit, watch, setError,clearErrors, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, setError, clearErrors, formState: { errors } } = useForm();
 
 
     const handleLogin = async ({ password, ...loginId }) => {
@@ -26,33 +33,32 @@ const Login = () => {
         console.log(loginID, password)
 
         try {
-            setIsSubmitting(true)
-            const res = await axios.post("/api/users/login", { loginID, password });
-            console.log(res)
-            if (res.status == 200) {
-                // setUsernameFetchStatus("notAvailable")
-                const userData = res.data;
-                console.log(userData);
-                dispatch(login(userData));
-                // router.back();
-
-
-            }
-        } catch (error) {
-            if (error?.response?.data?.field) {
-                const { field, message } = error?.response?.data;
-                setError(field, { message })
+            setIsSubmitting(true);
+            const data = { loginID, password };
+            const res = await signIn('credentials', { ...data, redirect: false })
+            // console.log( await res.json())
+            if (!res.ok) {
+                toast.error("Credentials do not match!");
             } else {
-                console.log(error)
+                // redirect("/add_artist_details");
             }
+            
+
+        } catch (error) {
+            console.log(error)
         } finally {
             setIsSubmitting(false)
-            
+            setPassword("")
+
+
         }
 
     }
 
+
     
+
+
 
 
     return (
@@ -69,6 +75,7 @@ const Login = () => {
                     value={loginId}
                     setValue={setLoginId}
                     classLists=""
+                    name="loginID"
                 />
 
                 <Input
@@ -81,9 +88,11 @@ const Login = () => {
                     value={password}
                     setValue={setPassword}
                     classLists=""
+                    name="password"
+
                 />
             </div>
-            <motion.button  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='bg-gray-900 text-white hover:bg-gray-700' type="submit" >
+            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='bg-gray-900 text-white hover:bg-gray-700' type="submit" >
                 {
                     isSubmitting ? "Logging In..." : "Log In"
                 }

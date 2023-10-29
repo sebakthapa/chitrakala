@@ -1,16 +1,21 @@
 "use client"
 import { app } from '@/lib/firebase';
-import { getDownloadURL, getStorage, ref, uploadBytes,deleteObject } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref, uploadBytes, deleteObject } from 'firebase/storage';
 import Image from 'next/image';
-import { useState  } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useState } from 'react'
 import axios from 'axios';
 import Exhibition from '@/components/Exhibition';
 import { useRouter } from 'next/navigation';
+import Input from '@/components/Input';
+import { AiOutlineCloudUpload } from 'react-icons/ai';
+import { RxCross2 } from 'react-icons/rx';
+import { useSelector } from 'react-redux';
+import {  toast } from 'react-toastify';
+
+
+
 const Page = () => {
 
-  const uid = useSelector(store=>store.user).uid;
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [title, setTitle] = useState('');
@@ -18,7 +23,10 @@ const Page = () => {
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('');
   const [loading, setLoading] = useState(false);
+  const [dragging, setDragging] = useState(false);
 
+
+  const user = useSelector(state => state.user)
 
 
   const handleCategoryChange = (e) => {
@@ -59,13 +67,16 @@ const Page = () => {
     }
   };
 
+  toast("Please login to upload")
+
   const handleFileUpload = async (e) => {
+    e.preventDefault();
+    if (!user?.uid) {
+      toast("Please login to upload")
+    };
     if (image) {
       try {
-
-        
         setLoading(true);
-        e.preventDefault();
         const storage = getStorage(app);
         var today = new Date();
         const storageRef = ref(storage, `gallery/${today}.png`);
@@ -75,8 +86,9 @@ const Page = () => {
         const downloadURL = await getDownloadURL(storageRef);
         console.log('Image uploaded:', downloadURL);
 
+
         const data = {
-          seller: uid,
+          seller: user.uid,
           name: title,
           price: price,
           description: description,
@@ -87,13 +99,13 @@ const Page = () => {
         const res = await axios.post("/api/products", data);
         if (res.status == 200) {
           console.log(" Uploadeed");
-          router.push('/gallery') 
+          router.push('/gallery')
 
 
         }
         else {
           console.error("Failed................................")
-        setLoading(false);
+          setLoading(false);
 
           await deleteObject(storageRef);
 
@@ -109,74 +121,159 @@ const Page = () => {
     }
   };
 
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragging(false);
+
+    const files = e.dataTransfer.files;
+    // Handle the dropped files, e.g., upload or process them
+    console.log('Dropped files:', files);
+
+    setImageUrl(files[0])
+    const selectedFile = files[0];
+    setImage(selectedFile);
+    // Display the selected image preview (optional)
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageUrl(reader.result);
+    };
+    reader.readAsDataURL(selectedFile);
+
+  };
+
+
   return (
     <>
-      <div className="container m-10 flex justify-center items-center ">
 
-        <form action="#" className="flex flex-col gap-2 justify-center">
-      <h1 className='text-center font-extrabold text-2xl '>Post Your Work</h1>
+      <div className="container my-12 w-full max-w-[600px] flex justify-center items-center mx-auto ">
 
-          <input
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={handleTitleChange}
-            className=" border-gray-400 border-2 rounded-md p-2  "
-          />
-
-          <textarea
-            type="text"
-            value={description}
-            onChange={handleDescriptionChange}
-            placeholder="Description"
-            className=" border-gray-400 border-2 rounded-md p-2  "
-          />
+        <form action="#" className="flex flex-col gap-8 justify-center w-full ">
+          <h1 className='text-center font-extrabold text-3xl'>Showcase your Masterpicee</h1>
 
 
-
-
-          <input className='p-5 border-gray-400 border-2 rounded-md' type="file" onChange={handleFileChange} />
-          {imageUrl && <Image src={imageUrl} alt="Selected" width="100" height="100" />}
-
-
-          <div className="flex justify-between">
-
-            <select
-              className="p-5 border-gray-400 border-2 rounded-md "
-              value={category}
-              onChange={handleCategoryChange}
+          <div className="title input_field_container">
+            <Input
+              // register={register}
+              // error={errors["username/email/phone"]}
+              // clearErrors={clearErrors}  
               required
-            >
-              <option  disabled value="" >Category</option>
-              <option value="oil">Oil</option>
-              <option  value="water">Water</option>
-              <option value="sketch">Sketch</option>
-              <option value="digital">Digital</option>
-              <option value="other">Other</option>
-            </select>
-            <input
               type="text"
-              placeholder="Price"
-              value={price}
-              onChange={handlePriceChange}
-              className=" border-gray-400 border-2 rounded-md p-2  "
+              label="Title"
+              value={title}
+              setValue={setTitle}
+              classLists=""
             />
           </div>
 
+          <div className="description input_field_container">
+
+            <label htmlFor="post-description" className='text-gray-500 -mb-2' >Description</label>
+            <textarea
+              type="text"
+              id='post-description'
+              value={description}
+              onChange={handleDescriptionChange}
+              className=" bg-transparent border-2 border-gray-300 hover:border-gray-400 transition duration-300 rounded py-[0.4rem] pl-3 pr-9 "
+            />
+          </div>
+
+          <div className=" image input_field_container ">
+            <input id="uploadimage" className='p-5 border-gray-300 hover:border-gray-400 transition border-2 rounded-md' type="file" label={"Upload Image"} required onChange={handleFileChange} />
+            <div
+              className='rounded relative flex items-center justify-center border-dashed border-2 border-gray-500 w-full h-auto min-h-[300px] p-1'
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}>
+              {
+                imageUrl && (
+                  <button title='Clear Image' onClick={() => { setImage(null); setImageUrl('') }} className="clearImage absolute bg-red-500 rounded-full p-1 -top-2 -right-2 text-gray-200 hover:scale-105 transition active:scale-95">
+                    <RxCross2 className='text-gray-100 font-extrabold w-6 h-6' />
+                  </button>
+                )
+              }
+
+              {
+                imageUrl ? <Image className='h-auto max-h-[500px] w-full object-contain' src={imageUrl} alt="Selected" width="300" height="300" /> : (
+                  <div className='text-xl p-4 flex flex-col justify-center items-center h-full w-full'>
+                    <span><AiOutlineCloudUpload className='w-20 h-20' /></span>
+                    <p>
+                      <span>Drag and drop your image or </span>  <span className='text-blue-500 cursor-pointer' onClick={() => document.querySelector("#uploadimage").click()}> browse</span>
+                    </p>
+                  </div>
+                )}
+            </div>
+          </div>
+
+
+
+
+
+
+          <div className="flex justify-between items-center">
+
+            <div className=" input_field_container flex flex-row justify-between">
+              <div className="flex flex-col gap-3">
+
+                <label htmlFor="post-category" className='text-gray-500 -mb-2' >Category</label>
+                <select
+                  id='post-category'
+                  className="py-2 px-5 border-gray-300 hover:border-gray-400 transition cursor-pointer border-2 rounded-sm "
+                  value={category}
+                  onChange={handleCategoryChange}
+                  required
+                >
+                  <option disabled value="" >Choose category..</option>
+                  <option value="oil">Oil</option>
+                  <option value="water">Water</option>
+                  <option value="sketch">Sketch</option>
+                  <option value="digital">Digital</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+
+
+
+            <div className="input_field_container">
+              <Input
+                type="number"
+                placeholder="Price"
+                value={price}
+                label={"Price"}
+                setValue={setPrice}
+                onChange={handlePriceChange}
+                className=" border-gray-400 border-2 rounded-md p-2 "
+              />
+            </div>
+          </div>
+          {console.log(user?.uid)}
           <button
-            disabled={loading}
-            className="bg-green-900 text-gray-100 rounded py-2 px-4 transition duration-300 hover:bg-green-700"
+            disabled={loading || (user?.uid ? true : false)}
+            title={`${user?.uid ? "" : "Login or Signup to Upload"}`}
+            className={`bg-green-700 text-gray-100 rounded py-2 px-4 transition duration-300  ${user?.uid ? "hover:bg-green-800" : " cursor-not-allowed opacity-60 hover:bg-green-700"}`}
             onClick={handleFileUpload}
           >
             {loading ? 'Uploading...' : 'Upload'}
           </button>
-
-
-
         </form>
       </div>
 
-      <Exhibition/>
+
+
+
+
+
+      <Exhibition />
 
     </>
   )

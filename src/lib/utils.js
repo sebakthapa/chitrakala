@@ -1,8 +1,5 @@
 export const IS_CLIENT = () => {
-    if (typeof window !== "undefined") {
-        return true;
-    }
-    return false;
+        return typeof window !== "undefined";
 }
 
 export function getLocalUser() {

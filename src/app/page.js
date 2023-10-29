@@ -5,99 +5,100 @@ import Carousel from "@/components/Carousel";
 import { motion } from "framer-motion";
 import MiniCarousel from "@/components/MiniCarousel";
 import Link from "next/link";
+
 const Page = () => {
   return (
     <>
       <Landing />
 
       <div className="pb-10 m-5 sm:mt-16">
-            
 
-            <div className="grid grid-cols-12 col-span-12 gap-7">
-                <div className="flex flex-col items-start col-span-12 overflow-hidden shadow-sm rounded-xl md:col-span-6 lg:col-span-4">
-                    <Link href="#_" className="block transition duration-200 ease-out transform hover:scale-110">
-                    <motion.img
-            key={"oil"}
-            src={"/landing/oil.jpg"}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 200, damping: 10 }}
-          />
-                    </Link>
-                    <div className="relative flex flex-col items-start px-6 bg-white border border-t-0 border-gray-200 py-7 rounded-b-2xl">
-                        <div className="bg-indigo-400 absolute top-0 -mt-3 items-center px-3 py-1.5 leading-none w-auto rounded-full text-xs font-medium uppercase text-white inline-block">
-                            <span>Oil</span>
-                        </div>
-                        <h2 className="text-base text-gray-500 font-bold sm:text-lg md:text-xl"><Link href="#_">Authenticating users with email verification in Django apps</Link></h2>
-                       
-                    </div>
-                </div>
 
-                <div className="flex flex-col items-start col-span-12 overflow-hidden shadow-sm rounded-xl md:col-span-6 lg:col-span-4">
-                    <Link href="#_" className="block transition duration-200 ease-out transform hover:scale-110">
-                    <motion.img
-            key={"oil"}
-            src={"/landing/water.jpg"}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 200, damping: 10 }}
-          />
-                    </Link>
-                    <div className="relative flex flex-col items-start px-6 bg-white border border-t-0 border-gray-200 py-7 rounded-b-2xl">
-                        <div className="bg-red-400 absolute top-0 -mt-3 items-center px-3 py-1.5 leading-none w-auto rounded-full text-xs font-medium uppercase text-white inline-block">
-                            <span>Water</span>
-                        </div>
-                        <h2 className="text-base text-gray-500 font-bold sm:text-lg md:text-xl"><Link href="#_">Authenticating users with email verification in Django apps</Link></h2>
-                      
-                    </div>
-                </div>
+        <div className="grid grid-cols-12 col-span-12 gap-7">
+          <div className="flex flex-col items-start col-span-12 overflow-hidden shadow-sm rounded-xl md:col-span-6 lg:col-span-4">
+            <Link href="#_" className="block transition duration-200 ease-out transform hover:scale-110">
+              <motion.img
+                key={"oil"}
+                src={"/landing/oil.jpg"}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 200, damping: 10 }}
+              />
+            </Link>
+            <div className="relative flex flex-col items-start px-6 bg-white border border-t-0 border-gray-200 py-7 rounded-b-2xl">
+              <div className="bg-indigo-400 absolute top-0 -mt-3 items-center px-3 py-1.5 leading-none w-auto rounded-full text-xs font-medium uppercase text-white inline-block">
+                <span>Oil</span>
+              </div>
+              <h2 className="text-base text-gray-500 font-bold sm:text-lg md:text-xl"><Link href="#_">Authenticating users with email verification in Django apps</Link></h2>
 
-        
-
-                <div className="flex flex-col items-start col-span-12 overflow-hidden shadow-sm rounded-xl md:col-span-6 lg:col-span-4">
-                    <Link href="#_" className="block transition duration-200 ease-out transform hover:scale-110">
-                    <motion.img
-            key={"oil"}
-            src={"/landing/digital.jpg"}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 200, damping: 10 }}
-          />
-                    </Link>
-                    <div className="relative flex flex-col items-start px-6 bg-white border border-t-0 border-gray-200 py-7 rounded-b-2xl">
-                        <div className="bg-purple-500 absolute top-0 -mt-3 items-center px-3 py-1.5 leading-none w-auto rounded-full text-xs font-medium uppercase text-white inline-block">
-                            <span>Digital</span>
-                        </div>
-                        <h2 className="text-base text-gray-500 font-bold sm:text-lg md:text-xl"><Link href="#_">Creating user registration and authentication system in flask</Link></h2>
-                       
-                    </div>
-                </div>
-
-                <div className="flex flex-col items-start col-span-12 overflow-hidden shadow-sm rounded-xl md:col-span-6 lg:col-span-4">
-                    <Link href="#_" className="block transition duration-200 ease-out transform hover:scale-110">
-                    <motion.img
-            key={"oil"}
-            src={"/landing/sketch.jpg"}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 200, damping: 10 }}
-          />
-                    </Link>
-                    <div className="relative flex flex-col items-start px-6 bg-white border border-t-0 border-gray-200 py-7 rounded-b-2xl">
-                        <div className="bg-purple-500 absolute top-0 -mt-3 items-center px-3 py-1.5 leading-none w-auto rounded-full text-xs font-medium uppercase text-white inline-block">
-                            <span>Sketch</span>
-                        </div>
-                        <h2 className="text-base text-gray-500 font-bold sm:text-lg md:text-xl"><Link href="#_">Creating user registration and authentication system in flask</Link></h2>
-                       
-                    </div>
-                </div>
-
-                <div className="flex  flex-col items-start col-span-12 overflow-hidden shadow rounded-xl md:col-span-6 lg:col-span-8">
-                <MiniCarousel />
-                </div>
             </div>
+          </div>
 
+          <div className="flex flex-col items-start col-span-12 overflow-hidden shadow-sm rounded-xl md:col-span-6 lg:col-span-4">
+            <Link href="#_" className="block transition duration-200 ease-out transform hover:scale-110">
+              <motion.img
+                key={"oil"}
+                src={"/landing/water.jpg"}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 200, damping: 10 }}
+              />
+            </Link>
+            <div className="relative flex flex-col items-start px-6 bg-white border border-t-0 border-gray-200 py-7 rounded-b-2xl">
+              <div className="bg-red-400 absolute top-0 -mt-3 items-center px-3 py-1.5 leading-none w-auto rounded-full text-xs font-medium uppercase text-white inline-block">
+                <span>Water</span>
+              </div>
+              <h2 className="text-base text-gray-500 font-bold sm:text-lg md:text-xl"><Link href="#_">Authenticating users with email verification in Django apps</Link></h2>
+
+            </div>
+          </div>
+
+
+
+          <div className="flex flex-col items-start col-span-12 overflow-hidden shadow-sm rounded-xl md:col-span-6 lg:col-span-4">
+            <Link href="#_" className="block transition duration-200 ease-out transform hover:scale-110">
+              <motion.img
+                key={"oil"}
+                src={"/landing/digital.jpg"}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 200, damping: 10 }}
+              />
+            </Link>
+            <div className="relative flex flex-col items-start px-6 bg-white border border-t-0 border-gray-200 py-7 rounded-b-2xl">
+              <div className="bg-purple-500 absolute top-0 -mt-3 items-center px-3 py-1.5 leading-none w-auto rounded-full text-xs font-medium uppercase text-white inline-block">
+                <span>Digital</span>
+              </div>
+              <h2 className="text-base text-gray-500 font-bold sm:text-lg md:text-xl"><Link href="#_">Creating user registration and authentication system in flask</Link></h2>
+
+            </div>
+          </div>
+
+          <div className="flex flex-col items-start col-span-12 overflow-hidden shadow-sm rounded-xl md:col-span-6 lg:col-span-4">
+            <Link href="#_" className="block transition duration-200 ease-out transform hover:scale-110">
+              <motion.img
+                key={"oil"}
+                src={"/landing/sketch.jpg"}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 200, damping: 10 }}
+              />
+            </Link>
+            <div className="relative flex flex-col items-start px-6 bg-white border border-t-0 border-gray-200 py-7 rounded-b-2xl">
+              <div className="bg-purple-500 absolute top-0 -mt-3 items-center px-3 py-1.5 leading-none w-auto rounded-full text-xs font-medium uppercase text-white inline-block">
+                <span>Sketch</span>
+              </div>
+              <h2 className="text-base text-gray-500 font-bold sm:text-lg md:text-xl"><Link href="#_">Creating user registration and authentication system in flask</Link></h2>
+
+            </div>
+          </div>
+
+          <div className="flex  flex-col items-start col-span-12 overflow-hidden shadow rounded-xl md:col-span-6 lg:col-span-8">
+            <MiniCarousel />
+          </div>
         </div>
+
+      </div>
 
 
 

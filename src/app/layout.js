@@ -3,6 +3,10 @@ import './globals.css';
 import ReduxProvider from '@/components/ReduxProvider';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+import SessionProvider from '../../context/SessionProvider';
+
 
 export const metadata = {
   title: 'Chitrakala',
@@ -10,16 +14,21 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
- 
+
   return (
     <html lang="en">
       <body>
         <ReduxProvider>
-        <Navbar/>
-          {children}
-          <div className='flex flex-wrap w-full h-[20rem] gap-1 justify-center items-center '>
-            <Footer/>
-          </div>
+          <SessionProvider>
+            <ToastContainer position="bottom-right"  />
+
+            <Navbar />
+            {children}
+            <div className='flex flex-wrap w-full h-[20rem] gap-1 justify-center items-center '>
+              {/* <Notification /> */}
+              <Footer />
+            </div>
+          </SessionProvider>
         </ReduxProvider>
       </body>
     </html>

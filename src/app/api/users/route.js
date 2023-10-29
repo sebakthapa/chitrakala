@@ -1,25 +1,26 @@
-import dbConnect  from "@/lib/dbConnect";
+import dbConnect from "@/lib/dbConnect";
 import Users from "@/models/useraccounts/users";
 import UsersDetails from "@/models/useraccounts/usersDetail";
 import { NextResponse } from "next/server";
+import bcrypt from "bcrypt"
 
 
 
 // GET => get all products
 export const GET = async () => {
   try {
-      await dbConnect();
+    await dbConnect();
 
-      const data = await UsersDetails.find()
+    const data = await UsersDetails.find()
       .populate({
         path: 'user',
         select: '-password' // excludes password
       })
-      const res = data.filter(doc => doc.user.isSeller );
-      return new NextResponse(JSON.stringify(res))
+    const res = data.filter(doc => doc.user.isSeller);
+    return new NextResponse(JSON.stringify(res))
 
   } catch (error) {
-      console.log("ERROR fetching products \n" + error)
+    console.log("ERROR fetching products \n" + error)
   }
 }
 
@@ -29,6 +30,16 @@ export const GET = async () => {
 // POST => POST a user
 
 export const POST = async (request) => {
+  const saltRounds = 10;
+  const hashPassword = (password) => {
+    return new Promise((resolve, reject) => {
+      bcrypt.hash(password, saltRounds, (err, hash) => {
+        if (err) reject(err)
+        resolve(hash)
+      })
+    })
+  }
+
 
   try {
     const { username, email, password, phone, displayName } = await request.json();
@@ -37,19 +48,24 @@ export const POST = async (request) => {
 
     // validation part
     const existingEmail = await Users.findOne({ email });
-    if (existingEmail?._id) return new NextResponse(JSON.stringify({ field: "email", message: "Email is already registered." }), { status: 403, statusText:"validation_error" })
+    if (existingEmail?._id) return new NextResponse(JSON.stringify({ field: "email", message: "Email is already registered." }), { status: 403, statusText: "validation_error" })
 
     const existingUsername = await Users.findOne({ username });
-    if (existingUsername?._id) return new NextResponse(JSON.stringify({ field: "username", message: "Username already taken. Please choose another." }), { status: 403, statusText:"validation_error" })
+    if (existingUsername?._id) return new NextResponse(JSON.stringify({ field: "username", message: "Username already taken. Please choose another." }), { status: 403, statusText: "validation_error" })
 
     if (phone) {
       const existingPhone = await Users.findOne({ phone });
-      if (existingPhone?._id) return new NextResponse(JSON.stringify({ field: "phone", message: "Phone number is already registered." }), { status: 403, statusText:"validation_error" })
+      if (existingPhone?._id) return new NextResponse(JSON.stringify({ field: "phone", message: "Phone number is already registered." }), { status: 403, statusText: "validation_error" })
     }
 
 
+    const saltRounds = 10;
+    let hashedPassword;
+    
+
+
     // saving new user
-    const newUser = new Users({ username, email, password });
+    const newUser = new Users({ username, email, password: await hashPassword(password) });
     phone && (newUser.phone = phone);
     const savedUser = await newUser.save();
 
@@ -71,9 +87,9 @@ export const POST = async (request) => {
 
 
   } catch (error) {
-   
+
     console.log("ERROR while creating user \n" + error)
-  } 
+  }
 
 }
 
@@ -115,7 +131,7 @@ export const DELETE = async (request) => {
 
     await Users.findByIdAndDelete(id);
 
-   
+
 
     return new NextResponse(JSON.stringify({ message: "User deleted successfully" }));
 

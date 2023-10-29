@@ -6,22 +6,22 @@ const userSlice = createSlice({
     name: "user",
     initialState ,
     reducers: {
-        login: (state, action) => {
+        addUserData: (state, action) => {
             const { payload: userData } = action;
 
-            const { address, photo, displayName,user  } = userData;
-            const { email, username, phone, _id } = user;
-            const formatedUserData = {uid:_id, username, email, phone, address, displayName, photo, }
-            return formatedUserData;
+            // const { address, photo, displayName,user  } = userData;
+            // const { email, username, phone, _id } = user;
+            // const formatedUserData = {uid:_id, username, email, phone, address, displayName, photo, }
+            return userData;
         },
 
-        logout: () => {
+        clearUserData: () => {
             return null;
         },
 
     }
 })
 
-export const { login, logout, loadUser } = userSlice.actions;
+export const { addUserData, clearUserData } = userSlice.actions;
 
 export default userSlice.reducer;

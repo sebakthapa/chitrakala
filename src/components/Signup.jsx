@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { login } from '@/redux/features/userSlice';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
     const router = useRouter();
@@ -47,9 +48,13 @@ const Signup = () => {
                 // setUsernameFetchStatus("notAvailable")
                 const userData = res.data;
                 console.log(userData);
-                dispatch(login(userData));
-                // router.back();
+                // dispatch(login(userData));
 
+                // toast.success("Account registered successfully! \n Please login to continue.")
+                toast.success("Account registered successfully!");
+                router.push("/auth/login" );
+
+                // toast("Update your info for getting access to ")
 
             }
         } catch (error) {
@@ -68,6 +73,7 @@ const Signup = () => {
         // }
     }
 
+
     const handleUsernameAvailavility = async (inputValue) => {
 
     }
@@ -80,7 +86,7 @@ const Signup = () => {
 
     return (
         <form className='sm:border-gray-700 sm:border-2 sm:p-5  flex flex-col gap-5 w-full sm:w-[500px] rounded' onSubmit={handleSubmit(handleSignup)}>
-            <h2 className='form_title'>Sign Up</h2>
+            <h2 className='form_title' >Sign Up</h2>
             <div className="input_field_container">
                 <Input
                     required
