@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import React from 'react'
 
 const TopCreator = () => {
@@ -62,10 +63,10 @@ const TopCreator = () => {
                         <td class="py-3 text-sm" role="cell">
                         <div class="flex items-center gap-2">
                             <div class="h-[30px] w-[30px] rounded-full">
-                            <img
+                            <Image
                                 src="https://images.unsplash.com/photo-1506863530036-1efeddceb993?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2244&amp;q=80"
                                 class="h-full w-full rounded-full"
-                                alt=""
+                                alt="random image"
                             />
                             </div>
                             <p
@@ -96,10 +97,10 @@ const TopCreator = () => {
                         <td class="py-3 text-sm" role="cell">
                         <div class="flex items-center gap-2">
                             <div class="h-[30px] w-[30px] rounded-full">
-                            <img
+                            <Image
                                 src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1780&amp;q=80"
                                 class="h-full w-full rounded-full"
-                                alt=""
+                                alt="rand image"
                             />
                             </div>
                             <p
@@ -130,10 +131,10 @@ const TopCreator = () => {
                         <td class="py-3 text-sm" role="cell">
                         <div class="flex items-center gap-2">
                             <div class="h-[30px] w-[30px] rounded-full">
-                            <img
+                            <Image
                                 src="https://images.unsplash.com/photo-1573766064535-6d5d4e62bf9d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1315&amp;q=80"
                                 class="h-full w-full rounded-full"
-                                alt=""
+                                alt="rand image"
                             />
                             </div>
                             <p
@@ -164,10 +165,10 @@ const TopCreator = () => {
                         <td class="py-3 text-sm" role="cell">
                         <div class="flex items-center gap-2">
                             <div class="h-[30px] w-[30px] rounded-full">
-                            <img
+                            <Image
                                 src="https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1780&amp;q=80"
                                 class="h-full w-full rounded-full"
-                                alt=""
+                                alt="random image"
                             />
                             </div>
                             <p
@@ -198,10 +199,10 @@ const TopCreator = () => {
                         <td class="py-3 text-sm" role="cell">
                         <div class="flex items-center gap-2">
                             <div class="h-[30px] w-[30px] rounded-full">
-                            <img
+                            <Image
                                 src="https://i.ibb.co/7p0d1Cd/Frame-24.png"
                                 class="h-full w-full rounded-full"
-                                alt=""
+                                alt="image"
                             />
                             </div>
                             <p

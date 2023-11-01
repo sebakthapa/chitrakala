@@ -34,10 +34,8 @@ export const PATCH = async (request) => {
       let updatedLikes = [...product.likes];
       console.log(updatedLikes)
       if (userHasLiked) {
-        console.log("true................")
         updatedLikes = updatedLikes.filter(id => !id.equals(userId));
     } else {
-          console.log("false................")
         updatedLikes.push(userId); 
       }
   

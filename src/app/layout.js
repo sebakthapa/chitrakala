@@ -9,11 +9,11 @@ import SessionProvider from '../../context/SessionProvider';
 
 
 export const metadata = {
-  title: 'Chitrakala',
+  title: 'Chitrakala - Art Marketplace & Gallery',
   description: 'Art marketplace and showcase.',
 }
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children, ...props }) {
 
   return (
     <html lang="en">
@@ -26,6 +26,7 @@ export default function RootLayout({ children }) {
             {children}
             <div className='flex flex-wrap w-full h-[20rem] gap-1 justify-center items-center '>
               {/* <Notification /> */}
+              
               <Footer />
             </div>
           </SessionProvider>

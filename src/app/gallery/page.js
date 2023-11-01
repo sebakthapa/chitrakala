@@ -152,19 +152,7 @@ const Page = () => {
                     />
 
                     <div className="pp flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-12 text-center h-12 m-1 rounded-full absolute bottom-0">
-                      <img
-                        src={item.photo || "/a1.png"}
-                        width={50}
-                        height={50}
-                      />
-                    </div>
-
-                    <div className="pp flex flex-col overflow-hidden top-1 right-1  p-1 m-1  absolute justify-center items-center ">
-                      {item.liked ? <BsHeartFill fill="red" /> : <BsHeart />}
-
-                      <span className="text-sm font-sans ">
-                      {likesCount[item._id] || 0}
-                      </span>
+                      <Image src={"/a1.png"} width={50} height={50} />
                     </div>
                   </div>
 

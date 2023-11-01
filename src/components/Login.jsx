@@ -62,7 +62,7 @@ const Login = (props) => {
 
 
     return (
-        <form className='sm:border-gray-700 sm:border-2 sm:p-5  flex flex-col gap-5 w-full sm:w-[500px] rounded' onSubmit={handleSubmit(handleLogin)}>
+        <form className='sm:border-gray-700 sm:border-2 sm:p-5  flex flex-col gap-6 w-full sm:w-[500px] rounded' onSubmit={handleSubmit(handleLogin)}>
             <h2 className='form_title '>Log in</h2>
             <div className="input_field_container">
                 <Input

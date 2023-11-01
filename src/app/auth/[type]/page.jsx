@@ -2,80 +2,66 @@
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { FcGoogle } from "react-icons/fc"
+import { FiArrowLeft } from "react-icons/fi"
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSelector } from 'react-redux'
 import { redirect, useRouter, useSearchParams } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
 import { addUserData } from '@/redux/features/userSlice'
+import isAuthenticated from '@/components/isAuthenticated'
+import { toast } from 'react-toastify'
+import Link from 'next/link'
 
-const Page = ({ params, ...props }) => {
-  const router = useRouter()
+const Page = ({ params, searchParams, ...props }) => {
   // const user = useSelector(state => state.user)
-  const { data: session, status } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
 
 
   // console.log(isNewUser)
+  console.log(params, searchParams.returnUrl)
+  console.log(props)
 
   const [isLogin, setIsLogin] = useState(params?.type == "login" ? true : false);
 
 
-  // Create a history stack
-  const historyStackRef = useRef([]);
 
-  useEffect(() => {
-    if (session?.user?.id) {
-      console.log(session?.user.isSeller)
-      if (session?.user.isSeller) {
-        router.back()
+  useLayoutEffect(() => {
+    if (sessionStatus == "authenticated") {
+      if (session?.user.isArtist) {
+        redirect("/profile-setup?step=welcome")
       } else {
-        redirect("/add_artist_details")
+        redirect(searchParams.returnUrl || "/")
       }
     }
-  }, [session])
+  }, [session, searchParams.returnUrl, sessionStatus])
 
-  useEffect(() => {
-    isLogin ? router.replace('/auth/login') : router.replace("/auth/signup");
-
-
-  }, [isLogin])
-
-  // // Add the current page to the history stack
-  // useEffect(() => {
-  //   historyStackRef.current.push(isLogin ? 'login' : 'signup');
-  // }, [isLogin]);
-
-  // // Handle browser back button press
-  // useEffect(() => {
-  //   const handleBackButton = (event) => {
-  //     if (historyStackRef.current.length > 1) {
-  //       historyStackRef.current.pop(); // Remove the current page
-  //       const previousPage = historyStackRef.current.pop();
-  //       setIsLogin(previousPage === 'login');
-  //       router.back();
-  //     }
-  //   };
-
-  //   window.addEventListener('popstate', handleBackButton);
-
-  //   return () => {
-  //     window.removeEventListener('popstate', handleBackButton);
-  //   };
-  // }, []);
 
   const handleGoogleSignin = async () => {
     try {
-    signIn("google");
-      
+      const res = await signIn("google", { callbackUrl: `/profile-setup?step=welcome&returnUrl=${searchParams.returnUrl}`, redirect: false, });
+      console.log(res)
+
     } catch (error) {
       throw error
     }
   }
 
+  if (sessionStatus == "loading") {
+    return (
+      <h1>LOADING...</h1>
+    )
+  }
+
+  if (searchParams?.callbackUrl?.length > 0) {
+    toast.error("You must login to continue!")
+  }
+
+
 
   return (
-    <div className='authPage  '>
+    <div className={`authPage ${sessionStatus == "authenticated" ? "hidden" : ""}`}  >
 
       <main className='flex flex-col lg:flex-row justify-center gap-5 lg:gap-10 xl:gap-20 items-center min-h-[100vh]'>
 
@@ -96,7 +82,7 @@ const Page = ({ params, ...props }) => {
         </div>
         <div className='font-bold'>or</div>
 
-        <div className="authOptions  flex flex-col gap-2 justify-center">
+        <div className="authOptions  flex flex-col gap-5 justify-center">
           <div className="changePage text-center">
             <AnimatePresence mode="wait">
               <motion.div
@@ -106,11 +92,18 @@ const Page = ({ params, ...props }) => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, }}
                 transition={{ duration: 0.3 }}>
-                {isLogin ? "Not registered yet? " : "Already registered? "}<button className='ml-1 text-blue-600 underline font-semibold hover:no-underline' onClick={() => setIsLogin((prev) => !prev)}>{isLogin ? " Sign Up" : " Log In"}</button>
+                {
+                  isLogin ? "Not registered yet? " : "Already registered? "}
+                <Link
+                  className='ml-1 text-blue-600 underline font-semibold hover:no-underline'
+                  href={`/auth/${isLogin ? "signup" : "login"}${searchParams?.returnUrl ? `?${searchParams?.returnUrl}` : ""}`}
+                >
+                  {isLogin ? " Sign Up" : " Log In"}
+                </Link>
               </motion.div>
             </AnimatePresence>
           </div>
-          <p className=' text-center'>or</p>
+          <p className=' text-center text-sm'>or</p>
           <motion.button
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 1 }}
@@ -122,7 +115,7 @@ const Page = ({ params, ...props }) => {
             <span className='text-white font-semibold'> Continue with Google </span>
           </motion.button>
 
-          <motion.button
+          {/* <motion.button
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 200, damping: 10 }}
@@ -130,7 +123,7 @@ const Page = ({ params, ...props }) => {
           >
             <Image alt='facebook logo' src="/facebook.svg" width="20" height="20" className='bg-white h-10 w-10 p-[0.4rem]' />
             <span className='text-white font-semibold'> Continue with Facebook </span>
-          </motion.button>
+          </motion.button> */}
         </div>
       </main>
 

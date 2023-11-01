@@ -176,7 +176,7 @@ const Page = () => {
 
 
           <input className='p-5 border-gray-400 border-2 rounded-md' type="file" onChange={handleFileChange} />
-          {imageUrl && <img src={imageUrl} alt="Selected" width="100" height="100" />}
+          {imageUrl && <Image src={imageUrl} alt="Selected" width="100" height="100" />}
 
 
 
