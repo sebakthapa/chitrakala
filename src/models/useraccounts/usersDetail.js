@@ -14,11 +14,11 @@ const usersDetailsSchema = new mongoose.Schema({
     type: String,
     maxlength: [256, "256 characters exteed for address."],
   },
-  photo: {
+  image: {
     type: String,
 
   },
-  displayName: {
+  name: {
     type: String,
     maxlength: [30, "Name should not exceed 30 characters"],
     minLength: [3, "Minimum 3 characters required"],

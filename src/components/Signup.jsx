@@ -8,9 +8,11 @@ import { useDispatch } from 'react-redux';
 import { login } from '@/redux/features/userSlice';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { useSession } from 'next-auth/react';
 
 const Signup = () => {
     const router = useRouter();
+    const {data:session} = useSession();
 
     const [fullName, setFullName] = useState("")
     const [username, setUsername] = useState("")
@@ -20,8 +22,9 @@ const Signup = () => {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [usernameFetchStatus, setUsernameFetchStatus] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [formDataModified, setFormDataModified] = useState(false)
 
-    const { register, handleSubmit, watch, clearErrors, setError, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, clearErrors, setError,setValue,  formState: { errors } } = useForm();
 
     const dispatch = useDispatch();
 
@@ -52,7 +55,7 @@ const Signup = () => {
 
                 // toast.success("Account registered successfully! \n Please login to continue.")
                 toast.success("Account registered successfully!");
-                router.push("/auth/login" );
+                router.push("/auth/login");
 
                 // toast("Update your info for getting access to ")
 
@@ -60,11 +63,16 @@ const Signup = () => {
         } catch (error) {
             if (error?.response?.data?.field) {
                 const { field, message } = error?.response?.data;
+                if (field == "multiple") {
+                    toast.error(`Unable to proceed! ${message}`)
+                }
                 setError(field, { message })
             } else {
                 console.log(error)
             }
         } finally {
+            setPassword("");
+            setConfirmPassword("")
             setIsSubmitting(false);
         }
 
@@ -74,35 +82,71 @@ const Signup = () => {
     }
 
 
+
     const handleUsernameAvailavility = async (inputValue) => {
 
     }
 
 
-
+    useEffect(() => {
+        if (session?.user && !formDataModified) {
+            setFullName(session?.user?.name || "")
+            setValue("fullname", session?.user?.name || "")
+            setEmail(session?.user?.email || "")
+            setValue("email", session?.user?.email || "")
+            setFormDataModified(true)
+        }
+    }, [session])
 
 
 
 
     return (
-        <form className='sm:border-gray-700 sm:border-2 sm:p-5  flex flex-col gap-5 w-full sm:w-[500px] rounded' onSubmit={handleSubmit(handleSignup)}>
+        <form className='sm:border-gray-700 sm:border-2 sm:p-5 max-w-[500px] m-auto  flex flex-col gap-7 w-full sm:w-[500px] rounded' onSubmit={handleSubmit(handleSignup)}>
             <h2 className='form_title' >Sign Up</h2>
             <div className="input_field_container">
-                <Input
-                    required
-                    register={register}
-                    validation={{
-                        maxLength: { value: 30, message: "Can't exceed 30 characters" },
-                        minLength: { value: 3, message: "Min 3 characters required" },
-                        required: "This field is required",
-                    }}
-                    error={errors?.fullname}
-                    type="text"
-                    label="full name"
-                    value={fullName}
-                    setValue={setFullName}
-                    classLists="capitalize"
-                />
+                <div className='flex flex-col gap-3 xs:flex-row xs:justify-between w-full'>
+
+                    <Input
+                        required
+                        register={register}
+                        validation={{
+                            maxLength: { value: 30, message: "Can't exceed 30 characters" },
+                            minLength: { value: 3, message: "Min 3 characters required" },
+                            required: "This field is required",
+                        }}
+                        error={errors?.fullname}
+                        type="text"
+                        label="full name"
+                        value={fullName}
+                        setValue={setFullName}
+                        classLists="capitalize w-full"
+                    />
+                    <Input
+                        required
+                        register={register}
+                        validation={{
+                            maxLength: { value: 30, message: "Enter less than 30 characters" },
+                            minLength: { value: 5, message: "Minimum 5 characters required" },
+                            required: "This field is required",
+                            pattern: {
+                                value: /^[a-zA-Z][a-zA-Z0-9._]*$/,
+                                message: "Only letters, numbers, underscores, and periods."
+                            },
+                        }}
+                        error={errors?.username}
+                        clearErrors={clearErrors}
+                        type="text"
+                        label="username"
+                        value={username}
+                        customValidation={handleUsernameAvailavility}
+                        setValue={setUsername}
+                        classLists=""
+                        availabilityState={usernameFetchStatus}
+
+                    />
+                </div>
+
 
                 <Input
                     required
@@ -121,31 +165,9 @@ const Signup = () => {
                     classLists=""
                 />
 
-                <Input
-                    required
-                    register={register}
-                    validation={{
-                        maxLength: { value: 30, message: "Enter less than 30 characters" },
-                        minLength: { value: 5, message: "Minimum 5 characters required" },
-                        required: "This field is required",
-                        pattern: {
-                            value: /^[a-zA-Z][a-zA-Z0-9._]*$/,
-                            message: "Only letters, numbers, underscores, and periods."
-                        },
-                    }}
-                    error={errors?.username}
-                    clearErrors={clearErrors}
-                    type="text"
-                    label="username"
-                    value={username}
-                    customValidation={handleUsernameAvailavility}
-                    setValue={setUsername}
-                    classLists=""
-                    availabilityState={usernameFetchStatus}
 
-                />
 
-                <Input
+                {/* <Input
                     register={register}
                     validation={{
                         pattern: {
@@ -163,7 +185,7 @@ const Signup = () => {
                     setValue={setPhone}
                     classLists=""
 
-                />
+                /> */}
 
                 <Input
                     required

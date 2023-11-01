@@ -22,7 +22,7 @@ const Input = ({clearErrors, availabilityState, label, type, value, setValue, cl
     }
 
     return (
-        <div className="fullName input_field">
+        <div className="fullName input_field w-full">
             <label htmlFor={id}>{label && label} {required && <span className="text-red-500 -ml-1">*</span>}</label>
             <div className="relative w-full">
 
