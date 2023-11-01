@@ -6,23 +6,23 @@ import bcrypt, { hash } from "bcrypt"
 
 
 
-// // GET => get all users (NOT APPLICABLE)
-// export const GET = async () => {
-//   try {
-//     await dbConnect();
+// GET => get all users 
+export const GET = async () => {
+  try {
+    await dbConnect();
 
-//     const data = await UsersDetails.find({})
-//       .populate({
-//         path: 'user',
-//         select: '-password' // excludes password
-//       })
-//     const res = data.filter(doc => doc.user.isSeller);
-//     return new NextResponse(JSON.stringify(res))
+    const data = await UsersDetails.find({})
+      .populate({
+        path: 'user',
+        select: '-password' // excludes password
+      })
+    const res = data.filter(doc => doc.user.isArtist);
+    return new NextResponse(JSON.stringify(res))
 
-//   } catch (error) {
-//     console.log("ERROR fetching products \n" + error)
-//   }
-// }
+  } catch (error) {
+    console.log("ERROR fetching products \n" + error)
+  }
+}
 
 
 

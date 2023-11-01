@@ -11,7 +11,7 @@ export const GET = async () => {
     try {
         await dbConnect();
 
-        const res = await Products.find().populate("seller");
+        const res = await Products.find().populate("artist");
         return new NextResponse(JSON.stringify(res))
 
     } catch (error) {
@@ -27,11 +27,11 @@ export const GET = async () => {
 export const POST = async (request) => {
 
     try {
-        const { seller, name, price, description = "", category, photo, } = await request.json();
+        const { artist, name, price, description = "", category, photo, } = await request.json();
         // console.log(data);
         await dbConnect("user");
 
-        const newProduct = new Products({ seller, name, price, description, category, photo, });
+        const newProduct = new Products({ artist, name, price, description, category, photo, });
 
         const savedProduct = await newProduct.save();
 

@@ -11,11 +11,14 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { RxCross2 } from 'react-icons/rx';
 import { useSelector } from 'react-redux';
 import {  toast } from 'react-toastify';
+import {  useSession } from 'next-auth/react';
 
 
 
 const Page = () => {
 
+
+  const {data:session} = useSession();
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [title, setTitle] = useState('');
@@ -32,9 +35,7 @@ const Page = () => {
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
   }
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  }
+
 
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
@@ -67,11 +68,11 @@ const Page = () => {
     }
   };
 
-  toast("Please login to upload")
+
 
   const handleFileUpload = async (e) => {
     e.preventDefault();
-    if (!user?.uid) {
+    if (!session) {
       toast("Please login to upload")
     };
     if (image) {
@@ -88,7 +89,8 @@ const Page = () => {
 
 
         const data = {
-          seller: user.uid,
+          artist: user?._id,
+
           name: title,
           price: price,
           description: description,
@@ -188,7 +190,9 @@ const Page = () => {
           </div>
 
           <div className=" image input_field_container ">
-            <input id="uploadimage" className='p-5 border-gray-300 hover:border-gray-400 transition border-2 rounded-md' type="file" label={"Upload Image"} required onChange={handleFileChange} />
+              <label htmlFor="uploadimage" className='text-gray-500 -mb-2' >Your Work</label>
+
+            <input id="uploadimage" className='p-5 hidden border-gray-300 hover:border-gray-400 transition border-2 rounded-md' type="file" label={"Upload Image"} required onChange={handleFileChange} />
             <div
               className='rounded relative flex items-center justify-center border-dashed border-2 border-gray-500 w-full h-auto min-h-[300px] p-1'
               onDragOver={handleDragOver}
@@ -256,11 +260,10 @@ const Page = () => {
               />
             </div>
           </div>
-          {console.log(user?.uid)}
           <button
-            disabled={loading || (user?.uid ? true : false)}
+            disabled={loading || (session ? false : true)}
             title={`${user?.uid ? "" : "Login or Signup to Upload"}`}
-            className={`bg-green-700 text-gray-100 rounded py-2 px-4 transition duration-300  ${user?.uid ? "hover:bg-green-800" : " cursor-not-allowed opacity-60 hover:bg-green-700"}`}
+            className={`bg-green-700 text-gray-100 rounded py-2 px-4 transition duration-300  ${session? "hover:bg-green-800" : " cursor-not-allowed opacity-60 hover:bg-green-700"}`}
             onClick={handleFileUpload}
           >
             {loading ? 'Uploading...' : 'Upload'}
