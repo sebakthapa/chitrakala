@@ -141,8 +141,12 @@ const authOptions = {
 
             return true;
 
+        },
 
+        async redirect({ url, baseUrl }) {
 
+            console.log("CONSOLONG FROM REDIRECT", { url, baseUrl });
+            return url
         }
 
     },

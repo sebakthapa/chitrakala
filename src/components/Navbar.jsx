@@ -9,6 +9,7 @@ import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { showNavigationMenu } from '@/lib/utils';
 
 function Navbar() {
 
@@ -20,7 +21,7 @@ function Navbar() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user)
 
-  const isAuthPage = pathname.split("/").includes("auth");
+  const showNav = showNavigationMenu(pathname)
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -77,7 +78,7 @@ function Navbar() {
     <>
 
       {
-        isAuthPage ? (
+        showNav ? (
           <Link className='mt-7 ml-7 block' href={"/"}>
             <span className='saman text-4xl  text-[#222] font-semibold'>CHITRAKALA</span>
           </Link>
@@ -164,7 +165,7 @@ function Navbar() {
                     ) : (
                       <>
                         {
-                          isAuthPage || (
+                          showNav || (
                             <div className="handlers authButtons text-[#556f5f] pt-0  flex gap-5 text-base ">
                               <motion.button
                                 whileHover={{ scale: 1.05 }}

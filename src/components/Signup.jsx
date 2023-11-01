@@ -55,7 +55,7 @@ const Signup = () => {
 
                 // toast.success("Account registered successfully! \n Please login to continue.")
                 toast.success("Account registered successfully!");
-                router.push("/auth/login");
+                router.push("/auth/verify-email");
 
                 // toast("Update your info for getting access to ")
 
