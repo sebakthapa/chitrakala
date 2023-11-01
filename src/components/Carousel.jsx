@@ -9,7 +9,6 @@ const Carousel = () => {
     "https://artist.com/photos/arts/extra-big/autumn-walk-1800329209.jpg",
     "https://i.etsystatic.com/5312870/r/il/300ef0/1185533356/il_570xN.1185533356_i5n8.jpg"
   ];
-  console.log(images)
 
   const [index, setIndex] = useState(0);
   const changePic = () => {
@@ -36,12 +35,12 @@ const Carousel = () => {
           </AnimatePresence>
               </div>
           <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60"></div>
-          <button type="button" className="flex absolute top-0 left-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-prev onClick={()=>changePic(-1)}>
+          <button type="button" className=" flex absolute top-0 left-0  justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-prev onClick={()=>changePic(-1)}>
           
           <span className=' bg-black p-2 rounded-full'  > <BsFillCaretLeftFill fill='white'/> </span>
             
         </button>
-        <button type="button" onClick={()=>changePic(1)} className="flex absolute top-0 right-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-next>
+        <button type="button" onClick={()=>changePic(1)} className=" flex absolute top-0 right-0 z justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-next>
  
         <span  className=' bg-black p-2 rounded-full' > <BsFillCaretRightFill fill='white' /> </span>
 

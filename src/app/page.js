@@ -30,7 +30,7 @@ const Page = () => {
               <div className="bg-indigo-400 absolute top-0 -mt-3 items-center px-3 py-1.5 leading-none w-auto rounded-full text-xs font-medium uppercase text-white inline-block">
                 <span>Oil</span>
               </div>
-              <h2 className="text-base text-gray-500 font-bold sm:text-lg md:text-xl"><Link href="#_">Authenticating users with email verification in Django apps</Link></h2>
+              <h2 className="font-sans italic text-gray-500 sm:text-lg md:text-xl"><Link href="#_">{`"A realm where stories and passions are whispered through the brushstrokes"`}</Link></h2>
 
             </div>
           </div>
@@ -49,7 +49,7 @@ const Page = () => {
               <div className="bg-red-400 absolute top-0 -mt-3 items-center px-3 py-1.5 leading-none w-auto rounded-full text-xs font-medium uppercase text-white inline-block">
                 <span>Water</span>
               </div>
-              <h2 className="text-base text-gray-500 font-bold sm:text-lg md:text-xl"><Link href="#_">Authenticating users with email verification in Django apps</Link></h2>
+              <h2 className="font-sans italic text-gray-500 sm:text-lg md:text-xl"><Link href="#_">{`"Washes of liquid color bloom across thirsty paper"`}</Link></h2>
 
             </div>
           </div>
@@ -70,7 +70,7 @@ const Page = () => {
               <div className="bg-purple-500 absolute top-0 -mt-3 items-center px-3 py-1.5 leading-none w-auto rounded-full text-xs font-medium uppercase text-white inline-block">
                 <span>Digital</span>
               </div>
-              <h2 className="text-base text-gray-500 font-bold sm:text-lg md:text-xl"><Link href="#_">Creating user registration and authentication system in flask</Link></h2>
+              <h2 className="font-sans italic text-gray-500 sm:text-lg md:text-xl"><Link href="#_">{`"Pixels unite to sing a song of light."`}</Link></h2>
 
             </div>
           </div>
@@ -89,7 +89,7 @@ const Page = () => {
               <div className="bg-purple-500 absolute top-0 -mt-3 items-center px-3 py-1.5 leading-none w-auto rounded-full text-xs font-medium uppercase text-white inline-block">
                 <span>Sketch</span>
               </div>
-              <h2 className="text-base text-gray-500 font-bold sm:text-lg md:text-xl"><Link href="#_">Creating user registration and authentication system in flask</Link></h2>
+              <h2 className="font-sans italic text-gray-500 sm:text-lg md:text-xl"><Link href="#_">{`"Swift strokes hint at forms not yet fully revealed"`}</Link></h2>
 
             </div>
           </div>
