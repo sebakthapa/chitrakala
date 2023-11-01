@@ -48,7 +48,7 @@ const Artist = () => {
                     />
 
                     <div className="pp flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-12 text-center h-12 m-1 rounded-full absolute bottom-0">
-                      <img src={item.photo || "/avatar.png"} width={50} height={50} />
+                      <Image alt='default avatar' src={item.photo || "/avatar.png"} width={50} height={50} />
                     </div>
                   </div>
 

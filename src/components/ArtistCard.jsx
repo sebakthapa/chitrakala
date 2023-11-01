@@ -1,13 +1,14 @@
+import Image from 'next/image'
 import React from 'react'
 
 const ArtistCard = () => {
   return (
     <div class="bg-gray-200 font-sans h-screen w-full flex flex-row justify-center items-center">
     <div class="card w-96 mx-auto bg-white  shadow-xl hover:shadow">
-      <img
+      <Image
         class="w-32 mx-auto rounded-full -mt-20 border-8 border-white"
         src="https://avatars.githubusercontent.com/u/67946056?v=4"
-        alt=""
+        alt="artist image"
       />
       <div class="text-center mt-2 text-3xl font-medium">Ajo Alex</div>
       <div class="text-center mt-2 font-light text-sm">@devpenzil</div>

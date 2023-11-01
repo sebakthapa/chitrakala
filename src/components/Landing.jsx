@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from './Navbar';
 import Image from 'next/image';
 
 function Landing() {
@@ -12,7 +11,7 @@ function Landing() {
                 <div className="flex-[100%]  mt-20 flex items-center flex-col justify-center">
                     <span className='text-7xl saman p-5  font-extrabold'>Chitrakala</span>
                     <p className="block font-sans text-2xl text-center font-light leading-relaxed text-gray-700 antialiased">
-                    The Marketplace & Gallery of Excleusive painting
+                    The Marketplace & Gallery of Exclusive painting
           </p>
                     
                     <span className='text-xl  text-center  font-extralight'> 
@@ -27,6 +26,7 @@ function Landing() {
                 <div className=' hidden  lg:flex justify-start '>
                     <div className='a opacity-90  scale-[1.1]  '>
                         <Image
+                            priority
                             alt='Painting of an old man'
                             src={'/landing/landingE.png'}
                             width={1000}

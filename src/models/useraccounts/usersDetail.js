@@ -5,17 +5,20 @@ const usersDetailsSchema = new mongoose.Schema({
     required:[true, "userId is required"],
     unique:[true, "The userdetails already exists"],
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Users'
+    ref: 'Users',
+    autopopulate:{
+      select: '-password' // remove listed fields from selection
+    }
   },
   address: {
     type: String,
     maxlength: [256, "256 characters exteed for address."],
   },
-  photo: {
+  image: {
     type: String,
 
   },
-  displayName: {
+  name: {
     type: String,
     maxlength: [30, "Name should not exceed 30 characters"],
     minLength: [3, "Minimum 3 characters required"],

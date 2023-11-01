@@ -8,16 +8,16 @@ import { useSelector } from 'react-redux';
 const Page = () => {
 
 
-    const store = useSelector(store=>store.user);
+    const store = useSelector(store=>store?.user);
     const [image, setImage] = useState(null);
-    const [imageUrl, setImageUrl] = useState(store.photo);
-    const [username, setUsername] = useState(store.username);
-    const [address, setAddress] = useState(store.address);
-    const [email, setEmail] = useState(store.email);
-    const [phone, setPhone] = useState(store.phone);
-    const [dob, setDob] = useState(store.dob);
-    const [name, setName] = useState(store.displayName);
-    const [bio, setBio] = useState(store.bio);
+    const [imageUrl, setImageUrl] = useState(store?.photo);
+    const [username, setUsername] = useState(store?.username);
+    const [address, setAddress] = useState(store?.address);
+    const [email, setEmail] = useState(store?.email);
+    const [phone, setPhone] = useState(store?.phone);
+    const [dob, setDob] = useState(store?.dob);
+    const [name, setName] = useState(store?.displayName);
+    const [bio, setBio] = useState(store?.bio);
     const [loading,setLoading]=useState(false)
   
   
@@ -176,7 +176,7 @@ const Page = () => {
 
 
           <input className='p-5 border-gray-400 border-2 rounded-md' type="file" onChange={handleFileChange} />
-          {imageUrl && <img src={imageUrl} alt="Selected" width="100" height="100" />}
+          {imageUrl && <Image src={imageUrl} alt="Selected" width="100" height="100" />}
 
 
 

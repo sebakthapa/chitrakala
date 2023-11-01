@@ -9,7 +9,7 @@ const options = {
 
 
 const dbConnect =  async  ()=> {
-  const uri = `${process.env.MONGODB_URI}/projectData?retryWrites=true&w=majority`;
+  const uri = `${process.env.MONGODB_URI}`;
 
   if (!uri) {
     throw new Error(`N0  environment variable SET: "MONGODB_URI"`);
@@ -21,6 +21,7 @@ const dbConnect =  async  ()=> {
   }
   catch (error) {
     console.log("ERROR connecting to DB \n" + error);
+    throw error;
     process.exit(1);
 
   }

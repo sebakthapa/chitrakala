@@ -38,13 +38,7 @@ const productsSchema = new mongoose.Schema({
     required: [true, "Photo is required."]
   },
   likes: {
-    count: {
-      type: Number,
-      min: [0, "Like count can't be negative"],
-    },
-    users: {
-      type: Array,
-    }
+      type: [mongoose.Schema.Types.ObjectId],
 
   }
 
