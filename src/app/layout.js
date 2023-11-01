@@ -20,15 +20,15 @@ export default function RootLayout({ children, ...props }) {
       <body>
         <ReduxProvider>
           <SessionProvider>
-            <ToastContainer position="bottom-right"  />
+            <ToastContainer position="bottom-right" />
 
             <Navbar />
-            {children}
-            <div className='flex flex-wrap w-full h-[20rem] gap-1 justify-center items-center '>
+            <div className='flex flex-wrap w-full min-h-screen gap-1 justify-center items-center '>
+              {children}
               {/* <Notification /> */}
-              
-              <Footer />
+
             </div>
+            <Footer />
           </SessionProvider>
         </ReduxProvider>
       </body>
