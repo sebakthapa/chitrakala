@@ -4,28 +4,128 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import axios from "axios";
 import Carousel from "@/components/Carousel";
+import { useDispatch, useSelector } from "react-redux";
+import { addUserData, clearUserData } from "@/redux/features/userSlice";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
+import {  useSession } from "next-auth/react";
+import { toast } from "react-toastify";
+
+
 const Page = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
+
   const [galleryData, setGalleryData] = useState([]);
+  const [likesCount, setLikesCount] = useState({}); 
+
   useEffect(() => {
-    async function fetchGalleryData() {
-      try {
-        const response = await axios.get("/api/products");
-        setGalleryData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
+    async function fetchData() {
+      const res = await axios.get("/api/products");
+
+    
+      const items = await Promise.all(res.data.map(async item => {
+        const liked = checkLiked(item.likes, userId); 
+        return {...item, liked};  
+      }))
+      
+      setGalleryData(items);
     }
 
-    fetchGalleryData();
+    fetchData();
   }, []);
+  
+  const checkLiked =  (likes, userId) => {
+    try {
+      const userHasLiked = likes.includes(userId);
+      return userHasLiked;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+  
+  const toggleLike = async (productId) => {
+
+    
+    if (session) {
+
+      setLikesCount(prev => ({
+        ...prev,
+        [productId]: prev[productId]  
+      }));
+
+      setGalleryData((prev) =>
+        prev.map((item) =>
+          item._id == productId ? { ...item, liked: !item.liked } : item
+        )
+      );
+
+        await axios.patch("/api/products/likes", {
+        userId,
+        productId,
+      });
+    } else {
+      toast.info("Login to interact with page");
+    }
+  };
+
+
+
+
+  useEffect(() => {
+  
+    const counts = {};
+  
+    galleryData.forEach(item => {
+      counts[item._id] = item.likes.length; 
+    })
+  
+    setLikesCount(counts);
+  
+  }, [galleryData])
+
+
+
+  //for session
+
+
+
+  const fetchUserDetails = async (uid) => {
+    try {
+      const res = await axios.get(`/api/userdetails/${uid}`);
+
+      dispatch(addUserData(res.data));
+
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+
+
+    const sessionUser = session?.user.id;
+    const reduxUser = user?.user?._id;
+    if (!reduxUser) {
+      if (sessionUser && sessionUser != reduxUser) {
+        // fetch user details and store in redux store
+        fetchUserDetails(session?.user.id);
+      }
+    }
+  }, [session]);
 
   return (
     <>
       <div className="flex justify-center">
-
-      <Carousel />
+        <Carousel />
       </div>
-      <h1 className="text-center font-extrabold text-2xl pt-10 pb-10">Gallery</h1>
+      <h1 className="text-center font-extrabold text-2xl pt-10 pb-10">
+        Gallery
+      </h1>
 
       <main class="py-4">
         <div class="px-4">
@@ -33,7 +133,12 @@ const Page = () => {
             {galleryData.map((item, index) => (
               <div key={index} class="w-full lg:w-1/4 md:mx-2 mb-4 md:mb-0">
                 <div class="bg-white rounded-lg overflow-hidden shadow relative">
-                  <div className=" h-[30vh] overflow-hidden  ">
+                  <div
+                    className=" h-[30vh] overflow-hidden  "
+                    onDoubleClick={() => {
+                      toggleLike(item._id);
+                    }}
+                  >
                     <motion.img
                       key={item.category}
                       src={item.photo}
@@ -47,7 +152,19 @@ const Page = () => {
                     />
 
                     <div className="pp flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-12 text-center h-12 m-1 rounded-full absolute bottom-0">
-                      <Image src={"/a1.png"} width={50} height={50} />
+                      <img
+                        src={item.photo || "/a1.png"}
+                        width={50}
+                        height={50}
+                      />
+                    </div>
+
+                    <div className="pp flex flex-col overflow-hidden top-1 right-1  p-1 m-1  absolute justify-center items-center ">
+                      {item.liked ? <BsHeartFill fill="red" /> : <BsHeart />}
+
+                      <span className="text-sm font-sans ">
+                      {likesCount[item._id] || 0}
+                      </span>
                     </div>
                   </div>
 

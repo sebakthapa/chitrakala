@@ -37,7 +37,7 @@ function Navbar() {
   const fetchUserDetails = async (uid) => {
     try {
       const res = await axios.get(`/api/userdetails/${uid}`);
-      console.log(res.data)
+  
       dispatch(addUserData(res.data))
 
       return res;
@@ -49,7 +49,7 @@ function Navbar() {
 
 
   useEffect(() => {
-    console.log(session);
+
 
     const sessionUser = session?.user.id;
     const reduxUser = user?.user?._id;
