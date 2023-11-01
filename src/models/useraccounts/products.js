@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const productsSchema = new mongoose.Schema({
-  seller: {
-    required:[true, "seller userId is required"],
+  artist: {
+    required:[true, "artist userId is required"],
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Users",
+    ref: "UsersDetails",
     sparse: true
   },
   name: {

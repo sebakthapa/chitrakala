@@ -23,6 +23,8 @@ export const PATCH = async (request) => {
     try {
   
       const { productId, userId } = await request.json();
+      let status= false;
+      let count = 0
   
       // Get product
       const product = await Products.findById(productId); 
@@ -32,19 +34,22 @@ export const PATCH = async (request) => {
   
       // Update likes array
       let updatedLikes = [...product.likes];
-      console.log(updatedLikes)
       if (userHasLiked) {
-        updatedLikes = updatedLikes.filter(id => !id.equals(userId));
+          updatedLikes = updatedLikes.filter(id => !id.equals(userId));
+          status = "unliked"
     } else {
         updatedLikes.push(userId); 
+        status = "liked"
       }
   
       // Rest of updated data
       const updatedData = {
         likes: updatedLikes,
+        status,
+        likesCount : updatedLikes.length
+
         // Other fields like name, description etc
       };
-      console.log(updatedData)
   
       // Update product with new data
       await Products.findByIdAndUpdate(productId, updatedData);

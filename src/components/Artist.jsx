@@ -1,8 +1,8 @@
 "use client"
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import TopCreator from './TopCreator'
 import { motion } from 'framer-motion'
+
 const Artist = () => {
 
   const [users, setUsers] = useState([])
@@ -48,33 +48,31 @@ const Artist = () => {
                     />
 
                     <div className="pp flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-12 text-center h-12 m-1 rounded-full absolute bottom-0">
-                      <Image alt='default avatar' src={item.photo || "/avatar.png"} width={50} height={50} />
+                      <Image alt='default avatar' src={item.image || "/avatar.png"} width={50} height={50} />
                     </div>
                   </div>
 
                   <div class="p-4 h-auto md:h-40 lg:h-48">
-                    <a
-                      href="#"
+                    <span
                       class="block text-blue-500 hover:text-blue-600 font-semibold mb-2 text-lg md:text-base lg:text-lg"
                     >
                       {item.displayName}
-                    </a>
+                    </span>
                     <div class="text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
                       {item.bio}
                     </div>
                     <div class="relative mt-2 lg:absolute bottom-0 mb-4 md:hidden lg:block">
-                      <a
+                      <span
                         class="inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
-                        href="#"
+                    
                       >
                      {item.address}
-                      </a>
-                      <a
+                      </span>
+                      <span
                         class="inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
-                        href="#"
                       >
                       {item.dob?.split('T')[0]}
-                      </a>
+                      </span>
                     </div>
                   </div>
                 </div>
