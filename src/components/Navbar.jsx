@@ -45,6 +45,7 @@ function Navbar() {
       if (res.status == 200) {
         console.log("FETCHING")
         dispatch(addUserData(res.data))
+        console.log(user)
         return res;
       }
       return;

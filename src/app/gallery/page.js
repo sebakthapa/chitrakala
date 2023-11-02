@@ -18,11 +18,7 @@ const Page = () => {
   async function fetchData() {
     try {
       const res = await axios.get("/api/products");
-      // const items = await Promise.all(res.data.map(item => {
-      //   const liked = checkLiked(item.likes, userId);
-      //   const likesCount = item.likes.length;
-      //   return { ...item, liked, likesCount };
-      // }))
+ 
 
       if (res.status == 200) {
         dispatch(addGalleryData(res.data));
@@ -34,8 +30,6 @@ const Page = () => {
 
   }
   useEffect(() => {
-
-    // console.log("GALLERY USEEFFECT RAN")
 
     fetchData();
   }, []);

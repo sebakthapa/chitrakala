@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { toggleArtLike } from "@/redux/features/gallerySlice";
 import axios from "axios";
+import Link from "next/link";
 
 
 
@@ -71,13 +72,17 @@ const ArtCard = ({ item }) => {
                         }}
                     />
 
+                        <Link
+                        href={`/artist/${item.artist._id}`} 
+                        >
                     <div className="pp flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-12 text-center h-12 m-1 rounded-full absolute bottom-0">
                         <img
                             src={item.artist.image || "/a1.png"}
                             width={50}
                             height={50}
-                        />
+                            />
                     </div>
+                            </Link>
 
                 </div>
 
