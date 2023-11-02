@@ -33,9 +33,10 @@ const Page = () => {
       
       setGalleryData(items);
     }
+    console.log("GALLERY USEEFFECT RAN")
 
     fetchData();
-  }, [galleryData]);
+  }, []);
   
   
   const checkLiked =  (likes, userId) => {

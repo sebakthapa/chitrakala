@@ -10,7 +10,14 @@ export const GET = async (request) => {
 
     try {
         const params = request.url.split('/');
+        console.log(params)
+
         const userId = params[params.length - 1];
+
+        console.log(userId)
+        if (!(userId?.length > 0)) {
+            return new NextResponse(JSON.stringify({error: "Invalid User ID provided"}),{status:404})
+        }
         await dbConnect();
         const res = await UsersDetails.findOne({
             'user': userId
@@ -21,7 +28,7 @@ export const GET = async (request) => {
 
     } catch (error) {
         console.log("ERROR fetching user detail \n" + error)
-        return new NextResponse(error);
+        // return new NextResponse(error);
     }
 }
 
@@ -30,7 +37,7 @@ export const GET = async (request) => {
 export const PATCH = async (request) => {
 
     try {
-        const { address, displayName, bio,dob,photo  } = await request.json();
+        const { address, displayName, bio, dob, photo } = await request.json();
 
         await dbConnect();
         const params = request.url.split('/');
@@ -38,7 +45,7 @@ export const PATCH = async (request) => {
 
         const res = await UsersDetails.findOneAndUpdate(
             { 'user': userId },
-            { address, displayName, photo ,bio,dob},
+            { address, displayName, photo, bio, dob },
             { new: true }
         )
 

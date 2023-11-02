@@ -17,18 +17,18 @@ export default function RootLayout({ children, ...props }) {
 
   return (
     <html lang="en">
-      <body>
+      <body className=''>
         <ReduxProvider>
           <SessionProvider>
-            <ToastContainer position="bottom-right"  />
+            <ToastContainer position="bottom-right" />
 
             <Navbar />
-            {children}
-            <div className='flex flex-wrap w-full h-[20rem] gap-1 justify-center items-center '>
+            < div className='max-w-[2000px] m-auto '>
+              {children}
               {/* <Notification /> */}
-              
-              <Footer />
+
             </div>
+            <Footer />
           </SessionProvider>
         </ReduxProvider>
       </body>
