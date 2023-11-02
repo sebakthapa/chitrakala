@@ -56,7 +56,7 @@ function Navbar() {
 
 
   useEffect(() => {
-    console.log("session\n",session, "\nuser", user)
+    // console.log("session\n",session)
 
     const sessionUser = session?.user?.id;
     const reduxUser = user?.user?._id;
@@ -127,22 +127,14 @@ function Navbar() {
                   </div>
                 </div>
 
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-5">
                   {
                     session?.user?.id ? (
-
                       <>
                         <button type="button" className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                         
-                          <span className="sr-only">View notifications</span>
-                          {user?.user?.isArtist &&
-                          (
-                              <Link
-                              href={'/upload'}
-                              >
-                          <BsPlusCircle fill='white' fontSize={"1.5rem"} />
-                              </Link>
-                          )}
+                          <Link href={'/upload'} title='Upload your art' >
+                            <BsPlusCircle fill='white' fontSize={"1.5rem"} />
+                          </Link>
                         </button>
                         <div id='ppMain' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="ppMain relative ml-3">
                           <div id='ppPhoto' className='ppPhoto'>
@@ -160,7 +152,7 @@ function Navbar() {
                           {showHover &&
                             <div className="absolute top-[75%] right-0 z-10 bg-red-00">
                               <div id='ppHover' className="ppHover    mt-4 w-48 origin-top-right rounded-md flex  flex-col gap-1  bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
-                                <span  className="  font-bold w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">{user?.name}</span>
+                                <span className="  font-bold w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">{user?.name}</span>
                                 <Link href="/me" className="hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">Your Profile</Link>
                                 <Link href="/me" className="hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Settings</Link>
                                 <span href="/" onClick={() => signOut()} className="hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Sign out</span>
