@@ -1,30 +1,32 @@
 "use client"
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/userSlice';
+import galleryReducer from './features/gallerySlice';
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore} from 'redux-persist';
 import { IS_CLIENT } from '@/lib/utils';
 import createWebStorage from 'redux-persist/es/storage/createWebStorage';
 
 
 const rootReducer = combineReducers({
-  user: userReducer,
+   user: userReducer,
+   gallery: galleryReducer
 })
 
 
 // to solve problem
-const createNoopStorage = () => {
-  return {
-     getItem(_key) {
-        return Promise.resolve(null);
-     },
-     setItem(_key, value) {
-        return Promise.resolve(value);
-     },
-     removeItem(_key) {
-        return Promise.resolve();
-     },
-  };
-};
+// const createNoopStorage = () => {
+//   return {
+//      getItem(_key) {
+//         return Promise.resolve(null);
+//      },
+//      setItem(_key, value) {
+//         return Promise.resolve(value);
+//      },
+//      removeItem(_key) {
+//         return Promise.resolve();
+//      },
+//   };
+// };
 
 
 // const persistConfig = {

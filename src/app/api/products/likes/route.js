@@ -25,6 +25,10 @@ export const PATCH = async (request) => {
       const { productId, userId } = await request.json();
       let status= false;
       let count = 0
+
+      if (!userId || !productId) {
+        return new NextResponse(JSON.stringify({error: "Bad Request"}), {status: 400});
+      }
   
       // Get product
       const product = await Products.findById(productId); 
@@ -34,27 +38,28 @@ export const PATCH = async (request) => {
   
       // Update likes array
       let updatedLikes = [...product.likes];
-      if (userHasLiked) {
+      if (userHasLiked) { // already liked remove userid form likes array
           updatedLikes = updatedLikes.filter(id => !id.equals(userId));
           status = "unliked"
-    } else {
+    } else { // not liked add userid in likes array
         updatedLikes.push(userId); 
         status = "liked"
       }
   
-      // Rest of updated data
       const updatedData = {
         likes: updatedLikes,
         status,
         likesCount : updatedLikes.length
-
+        
         // Other fields like name, description etc
       };
+      
+      // now update add the updated likes data to db
+      product.likes = updatedLikes;
+      const updatedProduct = await product.save();
   
       // Update product with new data
-      await Products.findByIdAndUpdate(productId, updatedData);
-  
-      return new NextResponse(JSON.stringify(updatedData));
+      return new NextResponse(JSON.stringify(updatedProduct));
   
     } catch (error) {
       console.log("Error updating likes: " + error);
