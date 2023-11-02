@@ -10,10 +10,8 @@ import { NextResponse } from "next/server";
 export const GET = async () => {
     try {
         await dbConnect();
-
-        const res = await Products.find().populate("artist");
+        const res = await Products.find({}).populate("artist");
         return new NextResponse(JSON.stringify(res))
-
     } catch (error) {
         console.log("ERROR fetching products \n" + error)
     }
@@ -21,9 +19,7 @@ export const GET = async () => {
 
 
 
-
 // POST => POST a product
-
 export const POST = async (request) => {
 
     try {
