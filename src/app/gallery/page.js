@@ -11,19 +11,73 @@ import { toast } from "react-toastify";
 
 
 const Page = () => {
-  const [galleryData, setGalleryData] = useState([]);
-  useEffect(() => {
-    async function fetchGalleryData() {
-      try {
-        const response = await axios.get("/api/products");
-        setGalleryData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
 
-    fetchGalleryData();
+  const user = useSelector((state) => state.user);
+
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
+
+  const [galleryData, setGalleryData] = useState([]);
+  
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await axios.get("/api/products");
+
+    
+      const items = await Promise.all(res.data.map( item => {
+        const liked = checkLiked(item.likes, userId); 
+        const likesCount = item.likes.length;
+        return {...item, liked , likesCount};  
+      }))
+      
+      setGalleryData(items);
+    }
+    console.log("GALLERY USEEFFECT RAN")
+
+    fetchData();
   }, []);
+  
+  
+  const checkLiked =  (likes, userId) => {
+    try {
+      const userHasLiked = likes.includes(userId);
+      return userHasLiked;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
+  
+  const toggleLike = async (productId) => {
+
+    
+    if (session) {
+
+      const res = await axios.patch("/api/products/likes", {
+        userId,
+        productId,
+      });
+      setGalleryData((prev) =>
+        prev.map((item) =>
+          item._id == productId ? { ...item, liked: res.data.liked === "liked" } : item
+        )
+      );
+
+      
+      console.log(galleryData)
+
+    } else {
+      toast.info("Login to interact with page");
+    }
+  };
+
+
+
+
+
+
 
   return (
     <>
@@ -59,7 +113,11 @@ const Page = () => {
                     />
 
                     <div className="pp flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-12 text-center h-12 m-1 rounded-full absolute bottom-0">
-                      <Image alt="a1 image" src={"/a1.png"} width={50} height={50} />
+                      <img
+                        src={item.artist.image || "/a1.png"}
+                        width={50}
+                        height={50}
+                      />
                     </div>
 
                   </div>

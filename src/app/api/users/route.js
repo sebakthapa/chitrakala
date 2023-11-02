@@ -17,6 +17,7 @@ export const GET = async () => {
         select: '-password' // excludes password
       })
     const res = data.filter(doc => doc.user.isArtist);
+    console.log("res",res)
     return new NextResponse(JSON.stringify(res))
 
   } catch (error) {

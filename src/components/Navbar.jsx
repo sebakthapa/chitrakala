@@ -41,9 +41,13 @@ function Navbar() {
   const fetchUserDetails = async (uid) => {
     try {
       const res = await axios.get(`/api/userdetails/${uid}`);
-  
-      dispatch(addUserData(res.data))
-      return res;
+      console.log(res)
+      if (res.status == 200) {
+        console.log("FETCHING")
+        dispatch(addUserData(res.data))
+        return res;
+      }
+      return;
     } catch (error) {
       throw error
     }
@@ -52,22 +56,21 @@ function Navbar() {
 
 
   useEffect(() => {
+    console.log("session\n",session, "\nuser", user)
 
     const sessionUser = session?.user?.id;
     const reduxUser = user?.user?._id;
     if (!reduxUser) {
-      if (sessionUser && sessionUser != reduxUser) {
+      if (sessionUser) {
         // fetch user details and store in redux store
         fetchUserDetails(session?.user.id);
       }
     } else {
-      if (sessionUser != reduxUser) {
+      if (sessionUser && sessionUser != reduxUser) {
         // fetch user details and store in redux store
         fetchUserDetails(session?.user.id);
       }
     }
-
-
   }, [session])
 
 
@@ -84,7 +87,7 @@ function Navbar() {
           </Link>
         ) : (
           <nav className="z-20 bg-gray-800 relative">
-            <div className="bg-gray-800 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div className="bg-gray-800 mx-auto px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                   <button onClick={() => setIsOpen(!isOpen)} type="button" className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">

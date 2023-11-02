@@ -1,109 +1,164 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins&family=Roboto&display=swap'); */
 
-  /* @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins&family=Roboto&display=swap'); */
-  
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
-  @font-face {
-      font-family: 'SAMAN';
-      src: url('/SAMAN.TTF');
-  }
-  
-  html{
-      @apply 2xl:text-[110%]
-  }
-  
-  
-  *{
-      font-family: 'Poppins', sans-serif;
-      color:#232323;
-  }
-  
-  body{
-      /* background: #e5eee9; */
-      /* background: red; */
-  
-      max-width: 2000px;
-  }
-  
-  .saman{
-      font-family: 'SAMAN',sans-serif;
-  }
-  
-  li{
-   list-style: none;
-  }
-  
-  
-  .link,.handlers li{
-      cursor: pointer;
-  }
-  .link li:hover{
-      color: #ed2945;
-  }
-  
-  .b
-  {
-      font-size: xx-large;
-      font-weight: 900;
-      animation: infinite abc;
-  }
-  
-  .card-collection
-  {
-      z-index: 100 !important;
-  }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  .pphoverDiv
-  {
+@font-face {
+    font-family: 'SAMAN';
+    src: url('/SAMAN.TTF');
+}
+
+html {
+    @apply 2xl:text-[110%]
+}
+
+
+* {
+    font-family: 'Poppins', sans-serif;
+    color: #232323;
+}
+
+body {
+    /* background: #e5eee9; */
+    /* background: red; */
+
+    /* max-width: 2000px; */
+}
+
+@media (min-width: 2000px) {
+    html {
+        font-size: 120%;
+    }
+}
+
+
+.saman {
+    font-family: 'SAMAN', sans-serif;
+}
+
+li {
+    list-style: none;
+}
+
+
+/* SHINY EFFECT for landing text (animation delay managed for that purpost)*/
+
+.shiny_effect{
+    position: relative;
+    overflow: hidden;
+}
+
+
+.shiny_effect:after {
+    content: '';
+    display: block;
+    pointer-events: none;
+    top: -50%;
+    left:0;
+    /* transform: translateX(100%); */
+    width:50%;
+    height: 200%;
+    position: absolute;
+    z-index: 1;
+    animation: 2s ease-in-out slide ;
+    animation-delay: 2s;
+    transform: rotateZ(25deg) translateX(-100%);
+    opacity: .6;
+    background: rgb(255,255,255);
+background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5691526610644257) 25%, rgba(255,255,255,1) 49%, rgba(255,255,255,0.4431022408963585) 75%, rgba(255,255,255,0) 100%);
+   
+}
+@keyframes slide {
+	0% {transform:translateX(-100%) rotateZ(25deg);}
+	100% {transform:translateX(100%) rotateZ(25deg);}
+}
+
+
+/* animate_blink */
+.animate_blink{
+    animation: 1s linear blink infinite
+}
+
+@keyframes blink {
+    0%,100%, 49%{opacity: 0}
+    50%, 99%{opacity: 1}
+}
+
+
+
+
+
+.link,
+.handlers li {
+    cursor: pointer;
+}
+
+.link li:hover {
+    color: #ed2945;
+}
+
+
+
+
+.b {
+    font-size: xx-large;
+    font-weight: 900;
+    animation: infinite abc;
+}
+
+.card-collection {
+    z-index: 100 !important;
+}
+
+.pphoverDiv {
     display: hidden;
-  }
+}
 
 
-  .active
-  {
+.active {
     @apply bg-gray-900 text-white
-  }
+}
 
 
-  
-  
-  .input_field_container {
-      @apply flex flex-col gap-3 
-  }
-  
-  .input_field_container .input_field{
-      @apply flex flex-col gap-0.5 
-  }
-  .input_field_container .input_field label{
-      @apply capitalize opacity-80 
-  }
-  .input_field_container .input_field input{
-      @apply bg-transparent border-2 border-gray-300 hover:border-gray-400 transition duration-300 rounded py-[0.4rem] pl-3 pr-9
-  }
-  
-  form .form_title{
-      @apply capitalize font-extrabold text-2xl opacity-95
-  } 
-  
-  form button[type="submit"]{
-      @apply py-3 px-5  rounded font-semibold transition-colors duration-500 
-  }
-  
 
-  
-  
-  
-  /* Chrome, Safari, Edge, Opera */
+
+.input_field_container {
+    @apply flex flex-col gap-3
+}
+
+.input_field_container .input_field {
+    @apply flex flex-col gap-0.5
+}
+
+.input_field_container .input_field label {
+    @apply capitalize opacity-80
+}
+
+.input_field_container .input_field input {
+    @apply bg-transparent border-2 border-gray-300 hover:border-gray-400 transition duration-300 rounded py-[0.4rem] pl-3 pr-9
+}
+
+form .form_title {
+    @apply capitalize font-extrabold text-2xl opacity-95
+}
+
+form button[type="submit"] {
+    @apply py-3 px-5 rounded font-semibold transition-colors duration-500
+}
+
+
+
+
+
+/* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
-

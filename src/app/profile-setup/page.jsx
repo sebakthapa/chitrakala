@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { motion } from "framer-motion"
 import { typingEffect } from '@/lib/utils';
 
-const page = ({ searchParams }) => {
+const Page = ({ searchParams }) => {
 
     const [title, setTitle] = useState("")
 
@@ -68,4 +68,4 @@ const page = ({ searchParams }) => {
     )
 }
 
-export default page
+export default Page

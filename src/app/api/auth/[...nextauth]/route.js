@@ -56,18 +56,18 @@ const authOptions = {
                     const user = await Users.findOne(query);
 
                     if (user?._id) {
-                        console.log("user from authorize user", user)
+                        // console.log("user from authorize user", user)
                         // user exists check for the password field
                         if (await checkPasswordMatch(user.password)) {
                             const userDetails = await UsersDetails.findOne({ user: user._id }).populate("user", { username: 1, email: 1, phone: 1 })
-                            // console.log(userDetails)
+                            console.log(userDetails)
 
                             const userData = {
                                 id: userDetails.user._id,
                                 isArtist: userDetails.user.isArtist,
                                 emailVerified: false
                             }
-                            console.log("user Data", userData)
+                            // console.log("user Data", userData)
                             return userData;
                         } else {
                             // return new NextResponse(JSON.stringify({ field: "password", message: "Password is incorrect." }), { status: 401 })
@@ -80,7 +80,7 @@ const authOptions = {
                     }
 
                 } catch (error) {
-                    console.log("ERROR trying to login" + error)
+                    // console.log("ERROR trying to login" + error)
                     return null
                 }
 
@@ -98,14 +98,13 @@ const authOptions = {
             //     }
             //   },
             profile(profile) {
-                console.log("PROFILE FROM PROFIE CALLBACK OF GOOGLE", profile)
+                // console.log("PROFILE FROM PROFIE CALLBACK OF GOOGLE", profile)
                 const { email, email_verified, name, picture, sub } = profile;
-                console.log("Email Verified", email_verified)
+                // console.log("Email Verified", email_verified)
                 return {
                     email,
                     name,
                     isEmailVerified: email_verified,
-                    // emailVerified: email_verified,
                     id: sub,
                     isArtist: false,
                     image: picture,
@@ -120,10 +119,10 @@ const authOptions = {
 
     secret: process.env.NEXTAUTH_SECRET,
     debug: process.env.NODE_ENV === "development",
-    // database: "",
+    // database: "", //
     callbacks: {
         async session({ session, token, user }) {
-            console.log("FROM SeSSION CALLBACK", session)
+            // console.log("FROM SeSSION CALLBACK", session)
 
             session.user = token.user;
             const { id, emailVerified, isArtist } = session.user;
@@ -132,7 +131,7 @@ const authOptions = {
         },
 
         async jwt({ token, user }) {
-            console.log("FROM JWT CALLBACK", user)
+            // console.log("FROM JWT CALLBACK", user)
             if (user) {
                 token.user = user;
             }
@@ -141,10 +140,10 @@ const authOptions = {
 
         async signIn({ profile, account, metadata }) {
             if (account.provider == "google") {
-                console.log("PROFILE FROM SIGININ CALLBACK", profile)
+                // console.log("PROFILE FROM SIGININ CALLBACK", profile)
                 return true ;
             }
-            console.log("FROM SIGNIN CALLBACK+++++++++++++++++")
+            // console.log("FROM SIGNIN CALLBACK+++++++++++++++++")
 
             return true;
 
@@ -152,7 +151,7 @@ const authOptions = {
 
         async redirect({ url, baseUrl }) {
 
-            console.log("CONSOLONG FROM REDIRECT", { url, baseUrl });
+            // console.log("CONSOLONG FROM REDIRECT", { url, baseUrl });
             return url
         }
 
