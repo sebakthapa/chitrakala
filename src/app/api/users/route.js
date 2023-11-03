@@ -63,48 +63,44 @@ export const POST = async (request) => {
 
     // validation part
     const existingEmail = await Users.findOne({ email });
-    if (existingEmail?._id && existingEmail?.password) {
+    if (existingEmail?._id) {
       return new NextResponse(JSON.stringify({ field: "email", message: "Email is already registered." }), { status: 403, statusText: "validation_error" })
     }
 
-    if (existingEmail?._id && !existingEmail?.password) {
-      // There is user with email but password or username is not set
-      //(probably sign in with google is done)
+    // if (existingEmail?._id && !existingEmail?.password) {
+    //   // There is user with email but password or username is not set
+    //   //(probably sign in with google is done)
 
-      // updates data in user collection, adds userdetails, removes schema unset fields in user collection
-      const updatedUser = {
-        email: existingEmail.email,
-        username,
-        password: await hashPassword(password),
-        $unset: { field: ["name", "image"] }
-      }
+    //   // updates data in user collection, adds userdetails, removes schema unset fields in user collection
+    //   const updatedUser = {
+    //     email: existingEmail.email,
+    //     username,
+    //     password: await hashPassword(password),
+    //     $unset: { field: ["name", "image"] }
+    //   }
 
-      const userData = {
-        displayName: existingEmail.name,
-        photo: existingEmail.image,
-      }
-      console.log("existingEmail", existingEmail)
+    //   const userData = {
+    //     displayName: existingEmail.name,
+    //     photo: existingEmail.image,
+    //   }
+    //   console.log("existingEmail", existingEmail)
 
-      const testuser = await Users.findOne({ email });
-      console.log("TEST USER", testuser)
+    //   const testuser = await Users.findOne({ email });
+    //   console.log("TEST USER", testuser)
 
-      const doc = await Users.findOneAndUpdate(
-        { email: existingEmail.email },
-        { ...updatedUser},
-        { new: true });
-      console.log("DOC", doc)
-      // const savedData = await doc.save();
+    //   const doc = await Users.findOneAndUpdate(
+    //     { email: existingEmail.email },
+    //     { ...updatedUser},
+    //     { new: true });
+    //   console.log("DOC", doc)
+    //   // const savedData = await doc.save();
 
-      const userDetails =  new UsersDetails({ ...userData, user: doc._id })
+    //   const userDetails =  new UsersDetails({ ...userData, user: doc._id })
 
-      const populatedUserDetails = await userDetails.populate({ path: "user", select: "-password" })
+    //   const populatedUserDetails = await userDetails.populate({ path: "user", select: "-password" })
 
-      return new NextResponse(JSON.stringify(populatedUserDetails))
-    }
-
-
-
-
+    //   return new NextResponse(JSON.stringify(populatedUserDetails))
+    // }
 
 
     const existingUsername = await Users.findOne({ username });

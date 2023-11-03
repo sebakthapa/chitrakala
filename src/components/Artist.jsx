@@ -28,12 +28,12 @@ const Artist = () => {
     </div>
 
 
-    <main class="py-4">
-        <div class="px-4">
-          <div class="block md:flex  md:-mx-2">
+    <main className="py-4">
+        <div className="px-4">
+          <div className="block md:flex  md:-mx-2">
             {users.map((item, index) => (
-              <div key={index} class="w-full lg:w-1/4 md:mx-2 mb-4 md:mb-0">
-                <div class="bg-white rounded-lg overflow-hidden shadow relative">
+              <div key={index} className="w-full lg:w-1/4 md:mx-2 mb-4 md:mb-0">
+                <div className="bg-white rounded-lg overflow-hidden shadow relative">
                   <div className=" h-[30vh] overflow-hidden  ">
                     <motion.img
                       key={index}
@@ -52,24 +52,24 @@ const Artist = () => {
                     </div>
                   </div>
 
-                  <div class="p-4 h-auto md:h-40 lg:h-48">
+                  <div className="p-4 h-auto md:h-40 lg:h-48">
                     <span
-                      class="block text-blue-500 hover:text-blue-600 font-semibold mb-2 text-lg md:text-base lg:text-lg"
+                      className="block text-blue-500 hover:text-blue-600 font-semibold mb-2 text-lg md:text-base lg:text-lg"
                     >
                       {item.displayName}
                     </span>
-                    <div class="text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
+                    <div className="text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
                       {item.bio}
                     </div>
-                    <div class="relative mt-2 lg:absolute bottom-0 mb-4 md:hidden lg:block">
+                    <div className="relative mt-2 lg:absolute bottom-0 mb-4 md:hidden lg:block">
                       <span
-                        class="inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
+                        className="inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
                     
                       >
                      {item.address}
                       </span>
                       <span
-                        class="inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
+                        className="inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
                       >
                       {item.dob?.split('T')[0]}
                       </span>
