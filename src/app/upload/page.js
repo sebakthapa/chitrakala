@@ -6,7 +6,7 @@ import { useState } from 'react'
 import axios from 'axios';
 import Exhibition from '@/components/Exhibition';
 import { useRouter } from 'next/navigation';
-import Input from '@/components/Input';
+import Input from '@/components/Input/Input';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { RxCross2 } from 'react-icons/rx';
 import { useSelector } from 'react-redux';
@@ -170,7 +170,7 @@ const Page = () => {
               // clearErrors={clearErrors}  
               required
               type="text"
-              label="Title"
+              label="title"
               value={title}
               setValue={setTitle}
               classLists=""
@@ -276,7 +276,7 @@ const Page = () => {
 
 
 
-      <Exhibition />
+      {/* <Exhibition /> */}
 
     </>
   )

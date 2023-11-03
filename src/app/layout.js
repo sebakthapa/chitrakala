@@ -23,7 +23,7 @@ export default function RootLayout({ children, ...props }) {
             <ToastContainer position="bottom-right" />
 
             <Navbar />
-            < div className='max-w-[2000px] m-auto '>
+            < div className='max-w-[2000px] m-auto min-h-screen'>
               {children}
               {/* <Notification /> */}
 
