@@ -1,9 +1,10 @@
 "use client";
-import React,{useEffect,useState} from "react";
-import { usePathname } from "next/navigation";
+import { useEffect,useState } from "react";
+import { useParams } from "next/navigation";
 import ArtDetails from "@/components/ArtDetail";
-const page = () => {
-  const productId = usePathname().split("/")[2];
+const Page = () => {
+    const {artId:productId} = useParams()
+
 
   const [artData, setArtData] = useState("");
 
@@ -30,4 +31,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

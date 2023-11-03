@@ -1,11 +1,11 @@
 "use client"
 import ArtistCard from '@/components/ArtistCard'
 import React, { useState,useEffect } from 'react'
-import { usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import ArtCard from '@/components/ArtCard';
 
 const Page = () => {
-  const  userId = usePathname().split('/')[2];
+  const {artistid:userId} = useParams()
 
   const [userData,setUserData] = useState('')
 
