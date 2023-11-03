@@ -34,7 +34,7 @@ const ArtCard = ({ item }) => {
             });
 
             if (res.status != 200) {
-                toast.error("Unable to like at the moment!")
+                toast.info("Unable to like at the moment!")
                 dispatch(toggleArtLike({ userId: session?.user.id, productId }))
             } else {
                 console.log("Like updated in db")

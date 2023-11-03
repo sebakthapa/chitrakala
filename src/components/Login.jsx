@@ -1,5 +1,5 @@
 "use client"
-import Input from './Input'
+import Input from './Input/Input'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'

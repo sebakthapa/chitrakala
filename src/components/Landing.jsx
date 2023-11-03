@@ -22,12 +22,12 @@ function Landing() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ ease: "easeOut", duration: 1, delay: 0.4 }}
-                        className='text-3xl text  font-sans px-5 pt-3  font-semibold'
+                        className='text-3xl text  px-5 pt-3  font-semibold'
                     >
                         Where Imagination Meets Canvas
                     </motion.span>
                     <motion.p
-                        className="block font-sans text-md   leading-relaxed text-gray-700 antialiased p-5"
+                        className=" text-md   leading-relaxed text-gray-700 antialiased p-5"
                         initial={{ opacity: 0, y: 5 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ ease: "easeInOut", duration: 1, delay: 1 }}
