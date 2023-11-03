@@ -16,7 +16,6 @@ const usersDetailsSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-
   },
   name: {
     type: String,

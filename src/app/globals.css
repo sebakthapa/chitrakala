@@ -15,8 +15,9 @@ html {
 
 
 * {
-    font-family: 'Poppins', sans-serif;
+    /* font-family: 'Poppins', sans-serif; */
     color: #232323;
+    @apply font-sans;
 }
 
 body {
@@ -124,27 +125,41 @@ background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.56
 
 
 .input_field_container {
-    @apply flex flex-col gap-3
+    @apply flex flex-col gap-4
 }
 
-.input_field_container .input_field {
-    @apply flex flex-col gap-0.5
+.input_field_container .input_field div {
+    @apply flex flex-col-reverse gap-2
 }
 
 .input_field_container .input_field label {
-    @apply capitalize opacity-80
+    @apply capitalize  text-gray-600 opacity-80 text-sm font-medium font-sans;
 }
 
-.input_field_container .input_field input {
-    @apply bg-transparent border-2 border-gray-300 hover:border-gray-400 transition duration-300 rounded py-[0.4rem] pl-3 pr-9
+.input_field_container .input_field input,
+.input_field_container .input_field textarea {
+    @apply bg-transparent text-gray-500 border-2 border-gray-300 hover:border-gray-400 transition duration-300 rounded py-[0.4rem] pl-3 pr-9
 }
 
+.input_field_container .input_field input:focus,
+.input_field_container .input_field textarea:focus{
+    @apply border-gray-500 outline-none text-gray-800;
+}
+.input_field_container .input_field input:focus ~ label,
+.input_field_container .input_field textarea:focus ~ label{
+    @apply opacity-100;
+}
 form .form_title {
     @apply capitalize font-extrabold text-2xl opacity-95
 }
 
-form button[type="submit"] {
-    @apply py-3 px-5 rounded font-semibold transition-colors duration-500
+form button,
+form input[type="button"] {
+    @apply py-3 px-5 rounded font-semibold transition-colors duration-500  
+}
+
+.input_row{
+    @apply flex;
 }
 
 

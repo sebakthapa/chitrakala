@@ -1,12 +1,12 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import Input from './Input';
+import Input from './Input/Input';
 import { motion } from 'framer-motion';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { login } from '@/redux/features/userSlice';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 
@@ -55,7 +55,7 @@ const Signup = () => {
 
                 // toast.success("Account registered successfully! \n Please login to continue.")
                 toast.success("Account registered successfully!");
-                router.push("/auth/verify-email");
+                redirect("/auth/verify-email");
 
                 // toast("Update your info for getting access to ")
 
@@ -65,8 +65,9 @@ const Signup = () => {
                 const { field, message } = error?.response?.data;
                 if (field == "multiple") {
                     toast.error(`Unable to proceed! ${message}`)
+                } else {
+                    setError(field, { message })
                 }
-                setError(field, { message })
             } else {
                 console.log(error)
             }
@@ -218,7 +219,13 @@ const Signup = () => {
                     classLists=""
                 />
             </div>
-            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className={`${isSubmitting || (errors?.email?.message || errors?.phone?.message || errors?.username?.message) && "pointer-events-none"} bg-gray-900 text-white hover:bg-gray-700`} type="submit" >
+            <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                className={`${isSubmitting || (errors?.email?.message || errors?.phone?.message || errors?.username?.message) && "pointer-events-none"} bg-gray-900 text-white hover:bg-gray-700`}
+                type="submit"
+            >
                 {
                     isSubmitting ? (
                         "Signing up..."
