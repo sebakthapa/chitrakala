@@ -17,32 +17,28 @@ const Footer = () => {
                         !showNav && (
                             <nav className="flex flex-wrap justify-center -mx-5 -my-2">
                                 <div className="px-5 py-2">
-                                    <a href="#" className="text-base leading-6 text-gray-500 hover:text-gray-900">
+                                    <a href="/" className="text-base leading-6 text-gray-500 hover:text-gray-900">
+                                        Home
+                                    </a>
+                                </div>
+                                <div className="px-5 py-2">
+                                    <a href="/about" className="text-base leading-6 text-gray-500 hover:text-gray-900">
                                         About
                                     </a>
                                 </div>
                                 <div className="px-5 py-2">
-                                    <a href="#" className="text-base leading-6 text-gray-500 hover:text-gray-900">
-                                        Blog
+                                    <a href="/about" className="text-base leading-6 text-gray-500 hover:text-gray-900">
+                                        Teams
                                     </a>
                                 </div>
+                      
                                 <div className="px-5 py-2">
-                                    <a href="#" className="text-base leading-6 text-gray-500 hover:text-gray-900">
-                                        Team
-                                    </a>
-                                </div>
-                                <div className="px-5 py-2">
-                                    <a href="#" className="text-base leading-6 text-gray-500 hover:text-gray-900">
-                                        Pricing
-                                    </a>
-                                </div>
-                                <div className="px-5 py-2">
-                                    <a href="#" className="text-base leading-6 text-gray-500 hover:text-gray-900">
+                                    <a href="/about" className="text-base leading-6 text-gray-500 hover:text-gray-900">
                                         Contact
                                     </a>
                                 </div>
                                 <div className="px-5 py-2">
-                                    <a href="#" className="text-base leading-6 text-gray-500 hover:text-gray-900">
+                                    <a href="/about" className="text-base leading-6 text-gray-500 hover:text-gray-900">
                                         Terms
                                     </a>
                                 </div>
@@ -83,7 +79,7 @@ const Footer = () => {
                         </a>
                     </div>
                     <p className="mt-8 text-base leading-6 text-center text-gray-400">
-                        © 2021 SomeCompany, Inc. All rights reserved.
+                        © 2024 Chitrakala, Inc. All rights reserved.
                     </p>
                 </div>
             </section>

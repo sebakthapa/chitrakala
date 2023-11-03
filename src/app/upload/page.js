@@ -90,7 +90,6 @@ const Page = () => {
 
         const data = {
           artist: user?._id,
-
           name: title,
           price: price,
           description: description,
@@ -165,9 +164,7 @@ const Page = () => {
 
           <div className="title input_field_container">
             <Input
-              // register={register}
-              // error={errors["username/email/phone"]}
-              // clearErrors={clearErrors}  
+            
               required
               type="text"
               label="title"

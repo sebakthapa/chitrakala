@@ -1,6 +1,6 @@
 "use client"
 import React,{ useState,useEffect } from "react";
-import Carousel from "@/components/Carousel";
+import Carousel from "@/components/ArtDetail";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
