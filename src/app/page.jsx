@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Landing from "@/components/Landing";
-import Carousel from "@/components/Carousel";
+import Carousel from "@/components/ArtDetail";
 import { motion } from "framer-motion";
 import MiniCarousel from "@/components/MiniCarousel";
 import Link from "next/link";
@@ -39,7 +39,11 @@ const Page = () => {
     },
 
   ]
-
+  const images = [
+    "https://w0.peakpx.com/wallpaper/409/718/HD-wallpaper-pencil-drawing-lionel-messi-football-player-sketch-art.jpg",
+    "https://artist.com/photos/arts/extra-big/autumn-walk-1800329209.jpg",
+    "https://i.etsystatic.com/5312870/r/il/300ef0/1185533356/il_570xN.1185533356_i5n8.jpg"
+  ];
    
   const cardVariant = {
     visible: { opacity: 1, scale: 1, transition:{duration:0.3, type:"spring", stiffness:100, damping:15} },
@@ -52,7 +56,7 @@ const Page = () => {
       <Landing />
 
       <section className="categoriesSection  mt-36 md:px-5">
-        <h1 className="font-extrabold font-mono text-5xl p-10 text-center mb-5">Explore by Category<span className="font-extrabold font-mono text-5xl animate_blink">_</span></h1>
+        <h1 className="font-semibold font-poppins text-5xl p-10 text-center mb-5">Explore by Category<span className="font-semibold font-sans text-5xl animate_blink">_</span></h1>
         <div className="categoriesContainer px-5 grid flex-wrap gap-10 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 place-items-center items-center justify-center">
           {
             categories.map(({ type, description, image, link, color }, idx) => {
@@ -84,7 +88,7 @@ const Page = () => {
             })
           }
           <div className="md:col-span-2  w-full">
-            <MiniCarousel />
+             <MiniCarousel images={images} />
 
           </div>
         </div>

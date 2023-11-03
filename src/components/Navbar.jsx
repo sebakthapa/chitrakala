@@ -57,14 +57,14 @@ function Navbar() {
 
 
   useEffect(() => {
-    // console.log("session\n",session)
-
+    
     const sessionUser = session?.user?.id;
     const reduxUser = user?.user?._id;
+    
     if (!reduxUser) {
       if (sessionUser) {
         // fetch user details and store in redux store
-        fetchUserDetails(session?.user.id);
+        fetchUserDetails(sessionUser);
       }
     } else {
       if (sessionUser && sessionUser != reduxUser) {

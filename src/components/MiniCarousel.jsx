@@ -3,13 +3,8 @@ import React, { useState } from 'react'
 import { BsFillCaretRightFill, BsFillCaretLeftFill } from 'react-icons/bs';
 import { AnimatePresence, motion } from 'framer-motion';
 
-const MiniCarousel = () => {
-  const images = [
-    "https://w0.peakpx.com/wallpaper/409/718/HD-wallpaper-pencil-drawing-lionel-messi-football-player-sketch-art.jpg",
-    "https://artist.com/photos/arts/extra-big/autumn-walk-1800329209.jpg",
-    "https://i.etsystatic.com/5312870/r/il/300ef0/1185533356/il_570xN.1185533356_i5n8.jpg"
-  ];
-  // console.log(images)
+const MiniCarousel = ({images}) => {
+
 
   const [index, setIndex] = useState(0);
   const changePic = () => {

@@ -9,7 +9,12 @@ export const GET = async (req,res) => {
         const userId = query[query.length - 1];
         await dbConnect();
 
-        const res = await Products.find({artist:userId}).populate("artist");
+        const res = await Products.find({})
+        .populate({
+            path: 'artist',
+            match: { 'user': userId } 
+          });
+
         return new NextResponse(JSON.stringify(res))
 
     } catch (error) {

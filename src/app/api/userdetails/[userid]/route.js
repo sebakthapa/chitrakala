@@ -20,7 +20,7 @@ export const GET = async (request) => {
         }
         await dbConnect();
         const res = await UsersDetails.findOne({
-            '_id': userId
+            'user': userId
         }).populate('user');
 
 

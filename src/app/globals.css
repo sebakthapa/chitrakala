@@ -162,3 +162,25 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+
+/* width */
+.myScroll::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+ 
+  }
+
+
+  
+  
+  /* Track */
+  .myScroll::-webkit-scrollbar-track {
+    @apply bg-transparent
+  }
+   
+  /* Handle */
+  .myScroll::-webkit-scrollbar-thumb {
+    @apply bg-gray-800 
+  }
+

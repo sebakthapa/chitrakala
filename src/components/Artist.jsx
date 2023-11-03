@@ -24,7 +24,7 @@ const Artist = () => {
   
 
     <div className='m-5 '>
-        <button className='border text-[#556f5f] border-[#556f5f] hover:bg-[#556f5f] hover:text-white py-2 px-6 rounded-full'>Filter</button>
+        <button className='border text-[#556f5f] border-[#556f5f] hover:bg-[#556f5f] hover:text-white py-2 px-6 rounded-lg'>Filter</button>
     </div>
 
 

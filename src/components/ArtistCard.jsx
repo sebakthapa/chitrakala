@@ -4,7 +4,7 @@ import React from 'react'
 import { useState,useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 
-const ArtistCard = () => {
+const ArtistCard = ({artwork,likes}) => {
   const [userData,setUserData] = useState({})
   const  userId = usePathname().split('/')[2];
   
@@ -19,7 +19,7 @@ const ArtistCard = () => {
     fetchUsers()
   }, [])
   return (
-    <div class="bg-gray-200 font-sans h-screen overflow-hidden w-full flex flex-row justify-center items-center">
+    <div class="bg-gray-200 font-sans h-[70vh] overflow-hidden w-full flex flex-row justify-center items-center">
     <div class="card w-96 mx-auto bg-white  shadow-xl hover:shadow">
       <img
         class="w-32 mx-auto rounded-full -mt-20 border-8 border-white"
@@ -37,11 +37,11 @@ const ArtistCard = () => {
       <hr class="mt-8" />
       <div class="flex p-4">
         <div class="w-1/2 text-center">
-          <span class="font-bold">1.8 k</span> Followers
+          <span class="font-bold">{artwork}</span> ArtWorks
         </div>
         <div class="w-0 border border-gray-300"></div>
         <div class="w-1/2 text-center">
-          <span class="font-bold">2.0 M</span> Likes
+          <span class="font-bold">{likes}</span> Likes
         </div>
       </div>
     </div>

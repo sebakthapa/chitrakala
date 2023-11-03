@@ -10,7 +10,17 @@ const Page = () => {
   const [userData,setUserData] = useState('')
 
 
+  let likes = 0
+  if(userData){
 
+    userData.map((item,index)=>{
+      console.log(item.likes.length)
+      
+      likes = likes + item.likes.length
+    })
+  }
+  
+  
 
 
   async function fetchData() {
@@ -36,8 +46,8 @@ const Page = () => {
 
   return (
     <>
-    <ArtistCard />
-    <div className="flex overflow-x-scroll md:flex  md:-mx-2">
+    <ArtistCard artwork={userData?.length} likes={likes} />
+    <div className=" myScroll overflow-x-scroll flex py-5">
     {
       userData?.length > 0 && userData?.map((item, index) => {
 
