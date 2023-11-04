@@ -3,12 +3,12 @@ import ArtistCard from '@/components/ArtistCard'
 import React, { useState,useEffect } from 'react'
 import { useParams } from 'next/navigation';
 import ArtCard from '@/components/ArtCard';
-
+import Skeleton from '@/components/Skeleton';
 const Page = () => {
   const {artistid:userId} = useParams()
 
   const [userData,setUserData] = useState('')
-
+  const [loading,setLoading] = useState(true)
 
   let likes = 0
   if(userData){
@@ -31,6 +31,7 @@ const Page = () => {
       if (res.status == 200) {
         const data = await res.json()
         setUserData(data)
+        setLoading(false)
       }
 
     } catch (error) {
@@ -46,6 +47,13 @@ const Page = () => {
 
   return (
     <>
+   
+    {loading?(
+
+    <Skeleton type={"card"} />
+    ):(
+      <>
+      
     <ArtistCard artwork={userData?.length} likes={likes} />
     <div className=" myScroll overflow-x-scroll flex py-5">
     {
@@ -55,6 +63,8 @@ const Page = () => {
       }
       )}
     </div>
+      </>
+    )}
     </>
   )
 }
