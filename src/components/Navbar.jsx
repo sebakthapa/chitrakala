@@ -213,7 +213,7 @@ function Navbar() {
 
             {setIsOpen && (
 
-            <div className='absolute t-0  float-right w-screen h-screen bg-transparent ' onClick={() => { setIsOpen(false) }}>
+            <div className={`${!isOpen ? "hidden":" bg-slate-50 "} md:hidden absolute t-0  float-right w-screen h-screen bg-transparent `} onClick={() => { setIsOpen(false) }}>
             </div>
             )}
 
