@@ -212,13 +212,13 @@ function Navbar() {
 
             {isOpen && (
 
-            <div className='absolute t-0  float-right w-screen h-screen bg-transparent ' onClick={() => { setIsOpen(false) }}>
+            <div className={`${!isOpen ? "hidden":" bg-slate-50 "} md:hidden absolute t-0  float-right w-screen h-screen bg-transparent `} onClick={() => { setIsOpen(false) }}>
             </div>
             )}
 
 
               <div
-                className={`pt-3 border-t-2  border-[rgba(255,255,255,.1)]  min-h-screen h-fit pb-5 sm:hidden bg-gray-800 -z-20 w-1/2 absolute  transition-all duration-[300ms] ${isOpen ? " opacity-100 left-0 " : "-left-[100%] opacity-50"
+                className={`pt-3 border-t-2  border-[rgba(255,255,255,.1)]  min-h-screen h-fit pb-5 sm:hidden bg-gray-800 z-20 w-1/2 absolute  transition-all duration-[300ms] ${isOpen ? " opacity-100 left-0 " : "-left-[100%] opacity-50"
                   }`}
                 id="mobile-menu"
               >
