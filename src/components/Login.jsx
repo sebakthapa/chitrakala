@@ -76,6 +76,7 @@ const Login = (props) => {
                     setValue={setLoginId}
                     classLists=""
                     name="loginID"
+                    autoComplete="email username tel-local"
                 />
 
                 <Input
@@ -89,6 +90,7 @@ const Login = (props) => {
                     setValue={setPassword}
                     classLists=""
                     name="password"
+                    autoComplete="current-password"
 
                 />
             </div>

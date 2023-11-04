@@ -122,7 +122,7 @@ const authOptions = {
     // database: "", //
     callbacks: {
         async session({ session, token, user }) {
-            // console.log("FROM SeSSION CALLBACK", session)
+            console.log("FROM SeSSION CALLBACK", session)
 
             session.user = token.user;
             const { id, emailVerified, isArtist } = session.user;
@@ -140,12 +140,24 @@ const authOptions = {
 
         async signIn({ profile, account, metadata }) {
             if (account.provider == "google") {
-                // console.log("PROFILE FROM SIGININ CALLBACK", profile)
-                return true ;
+                console.log("profile, profile", profile)
+
+                // await dbConnect();
+                // console.log("++++++++++++++++EMAIL", profile.email)
+                // const res = await Users.findOne({ email: profile.email });
+                // console.log("_______+++++++++++++_____________++++++++++\n RES \n", res)
+                // // // console.log("_______+++++++++++++_____________++++++++++\n metadata \n", metadata)
+                // if (res == null) {
+                //     return "/artist"
+                // }
+
+                return true
+
             }
             // console.log("FROM SIGNIN CALLBACK+++++++++++++++++")
 
             return true;
+
 
         },
 

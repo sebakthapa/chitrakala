@@ -21,7 +21,6 @@ function Navbar() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-
   const pathname = usePathname();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user)
@@ -45,11 +44,11 @@ function Navbar() {
   const fetchUserDetails = async (uid) => {
     try {
       const res = await axios.get(`/api/userdetails/${uid}`);
-      console.log(res)
+      // console.log(res)
       if (res.status == 200) {
-        console.log("FETCHING")
+        // console.log("FETCHING")
         dispatch(addUserData(res.data))
-        console.log(user)
+        // console.log(user)
         return res;
       }
       return;
@@ -105,7 +104,7 @@ function Navbar() {
 
       {
         showNav ? (
-          <Link className='mt-7 ml-7 block' href={"/"}>
+          <Link className='mt-7 ml-2 xxs:3 xs:ml-7 block' href={"/"}>
             <span className='saman text-4xl  text-[#222] font-semibold'>CHITRAKALA</span>
           </Link>
         ) : (
@@ -211,7 +210,7 @@ function Navbar() {
               </div >
             </div >
 
-            {setIsOpen && (
+            {isOpen && (
 
             <div className='absolute t-0  float-right w-screen h-screen bg-transparent ' onClick={() => { setIsOpen(false) }}>
             </div>

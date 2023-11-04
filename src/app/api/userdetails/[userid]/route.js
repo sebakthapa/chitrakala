@@ -34,10 +34,10 @@ export const GET = async (request) => {
 
 export const PATCH = async (request) => {
     const hasArtistDetails = (details) => {
-        const { user, bio, image, name } = details;
+        const { user, bio, image, name, address : {country, state, city, street}, dob } = details;
         const { email, phone, username } = user;
         
-        if (bio && email && phone && name && username && image) {
+        if (bio && email && phone && name && username && image && country && state && city && street && dob) {
             return true;
         }
         return false;
@@ -50,13 +50,16 @@ export const PATCH = async (request) => {
         const params = request.url.split('/');
         const userId = params[params.length - 1];
 
-        const { bio, image, name } = dataToUpdate
+        const { bio, image, name, address, dob } = dataToUpdate;
+        const { country, state, city, street } = address;
         
         const updatingData = {}
         
         if (bio) updatingData.bio = bio;
         if (image) updatingData.image = image;
         if (name) updatingData.name = name;
+        if (dob) updatingData.dob = dob;
+        if (address) updatingData.address = {country, state, city, street};
 
         let res = await UsersDetails.findOneAndUpdate(
             { 'user': userId },

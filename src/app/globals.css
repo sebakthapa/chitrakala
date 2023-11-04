@@ -128,12 +128,12 @@ background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.56
     @apply flex flex-col gap-4
 }
 
-.input_field_container .input_field div {
-    @apply flex flex-col-reverse gap-2
-}
+/* .input_field_container .input_field div.textarea {
+    @apply flex flex-col-reverse gap-
+} */
 
-.input_field_container .input_field label {
-    @apply capitalize  text-gray-600 opacity-80 text-sm font-medium font-sans;
+.input_field_container label {
+    @apply capitalize text-gray-600 block opacity-80 text-sm font-medium font-sans mb-1;
 }
 
 .input_field_container .input_field input,

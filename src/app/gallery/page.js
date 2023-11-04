@@ -1,8 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import React, { useEffect } from "react";
 import axios from "axios";
-import Carousel from "@/components/ArtDetail";
 import { useDispatch, useSelector } from "react-redux";
 import ArtCard from "@/components/ArtCard";
 import { addGalleryData } from "@/redux/features/gallerySlice";
@@ -12,16 +10,15 @@ const Page = () => {
   const dispatch = useDispatch();
   const galleryData = useSelector(state => state.gallery)
 
-  const user = useSelector((state) => state.user);
 
 
   async function fetchData() {
     try {
       const res = await axios.get("/api/products");
- 
-
+      const galleryData = res.data;
       if (res.status == 200) {
-        dispatch(addGalleryData(res.data));
+        dispatch(addGalleryData(galleryData));
+        return galleryData
       }
 
     } catch (error) {
