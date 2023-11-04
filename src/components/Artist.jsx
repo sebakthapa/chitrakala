@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 const Artist = () => {
 
@@ -32,14 +33,15 @@ const Artist = () => {
         <div className="px-4">
           <div className="block md:flex  md:-mx-2">
             {users.map((item, index) => (
+              
               <div key={index} className="w-full lg:w-1/4 md:mx-2 mb-4 md:mb-0">
+                <Link href="/artists/[id]" as={`/artist/${item?.user?._id}`}>
                 <div className="bg-white rounded-lg overflow-hidden shadow relative">
                   <div className=" h-[30vh] overflow-hidden  ">
                     <motion.img
                       key={index}
                       src="/landing/oil.jpg"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
+                    
                       transition={{
                         type: "spring",
                         stiffness: 200,
@@ -53,34 +55,42 @@ const Artist = () => {
                   </div>
 
                   <div className="p-4 h-auto md:h-40 lg:h-48">
+                    <div className="text-gray-600 text-xl leading-relaxed block md:text-xs lg:text-sm">
+                      @{item.user.username}
+                    </div>
                     <span
-                      className="block text-blue-500 hover:text-blue-600 font-semibold mb-2 text-lg md:text-base lg:text-lg"
+                      className="block text-gray-700 hover:underline font-semibold mb-2 text-lg md:text-base lg:text-lg"
                     >
-                      {item.displayName}
+                      {item.name}
                     </span>
                     <div className="text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
                       {item.bio}
                     </div>
+                 
                     <div className="relative mt-2 lg:absolute bottom-0 mb-4 md:hidden lg:block">
                       <span
-                        className="inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
+                        className=" mr-2 inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
                     
                       >
-                     {item.address}
+                     {item.user.email}
                       </span>
                       <span
                         className="inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
                       >
-                      {item.dob?.split('T')[0]}
+                      {/* {item.dob?.split('T')[0]} */}
+                      {item.user?.phone}
                       </span>
                     </div>
                   </div>
                 </div>
+              </Link>
               </div>
+
             ))}
           </div>
         </div>
       </main>
+      
       
     {/* <main className='bg-[#gagaga] m-5 flex flex-col overflow-hidden  gap-7 '>
     {users.map((user,index) => (

@@ -112,11 +112,11 @@ const ArtCard = ({ item }) => {
 
                         </div>
                         <Link
-                            href={`/artist/${item.artist.user}`}
+                            href={`/artist/${item?.artist?.user}`}
                         >
                             <div className="pp hover:shadow-lg flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-10 text-center h-10 m-1 rounded-full  bottom-0">
                                 <img
-                                    src={item.artist.image || "/a1.png"}
+                                    src={item?.artist?.image || "/a1.png"}
                                     className="item-contain w-full h-full"
                                 />
                             </div>
