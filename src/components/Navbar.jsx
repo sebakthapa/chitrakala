@@ -193,8 +193,8 @@ function Navbar() {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                                className='    bg-gray-800 underline rounded'>
-                                <Link className='inline-block  text-gray-100 py-[0.4rem] px-5 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
+                                className='    bg-gray-800   rounded'>
+                                <Link className='inline-block font-bold text-gray-100 py-[0.4rem] px-5 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
                               </motion.button>
 
                               <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='hidden md:block bg-gray-900 border-2 border-gray-900 rounded'>
@@ -219,7 +219,7 @@ function Navbar() {
 
 
               <div
-                className={`pt-3 border-t-2  border-[rgba(255,255,255,.1)]  min-h-screen h-fit pb-5 sm:hidden bg-gray-800 -z-20 w-1/2 absolute left-0 transition-all duration-[300ms] ${isOpen ? "left-0 opacity-100" : "-left-[100vw] opacity-50"
+                className={`pt-3 border-t-2  border-[rgba(255,255,255,.1)]  min-h-screen h-fit pb-5 sm:hidden bg-gray-800 -z-20 w-1/2 absolute  transition-all duration-[300ms] ${isOpen ? " opacity-100 left-0 " : "-left-[100%] opacity-50"
                   }`}
                 id="mobile-menu"
               >
@@ -246,12 +246,12 @@ function Navbar() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                          className=' border-2 border-gray-100 rounded'>
-                          <Link className='w-full inline-block text-gray-100 py-[0.4rem] px-5 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
+                          className='  rounded'>
+                          <Link className='w-full inline-block text-gray-100 py-[0.4rem] px-2 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
                         </motion.button>
 
                         <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className=' bg-gray-900 border-2 border-gray-900 rounded'>
-                          <Link className='inline-block text-gray-200 py-[0.4rem] px-5 ' href={`/auth/signup?returnUrl=${pathname}`}>Sign Up</Link>
+                          <Link className='inline-block text-gray-200 py-[0.4rem] px-2 ' href={`/auth/signup?returnUrl=${pathname}`}>Sign Up</Link>
                         </motion.button>
                       </div>
                     )}
