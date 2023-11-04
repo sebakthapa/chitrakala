@@ -18,11 +18,11 @@ const dbConnect =  async  ()=> {
   try {
     const conn = await mongoose.connect(uri, options);
     console.log(`Connected to DB `);
+    return conn;
   }
   catch (error) {
     console.log("ERROR connecting to DB \n" + error);
     throw error;
-    process.exit(1);
 
   }
 }

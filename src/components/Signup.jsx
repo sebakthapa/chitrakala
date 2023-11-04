@@ -122,6 +122,7 @@ const Signup = () => {
                         value={fullName}
                         setValue={setFullName}
                         classLists="capitalize w-full"
+                        autoComplete="name"
                     />
                     <Input
                         required
@@ -144,7 +145,7 @@ const Signup = () => {
                         setValue={setUsername}
                         classLists=""
                         availabilityState={usernameFetchStatus}
-
+                        autoComplete="username"
                     />
                 </div>
 
@@ -164,6 +165,7 @@ const Signup = () => {
                     value={email}
                     setValue={setEmail}
                     classLists=""
+                    autoComplete="email"
                 />
 
 
@@ -202,6 +204,7 @@ const Signup = () => {
                     value={password}
                     setValue={setPassword}
                     classLists=""
+                    autoComplete="new-password"
                 />
 
                 <Input
@@ -217,6 +220,8 @@ const Signup = () => {
                     value={confirmPassword}
                     setValue={setConfirmPassword}
                     classLists=""
+                    autoComplete="new-password"
+
                 />
             </div>
             <motion.button

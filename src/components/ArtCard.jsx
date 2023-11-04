@@ -8,6 +8,7 @@ import { toggleArtLike } from "@/redux/features/gallerySlice";
 import { FcTimeline } from "react-icons/fc";
 import axios from "axios";
 import Link from "next/link";
+import Image from "next/image";
 
 
 
@@ -15,17 +16,6 @@ const ArtCard = ({ item }) => {
     const dispatch = useDispatch()
 
     const { data: session } = useSession();
-
-    const updateLocalLikes = (likes, productId) => {
-        if (!checkLiked(likes, productId)) { // not liked add to array
-            setGalleryData((prev) => prev.map((itm) => itm._id == productId ? { ...itm, likes: [...itm.likes, productId] } : itm
-
-            ))
-        } else { // liked remove from array
-            setGalleryData((prev) => prev.map((itm) => itm._id == productId ? { ...itm, likes: itm.likes.filter(id => id != productId) } : itm
-            ))
-        }
-    }
 
     const toggleLike = async (likes, productId) => {
         if (session?.user.id) {
@@ -61,9 +51,11 @@ const ArtCard = ({ item }) => {
                         toggleLike(item.likes, item._id);
                     }}
                 >
-                    <motion.img
-                        key={item.category}
+                    <Image
+                        alt={item.title + "image"}
                         src={item.photo}
+                        width={300}
+                        height={300}
                         className="  object-contain w-full h-full "
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
@@ -85,7 +77,7 @@ const ArtCard = ({ item }) => {
                             onClick={() => {
                                 toggleLike(item.likes, item._id);
                             }}
-                            className="pp cursor-pointer  flex flex-col  p-1 m-1   justify-center items-center ">
+                            className="pp cursor-pointer   flex flex-col  p-1 m-1   justify-center items-center ">
                             {
                                 !checkLiked(item.likes, session?.user.id) ? <BsHeart fontSize={"1rem"} fill="gray" /> :
                                     <motion.span
@@ -115,8 +107,12 @@ const ArtCard = ({ item }) => {
                             href={`/artist/${item?.artist?.user}`}
                         >
                             <div className="pp hover:shadow-lg flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-10 text-center h-10 m-1 rounded-full  bottom-0">
-                                <img
-                                    src={item?.artist?.image || "/a1.png"}
+                                <Image
+                                    src={item?.artist?.image || "/default-profile.png"}
+                                    alt="Dommy profile picture"
+                                    width={100}
+                                    height={100}
+                                    referrerPolicy="no-referrer"
                                     className="item-contain w-full h-full"
                                 />
                             </div>

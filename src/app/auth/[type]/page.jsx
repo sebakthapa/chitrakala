@@ -20,8 +20,8 @@ const Page = ({ params, searchParams, ...props }) => {
 
 
   // console.log(isNewUser)
-  console.log(params, searchParams.returnUrl)
-  console.log(props)
+  // console.log(params, searchParams.returnUrl)
+  // console.log(props)
 
   const [isLogin, setIsLogin] = useState(params?.type == "login" ? true : false);
 
@@ -40,8 +40,8 @@ const Page = ({ params, searchParams, ...props }) => {
 
   const handleGoogleSignin = async () => {
     try {
-      const res = await signIn("google", { callbackUrl: `/profile-setup?step=welcome&${searchParams?.returnUrl && `returnUrl=${searchParams?.returnUrl}`}`, redirect: false, });
-      console.log(res)
+      await signIn("google", { callbackUrl: `${searchParams?.returnUrl ? searchParams?.returnUrl : "/"}`, redirect:false, });
+      // console.log(res)
 
     } catch (error) {
       throw error

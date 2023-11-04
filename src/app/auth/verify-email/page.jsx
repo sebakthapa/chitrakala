@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react'
 import { redirect } from 'next/dist/server/api-utils';
 import React, { useLayoutEffect } from 'react'
 
-
+//on verified push to profile?welcome
 
 const Page = () => {
     const { data: session, status: sessionStatus } = useSession();
