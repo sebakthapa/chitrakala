@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { showNavigationMenu } from '@/lib/utils';
 import { BsPlusCircle } from 'react-icons/bs';
+import { toast } from 'react-toastify';
 
 function Navbar() {
 
@@ -55,11 +56,29 @@ function Navbar() {
   }
 
 
+  const handleAddClick = () => {
+    const userId = session?.user.id;
+    const isArtist = session?.user.isArtist;
+    if (userId) {
+      if (isArtist) {
+        router.push("/upload");
+      } else {
+        router.push("/profile-setup?step=personal-details")
+        toast.info("Fill these details about you to upload!")
+      }
+    } else {
+      router.push("/auth/login")
+      toast.info("Please login to upload!")
+    }
+  }
+
 
   useEffect(() => {
 
+
     const sessionUser = session?.user?.id;
     const reduxUser = user?.user?._id;
+    
 
     if (!reduxUser) {
       if (sessionUser) {
@@ -132,10 +151,8 @@ function Navbar() {
                   {
                     session?.user?.id ? (
                       <>
-                        <button type="button" className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                          <Link href={'/upload'} title='Upload your art' >
-                            <BsPlusCircle fill='white' fontSize={"1.5rem"} />
-                          </Link>
+                        <button onClick={handleAddClick} type="button" className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                          <BsPlusCircle fill='white' fontSize={"1.5rem"} />
                         </button>
                         <div id='ppMain' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="ppMain relative ml-3">
                           <div id='ppPhoto' className='ppPhoto'>
