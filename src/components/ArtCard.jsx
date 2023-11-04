@@ -52,7 +52,7 @@ const ArtCard = ({ item }) => {
                     }}
                 >
                     <Image
-                        key={item.category}
+                        alt={item.title + "image"}
                         src={item.photo}
                         width={300}
                         height={300}
@@ -108,7 +108,8 @@ const ArtCard = ({ item }) => {
                         >
                             <div className="pp hover:shadow-lg flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-10 text-center h-10 m-1 rounded-full  bottom-0">
                                 <Image
-                                    src={item?.artist?.image || "/a1.png"}
+                                    src={item?.artist?.image || "/default-profile.png"}
+                                    alt="Dommy profile picture"
                                     width={100}
                                     height={100}
                                     referrerPolicy="no-referrer"
