@@ -57,10 +57,10 @@ function Navbar() {
 
 
   useEffect(() => {
-    
+
     const sessionUser = session?.user?.id;
     const reduxUser = user?.user?._id;
-    
+
     if (!reduxUser) {
       if (sessionUser) {
         // fetch user details and store in redux store
@@ -173,11 +173,11 @@ function Navbar() {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                                className=' hidden md:block border-2 border-gray-100 rounded'>
-                                <Link className='inline-block text-gray-100 py-[0.4rem] px-5 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
+                                className='    bg-gray-800 underline rounded'>
+                                <Link className='inline-block  text-gray-100 py-[0.4rem] px-5 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
                               </motion.button>
 
-                              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='bg-gray-900 border-2 border-gray-900 rounded'>
+                              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='hidden md:block bg-gray-900 border-2 border-gray-900 rounded'>
                                 <Link className='inline-block text-gray-200 py-[0.4rem] px-5 ' href={`/auth/signup?returnUrl=${pathname}`}>Sign Up</Link>
                               </motion.button>
 
@@ -216,14 +216,19 @@ function Navbar() {
                     <></>
 
                   ) : (
+                    <div onClick={() => { setIsOpen(false) }} className='flex gap-3 justify-center'> 
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                        className=' border-2 border-gray-100 rounded'>
+                        <Link className='w-full inline-block text-gray-100 py-[0.4rem] px-5 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
+                      </motion.button>
 
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                      className=' border-2 border-gray-100 rounded'>
-                      <Link className='w-full inline-block text-gray-100 py-[0.4rem] px-5 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
-                    </motion.button>
+                      <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className=' bg-gray-900 border-2 border-gray-900 rounded'>
+                        <Link className='inline-block text-gray-200 py-[0.4rem] px-5 ' href={`/auth/signup?returnUrl=${pathname}`}>Sign Up</Link>
+                      </motion.button>
+                    </div>
                   )}
 
                 </div>
