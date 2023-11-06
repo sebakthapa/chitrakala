@@ -2,18 +2,24 @@ import mongoose from "mongoose";
 const usersDetailsSchema = new mongoose.Schema({
 
   user: {
-    required:[true, "userId is required"],
-    unique:[true, "The userdetails already exists"],
+    required: [true, "userId is required"],
+    unique: [true, "The userdetails already exists"],
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users',
-    autopopulate:{
+    autopopulate: {
       select: '-password' // remove listed fields from selection
     }
   },
   address: {
-    type: String,
-    maxlength: [256, "256 characters exteed for address."],
+    type: new mongoose.Schema({
+      country: String,
+      state: String,
+      city: String,
+      street: String
+    }),
+    default: {}
   },
+
   image: {
     type: String,
   },
@@ -22,7 +28,7 @@ const usersDetailsSchema = new mongoose.Schema({
     maxlength: [30, "Name should not exceed 30 characters"],
     minLength: [3, "Minimum 3 characters required"],
   },
-  bio:{
+  bio: {
 
     type: String,
     maxlength: [30, "Bio should not exceed 30 characters"],
@@ -30,18 +36,18 @@ const usersDetailsSchema = new mongoose.Schema({
 
   },
   dob: {
-    type: Date,
+    type: String,
     validate: {
-      validator: function(value) {
+      validator: function (value) {
         return value <= new Date();
       },
-      message: 'Date of birth must be in the past'  
+      message: 'Date of birth must be in the past'
     }
   }
 
 
 },
-{timestamps:true})
+  { timestamps: true })
 
 mongoose.models = {}
 

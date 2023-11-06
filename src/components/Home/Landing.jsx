@@ -64,7 +64,7 @@ function Landing() {
                             priority
                             alt='Painting of an old man'
                             src={'/landing/landingE.png'}
-                            className=' b-red-500 w-[25rem] lg:w-[30rem] xl:w-[35rem]  object-contain  drop-shadow-[0_50px_50px_rgba(0,0,0,1)] '
+                            className=' b-red-500 w-[25rem] lg:w-[30rem] xl:w-[35rem]  object-contain drop-shadow-[0_50px_50px_rgba(0,0,0,.5)] lg:drop-shadow-[0_50px_50px_rgba(0,0,0,.8)] '
                             width={1000}
                             height={1000}
 

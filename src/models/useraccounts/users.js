@@ -32,17 +32,13 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
     emailVerified: {
-      type: Boolean,
-      default: false,
+      type: Date,
+      // default: false,
     },
   },
   {
     timestamps: true,
   },
-
-  {
-    hidden: ["password"],
-  }
 );
 mongoose.models = {};
 

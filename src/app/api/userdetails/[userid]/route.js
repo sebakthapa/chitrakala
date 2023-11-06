@@ -19,7 +19,10 @@ export const GET = async (request) => {
         await dbConnect();
         const res = await UsersDetails.findOne({
             'user': userId
-        }).populate('user');
+        }).populate({
+            path: "user",
+            select:"-password"
+        });
 
 
         return new NextResponse(JSON.stringify(res))
@@ -34,29 +37,45 @@ export const GET = async (request) => {
 
 export const PATCH = async (request) => {
     const hasArtistDetails = (details) => {
-        const { user, bio, image, name } = details;
-        const { email, phone, username } = user;
+        const { user, bio, image, name, address : {country="", state="",city="", street=""}, dob } = details;
         
-        if (bio && email && phone && name && username && image) {
+        const { email, phone, username, emailVerified } = user;
+        
+        if (bio && email && phone && name && username && image && country && state && city && street && dob && emailVerified) {
             return true;
         }
         return false;
     }
 
     try {
+        console.log("try start")
         const  dataToUpdate = await request.json();
 
         await dbConnect();
         const params = request.url.split('/');
         const userId = params[params.length - 1];
-
-        const { bio, image, name } = dataToUpdate
+        console.log("Before")
+        const { bio, image, name, address, dob } = dataToUpdate;
+        let country = "", state = "", city = "", street = "";
+        if (address) {
+            ({ country, state, city, street } = address);
+        }
+        console.log("After")
         
         const updatingData = {}
         
         if (bio) updatingData.bio = bio;
         if (image) updatingData.image = image;
         if (name) updatingData.name = name;
+        if (dob) updatingData.dob = dob;
+        console.log("before fisrt country")
+        if (address) {
+            updatingData.address = { country, state, city, street };
+        }
+
+        console.log("after fisrt country")
+        
+        console.log("before find and update")
 
         let res = await UsersDetails.findOneAndUpdate(
             { 'user': userId },
@@ -64,6 +83,7 @@ export const PATCH = async (request) => {
             { new: true }
         )
         res = await res.populate({path: 'user',select: '-password'})
+        console.log("after find and update")
 
         const isArtist = hasArtistDetails(res);
 
@@ -75,7 +95,7 @@ export const PATCH = async (request) => {
         return new NextResponse(JSON.stringify(res))
 
     } catch (error) {
-        console.log("ERROR while creating product \n" + error)
+        console.log("ERROR while patching userdetails \n" + error)
     }
 
 }

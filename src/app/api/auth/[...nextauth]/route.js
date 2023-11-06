@@ -6,11 +6,14 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
+import EmailProvider from "next-auth/providers/email";
 import bcrypt from "bcrypt"
 import { MongoDBAdapter } from "@/lib/mongoDBAdapter";
+import { createTransport } from "nodemailer";
+import { html, text } from "@/lib/email";
 
 const authOptions = {
-    adapter: MongoDBAdapter(clientPromise),
+    adapter: MongoDBAdapter(clientPromise, { databaseName: "test" }),
     pages: {
         signIn: "/auth/login"
     },
@@ -26,8 +29,7 @@ const authOptions = {
             async authorize(credentials, req) {
                 // Add logic here to look up the user from the credentials supplied
                 const { loginID, password } = credentials;
-
-
+                // console.log("CREDENTIALS__________________________",{loginID, password})
                 try {
                     let query = "";
                     const checkPasswordMatch = async (userPassword) => {
@@ -53,22 +55,20 @@ const authOptions = {
                     }
 
 
-                    const user = await Users.findOne(query);
+                    const user = await Users.findOne(query,);
+                    console.log("USER FROM CREDENTIALS", user)
 
                     if (user?._id) {
-                        // console.log("user from authorize user", user)
                         // user exists check for the password field
                         if (await checkPasswordMatch(user.password)) {
-                            const userDetails = await UsersDetails.findOne({ user: user._id }).populate("user", { username: 1, email: 1, phone: 1 })
-                            console.log(userDetails)
-
-                            const userData = {
-                                id: userDetails.user._id,
-                                isArtist: userDetails.user.isArtist,
-                                emailVerified: false
+                            // console.log(userDetails)
+                            const returnData = {
+                                id: user._id,
+                                isArtist: user.isArtist,
+                                emailVerified: user.emailVerified,
                             }
-                            // console.log("user Data", userData)
-                            return userData;
+                            console.log("user Data", returnData)
+                            return returnData;  
                         } else {
                             // return new NextResponse(JSON.stringify({ field: "password", message: "Password is incorrect." }), { status: 401 })
                             throw new Error(JSON.stringify({ errors: "Invalid Password", message: "Password is incorrect", status: false, field: "password" }))
@@ -83,8 +83,6 @@ const authOptions = {
                     // console.log("ERROR trying to login" + error)
                     return null
                 }
-
-
             }
         }),
         GoogleProvider({
@@ -110,6 +108,34 @@ const authOptions = {
                     image: picture,
                 }
             },
+        }),
+        EmailProvider({
+            server: {
+                host: process.env.EMAIL_SERVER_HOST,
+                port: process.env.EMAIL_SERVER_PORT,
+                secure: true,
+                auth: {
+                    user: process.env.EMAIL_SERVER_USER,
+                    pass: process.env.EMAIL_SERVER_PASSWORD
+                },
+            },
+            from: process.env.EMAIL_FROM,
+            async sendVerificationRequest({ identifier: email, url, provider: { server, from }, }) {
+                const { host } = new URL(url)
+                // NOTE: You are not required to use `nodemailer`, use whatever you want.
+                const transport = createTransport(server)
+                const result = await transport.sendMail({
+                    to: email,
+                    from: from,
+                    subject: `Sign in to ${host}`,
+                    text: text({ url, host }),
+                    html: html({ url, host }),
+                })
+                const failed = result.rejected.concat(result.pending).filter(Boolean)
+                if (failed.length) {
+                    throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`)
+                }
+            },
         })
     ],
     session: {
@@ -119,7 +145,7 @@ const authOptions = {
 
     secret: process.env.NEXTAUTH_SECRET,
     debug: process.env.NODE_ENV === "development",
-    // database: "", //
+    database: process.env.MONGODB_URI, //
     callbacks: {
         async session({ session, token, user }) {
             // console.log("FROM SeSSION CALLBACK", session)
@@ -138,15 +164,22 @@ const authOptions = {
             return token;
         },
 
-        async signIn({ profile, account, metadata }) {
-            if (account.provider == "google") {
-                // console.log("PROFILE FROM SIGININ CALLBACK", profile)
-                return true ;
+        async signIn({ profile, account, metadata, }) {
+            if (account.provider != "email") {
+                if (account.provider == "google") {
+                    // //++++++++++++++++++++ Logic to redirect user to welcome page only on first signin
+                    // await dbConnect();
+                    // console.log("++++++++++++++++EMAIL", profile.email)
+                    // const res = await Users.findOne({ email: profile.email });
+                    // console.log("_______+++++++++++++_____________++++++++++\n RES \n", res)
+                    // // // console.log("_______+++++++++++++_____________++++++++++\n metadata \n", metadata)
+                    // if (res == null) {
+                    //     return "/profile-setup?step=welcome"
+                    // }
+                }
             }
-            // console.log("FROM SIGNIN CALLBACK+++++++++++++++++")
 
             return true;
-
         },
 
         async redirect({ url, baseUrl }) {

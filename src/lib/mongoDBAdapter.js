@@ -67,7 +67,12 @@ export function MongoDBAdapter(client, options = {}) {
         async createUser(data) {
             console.log("CREATING NEW USER", data)
             const { email, name, image, isEmailVerified, isArtist } = data;
-            const user = to({email, emailVerified:isEmailVerified, isArtist });
+            let user;
+            if (isEmailVerified) {
+                user = to({email, emailVerified: new Date(), isArtist });
+            } else {
+                user = to({email, isArtist });
+            }
             const addedUser = await (await db).U.insertOne(user);
             const userDetails = to({name, image, user:addedUser.insertedId}); // added this to make collection ready to add in mongodb
             await (await db).UD.insertOne(userDetails); // added this to add userDetails data to collection
