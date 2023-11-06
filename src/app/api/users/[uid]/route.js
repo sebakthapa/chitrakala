@@ -6,7 +6,6 @@ import { NextResponse } from "next/server";
 // get username from db (GET USER NOT APPLICABLE as userdetails is used to load user)
 
 export const GET = async (request) => {
-
   try {
     const params = request.url.split('/');
     const id = params[params.length - 1];
@@ -14,7 +13,7 @@ export const GET = async (request) => {
     await dbConnect();
     const res = await Users.findById(id);
 
-    console.log(res)
+    console.log("res from user fetch", res)
 
     // handle if username is no till registered - that is username is available to register
     if (!res) return new NextResponse(JSON.stringify({ error: "user doesn't exist" }), { status: 404 })

@@ -1,10 +1,8 @@
 "use client"
 import Input from './Input/Input'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
-import axios from 'axios'
-import { login } from '@/redux/features/userSlice'
 import { useDispatch } from 'react-redux'
 import { redirect, useRouter, useSearchParams } from 'next/navigation'
 import { signIn, useSession } from "next-auth/react"
@@ -12,10 +10,10 @@ import { toast } from 'react-toastify'
 
 const Login = (props) => {
     const dispatch = useDispatch();
-    const { data: session, status } = useSession();
+    const { data: session, status: sessionStatus } = useSession();
     // toast(session?.user)
     const router = useRouter()
-    
+    const searchParams = useSearchParams()
 
 
 
@@ -27,22 +25,19 @@ const Login = (props) => {
     const { register, handleSubmit, watch, setError, clearErrors, formState: { errors } } = useForm();
 
 
-    const handleLogin = async ({ password, ...loginId }) => {
-        const loginID = loginId["username/email/phone"]
-
-        console.log(loginID, password)
-
+    const handleLogin = async (data) => {
         try {
             setIsSubmitting(true);
-            const data = { loginID, password };
+            const data = { loginID: loginId, password };
             const res = await signIn('credentials', { ...data, redirect: false })
             // console.log( await res.json())
             if (!res.ok) {
                 toast.error("Credentials do not match!");
             } else {
                 // redirect("/add_artist_details");
+
             }
-            
+
 
         } catch (error) {
             console.log(error)
@@ -56,8 +51,26 @@ const Login = (props) => {
     }
 
 
-    
 
+    useLayoutEffect(() => {
+        if (sessionStatus == "authenticated") {
+            if (!session?.user.emailVerified) {
+                redirect("/auth/verify-email");
+            } else {
+                    redirect(searchParams.get("returnUrl")  ? searchParams.get("returnUrl") : "/")
+            }
+        }
+
+
+    }, [session, sessionStatus])
+
+
+    useEffect(() => {
+        const error = searchParams.get("error");
+        if (error == "") {
+            //error for account already linked
+        }
+    }, [])
 
 
 
@@ -66,9 +79,9 @@ const Login = (props) => {
             <h2 className='form_title '>Log in</h2>
             <div className="input_field_container">
                 <Input
-                    register={register}
-                    error={errors["username/email/phone"]}
-                    clearErrors={clearErrors}
+                    // register={register}
+                    // error={errors["username/email/phone"]}
+                    // clearErrors={clearErrors}
                     required
                     type="text"
                     label="username/email/phone"
@@ -80,7 +93,7 @@ const Login = (props) => {
                 />
 
                 <Input
-                    register={register}
+                    // register={register}
                     error={errors.password}
                     clearErrors={clearErrors}
                     required

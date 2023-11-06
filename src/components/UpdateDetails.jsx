@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Input from './Input/Input';
 import { getDownloadURL, getStorage, ref, uploadBytes, deleteObject } from 'firebase/storage';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { app } from '@/lib/firebase';
@@ -11,10 +11,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import UploadImage from './Input/UploadImage';
+import { addUserData } from '@/redux/features/userSlice';
 
 
 
 const UpdateDetails = () => {
+    const dispatch = useDispatch()
     const router = useRouter()
     const searchParams = useSearchParams();
     const { data: session } = useSession()
@@ -46,79 +48,87 @@ const UpdateDetails = () => {
 
 
     const handleFormSubmit = async (data) => {
-        // console.log(data)
         setIsSubmitting(true);
         uploadedImage = null;
 
         if (!session?.user.id) {
             toast.error("Login to update details.");
-            router.push(searchParams.get("returnurl") || "/");
+            router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
             return;
         }
         if (!user?.user._id) {
             toast.error("wait a few seconds or reload and try again.");
-            router.push(searchParams.get("returnurl") || "/");
+            router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
             return;
         }
 
         try {
+            let userRes, userDetailsRes;
+
             const userData = {};
-            const address = {};
 
             if (username != user?.user.username) userData.username = username;
             if (email != user?.user.email) userData.email = email;
             if (phone != user?.user.phone) userData.phone = phone;
 
-            // console.log(userData)
             if (Object.keys(userData).length > 0) {
-                // console.log("ud dbx")
-                const userRes = await axios.patch(`/api/users/${session?.user.id}`, userData);
+                userRes = await axios.patch(`/api/users/${session?.user.id}`, userData);
                 if (userRes?.status == 200) {
-                    // console.log("User Data Updated");
                 }
+            } else {
             }
 
-            const userDetailsData = { }
-            if (bio != user?.bio) userData.bio = bio;
-            if (name != user?.name) userData.name = name;
-            if (dob != user?.dob) userData.dob = dob;
-            if (country != user?.address?.country) userDetailsData.address = {...userDetailsData.address, country};
-            if (state != user?.address?.state) userDetailsData.address = {...userDetailsData.address, state};
-            if (city != user?.address?.city) userDetailsData.address = {...userDetailsData.address, city};
+            const userDetailsData = {}
+            if (bio != user?.bio) userDetailsData.bio = bio;
+            if (name != user?.name) userDetailsData.name = name;
+            if (dob != user?.dob) userDetailsData.dob = dob;
+            if (country != user?.address?.country) userDetailsData.address = { ...userDetailsData.address, country };
+            if (state != user?.address?.state) userDetailsData.address = { ...userDetailsData.address, state };
+            if (city != user?.address?.city) userDetailsData.address = { ...userDetailsData.address, city };
             if (street != user?.address?.street) userDetailsData.address = { ...userDetailsData.address, street };
-            
+
             // userDetailsData
 
 
 
             if (imageUrl != user?.image) {
                 const imageData = await handleFileUpload();
-                uploadedImage = imageData.storageRef;
-                userDetailsData.image = imageData.downloadURL;
+                if (imageData) {
+                    uploadedImage = imageData?.storageRef;
+                    userDetailsData.image = imageData.downloadURL;
+                } else {
+                    toast("unable to upload image at the moment.")
+                }
+            } else {
             }
 
             if (Object.keys(userDetailsData).length == 0 && Object.keys(userData).length == 0) {
                 toast("No changes made to update!")
-                router.push(searchParams.get("returnurl") || "/");
-                return;         
-            }
-            // console.log(userDetailsData)
-            
+                router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") :  "/");
+                return;
+            } 
+
             if (Object.keys(userDetailsData).length > 0) {
-                // console.log("udd dbx")
-                const userDetailsRes = await axios.patch(`/api/userdetails/${session?.user.id}`, userDetailsData);
+                userDetailsRes = await axios.patch(`/api/userdetails/${session?.user.id}`, userDetailsData);
                 if (userDetailsRes?.status == 200) {
-                    // console.log("User Details Data Updated");
                 }
                 else {
                     await deleteObject(storageRef);
-                    // console.error("Failed User Details update")
+                }
+            } else {
+            }
+
+            if (!userRes || userRes?.status == 200) {
+                if (!userDetailsRes || userDetailsRes?.status == 200) {
+                    const newUserDetails = {}
+                    dispatch(addUserData({...userDetailsRes?.data, user: {...userRes?.data}}))
+                    router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
+                    toast("Details updated successfully")
                 }
             }
 
 
-            router.push(searchParams.get("returnurl") || "/");
-            toast("Details updated successfully")
+
 
         } catch (error) {
             uploadedImage && await deleteObject(uploadedImage);
@@ -139,7 +149,7 @@ const UpdateDetails = () => {
     }
 
     const handleFileUpload = async () => {
-        if (!user?.id) {
+        if (!session?.user.id) {
             toast("Please login to add details")
             return;
         };
@@ -152,21 +162,25 @@ const UpdateDetails = () => {
 
                 // Get the download URL of the uploaded image
                 const downloadURL = await getDownloadURL(storageRef);
-                // console.log('Image uploaded:', downloadURL);
                 return { downloadURL, storageRef };
 
                 // You can now save the downloadURL to your database or use it in your application as needed
             } catch (error) {
                 setLoading(false);
 
-                // console.error('Error uploading image:', error);
             }
         }
     };
 
+    const handleSkip = () => {
+        const returnUrl = searchParams.get("returnUrl")
+        console.log(returnUrl)
+        returnUrl ? router.push(returnUrl) : router.push("/")
+    }
+
     useEffect(() => {
         if (user?.user?._id && !dataModified) {
-            const { name, user: userData, bio, image, } = user;
+            const { name, user: userData, bio, image,dob, address:{country, state, city, street} } = user;
             const { email, phone, username } = userData;
             setName(name || "")
             setBio(bio || "")
@@ -174,6 +188,12 @@ const UpdateDetails = () => {
             setEmail(email || "")
             setPhone(phone || "")
             setUsername(username || "")
+            console.log(dob)
+            setDob(dob || "");
+            setCity(city || "")
+            setCountry(country || "")
+            setState(state || "")
+            setStreet(street || "")
         }
     }, [user])
 
@@ -341,7 +361,7 @@ const UpdateDetails = () => {
                     }
                 </motion.button>
                 <motion.button
-                    onClick={() => router.push(searchParams.get("returnUrl") || "/")}
+                    onClick={handleSkip}
                     type="button"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.9 }}
