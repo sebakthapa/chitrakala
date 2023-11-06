@@ -70,18 +70,18 @@ const Page = () => {
       </div>
       <h1 className='font-bold text-3xl text-gray-700'>Please verify your email</h1>
       <p className='font- text-gray-700 mt-4'>
-        You're almost there! We've sent a verification link to
+        {`You're almost there! We've sent a verification link to`}
         <br />
         <span className="font-bold text-xl text-gray-600">
           {localVerificationEmail  || user?.user?.email}
         </span>
       </p>
       <p className="mt-8">
-        Just click on the link in that email to complete your signup. If you don't
-        see it, you may need to <b className='text-gray-600'>check your spam </b> folder.
+        {`Just click on the link in that email to complete your signup. If you don't
+        see it, you may need to`} <b className='text-gray-600'>check your spam </b> folder.
       </p>
       <p className='mt-7'>
-        Still can't find the email? No problem.
+       {` Still can't find the email? No problem.`}
       </p>
 
       <button onClick={handleSendVerificationEmail} className='py-3 px-8 mt-8 bg-gray-600 text-gray-200 font-semibold rounded transition duration-300 hover:bg-gray-700 hover:text-white hover:shadow-md  hover:shadow-[#11111188]'>Resend Verification Email</button>
