@@ -1,8 +1,10 @@
 "use client"
 import React,{ useState,useEffect } from "react";
-import Carousel from "@/components/Carousel";
+import Carousel from "@/components/ArtDetail";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { BsMapFill,BsCalendar,BsPinMap } from "react-icons/bs";
+import { BiSolidMap} from "react-icons/bi";
 
 const Page = () => {
   
@@ -51,21 +53,21 @@ const Page = () => {
                     >
                       {item.title}
                     </a>
-                    <div class="text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
+                    <div class="text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm line-clamp-2 ">
                       {item.description}
                     </div>
-                    <div class="relative mt-2 lg:absolute bottom-0 mb-4 md:hidden lg:block">
+                    <div class="mt-5 flex justify-between">
                       <a
-                        class="inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
+                        class="flex items-center gap-2 bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
                         href="#"
                       >
-                       {item.location}
+                       <BiSolidMap/>{item.location}
                       </a>
                       <a
-                        class="inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
+                        class="flex items-center gap-2 bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
                         href="#"
                       >
-                        {item.datetime.split('T')[0]}
+                        <BsCalendar/> {item.datetime.split('T')[0]}
                       </a>
                     </div>
                   </div>

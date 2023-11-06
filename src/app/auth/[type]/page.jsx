@@ -1,16 +1,11 @@
 "use client"
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
-import Image from 'next/image'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import {  useLayoutEffect } from 'react'
 import { FcGoogle } from "react-icons/fc"
-import { FiArrowLeft } from "react-icons/fi"
 import { motion, AnimatePresence } from 'framer-motion'
-import { useSelector } from 'react-redux'
-import { redirect, useRouter, useSearchParams } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
-import { addUserData } from '@/redux/features/userSlice'
-import isAuthenticated from '@/components/isAuthenticated'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
 
@@ -19,29 +14,17 @@ const Page = ({ params, searchParams, ...props }) => {
   const { data: session, status: sessionStatus } = useSession();
 
 
-  // console.log(isNewUser)
-  console.log(params, searchParams.returnUrl)
-  console.log(props)
 
-  const [isLogin, setIsLogin] = useState(params?.type == "login" ? true : false);
+  const isLogin = params?.type == "login";
 
 
-
-  useLayoutEffect(() => {
-    if (sessionStatus == "authenticated") {
-      if (session?.user.isArtist) {
-        redirect("/profile-setup?step=welcome")
-      } else {
-        redirect(searchParams.returnUrl || "/")
-      }
-    }
-  }, [session, searchParams.returnUrl, sessionStatus])
+ 
 
 
   const handleGoogleSignin = async () => {
     try {
-      const res = await signIn("google", { callbackUrl: `/profile-setup?step=welcome&${searchParams?.returnUrl && `returnUrl=${searchParams?.returnUrl}`}`, redirect: false, });
-      console.log(res)
+      await signIn("google", { callbackUrl: `${searchParams?.returnUrl ? searchParams?.returnUrl : "/"}`, redirect:false, });
+      // console.log(res)
 
     } catch (error) {
       throw error

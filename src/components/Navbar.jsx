@@ -11,13 +11,15 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { showNavigationMenu } from '@/lib/utils';
 import { BsPlusCircle } from 'react-icons/bs';
+import { SiIconfinder } from 'react-icons/si'
+import { AiFillPicture, AiFillHome, AiFillInfoCircle } from 'react-icons/ai';
+import { ImInfo, ImProfile } from 'react-icons/im'
 import { toast } from 'react-toastify';
 
 function Navbar() {
 
   const router = useRouter();
   const { data: session, status } = useSession();
-
 
   const pathname = usePathname();
   const dispatch = useDispatch();
@@ -42,10 +44,11 @@ function Navbar() {
   const fetchUserDetails = async (uid) => {
     try {
       const res = await axios.get(`/api/userdetails/${uid}`);
-      console.log(res)
+      // console.log(res)
       if (res.status == 200) {
-        console.log("FETCHING")
+        // console.log("FETCHING")
         dispatch(addUserData(res.data))
+        // console.log(user)
         return res;
       }
       return;
@@ -72,15 +75,30 @@ function Navbar() {
   }
 
 
+  const handleSignout = async () => {
+    try {
+      const res = await signOut({ redirect: false });
+      console.log(res)
+      dispatch(clearUserData());
+      
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
   useEffect(() => {
-    // console.log("session\n",session)
+    console.log(session)
+
+
     const sessionUser = session?.user?.id;
     const reduxUser = user?.user?._id;
+
 
     if (!reduxUser) {
       if (sessionUser) {
         // fetch user details and store in redux store
-        fetchUserDetails(session?.user.id);
+        fetchUserDetails(sessionUser);
       }
     } else {
       if (sessionUser && sessionUser != reduxUser) {
@@ -93,20 +111,19 @@ function Navbar() {
 
 
 
-
   return (
     <>
 
       {
-        showNav ? (
-          <Link className='mt-7 ml-7 block' href={"/"}>
+        showNav ? ( // showing only logo in pages like auth/login and auth/signup
+          <Link className='mt-7 ml-4 xxs:3 xs:ml-7 block' href={"/"}>
             <span className='saman text-4xl  text-[#222] font-semibold'>CHITRAKALA</span>
           </Link>
-        ) : (
+        ) : ( // showing full nav with navitems in other pages
           <nav className="z-20 bg-gray-800 relative">
-            <div className="bg-gray-800 mx-auto px-2 sm:px-6 lg:px-8">
+            <div className="bg-gray-800 mx-auto px-0 xxs:px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
-                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
                   <button onClick={() => setIsOpen(!isOpen)} type="button" className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
                     <span className="absolute -inset-0.5"></span>
                     <span className="sr-only">Open main menu</span>
@@ -124,27 +141,30 @@ function Navbar() {
 
                   </button >
                 </div >
-                <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
                   <div className="flex flex-shrink-0 items-center mr-10">
-                    <Link href={"/"}>
-                      <span className='saman text-2xl text-[#ccc] font-semibold'>CHITRAKALA</span>
+                    <Link href={"/"} className='-mr-5 lg:-mr-0'>
+                      <span className='saman  xxs:mr-0 text-2xl text-[#ccc] font-semibold'>CHITRAKALA</span>
                     </Link>
 
                   </div>
-                  <div className="hidden sm:ml-6 sm:block">
-                    <div className="flex space-x-5">
-                      <Link href="/" className={`${pathname === '/' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium`} aria-current="page">Home</Link>
-                      <Link href="/gallery" className={`${pathname === '/gallery' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium`} aria-current="page">Gallery</Link>
-                      <Link href="/artist" className={`${pathname === '/artist' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium`} aria-current="page">Artist</Link>
-                      <Link href="/exhibition" className={`${pathname === '/exhibition' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium`} aria-current="page">Exhibition</Link>
-                      <Link href="/about" className={`${pathname === '/about' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium`} aria-current="page">About</Link>
-                      {/* <Link href="/add_artist_details" className={`${pathname === '/add_artist_details' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium`} aria-current="page">Be an Artist</Link> */}
+                  <div className="hidden md:ml-6 md:block">
+                    <div className="flex space-x-3 lg:space-x-5">
+                      <Link href="/" className={`${pathname === '/' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Home</Link>
+                      <Link href="/gallery" className={`${pathname === '/gallery' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Gallery</Link>
+                      <Link href="/artist" className={`${pathname === '/artist' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Artist</Link>
+                      <Link href="/exhibition" className={`${pathname === '/exhibition' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Exhibition</Link>
+                      <Link href="/about" className={`${pathname === '/about' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">About</Link>
+                      <Link href="/auth/verify-email" className={`${pathname === '/auth/verify-email' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">verify Email</Link>
+
+                      {/* <Link href="/add_artist_details" className={`${pathname === '/add_artist_details' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Be an Artist</Link> */}
                     </div>
 
                   </div>
                 </div>
 
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-5">
+
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0 gap-0 xxs:gap-1 xs:gap-5">
                   {
                     session?.user?.id ? (
                       <>
@@ -159,7 +179,7 @@ function Navbar() {
                               {
                                 user?.image ?
                                   <Image className="h-8 w-8 rounded-full object-cover" height={100} width={100} src={user?.image} alt="profile image" /> :
-                                  <Image className="h-8 w-8 rounded-full cover" height={100} width={100} src={"/avatar.png"} alt="profile image" />
+                                  <Image className="h-8 w-8 rounded-full cover" height={100} width={100} src={"/default-profile.png"} alt="profile image" />
                               }
 
                             </button>
@@ -170,7 +190,7 @@ function Navbar() {
                                 <span className="  font-bold w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">{user?.name}</span>
                                 <Link href="/me" className="hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">Your Profile</Link>
                                 <Link href="/me" className="hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Settings</Link>
-                                <span href="/" onClick={() => signOut()} className="hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Sign out</span>
+                                <span href="/" onClick={handleSignout} className="hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Sign out</span>
                               </div>
                             </div>
                           }
@@ -182,17 +202,17 @@ function Navbar() {
                       <>
                         {
                           showNav || (
-                            <div className="handlers authButtons text-[#556f5f] pt-0  flex gap-5 text-base ">
+                            <div className="handlers authButtons text-[#556f5f] pt-0  flex gap-2 w-fit lg:gap-5 text-base ">
                               <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                                className=' hidden md:block border-2 border-gray-100 rounded'>
-                                <Link className='inline-block text-gray-100 py-[0.4rem] px-5 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
+                                className='    bg-gray-800   rounded border-[1px] border-[#ffffff44]'>
+                                <Link className='inline-block font-bold text-gray-100 py-[0.35rem] px-3 lg:py-[0.4rem] lg:px-5 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
                               </motion.button>
 
-                              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='bg-gray-900 border-2 border-gray-900 rounded'>
-                                <Link className='inline-block text-gray-200 py-[0.4rem] px-5 ' href={`/auth/signup?returnUrl=${pathname}`}>Sign Up</Link>
+                              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='hidden md:block bg-gray-900 border-2 border-gray-900 rounded'>
+                                <Link className='inline-block text-gray-200 py-[0.35rem] px-3 lg:py-[0.4rem] lg:px-5 ' href={`/auth/signup?returnUrl=${pathname}`}>Sign Up</Link>
                               </motion.button>
 
                             </div>
@@ -205,46 +225,63 @@ function Navbar() {
               </div >
             </div >
 
+            {isOpen && (
+
+              <div className={`${!isOpen ? "hidden" : " "} md:hidden absolute t-0  float-right  w-full h-screen bg-transparent `} onClick={() => { setIsOpen(false) }}>
+              </div>
+            )}
 
 
             <div
-              className={`pt-3 border-t-2  border-[rgba(255,255,255,.1)]  min-h-screen h-fit pb-5 sm:hidden bg-gray-800 -z-20 w-full absolute left-0 transition-all duration-[300ms] ${isOpen ? "top-full opacity-100" : "-top-[100vh] opacity-50"
+              className={`pt-3 border-t-2  border-[rgba(255,255,255,.1)]  min-h-screen h-fit pb-5 md:hidden bg-gray-800 z-20 w-1/2 min-w-[15rem]  absolute  transition-all duration-[300ms] ${isOpen ? " opacity-100 left-0 " : "-left-[100%] opacity-50"
                 }`}
               id="mobile-menu"
             >
 
               <div className="space-y-1 px-2 pb-3 pt-2 flex flex-col  items-center w-full gap-3 ">
 
-                <Link onClick={() => { setIsOpen(false) }} href="/" className={`rounded-lg border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center block hover:bg-gray-700 text-gray-300   px-3 py-2 text-base font-medium ${pathname === '/' ? 'active' : ''} } `} ria-current="page">Home</Link>
+                <Link onClick={() => { setIsOpen(false) }} href="/" className={` border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center flex gap-6  items-center hover:bg-gray-700 text-gray-300   px-7 py-2 text-base font-medium ${pathname === '/' ? 'active' : ''} } `} ria-current="page"> <AiFillHome className='w-5 h-5' fill='#ccc' /> Home</Link>
 
-                <Link onClick={() => { setIsOpen(false) }} href="/gallery" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white block  px-3 py-2 text-base font-medium ${pathname === '/gallery' ? 'active' : ''} `}>Gallery</Link>
+                <Link onClick={() => { setIsOpen(false) }} href="/gallery" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white flex gap-6  items-center  px-7 py-2 text-base font-medium ${pathname === '/gallery' ? 'active' : ''} `}> <AiFillPicture className='w-5 h-5' fill='#ccc' /> Gallery</Link>
 
-                <Link onClick={() => { setIsOpen(false) }} href="/artist" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white block  px-3 py-2 text-base font-medium ${pathname === '/artist' ? 'active' : ''} `}>Artist</Link>
+                <Link onClick={() => { setIsOpen(false) }} href="/artist" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white flex gap-6  items-center  px-7 py-2 text-base font-medium ${pathname === '/artist' ? 'active' : ''} `}> <ImProfile className='w-5 h-5' fill='#ccc' /> Artist</Link>
 
-                <Link onClick={() => { setIsOpen(false) }} href="/exhibition" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white block  px-3 py-2 text-base font-medium ${pathname === '/exhibition' ? 'active' : ''} `}>Exhibition</Link>
+                <Link onClick={() => { setIsOpen(false) }} href="/exhibition" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white flex gap-6  items-center  px-7 py-2 text-base font-medium ${pathname === '/exhibition' ? 'active' : ''} `}> <SiIconfinder className='w-5 h-5' fill='#ccc' /> Exhibition</Link>
 
-                <Link onClick={() => { setIsOpen(false) }} href="/about" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white block  px-3 py-2 text-base font-medium ${pathname === '/about' ? 'active' : ''} `}>About</Link>
+                <Link onClick={() => { setIsOpen(false) }} href="/about" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white flex gap-6  items-center  px-7 py-2 text-base font-medium ${pathname === '/about' ? 'active' : ''} `}> <ImInfo className='w-5 h-5' fill='#ccc' /> About</Link>
 
-                <div className="border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-white block  px-3 py-2 text-base font-medium " aria-current="page">
+                <div className="border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-white flex gap-2  items-center  px-4 py-5 mt-5 text-base font-medium " aria-current="page">
                   {user?.user?._id ? (
                     <></>
 
                   ) : (
+                    <div onClick={() => { setIsOpen(false) }} className='flex flex-col gap-3 justify-center w-full border-t-[1px] border-[#ffffff55] pt-8'>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                        className='  w-full border-[1px] border-[#ffffff77]'>
+                        <Link className='w-full inline-block text-gray-100 py-[0.5rem] px-2 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
+                      </motion.button>
 
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                      className=' border-2 border-gray-100 rounded'>
-                      <Link className='w-full inline-block text-gray-100 py-[0.4rem] px-5 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
-                    </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 200, damping: 10
+                        }}
+                        className=' w-full bg-gray-900 border-[1px] border-gray-900'
+                      >
+                        <Link className='inline-block w-full  text-gray-200 py-[0.5rem] px-2 ' href={`/auth/signup?returnUrl=${pathname}`}>Sign Up</Link>
+                      </motion.button>
+                    </div>
                   )}
 
                 </div>
               </div>
 
             </div>
-
 
           </nav >
         )

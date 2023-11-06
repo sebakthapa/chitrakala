@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Landing from "@/components/Landing";
-import Carousel from "@/components/Carousel";
+import Carousel from "@/components/ArtDetail";
 import { motion } from "framer-motion";
 import MiniCarousel from "@/components/MiniCarousel";
 import Link from "next/link";
@@ -39,7 +39,12 @@ const Page = () => {
     },
 
   ]
-
+  const images = [
+    "https://img.freepik.com/premium-photo/spectacular-abstract-city-orange-teal-digital-art-3d-illustration_31965-49704.jpg",
+    "https://images.nightcafe.studio/jobs/cNxmQICjMo8xdPi31Zjt/cNxmQICjMo8xdPi31Zjt_6.9444x.jpg?tr=w-9999,c-at_max",
+    "https://cdn11.bigcommerce.com/s-x49po/images/stencil/1500x1500/products/43339/58776/1571390056201_6D1F1BD8-CA91-4B86-AD0F-249681E867B0__71341.1571633277.jpg?c=2",
+    "https://i.pinimg.com/736x/60/d3/6f/60d36f7dec5f9a2818a08b964def0190.jpg",
+  ];
    
   const cardVariant = {
     visible: { opacity: 1, scale: 1, transition:{duration:0.3, type:"spring", stiffness:100, damping:15} },
@@ -50,9 +55,10 @@ const Page = () => {
   return (
     <>
       <Landing />
+   
 
-      <section className="categoriesSection  mt-36 md:px-5">
-        <h1 className="font-extrabold font-mono text-5xl p-10 text-center mb-5">Explore by Category<span className="font-extrabold font-mono text-5xl animate_blink">_</span></h1>
+      <section className=" bg-slate-100 categoriesSection  md:my-36 md:px-5 md:pb-36">
+        <h1 className="font-semibold font-poppins text-5xl p-10 text-center mb-5">Explore by Category<span className="font-semibold font-sans text-5xl animate_blink">_</span></h1>
         <div className="categoriesContainer px-5 grid flex-wrap gap-10 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 place-items-center items-center justify-center">
           {
             categories.map(({ type, description, image, link, color }, idx) => {
@@ -84,7 +90,7 @@ const Page = () => {
             })
           }
           <div className="md:col-span-2  w-full">
-            <MiniCarousel />
+             <MiniCarousel images={images} />
 
           </div>
         </div>
@@ -93,13 +99,7 @@ const Page = () => {
 
 
 
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-        <path
-          fill="#e5e7eb"
-          fillOpacity="1"
-          d="M0,224L48,240C96,256,192,288,288,256C384,224,480,128,576,117.3C672,107,768,181,864,197.3C960,213,1056,171,1152,176C1248,181,1344,235,1392,261.3L1440,288L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-        ></path>
-      </svg>
+   
 
       <div className="bg-gray-200 font-sans h-screen w-full flex flex-row justify-center items-center">
         <div className="card w-96 mx-auto bg-white  shadow-xl hover:shadow">

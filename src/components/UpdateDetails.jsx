@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Input from './Input/Input';
 import { getDownloadURL, getStorage, ref, uploadBytes, deleteObject } from 'firebase/storage';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { app } from '@/lib/firebase';
@@ -10,10 +10,13 @@ import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
+import UploadImage from './Input/UploadImage';
+import { addUserData } from '@/redux/features/userSlice';
 
 
 
 const UpdateDetails = () => {
+    const dispatch = useDispatch()
     const router = useRouter()
     const searchParams = useSearchParams();
     const { data: session } = useSession()
@@ -27,6 +30,13 @@ const UpdateDetails = () => {
     const [username, setUsername] = useState(user?.user?.username || "");
     const [bio, setBio] = useState(user?.bio || "");
     const [phone, setPhone] = useState(user?.user?.phone || "");
+    const [dob, setDob] = useState("");
+    //address states
+    const [country, setCountry] = useState("");
+    const [state, setState] = useState("");
+    const [city, setCity] = useState("");
+    const [street, setStreet] = useState("");
+
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [dragging, setDragging] = useState(false);
     const [image, setImage] = useState(null);
@@ -36,56 +46,89 @@ const UpdateDetails = () => {
 
     let uploadedImage = null;
 
-    console.log(errors)
 
-    const handleFormSubmit = async () => {
+    const handleFormSubmit = async (data) => {
         setIsSubmitting(true);
         uploadedImage = null;
 
         if (!session?.user.id) {
-            toast.error("Wait few seconds and try again!");
+            toast.error("Login to update details.");
+            router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
+            return;
+        }
+        if (!user?.user._id) {
+            toast.error("wait a few seconds or reload and try again.");
+            router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
             return;
         }
 
         try {
-            const userData = {
-            }
+            let userRes, userDetailsRes;
+
+            const userData = {};
+
             if (username != user?.user.username) userData.username = username;
             if (email != user?.user.email) userData.email = email;
             if (phone != user?.user.phone) userData.phone = phone;
 
-
             if (Object.keys(userData).length > 0) {
-                const userRes = await axios.patch(`/api/users/${session?.user.id}`, userData);
-                if (userRes.status == 200) {
-                    console.log("User Data Updated");
+                userRes = await axios.patch(`/api/users/${session?.user.id}`, userData);
+                if (userRes?.status == 200) {
                 }
-                else {
-                    console.error("Failed User update")
-                }
+            } else {
             }
 
-            const userDetailsData = {
-                bio,
-                name,
-            }
+            const userDetailsData = {}
+            if (bio != user?.bio) userDetailsData.bio = bio;
+            if (name != user?.name) userDetailsData.name = name;
+            if (dob != user?.dob) userDetailsData.dob = dob;
+            if (country != user?.address?.country) userDetailsData.address = { ...userDetailsData.address, country };
+            if (state != user?.address?.state) userDetailsData.address = { ...userDetailsData.address, state };
+            if (city != user?.address?.city) userDetailsData.address = { ...userDetailsData.address, city };
+            if (street != user?.address?.street) userDetailsData.address = { ...userDetailsData.address, street };
+
+            // userDetailsData
+
+
 
             if (imageUrl != user?.image) {
                 const imageData = await handleFileUpload();
-                uploadedImage = imageData.storageRef;
-                userDetailsData.image = imageData.downloadURL;
+                if (imageData) {
+                    uploadedImage = imageData?.storageRef;
+                    userDetailsData.image = imageData.downloadURL;
+                } else {
+                    toast("unable to upload image at the moment.")
+                }
+            } else {
             }
 
-            const userDetailsRes = await axios.patch(`/api/userdetails/${session?.user.id}`, userDetailsData);
-            if (userDetailsRes.status == 200) {
-                console.log("User Details Data Updated");
+            if (Object.keys(userDetailsData).length == 0 && Object.keys(userData).length == 0) {
+                toast("No changes made to update!")
+                router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") :  "/");
+                return;
+            } 
+
+            if (Object.keys(userDetailsData).length > 0) {
+                userDetailsRes = await axios.patch(`/api/userdetails/${session?.user.id}`, userDetailsData);
+                if (userDetailsRes?.status == 200) {
+                }
+                else {
+                    await deleteObject(storageRef);
+                }
+            } else {
             }
-            else {
-                await deleteObject(storageRef);
-                console.error("Failed User Details update")
+
+            if (!userRes || userRes?.status == 200) {
+                if (!userDetailsRes || userDetailsRes?.status == 200) {
+                    const newUserDetails = {}
+                    dispatch(addUserData({...userDetailsRes?.data, user: {...userRes?.data}}))
+                    router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
+                    toast("Details updated successfully")
+                }
             }
-            router.push(searchParams.get("returnurl") || "/");
-            toast("Details updated successfully")
+
+
+
 
         } catch (error) {
             uploadedImage && await deleteObject(uploadedImage);
@@ -106,7 +149,7 @@ const UpdateDetails = () => {
     }
 
     const handleFileUpload = async () => {
-        if (!user?.id) {
+        if (!session?.user.id) {
             toast("Please login to add details")
             return;
         };
@@ -119,21 +162,25 @@ const UpdateDetails = () => {
 
                 // Get the download URL of the uploaded image
                 const downloadURL = await getDownloadURL(storageRef);
-                console.log('Image uploaded:', downloadURL);
                 return { downloadURL, storageRef };
 
                 // You can now save the downloadURL to your database or use it in your application as needed
             } catch (error) {
                 setLoading(false);
 
-                console.error('Error uploading image:', error);
             }
         }
     };
 
+    const handleSkip = () => {
+        const returnUrl = searchParams.get("returnUrl")
+        console.log(returnUrl)
+        returnUrl ? router.push(returnUrl) : router.push("/")
+    }
+
     useEffect(() => {
         if (user?.user?._id && !dataModified) {
-            const { name, user: userData, bio, image, } = user;
+            const { name, user: userData, bio, image,dob, address:{country, state, city, street} } = user;
             const { email, phone, username } = userData;
             setName(name || "")
             setBio(bio || "")
@@ -141,44 +188,70 @@ const UpdateDetails = () => {
             setEmail(email || "")
             setPhone(phone || "")
             setUsername(username || "")
+            console.log(dob)
+            setDob(dob || "");
+            setCity(city || "")
+            setCountry(country || "")
+            setState(state || "")
+            setStreet(street || "")
         }
     }, [user])
 
     return (
         <form action="" onSubmit={handleSubmit(handleFormSubmit)} className=''>
-            <div className="input_field_container  flex flex-col gap-20">
-                <div className="input_row gap-4">
-                    <Input
-                        label={"full name"}
-                        type={"text"}
-                        value={name}
-                        setValue={setName}
-                        register={register}
-                        validation={{
-                            maxLength: { value: 30, message: "Can't exceed 30 characters" },
-                            minLength: { value: 3, message: "Min 3 characters required" },
-                        }}
-                        error={errors?.fullname}
-                    />
+            <div className="input_field_container flex flex-col gap-20">
+                <div className="input_row flex-col xs:flex-row items-center xs:gap-10  h-fit border-">
 
-                    <Input
-                        label={"username"}
-                        type={"text"}
-                        value={username}
-                        setValue={setUsername}
-                        register={register}
-                        validation={{
-                            maxLength: { value: 30, message: "Enter less than 30 characters" },
-                            minLength: { value: 5, message: "Minimum 5 characters required" },
-                            pattern: {
-                                value: /^[a-zA-Z][a-zA-Z0-9._]*$/,
-                                message: "Only letters, numbers, underscores, and periods."
-                            },
-                        }}
-                        error={errors?.username}
-                        clearErrors={clearErrors}
-                    />
+                    <div className='shrink-0 xs:scale-[0.85] -my-7 '>
+                        <UploadImage
+                            key={"profileImage"}
+                            label={"your photo"}
+                            type={"profile"}
+                            placeholder={"About you (in short)..."}
+                            setImage={setImage}
+                            setImageUrl={setImageUrl}
+                            imageUrl={imageUrl}
+                            setDragging={setDragging}
+                        />
+                    </div>
+
+
+                    <div className='flex flex-col xs:py-2 h-full xs:items-between gap-5 xs:gap-10 xs:mb-12 w-full'>
+                        <Input
+                            key={"fullname"}
+                            label={"full name"}
+                            type={"text"}
+                            value={name}
+                            setValue={setName}
+                            register={register}
+                            validation={{
+                                maxLength: { value: 30, message: "Can't exceed 30 characters" },
+                                minLength: { value: 3, message: "Min 3 characters required" },
+                            }}
+                            error={errors?.fullname}
+                        />
+
+                        <Input
+                            key={"username"}
+                            label={"username"}
+                            type={"text"}
+                            value={username}
+                            setValue={setUsername}
+                            register={register}
+                            validation={{
+                                maxLength: { value: 30, message: "Enter less than 30 characters" },
+                                minLength: { value: 5, message: "Minimum 5 characters required" },
+                                pattern: {
+                                    value: /^[a-zA-Z][a-zA-Z0-9._]*$/,
+                                    message: "Only letters, numbers, underscores, and periods."
+                                },
+                            }}
+                            error={errors?.username}
+                            clearErrors={clearErrors}
+                        />
+                    </div>
                 </div>
+
 
 
                 {/* <Input
@@ -196,6 +269,7 @@ const UpdateDetails = () => {
                 /> */}
 
                 <Input
+                    key={"phone"}
                     register={register}
                     validation={{
                         pattern: {
@@ -224,18 +298,54 @@ const UpdateDetails = () => {
                 />
 
                 <Input
-                    label={"Your photo"}
-                    type={"image"}
-                    placeholder={"About you (in short)..."}
-                    value={bio}
-                    setImage={setImage}
-                    setImageUrl={setImageUrl}
-                    imageUrl={imageUrl}
-                    setDragging={setDragging}
+                    label={"date of birth"}
+                    type={"date"}
+                    value={dob}
+                    setValue={setDob}
                 />
 
+
+
+                <div className="addressDetail capitalize">
+                    <label className=''>Address</label>
+                    <div className="inputs grid grid-cols-1 xxs:grid-cols-2 gap-5">
+                        <Input
+                            type="text"
+                            placeholder="Country"
+                            value={country}
+                            setValue={setCountry}
+                            classLists={"capitalize"}
+                        />
+                        <Input
+                            type="text"
+                            placeholder="State"
+                            value={state}
+                            setValue={setState}
+                            classLists={"capitalize"}
+
+                        />
+                        <Input
+                            type="text"
+                            placeholder="City"
+                            value={city}
+                            setValue={setCity}
+                            classLists={"capitalize"}
+
+                        />
+                        <Input
+                            type="text"
+                            placeholder="Street"
+                            value={street}
+                            setValue={setStreet}
+                            classLists={"capitalize"}
+
+                        />
+                    </div>
+
+                </div>
+
             </div>
-            <div className="buttons flex gap-7">
+            <div className="buttons flex gap-7 mt-5">
                 <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.9 }}
@@ -251,7 +361,7 @@ const UpdateDetails = () => {
                     }
                 </motion.button>
                 <motion.button
-                    onClick={() => router.push(searchParams.get("returnUrl") || "/")}
+                    onClick={handleSkip}
                     type="button"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.9 }}

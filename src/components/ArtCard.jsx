@@ -5,7 +5,10 @@ import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { toggleArtLike } from "@/redux/features/gallerySlice";
+import { FcTimeline } from "react-icons/fc";
 import axios from "axios";
+import Link from "next/link";
+import Image from "next/image";
 
 
 
@@ -13,17 +16,6 @@ const ArtCard = ({ item }) => {
     const dispatch = useDispatch()
 
     const { data: session } = useSession();
-
-    const updateLocalLikes = (likes, productId) => {
-        if (!checkLiked(likes, productId)) { // not liked add to array
-            setGalleryData((prev) => prev.map((itm) => itm._id == productId ? { ...itm, likes: [...itm.likes, productId] } : itm
-
-            ))
-        } else { // liked remove from array
-            setGalleryData((prev) => prev.map((itm) => itm._id == productId ? { ...itm, likes: itm.likes.filter(id => id != productId) } : itm
-            ))
-        }
-    }
 
     const toggleLike = async (likes, productId) => {
         if (session?.user.id) {
@@ -51,17 +43,20 @@ const ArtCard = ({ item }) => {
 
 
     return (
-        <div className="w-full lg:w-1/4 md:mx-2 mb-4 md:mb-0">
-            <div className="bg-white rounded-lg overflow-hidden shadow relative">
+        <div className=" w-[15rem] md:min-w-[18rem] m-2  ">
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg relative">
                 <div
-                    className=" h-[30vh] overflow-hidden  "
+                    className=" h-[30vh] overflow-hidden shadow-sm  "
                     onDoubleClick={() => {
                         toggleLike(item.likes, item._id);
                     }}
                 >
-                    <motion.img
-                        key={item.category}
+                    <Image
+                        alt={item.title + "image"}
                         src={item.photo}
+                        width={300}
+                        height={300}
+                        className="  object-contain w-full h-full "
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         transition={{
@@ -71,36 +66,20 @@ const ArtCard = ({ item }) => {
                         }}
                     />
 
-                    <div className="pp flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-12 text-center h-12 m-1 rounded-full absolute bottom-0">
-                        <img
-                            src={item.artist.image || "/a1.png"}
-                            width={50}
-                            height={50}
-                        />
-                    </div>
+
 
                 </div>
 
-                <div className="p-4 h-auto md:h-40 lg:h-48">
-                    <a
-                        href="#"
-                        className="block text-blue-500 hover:text-blue-600 font-semibold mb-2 text-lg md:text-base lg:text-lg"
-                    >
-                        {item.name}
-                    </a>
-                    <div className="text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
-                        {item.description}
-                    </div>
-                    <div className="relative mt-2 lg:absolute bottom-0 mb-4 md:hidden lg:block">
-
+                <div className="p-4   ">
+                    <div className="flex  flex-row-reverse justify-between w-full mb-5">
 
                         <div
                             onClick={() => {
                                 toggleLike(item.likes, item._id);
                             }}
-                            className="pp cursor-pointer  flex flex-col  p-1 m-1   justify-center items-center ">
+                            className="pp cursor-pointer   flex flex-col  p-1 m-1   justify-center items-center ">
                             {
-                                !checkLiked(item.likes, session?.user.id) ? <BsHeart fontSize={"1.5rem"} fill="gray" /> :
+                                !checkLiked(item.likes, session?.user.id) ? <BsHeart fontSize={"1rem"} fill="gray" /> :
                                     <motion.span
                                         className="block"
                                         initial={{ opacity: 0, scale: 0.5 }}
@@ -116,14 +95,47 @@ const ArtCard = ({ item }) => {
                                             }
                                         }}
                                     >
-                                        <BsHeartFill fontSize={"1.5rem"} fill="red" />
+                                        <BsHeartFill fontSize={"1rem"} fill="#ed495b" />
                                     </motion.span>}
 
-                            <span className="text-sm font-sans text-black ">
+                            <span className=" text-xs font-sans text-gray-500 ">
                                 {item?.likes?.length || 0}
                             </span>
+
                         </div>
+                        <Link
+                            href={`/artist/${item?.artist?.user}`}
+                        >
+                            <div className="pp hover:shadow-lg flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-10 text-center h-10 m-1 rounded-full  bottom-0">
+                                <Image
+                                    src={item?.artist?.image || "/default-profile.png"}
+                                    alt="Dommy profile picture"
+                                    width={100}
+                                    height={100}
+                                    referrerPolicy="no-referrer"
+                                    className="item-contain w-full h-full"
+                                />
+                            </div>
+                        </Link>
                     </div>
+                    <a
+                        href={`/gallery/${item._id}`}
+                        className="truncate  block text-gray-600 hover:underline font-semibold mb-2 text-lg md:text-base lg:text-lg"
+                    >
+                        {item.name}
+                    </a>
+                    <div className="mb-5 truncate text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
+                        {item.description}
+                    </div>
+
+                    <div className="mt-2 flex justify-between">
+                        <span className="rounded-lg bg-yellow-100 px-5" >${item?.price}</span>
+                        <span className="rounded-lg capitalize bg-blue-100 px-5 flex items-center gap-1">  <FcTimeline/> {item?.category}</span>
+                    </div>
+
+
+
+
                 </div>
             </div>
         </div>

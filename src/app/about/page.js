@@ -1,8 +1,20 @@
+"use client"
 import React from 'react'
+import Skeleton from '@/components/Skeleton'
 
 const Page = () => {
   return (
-    <div>Page</div>
+    <div>
+      <Skeleton
+      type={"card"}
+      />
+      <Skeleton
+      type={"reel"}
+      />
+      <Skeleton
+      type={"pp"}
+      />
+    </div>
   )
 }
 
