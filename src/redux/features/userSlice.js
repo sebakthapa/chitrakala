@@ -14,7 +14,7 @@ const userSlice = createSlice({
             return userData;
         },
 
-        clearUserData: () => {
+        clearUserData: (state, action) => {
             return null;
         },
 

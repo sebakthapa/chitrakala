@@ -1,18 +1,16 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import Input from './Input/Input';
 import { motion } from 'framer-motion';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { login } from '@/redux/features/userSlice';
 import { redirect, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 
 const Signup = () => {
     const router = useRouter();
-    const {data:session} = useSession();
+    const {data:session, status:sessionStatus} = useSession();
 
     const [fullName, setFullName] = useState("")
     const [username, setUsername] = useState("")
@@ -26,7 +24,6 @@ const Signup = () => {
 
     const { register, handleSubmit, watch, clearErrors, setError,setValue,  formState: { errors } } = useForm();
 
-    const dispatch = useDispatch();
 
     const handleSignup = async ({ username, email, password, fullname, phone, }) => {
         if (errors?.email && errors?.phone && errors?.username) { console.log("error xa"); return; }
@@ -40,8 +37,8 @@ const Signup = () => {
         }
         // console.log(data)
 
-        phone && (data.phone = phone);
-        fullname && (data.displayName = fullname);
+        // phone && (data.phone = phone);
+        fullName && (data.name = fullName);
 
         try {
             const res = await axios.post("/api/users", data);
@@ -51,12 +48,10 @@ const Signup = () => {
                 // setUsernameFetchStatus("notAvailable")
                 const userData = res.data;
                 console.log(userData);
-                // dispatch(login(userData));
 
-                // toast.success("Account registered successfully! \n Please login to continue.")
+                localStorage.verificationEmail = email;
+                router.replace("/auth/verify-email");
                 toast.success("Account registered successfully!");
-                redirect("/auth/verify-email");
-
                 // toast("Update your info for getting access to ")
 
             }
@@ -69,16 +64,13 @@ const Signup = () => {
                     setError(field, { message })
                 }
             } else {
-                console.log(error)
+                throw error
             }
         } finally {
             setPassword("");
             setConfirmPassword("")
             setIsSubmitting(false);
         }
-
-
-
         // }
     }
 
@@ -99,7 +91,15 @@ const Signup = () => {
         }
     }, [session])
 
-
+    useLayoutEffect(() => {
+        if (sessionStatus == "authenticated") {
+          if (session?.user.isArtist) {
+            redirect("/profile-setup?step=welcome")
+          } else {
+            redirect(searchParams.returnUrl || "/")
+          }
+        }
+      }, [session, sessionStatus])
 
 
     return (

@@ -120,7 +120,7 @@ const Input = ({
                     />
 
                     {
-                        type === "password" && value && (
+                        type === "password" && (
                             <span className="icon cursor-pointer absolute top-1/2 -translate-y-1/2 right-2 opacity-50 hover:opacity-70 transition duration-300 " onClick={() => setShowPassword((prev) => !prev)}>
                                 {
                                     showPassword ? (

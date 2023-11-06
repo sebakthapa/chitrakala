@@ -36,7 +36,7 @@ const usersDetailsSchema = new mongoose.Schema({
 
   },
   dob: {
-    type: Date,
+    type: String,
     validate: {
       validator: function (value) {
         return value <= new Date();
