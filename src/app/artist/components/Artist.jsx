@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { AiOutlineMail ,AiFillPhone } from 'react-icons/ai'
 
 const Artist = () => {
 
@@ -24,9 +25,6 @@ const Artist = () => {
 
   
 
-    <div className='m-5 '>
-        <button className='border text-[#556f5f] border-[#556f5f] hover:bg-[#556f5f] hover:text-white py-2 px-6 rounded-lg'>Filter</button>
-    </div>
 
 
     <main className="py-4">
@@ -67,18 +65,18 @@ const Artist = () => {
                       {item.bio}
                     </div>
                  
-                    <div className="relative mt-2 lg:absolute bottom-0 mb-4 md:hidden lg:block">
+                    <div className="flex  bg-slate-300 rounded-full px-5 gap-2 mt-2 lg:absolute bottom-0 mb-4 md:hidden lg:block">
                       <span
-                        className=" mr-2 inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
+                        className="flex   items-center gap-2 mr-2   py-1 px-2 rounded-full text-xs lowercase text-gray-700"
                     
                       >
-                     {item.user.email}
+                     <AiOutlineMail/> {item.user.email}
                       </span>
                       <span
-                        className="inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"
+                        className="flex items-center gap-2  py-1 px-2 rounded-full text-xs lowercase text-gray-700"
                       >
                       {/* {item.dob?.split('T')[0]} */}
-                      {item.user?.phone}
+                       <AiFillPhone/> {item.user?.phone}
                       </span>
                     </div>
                   </div>
@@ -90,40 +88,7 @@ const Artist = () => {
           </div>
         </div>
       </main>
-      
-      
-    {/* <main className='bg-[#gagaga] m-5 flex flex-col overflow-hidden  gap-7 '>
-    {users.map((user,index) => (
 
-    
-      <section key ={index} className='bg-slate-300 w-full p-5 flex justify-between rounded-lg'>
-        <aside className='flex gap-5'>
-          <div className='bg-red-50 w-[6rem] h-[6rem] flex justify-center items-center border rounded-full'>
-            <img
-           
-            src={user.photo}
-            alt="profile"
-            />
-          </div>
-          <div>
-            <div>{user.displayName}</div>
-            <div>{user.bio}</div>
-            <div>{user.address}</div>
-            
-            <div>{ user.dob?.split('T')[0]}</div>
-    
-          </div>
-        </aside>
-
-        <div className='flex justify-center items-center'>
-        <button className='border text-[#556f5f] border-[#556f5f] hover:bg-[#556f5f] hover:text-white py-2 px-6 rounded-full'>Checkout</button>
-                        
-        </div>
-
-      </section>
-
-))}
-</main> */}
     </>
   )
 }

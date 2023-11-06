@@ -179,16 +179,14 @@ input[type=number] {
 }
 
 
+/* scrollbar costume  */
+
 /* width */
 .myScroll::-webkit-scrollbar {
     width: 5px;
     height: 5px;
  
-  }
-
-
-  
-  
+  }  
   /* Track */
   .myScroll::-webkit-scrollbar-track {
     @apply bg-transparent
@@ -196,6 +194,24 @@ input[type=number] {
    
   /* Handle */
   .myScroll::-webkit-scrollbar-thumb {
+    @apply bg-gray-800 
+  }
+
+  /* global scrollbar  */
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+ 
+  }  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
     @apply bg-gray-800 
   }
 
