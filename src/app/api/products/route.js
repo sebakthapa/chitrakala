@@ -1,17 +1,63 @@
 import dbConnect from "@/lib/dbConnect";
 import Products from "@/models/useraccounts/products";
-import { NextResponse } from "next/server";
+import { NextResponse,NextRequest } from "next/server";
 
-
+import { useSearchParams } from "next/navigation";
 
 
 
 // GET => get all products
-export const GET = async () => {
+export const GET = async (req) => {
     try {
+        const { searchParams } = new URL(req.url);
+        const username = searchParams.get('username') ;
+        const limit = searchParams.get('limit') ;
+        const filter = searchParams.get('filter');
+        const category = searchParams.get('category');
+        let query = {}
+        let sort = {}
+        if (category) {
+            query.category = category 
+        }
+        if (filter){
+            switch (filter) {
+                case 'priceA': 
+                    sort = { price: 1 };
+                    break;
+                case 'priceD':
+                    sort = { price : -1} ;
+                    break;
+                case 'likesA':
+                    sort = {'likes.length' : 1}  
+                    break;
+                case 'likesD':
+                    sort = {'likes.length' : -1}    
+                    break;
+                default:
+                    break;
+            }
+        }
+        console.log(sort)
+       
         await dbConnect();
-        const res = await Products.find({}).populate("artist");
-        return new NextResponse(JSON.stringify(res))
+        const populateOpts = {
+            path: 'artist',
+            populate: {
+              path: 'user'
+            }
+          }
+
+          if (username) {
+            populateOpts.populate.match = { username }
+          }
+          
+        const res = await Products.find(query)
+        .limit(limit) 
+        .sort(sort)
+        .populate(populateOpts)
+        const filtered = res.filter(p => p.artist && p.artist.user)
+
+        return new NextResponse(JSON.stringify(filtered))
     } catch (error) {
         console.log("ERROR fetching products \n" + error)
     }
