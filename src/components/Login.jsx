@@ -67,8 +67,8 @@ const Login = (props) => {
 
     useEffect(() => {
         const error = searchParams.get("error");
-        if (error == "") {
-            //error for account already linked
+        if (error == "OAuthAccountNotLinked") {
+            toast.error("The email is already linked to another account!", {autoClose:10000,})
         }
     }, [])
 
