@@ -1,6 +1,6 @@
 "use client"
 import { motion } from "framer-motion";
-import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsAppIndicator, BsHeart, BsHeartFill } from "react-icons/bs";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
@@ -9,10 +9,13 @@ import { FcTimeline } from "react-icons/fc";
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 
 
 const ArtCard = ({ item }) => {
+
+    const [filter,setFilter] = useState()
     const dispatch = useDispatch()
 
     const { data: session } = useSession();
@@ -128,10 +131,13 @@ const ArtCard = ({ item }) => {
                         {item.description}
                     </div>
 
-                    <div className="mt-2 flex justify-between">
+                    <div className="my-5 flex justify-between">
                         <span className="rounded-lg bg-yellow-100 px-5" >${item?.price}</span>
                         <span className="rounded-lg capitalize bg-blue-100 px-5 flex items-center gap-1">  <FcTimeline/> {item?.category}</span>
                     </div>
+              
+                        <span className="rounded-lg text-gray-500 text-xs flex  items-center gap-2 " ><BsAppIndicator/> {item?.createdAt.split('T')[0]}</span>
+                 
 
 
 

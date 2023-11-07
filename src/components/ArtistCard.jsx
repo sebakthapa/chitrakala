@@ -3,6 +3,7 @@ import Image from 'next/image'
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
+import Skeleton from 'react-loading-skeleton';
 
 const ArtistCard = ({ artwork, likes }) => {
   const [userData, setUserData] = useState({})
@@ -28,12 +29,12 @@ const ArtistCard = ({ artwork, likes }) => {
           width={100}
           height={100}
         />
-        <div class="text-center mt-2 text-3xl font-medium">{userData?.name}</div>
-        <div class="text-center mt-2 text-sm font-medium">@{userData?.user?.username}</div>
-        <div class="text-center mt-2 font-light text-sm">{userData?.user?.email}</div>
-        <div class="text-center font-normal text-lg">{userData?.user?.address}</div>
+        <div class="text-center mt-2 text-3xl font-medium">{userData?.name || <Skeleton/>}</div>
+        <div class="text-center mt-2 text-sm font-medium">@{userData?.user?.username || <Skeleton/> }</div>
+        <div class="text-center mt-2 font-light text-sm">{userData?.user?.email || <Skeleton/>}</div>
+        <div class="text-center font-normal text-lg">{userData?.user?.address || <Skeleton/>}</div>
         <div class="px-6 text-center mt-2 font-light text-sm">
-          <p>{userData?.bio}</p>
+          <p>{userData?.bio || <Skeleton/>}</p>
         </div>
         <hr class="mt-8" />
         <div class="flex p-4">

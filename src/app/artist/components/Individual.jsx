@@ -3,12 +3,13 @@ import ArtistCard from '@/components/ArtistCard'
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation';
 import ArtCard from '@/components/ArtCard';
-import Skeleton from '@/components/Skeleton';
+import Link from 'next/link';
+import { BiSolidLeftArrowCircle } from 'react-icons/bi';
+
 const Individual = () => {
     const { artistid: userId } = useParams()
 
     const [userData, setUserData] = useState('')
-    const [loading, setLoading] = useState(true)
 
     let likes = 0
     if (userData) {
@@ -31,7 +32,6 @@ const Individual = () => {
             if (res.status == 200) {
                 const data = await res.json()
                 setUserData(data)
-                setLoading(false)
             }
 
         } catch (error) {
@@ -46,12 +46,16 @@ const Individual = () => {
 
     return (
         <>
-            {loading ? (
+         <div className="text-center ">
+                <Link href="/artist" passHref>
+                    <span className="text-blue-500 absolute left-0  m-5"><BiSolidLeftArrowCircle   fontSize={"2rem"}/></span>
+                </Link>
+            </div>
 
-                <Skeleton type={"card"} />
-            ) : (
-                <>
+    
+                
 
+                              
                     <ArtistCard artwork={userData?.length} likes={likes} />
                     <div className=" myScroll overflow-x-scroll flex py-5">
                         {
@@ -59,10 +63,12 @@ const Individual = () => {
 
                                 return <ArtCard key={index} item={item} />
                             }
-                            )}
+                            )
+                            
+                            }
                     </div>
-                </>
-            )}
+                
+            
         </>
     )
 }

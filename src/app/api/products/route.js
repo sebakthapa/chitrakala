@@ -28,10 +28,16 @@ export const GET = async (req) => {
                     sort = { price : -1} ;
                     break;
                 case 'likesA':
-                    sort = {'likes.length' : 1}  
+                    sort = {likes : 1}  
                     break;
                 case 'likesD':
-                    sort = {'likes.length' : -1}    
+                    sort = {likes : -1}    
+                    break;
+                case 'newA':
+                    sort = {createdAt : 1}  
+                    break;
+                case 'newD':
+                    sort = {updatedAt : -1}    
                     break;
                 default:
                     break;

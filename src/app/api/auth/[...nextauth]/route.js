@@ -13,7 +13,7 @@ import { createTransport } from "nodemailer";
 import { html, text } from "@/lib/email";
 
 const authOptions = {
-    adapter: MongoDBAdapter(clientPromise, { databaseName: "test" }),
+    adapter: MongoDBAdapter(clientPromise, { databaseName: "projectData" }),
     pages: {
         signIn: "/auth/login"
     },

@@ -1,6 +1,5 @@
 import React from 'react'
-import Skeleton from '@/components/Skeleton'
-import TopCreator from '@/components/TopCreator'
+import Loading from '@/components/LoadingComponent'
 export const metadata = {
   title: 'About - Chitrakala',
   description: 'Art marketplace and showcase.',
@@ -9,16 +8,7 @@ export const metadata = {
 const Page = () => {
   return (
     <div>
-      <TopCreator/>
-      <Skeleton
-      type={"card"}
-      />
-      <Skeleton
-      type={"reel"}
-      />
-      <Skeleton
-      type={"pp"}
-      />
+      <Loading/>
     </div>
   )
 }

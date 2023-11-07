@@ -88,7 +88,7 @@ export const PATCH = async (request) => {
         const isArtist = hasArtistDetails(res);
 
         if (isArtist) {
-            const updatedUser = await Users.findByIdAndUpdate(userId, { isArtist });
+            const updatedUser = await Users.findByIdAndUpdate(userId, { isArtist },{new:true});
             res.user = updatedUser;
         }
 
