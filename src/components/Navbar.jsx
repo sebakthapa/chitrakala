@@ -61,6 +61,7 @@ function Navbar() {
   const handleAddClick = () => {
     const userId = session?.user.id;
     const isArtist = session?.user.isArtist;
+
     const emailVerified = session?.user.emailVerified;
     console.log("ev", emailVerified)
 
@@ -70,13 +71,14 @@ function Navbar() {
       router.push("/auth/verify-email");
       return;
     }
+
     if (userId) {
       if (isArtist) {
         router.push("/upload");
       } else {
         router.push("/profile-setup?step=personal-details")
         toast.info("Fill these details about you to upload!")
-      }
+      } 
     } else {
       router.push("/auth/login")
       toast.info("Please login to upload on Chitrakala!")

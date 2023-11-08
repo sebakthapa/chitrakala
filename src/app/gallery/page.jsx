@@ -8,11 +8,12 @@ export const metadata = {
 const Page = ({searchParams}) => {
   return (
     <>
-      <h1 className="text-center capitalize font-extrabold text-2xl pt-10 pb-10">
+      <h1 className="  capitalize my-4 text-center text-2xl text-gray-900 font-bold md:text-4xl">
         {searchParams?.category ?(
           `${searchParams.category}`
         ):`Trending`}
       </h1>
+      
 
       <main className="py-4">
         <div className="px-4">

@@ -14,7 +14,10 @@ import { html, text } from "@/lib/email";
 import VerificationTokens from "@/models/others/VerificationTokens";
 
 const authOptions = {
+
+
     adapter: MongoDBAdapter(clientPromise, { databaseName: process.env.DATABASE_NAME }),
+
     pages: {
         signIn: "/auth/login"
     },
