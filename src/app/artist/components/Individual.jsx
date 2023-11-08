@@ -46,29 +46,29 @@ const Individual = () => {
 
     return (
         <>
-         <div className="text-center ">
+            <div className="text-center ">
                 <Link href="/artist" passHref>
-                    <span className="text-blue-500 absolute left-0  m-5"><BiSolidLeftArrowCircle   fontSize={"2rem"}/></span>
+                    <span className="text-blue-500 absolute left-0  m-5"><BiSolidLeftArrowCircle fontSize={"2rem"} /></span>
                 </Link>
             </div>
 
-    
-                
 
-                              
-                    <ArtistCard artwork={userData?.length} likes={likes} />
-                    <div className=" myScroll overflow-x-scroll flex py-5">
-                        {
-                            userData?.length > 0 && userData?.map((item, index) => {
 
-                                return <ArtCard key={index} item={item} />
-                            }
-                            )
-                            
-                            }
-                    </div>
-                
-            
+
+
+            <ArtistCard artwork={userData?.length} likes={likes} />
+            <div className=" myScroll overflow-x-scroll flex py-5">
+                {
+                    userData?.length > 0 && userData?.map((item, index) => {
+
+                        return <ArtCard key={index} item={item} />
+                    }
+                    )
+
+                }
+            </div>
+
+
         </>
     )
 }

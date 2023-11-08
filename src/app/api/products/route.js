@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import Products from "@/models/useraccounts/products";
+import UsersDetails from "@/models/useraccounts/usersDetail";
 import { NextResponse,NextRequest } from "next/server";
 
 import { useSearchParams } from "next/navigation";
@@ -82,6 +83,9 @@ export const POST = async (request) => {
         const newProduct = new Products({ artist, name, price, description, category, photo, });
 
         const savedProduct = await newProduct.save();
+
+        await UsersDetails.findByIdAndUpdate(artist, { $push: { artWorks: savedProduct._id } });
+
 
         return new NextResponse(JSON.stringify(savedProduct))
 

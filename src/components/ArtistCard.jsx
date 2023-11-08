@@ -3,8 +3,8 @@ import Image from 'next/image'
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import Skeleton from 'react-loading-skeleton';
-
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 const ArtistCard = ({ artwork, likes }) => {
   const [userData, setUserData] = useState({})
   const userId = usePathname().split('/')[2];

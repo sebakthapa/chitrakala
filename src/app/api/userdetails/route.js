@@ -32,8 +32,9 @@ export const POST = async (request) => {
         const { user, address = "", photo = "", displayName = "" } = await request.json();
 
         await dbConnect();
+
         
-        const newUserDetail = new UserDetails({ user, address, photo, displayName });
+        const newUserDetail = new UserDetails({ user, address, photo, displayName  });
 
         const savedUserDetail = await newUserDetail.save();
 

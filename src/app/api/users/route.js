@@ -13,7 +13,7 @@ export const GET = async () => {
 
     const data = await UsersDetails.find({})
       .populate({
-        path: 'user',
+        path: 'user likeProducts artWorks',
         select: '-password' // excludes password
       })
     const res = data.filter(doc => doc.user.isArtist);

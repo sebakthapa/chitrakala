@@ -36,14 +36,28 @@ const usersDetailsSchema = new mongoose.Schema({
 
   },
   dob: {
-    type: String,
+    type: Date,
     validate: {
       validator: function (value) {
         return value <= new Date();
       },
       message: 'Date of birth must be in the past'
     }
+  },
+  artWorks: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Products',
+    default: []
+
+
+},
+  likeProducts : 
+  {
+    ref: 'Products',
+    type:[mongoose.Schema.Types.ObjectId],
+    default: []
   }
+  
 
 
 },
