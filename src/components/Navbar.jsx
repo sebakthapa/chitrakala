@@ -122,7 +122,6 @@ function Navbar() {
 
   return (
     <>
-
       {
         showNav ? ( // showing only logo in pages like auth/login and auth/signup
           <Link className='mt-7 ml-4 xxs:3 xs:ml-7 block' href={"/"}>
@@ -151,8 +150,8 @@ function Navbar() {
                   </button >
                 </div >
                 <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
-                  <div className="flex flex-shrink-0 items-center mr-10">
-                    <Link href={"/"} className='-mr-5 lg:-mr-0'>
+                  <div className="flex flex-shrink-0  items-center mr-10">
+                    <Link href={"/"} className='-ml-5 lg:-mr-0'>
                       <span className='saman  xxs:mr-0 text-2xl text-[#ccc] font-semibold'>CHITRAKALA</span>
                     </Link>
 
