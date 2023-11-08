@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserData, clearUserData } from '@/redux/features/userSlice';
 import { usePathname } from 'next/navigation';
-import { signOut, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -61,6 +61,15 @@ function Navbar() {
   const handleAddClick = () => {
     const userId = session?.user.id;
     const isArtist = session?.user.isArtist;
+    const emailVerified = session?.user.emailVerified;
+    console.log("ev", emailVerified)
+
+    if (!emailVerified) {
+      signIn("email", { email: user?.user.email, redirect: false })
+      toast.info("Please Verify your email to Upload on Chitrakala!")
+      router.push("/auth/verify-email");
+      return;
+    }
     if (userId) {
       if (isArtist) {
         router.push("/upload");
@@ -70,7 +79,7 @@ function Navbar() {
       }
     } else {
       router.push("/auth/login")
-      toast.info("Please login to upload!")
+      toast.info("Please login to upload on Chitrakala!")
     }
   }
 
@@ -155,7 +164,7 @@ function Navbar() {
                       <Link href="/artist" className={`${pathname === '/artist' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Artist</Link>
                       <Link href="/exhibition" className={`${pathname === '/exhibition' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Exhibition</Link>
                       <Link href="/about" className={`${pathname === '/about' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">About</Link>
-                      <Link href="/auth/verify-email" className={`${pathname === '/auth/verify-email' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">verify Email</Link>
+                      
 
                       {/* <Link href="/add_artist_details" className={`${pathname === '/add_artist_details' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Be an Artist</Link> */}
                     </div>

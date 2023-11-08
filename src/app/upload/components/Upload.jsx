@@ -151,7 +151,7 @@ const Upload = () => {
     return (
         <>
             <form action="#" className="flex flex-col gap-8 justify-center w-full ">
-                <h1 className='text-center font-extrabold text-3xl'>Showcase your Masterpicee</h1>
+                <h1 className='text-center font-extrabold text-3xl'>Showcase your Masterpiece</h1>
 
 
                 <div className="title input_field_container">

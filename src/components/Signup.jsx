@@ -4,13 +4,14 @@ import Input from './Input/Input';
 import { motion } from 'framer-motion';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
-import { redirect, useRouter } from 'next/navigation';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 
 const Signup = () => {
     const router = useRouter();
-    const {data:session, status:sessionStatus} = useSession();
+    const { data: session, status: sessionStatus } = useSession();
+    const searchParams = useSearchParams()
 
     const [fullName, setFullName] = useState("")
     const [username, setUsername] = useState("")
@@ -19,10 +20,11 @@ const Signup = () => {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [usernameFetchStatus, setUsernameFetchStatus] = useState("");
-    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitMessage, setSubmitMessage] = useState("Sign Up")
     const [formDataModified, setFormDataModified] = useState(false)
 
-    const { register, handleSubmit, watch, clearErrors, setError,setValue,  formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, clearErrors, setError, setValue, formState: { errors } } = useForm();
 
 
     const handleSignup = async ({ username, email, password, fullname, phone, }) => {
@@ -32,6 +34,7 @@ const Signup = () => {
         // watch can be used to update state(errors) onchange
         // if (usernameFetchStatus === "available") { //change this condition if username availability is checked on change
         setIsSubmitting(true)
+        setSubmitMessage("Signing Up...")
         const data = {
             username, email, password
         }
@@ -46,12 +49,17 @@ const Signup = () => {
             // console.log("RESPONSE STATUS > \n", res.status);
             if (res.status == 200) {
                 // setUsernameFetchStatus("notAvailable")
-                const userData = res.data;
-                console.log(userData);
-
-                localStorage.verificationEmail = email;
-                router.replace("/auth/verify-email");
                 toast.success("Account registered successfully!");
+                setSubmitMessage("Logging In!")
+                const userData = res.data;
+
+                console.log(userData);
+                console.log(password);
+                const loginRes = await signIn("credentials", { loginID: userData.user.email, password: password, redirect: false })
+                console.log(loginRes)
+                signIn("email", { email: userData.user.email, redirect: false },)
+
+                router.replace("/auth/verify-email");
                 // toast("Update your info for getting access to ")
 
             }
@@ -70,36 +78,38 @@ const Signup = () => {
             setPassword("");
             setConfirmPassword("")
             setIsSubmitting(false);
+            setSubmitMessage("Sign Up")
         }
         // }
     }
 
 
 
-    const handleUsernameAvailavility = async (inputValue) => {
-
-    }
-
-
-    useEffect(() => {
-        if (session?.user && !formDataModified) {
-            setFullName(session?.user?.name || "")
-            setValue("fullname", session?.user?.name || "")
-            setEmail(session?.user?.email || "")
-            setValue("email", session?.user?.email || "")
-            setFormDataModified(true)
-        }
-    }, [session])
+    // useEffect(() => {
+    //     if (session?.user && !formDataModified) {
+    //         setFullName(session?.user?.name || "")
+    //         setValue("fullname", session?.user?.name || "")
+    //         setEmail(session?.user?.email || "")
+    //         setValue("email", session?.user?.email || "")
+    //         setFormDataModified(true)
+    //     }
+    // }, [session])
 
     useLayoutEffect(() => {
         if (sessionStatus == "authenticated") {
-          if (session?.user.isArtist) {
-            redirect("/profile-setup?step=welcome")
-          } else {
-            redirect(searchParams.returnUrl || "/")
-          }
+            if (session?.user.emailVerified) {
+                if (session?.user.isArtist) {
+                    router.replace("/profile-setup?step=welcome")
+                } else {
+                    router.replace(searchParams.returnUrl || "/");
+                }
+            } else {
+                router.replace("/auth/verify-email")
+            }
         }
-      }, [session, sessionStatus])
+    }, [session, sessionStatus])
+
+  
 
 
     return (
@@ -141,7 +151,6 @@ const Signup = () => {
                         type="text"
                         label="username"
                         value={username}
-                        customValidation={handleUsernameAvailavility}
                         setValue={setUsername}
                         classLists=""
                         availabilityState={usernameFetchStatus}
@@ -205,6 +214,8 @@ const Signup = () => {
                     setValue={setPassword}
                     classLists=""
                     autoComplete="new-password"
+                    submitting={isSubmitting}
+
                 />
 
                 <Input
@@ -221,6 +232,7 @@ const Signup = () => {
                     setValue={setConfirmPassword}
                     classLists=""
                     autoComplete="new-password"
+                    submitting={isSubmitting}
 
                 />
             </div>
@@ -228,16 +240,14 @@ const Signup = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.9 }}
                 transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                className={`${isSubmitting || (errors?.email?.message || errors?.phone?.message || errors?.username?.message) && "pointer-events-none"} bg-gray-900 text-white hover:bg-gray-700`}
+                className={`
+                ${isSubmitting || (errors?.email?.message || errors?.phone?.message || errors?.username?.message) && "pointer-events-none"}
+                 bg-gray-900 text-white hover:bg-gray-700`}
                 type="submit"
             >
-                {
-                    isSubmitting ? (
-                        "Signing up..."
-                    ) : (
-                        "Sign Up"
-                    )
-                }
+
+                
+                            {submitMessage}
             </motion.button>
         </form>
     )

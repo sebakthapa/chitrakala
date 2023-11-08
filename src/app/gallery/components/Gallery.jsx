@@ -35,17 +35,15 @@ const Gallery = () => {
             const res = await axios.get(`/api/products?${query}`);
             const res1 = await axios.get(`/api/products?limit=20`);
             if (res.status == 200) {
-                dispatch(addGalleryData(res.data));
+                dispatch(addGalleryData(res1.data));
             }
             if (res1.status == 200) {
                 setWholeGalleryData(res.data);
             }
-
         }
         catch (error) {
             throw error
         }
-
     }
     useEffect(() => {
 
@@ -56,14 +54,14 @@ const Gallery = () => {
             <div className="myScroll pb-10  flex overflow-x-auto">
 
                 {
-                    galleryData?.length > 0 && galleryData?.map((item, index) => <ArtCard key={index} item={item} />
+                    wholeGalleryData?.length > 0 && wholeGalleryData?.map((item, index) => <ArtCard key={index} item={item} />
 
                     )}
             </div>
-            <div className=" flex flex-wrap">
+            <div className=" myScroll pb-10  flex overflow-x-auto">
 
                 {
-                    wholeGalleryData?.length > 0 && wholeGalleryData?.map((item, index) => <ArtCard key={index} item={item} />
+                    galleryData?.length > 0 && galleryData?.map((item, index) => <ArtCard key={index} item={item} />
 
                     )}
             </div>
