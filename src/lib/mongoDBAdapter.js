@@ -1,4 +1,5 @@
 
+import UsersDetails from "@/models/useraccounts/usersDetail";
 import { ObjectId } from "mongodb";
 export const defaultCollections = {
     Users: "users",
@@ -75,7 +76,11 @@ export function MongoDBAdapter(client, options = {}) {
             }
             const addedUser = await (await db).U.insertOne(user);
             const userDetails = to({name, image, user:addedUser.insertedId}); // added this to make collection ready to add in mongodb
-            await (await db).UD.insertOne(userDetails); // added this to add userDetails data to collection
+            // added this to add userDetails data to collection
+            const userDetailsSchema = await UsersDetails(userDetails)
+            await userDetailsSchema.save()
+
+            // await (await db).UD.insertOne(userDetails);
             return from(user);
         },
         async getUser(id) {
