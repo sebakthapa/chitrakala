@@ -75,12 +75,13 @@ export const PATCH = async (request) => {
 
         // userDetailsRes = await userDetailsRes.populate({ path: 'user', select: '-password' })
 
+        // console.log("after find and update")
         const wasArtist = userDetailsRes?.user?.isArtist;
 
         const isArtist = hasArtistDetails(userDetailsRes);
         if (isArtist != wasArtist) {
-            const updatedUser = await Users.isArtist == (userId, { isArtist }, { new: true });
-            userDetailsRes.user = updatedUser;
+            const updatedUser = await Users.findByIdAndUpdate(userId, { isArtist }, { new: true });
+            res.user = updatedUser;
         }
 
 
@@ -114,3 +115,5 @@ export const DELETE = async (request) => {
     }
 
 }
+
+//
