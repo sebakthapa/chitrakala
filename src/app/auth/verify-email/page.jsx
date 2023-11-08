@@ -75,9 +75,7 @@ const Page = () => {
           )
         }
       </p>
-      <p className="mt-8 text-sm text-gray-700">
-        {"This may take up to a minute."}
-      </p>
+    
       <p className="mt-0">
         {`Just click on the link in that email to complete your signup. If you don't
         see it, you may need to`} <b className='text-gray-600'>check your spam </b> folder.
