@@ -104,7 +104,7 @@ const ArtCard = ({ item }) => {
 
                         </div>
                         <Link
-                            href={`/artist/${item?.artist?.user}`}
+                            href={`/artist/${item?.artist?.user?._id}`}
                         >
                             <div className="pp hover:shadow-lg flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-10 text-center h-10 m-1 rounded-full  bottom-0">
                                 <Image
@@ -118,12 +118,12 @@ const ArtCard = ({ item }) => {
                             </div>
                         </Link>
                     </div>
-                    <a
+                    <Link
                         href={`/gallery/${item._id}`}
                         className="truncate  block text-gray-600 hover:underline font-semibold mb-2 text-lg md:text-base lg:text-lg"
                     >
                         {item.name}
-                    </a>
+                    </Link>
                     <div className="mb-5 truncate text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
                         {item.description}
                     </div>

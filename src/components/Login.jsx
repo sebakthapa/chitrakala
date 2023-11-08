@@ -30,12 +30,11 @@ const Login = (props) => {
             setIsSubmitting(true);
             const data = { loginID: loginId, password };
             const res = await signIn('credentials', { ...data, redirect: false })
-            // console.log( await res.json())
+            console.log(res)
             if (!res.ok) {
-                toast.error("Credentials do not match!");
+                toast.error(res.error)
             } else {
                 // redirect("/add_artist_details");
-
             }
 
 
@@ -55,24 +54,29 @@ const Login = (props) => {
     useLayoutEffect(() => {
         if (sessionStatus == "authenticated") {
             if (!session?.user.emailVerified) {
-                redirect("/auth/verify-email");
+                router.replace("/auth/verify-email");
             } else {
-                    redirect(searchParams.get("returnUrl")  ? searchParams.get("returnUrl") : "/")
+                const callbackUrl = searchParams?.get("callbackUrl");
+                // if (searchParams?.get("returning-user") == true) {
+                //     console.log("returning user")
+                //     router.replace(searchParams?.get("returnUrl") ? searchParams?.get("returnUrl") : "/");
+                // } else {
+                //     router.replace("/profile-setup?step=welcome")
+                // }
+                router.replace(searchParams?.get("returnUrl") ? searchParams?.get("returnUrl") : "/");
+
             }
         }
+    }, [session, sessionStatus, searchParams])
 
 
-    }, [session, sessionStatus])
-
-
-    useEffect(() => {
-        const error = searchParams.get("error");
-        if (error == "") {
-            //error for account already linked
+    useLayoutEffect(() => {
+        const error = searchParams?.get("error");
+        console.log(error)
+        if (error == "OAuthAccountNotLinked") {
+            toast.error("The email is already linked to another account!", { autoClose: 10000, })
         }
     }, [])
-
-
 
     return (
         <form className='sm:border-gray-700 sm:border-2 sm:p-5  flex flex-col gap-6 w-full sm:w-[500px] rounded' onSubmit={handleSubmit(handleLogin)}>

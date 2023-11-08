@@ -8,7 +8,8 @@ export const metadata = {
 
 const Page = ({ searchParams }) => {
     const step = searchParams?.step;
-    if (step == "welcome") {
+
+    if (step == "welcome" || step == undefined) {
         return (
             <Welcome />
         )

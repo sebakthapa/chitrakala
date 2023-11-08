@@ -13,34 +13,19 @@ const Page = ({ params, searchParams, ...props }) => {
   // const user = useSelector(state => state.user)
   const { data: session, status: sessionStatus } = useSession();
 
-
-
   const isLogin = params?.type == "login";
 
-
  
-
-
   const handleGoogleSignin = async () => {
     try {
-      await signIn("google", { callbackUrl: `${searchParams?.returnUrl ? searchParams?.returnUrl : "/"}`, redirect:false, });
+      console.log(searchParams?.returnUrl ? searchParams?.returnUrl : "/")
+      const res = await signIn("google", { callbackUrl: `${searchParams?.returnUrl ? searchParams?.returnUrl : "/"}`, redirect: false, });
+      console.log(res)
       // console.log(res)
-
     } catch (error) {
       throw error
     }
   }
-
-  if (sessionStatus == "loading") {
-    return (
-      <h1>LOADING...</h1>
-    )
-  }
-
-  if (searchParams?.callbackUrl?.length > 0) {
-    toast.error("You must login to continue!")
-  }
-
 
 
   return (

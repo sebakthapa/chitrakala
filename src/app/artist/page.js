@@ -1,5 +1,11 @@
 import React from 'react'
-import Artist from '@/components/Artist'
+import Artist from './components/Artist'
+
+export const metadata = {
+  title: 'Artists - Chitrakala',
+  description: 'Art marketplace and showcase.',
+}
+
 const Page = () => {
   return (
     <>
