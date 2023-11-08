@@ -146,7 +146,7 @@ const UploadImage = ({ type, setDragging, setImage, setImageUrl, label, required
                         </span>
                     )
                 }
-                <div className="imageContainer relative w-ful">
+                <div className="imageContainer relative w-full border-2 border-gray-300 rounded-full">
 
 
 

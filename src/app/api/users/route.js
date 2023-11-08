@@ -48,7 +48,7 @@ export const POST = async (request) => {
 
 
   try {
-    const { username, email, password, phone, displayName } = await request.json();
+    const { username, email, password, phone, name } = await request.json();
 
     if (!username || !email || !password) {
       return new NextResponse(JSON.stringify({ field: "multiple", message: "Missing some required fields." }), { status: 403, statusText: "validation_error" })
@@ -57,7 +57,7 @@ export const POST = async (request) => {
 
     await dbConnect();
 
-    console.log("email", email)
+    // console.log("email", email)
 
 
 
@@ -122,11 +122,11 @@ export const POST = async (request) => {
     if (savedUser?._id) {
       const newUserDetail = new UsersDetails({ user: newUser._id });
       phone && (newUserDetail.phone = phone);
-      displayName && (newUserDetail.displayName = displayName);
+      name && (newUserDetail.name = name);
 
       const savedUserDetail = await newUserDetail.save();
 
-      const data = await savedUserDetail.populate('user', { username: 1, email: 1, _id: 1, phone: 1, });
+      const data = await savedUserDetail.populate('user', { username: 1, email: 1, _id: 1, phone: 1,emailVerified: 1, isArtist: 1 });
 
       return new NextResponse(JSON.stringify(data))
     }

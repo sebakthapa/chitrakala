@@ -24,6 +24,7 @@ const Input = ({
     setDragging,
     setImage,
     imageUrl,
+    submitting: isSubmitting,
 
     ...props
 }) => {
@@ -41,6 +42,11 @@ const Input = ({
 
         }
     }
+
+
+    useEffect(() => {
+        isSubmitting && setShowPassword(false)
+    }, [isSubmitting])
 
 
     if (type == "textarea") {
@@ -99,7 +105,7 @@ const Input = ({
         )
     } else {
         return (
-            <div className="INPUT input_field w-full">
+            <div className={`INPUT input_field w-full ${isSubmitting && "pointer-events-none"}`}>
                 {label &&
                     <label htmlFor={id}>{label} {required && <span className="text-red-500 -ml-1">*</span>}</label>
                 }

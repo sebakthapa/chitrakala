@@ -10,18 +10,18 @@ import { NextResponse } from "next/server";
 export const GET = async (request) => {
     try {
         const params = request.url.split('/');
-        console.log(params)
+        // console.log(params)
         const userId = params[params.length - 1];
-        console.log(userId)
+        // console.log(userId)
         if (!(userId?.length > 0)) {
-            return new NextResponse(JSON.stringify({error: "Invalid User ID provided"}),{status:404})
+            return new NextResponse(JSON.stringify({ error: "Invalid User ID provided" }), { status: 404 })
         }
         await dbConnect();
         const res = await UsersDetails.findOne({
             'user': userId
         }).populate({
             path: "user",
-            select:"-password"
+            select: "-password"
         });
 
 
@@ -33,15 +33,16 @@ export const GET = async (request) => {
     }
 }
 
-// UPDATE => UPDATE a buyer detail
 
+
+// UPDATE => UPDATE a buyer detail
 export const PATCH = async (request) => {
     const hasArtistDetails = (details) => {
-        const { user, bio, image, name, address : {country="", state="",city="", street=""}, dob } = details;
-        
+        const { user, bio, image, name, address, dob } = details;
+
         const { email, phone, username, emailVerified } = user;
-        
-        if (bio && email && phone && name && username && image && country && state && city && street && dob && emailVerified) {
+
+        if (bio && email && phone && name && username && image && address && dob && emailVerified) {
             return true;
         }
         return false;
@@ -49,51 +50,52 @@ export const PATCH = async (request) => {
 
     try {
         console.log("try start")
-        const  dataToUpdate = await request.json();
+        const dataToUpdate = await request.json();
 
         await dbConnect();
         const params = request.url.split('/');
         const userId = params[params.length - 1];
-        console.log("Before")
-        const { bio, image, name, address, dob } = dataToUpdate;
-        let country = "", state = "", city = "", street = "";
-        if (address) {
-            ({ country, state, city, street } = address);
-        }
-        console.log("After")
-        
-        const updatingData = {}
-        
-        if (bio) updatingData.bio = bio;
-        if (image) updatingData.image = image;
-        if (name) updatingData.name = name;
-        if (dob) updatingData.dob = dob;
-        console.log("before fisrt country")
-        if (address) {
-            updatingData.address = { country, state, city, street };
-        }
+        // console.log("Before")
+        const { bio, image, name, address, dob, username, phone, } = dataToUpdate;
 
-        console.log("after fisrt country")
-        
-        console.log("before find and update")
 
-        let res = await UsersDetails.findOneAndUpdate(
-            { 'user': userId },
-            updatingData,
-            { new: true }
+
+        // const {updatingData, }
+        const newUserDetails = { bio, image, name, address, dob };
+        // console.log("UPDATING DATA", updatingData)
+        // console.log(updatingData)
+        // { // not directely pushing dataToUpdate, so that other data won't be uploaded other than what is valid in schema
+        // if (bio) updatingData.bio = bio;
+        // if (image) updatingData.image = image;
+        // if (name) updatingData.name = name;
+        // if (dob) updatingData.dob = dob;
+        // console.log("before fisrt country")
+        // if (address) updatingData.address = address;
+        // console.log(updatingData)
+        // }
+        //address lai not done
+
+
+        let res = await UsersDetails.findOneAndUpdate({ 'user': userId }, newUserDetails,
+            { new: true, }
         )
-        res = await res.populate({path: 'user',select: '-password'})
-        console.log("after find and update")
+
+        // console.log("no populate", res)
+        res = await res.populate({ path: 'user', select: '-password' })
+        // console.log("populate", res)
+
+        // console.log("after find and update")
+
+        const wasArtist = res?.user?.isArtist;
 
         const isArtist = hasArtistDetails(res);
-
-        if (isArtist) {
-            const updatedUser = await Users.findByIdAndUpdate(userId, { isArtist });
+        if (isArtist != wasArtist) {
+            const updatedUser = await Users.findByIdAndUpdate(userId, { isArtist }, { new: true });
             res.user = updatedUser;
         }
 
-        return new NextResponse(JSON.stringify(res))
 
+        return new NextResponse(JSON.stringify(res))
     } catch (error) {
         console.log("ERROR while patching userdetails \n" + error)
     }
