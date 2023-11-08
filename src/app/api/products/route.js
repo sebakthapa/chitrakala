@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import Products from "@/models/useraccounts/products";
+import UsersDetails from "@/models/useraccounts/usersDetail";
 import { NextResponse,NextRequest } from "next/server";
 
 import { useSearchParams } from "next/navigation";
@@ -28,10 +29,16 @@ export const GET = async (req) => {
                     sort = { price : -1} ;
                     break;
                 case 'likesA':
-                    sort = {'likes.length' : 1}  
+                    sort = {likes : 1}  
                     break;
                 case 'likesD':
-                    sort = {'likes.length' : -1}    
+                    sort = {likes : -1}    
+                    break;
+                case 'newA':
+                    sort = {createdAt : 1}  
+                    break;
+                case 'newD':
+                    sort = {updatedAt : -1}    
                     break;
                 default:
                     break;
@@ -76,6 +83,9 @@ export const POST = async (request) => {
         const newProduct = new Products({ artist, name, price, description, category, photo, });
 
         const savedProduct = await newProduct.save();
+
+        await UsersDetails.findByIdAndUpdate(artist, { $push: { artWorks: savedProduct._id } });
+
 
         return new NextResponse(JSON.stringify(savedProduct))
 

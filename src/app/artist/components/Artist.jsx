@@ -38,7 +38,7 @@ const Artist = () => {
                   <div className=" h-[30vh] overflow-hidden  ">
                     <motion.img
                       key={index}
-                      src="/landing/oil.jpg"
+                      src={item.artWorks[0].photo}
                     
                       transition={{
                         type: "spring",
@@ -53,13 +53,13 @@ const Artist = () => {
                   </div>
 
                   <div className="p-4 h-auto md:h-40 lg:h-48">
-                    <div className="text-gray-600 text-xl leading-relaxed block md:text-xs lg:text-sm">
+                    <div className="text-gray-600  text-xl leading-relaxed block md:text-xs lg:text-sm">
                       @{item.user.username}
                     </div>
                     <span
-                      className="block text-gray-700 hover:underline font-semibold mb-2 text-lg md:text-base lg:text-lg"
+                      className="block capitalize text-gray-700 hover:underline font-semibold mb-2 text-lg md:text-base lg:text-lg"
                     >
-                      {item.name}
+                      {item.name.toLowerCase()}
                     </span>
                     <div className="text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
                       {item.bio}

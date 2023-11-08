@@ -14,7 +14,7 @@ function Landing() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ ease: 'easeOut', duration: .7 }}
-                        className='  text-7xl saman  px-5  font-extrabold'
+                        className='  text-5xl xxs:text-6xl xs:text-7xl saman  px-5  font-extrabold'
                     >
                         Chitrakala
                     </motion.span>
@@ -22,12 +22,12 @@ function Landing() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ ease: "easeOut", duration: 1, delay: 0.4 }}
-                        className='text-3xl text  px-5 pt-3  font-semibold'
+                        className='text-xl xxs:text-2xl sm:text-3xl  text  px-5 pt-3  font-semibold'
                     >
                         Where Imagination Meets Canvas
                     </motion.span>
                     <motion.p
-                        className=" text-md   leading-relaxed text-gray-700 antialiased p-5"
+                        className=" text-sm xxs:text-base  sm:text-[1.08rem]  leading-relaxed text-gray-700 antialiased p-5"
                         initial={{ opacity: 0, y: 5 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ ease: "easeInOut", duration: 1, delay: 1 }}
@@ -39,7 +39,7 @@ function Landing() {
 
                     </span>
                     <motion.div
-                        className='flex gap-5 mx-5 mt-2'
+                        className='flex gap-2 xxs:gap-5 mx-5 mt-2'
                         initial={{ opacity: 0, y: 0 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ ease: "easeInOut", duration: 1, delay: 1.5 }}
