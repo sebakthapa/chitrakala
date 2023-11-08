@@ -17,13 +17,13 @@ const PersonalDetails = () => {
         }
     }, [sessionStatus, session])
     return (
-        <div className='w-full max-w-[600px] border- m-auto mt- font-serif border- p-2 xs:p-5  rounded-lg'>
-            <motion.div className="mainInformation mt-20 xxs:mt-10"
-                initial={{ opacity: 0, y: 0 }}
+        <div className='w-full aa max-w-[600px] border- m-auto mt- font-serif border- p-2 xs:p-5 mt-10  rounded-lg'>
+            <motion.div className="mainInformation "
+                initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 1 }}
             >
-                <UpdateDetails title="Profile Details" subtitle="Fill all these details to become artist on Chitrakala" />
+                <UpdateDetails title="Your Profile" subtitle="Update your profile and upload on Chitrakala." />
             </motion.div>
          </div>
     )

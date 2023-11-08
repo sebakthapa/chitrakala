@@ -12,10 +12,11 @@ import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import UploadImage from './Input/UploadImage';
 import { addUserData } from '@/redux/features/userSlice';
+import { BiQuestionMark } from 'react-icons/bi';
 
 
 
-const UpdateDetails = () => {
+const UpdateDetails = ({title,  subtitle}) => {
     const dispatch = useDispatch()
     const router = useRouter()
     const searchParams = useSearchParams();
@@ -186,7 +187,28 @@ const UpdateDetails = () => {
 
     return (
         <form action="" onSubmit={handleSubmit(handleFormSubmit)} className=''>
-            <div className="input_field_container flex flex-col gap-20">
+            <motion.h1
+                className="text-2xl font-bold xxs:text-3xl xs:text-4xl xxs:font-semibold text-gray-700"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                viewport={{ once: true }}
+            >
+                {title}
+            </motion.h1>
+            <motion.h5
+                className=' text-gray-500 text-sm italic mt-1 xxs:mt-2 xxs:text-base flex gap-2 items-center'
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+            >
+                {subtitle} 
+                <div className='block relative border-[1px] cursor-help border-gray-300 w-fit rounded-full'>
+                    <BiQuestionMark className='' fill="#11111188" />
+                    {/* <p className="message absolute w-auto max-w-screen w-[300px] bg-red-500">Only fields you change will be updated.</p> */}
+                </div>
+            </motion.h5>
+            <div className="input_field_container flex flex-col gap-20 mt-20 xxs:mt-10">
                 <div className="input_row flex-col xs:flex-row items-center xs:gap-10  h-fit border-">
 
                     <div className='shrink-0 xs:scale-[0.85] -my-7 '>
