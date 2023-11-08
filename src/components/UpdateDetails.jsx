@@ -12,14 +12,15 @@ import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import UploadImage from './Input/UploadImage';
 import { addUserData } from '@/redux/features/userSlice';
+import { BiQuestionMark } from 'react-icons/bi';
 
 
 
-const UpdateDetails = () => {
+const UpdateDetails = ({title,  subtitle}) => {
     const dispatch = useDispatch()
     const router = useRouter()
     const searchParams = useSearchParams();
-    const { data: session } = useSession()
+    const { data: session, update: updateSession } = useSession()
     const user = useSelector(state => state.user)
 
     const { register, handleSubmit, watch, clearErrors, setError, setValue, formState: { errors } } = useForm();
@@ -32,10 +33,7 @@ const UpdateDetails = () => {
     const [phone, setPhone] = useState(user?.user?.phone || "");
     const [dob, setDob] = useState("");
     //address states
-    const [country, setCountry] = useState("");
-    const [state, setState] = useState("");
-    const [city, setCity] = useState("");
-    const [street, setStreet] = useState("");
+    const [address, setAddress] = useState("");
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [dragging, setDragging] = useState(false);
@@ -43,9 +41,7 @@ const UpdateDetails = () => {
     const [imageUrl, setImageUrl] = useState(user?.photo || null);
     const [dataModified, setDataModified] = useState(false);
 
-
     let uploadedImage = null;
-
 
     const handleFormSubmit = async (data) => {
         setIsSubmitting(true);
@@ -67,30 +63,25 @@ const UpdateDetails = () => {
 
             const userData = {};
 
-            if (username != user?.user.username) userData.username = username;
-            if (email != user?.user.email) userData.email = email;
-            if (phone != user?.user.phone) userData.phone = phone;
+            if (username && username != user?.user.username) userData.username = username;
+            // if (email && email != user?.user.email) userData.email = email;
+            if (phone && phone != user?.user.phone) userData.phone = phone;
 
             if (Object.keys(userData).length > 0) {
                 userRes = await axios.patch(`/api/users/${session?.user.id}`, userData);
                 if (userRes?.status == 200) {
                 }
             } else {
+
             }
 
             const userDetailsData = {}
             if (bio != user?.bio) userDetailsData.bio = bio;
             if (name != user?.name) userDetailsData.name = name;
             if (dob != user?.dob) userDetailsData.dob = dob;
-            if (country != user?.address?.country) userDetailsData.address = { ...userDetailsData.address, country };
-            if (state != user?.address?.state) userDetailsData.address = { ...userDetailsData.address, state };
-            if (city != user?.address?.city) userDetailsData.address = { ...userDetailsData.address, city };
-            if (street != user?.address?.street) userDetailsData.address = { ...userDetailsData.address, street };
+            if (address != user?.address) userDetailsData.address = address;
 
             // userDetailsData
-
-
-
             if (imageUrl != user?.image) {
                 const imageData = await handleFileUpload();
                 if (imageData) {
@@ -104,9 +95,9 @@ const UpdateDetails = () => {
 
             if (Object.keys(userDetailsData).length == 0 && Object.keys(userData).length == 0) {
                 toast("No changes made to update!")
-                router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") :  "/");
+                router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
                 return;
-            } 
+            }
 
             if (Object.keys(userDetailsData).length > 0) {
                 userDetailsRes = await axios.patch(`/api/userdetails/${session?.user.id}`, userDetailsData);
@@ -121,9 +112,11 @@ const UpdateDetails = () => {
             if (!userRes || userRes?.status == 200) {
                 if (!userDetailsRes || userDetailsRes?.status == 200) {
                     const newUserDetails = {}
-                    dispatch(addUserData({...userDetailsRes?.data, user: {...userRes?.data}}))
+                    dispatch(addUserData({ ...userDetailsRes?.data, user: { ...userRes?.data } }))
                     router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
                     toast("Details updated successfully")
+                    await updateSession();
+
                 }
             }
 
@@ -174,13 +167,12 @@ const UpdateDetails = () => {
 
     const handleSkip = () => {
         const returnUrl = searchParams.get("returnUrl")
-        console.log(returnUrl)
         returnUrl ? router.push(returnUrl) : router.push("/")
     }
 
     useEffect(() => {
         if (user?.user?._id && !dataModified) {
-            const { name, user: userData, bio, image,dob, address:{country, state, city, street} } = user;
+            const { name, user: userData, bio, image, dob, address } = user;
             const { email, phone, username } = userData;
             setName(name || "")
             setBio(bio || "")
@@ -188,18 +180,35 @@ const UpdateDetails = () => {
             setEmail(email || "")
             setPhone(phone || "")
             setUsername(username || "")
-            console.log(dob)
             setDob(dob || "");
-            setCity(city || "")
-            setCountry(country || "")
-            setState(state || "")
-            setStreet(street || "")
+            setAddress(address || "")
         }
     }, [user])
 
     return (
         <form action="" onSubmit={handleSubmit(handleFormSubmit)} className=''>
-            <div className="input_field_container flex flex-col gap-20">
+            <motion.h1
+                className="text-2xl font-bold xxs:text-3xl xs:text-4xl xxs:font-semibold text-gray-700"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                viewport={{ once: true }}
+            >
+                {title}
+            </motion.h1>
+            <motion.h5
+                className=' text-gray-500 text-sm italic mt-1 xxs:mt-2 xxs:text-base flex gap-2 items-center'
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+            >
+                {subtitle} 
+                <div className='block relative border-[1px] cursor-help border-gray-300 w-fit rounded-full'>
+                    <BiQuestionMark className='' fill="#11111188" />
+                    {/* <p className="message absolute w-auto max-w-screen w-[300px] bg-red-500">Only fields you change will be updated.</p> */}
+                </div>
+            </motion.h5>
+            <div className="input_field_container flex flex-col gap-20 mt-20 xxs:mt-10">
                 <div className="input_row flex-col xs:flex-row items-center xs:gap-10  h-fit border-">
 
                     <div className='shrink-0 xs:scale-[0.85] -my-7 '>
@@ -304,45 +313,15 @@ const UpdateDetails = () => {
                     setValue={setDob}
                 />
 
+                <Input
+                    label={"address"}
+                    type="text"
+                    value={address}
+                    setValue={setAddress}
+                    classLists={"capitalize"}
+                />
 
 
-                <div className="addressDetail capitalize">
-                    <label className=''>Address</label>
-                    <div className="inputs grid grid-cols-1 xxs:grid-cols-2 gap-5">
-                        <Input
-                            type="text"
-                            placeholder="Country"
-                            value={country}
-                            setValue={setCountry}
-                            classLists={"capitalize"}
-                        />
-                        <Input
-                            type="text"
-                            placeholder="State"
-                            value={state}
-                            setValue={setState}
-                            classLists={"capitalize"}
-
-                        />
-                        <Input
-                            type="text"
-                            placeholder="City"
-                            value={city}
-                            setValue={setCity}
-                            classLists={"capitalize"}
-
-                        />
-                        <Input
-                            type="text"
-                            placeholder="Street"
-                            value={street}
-                            setValue={setStreet}
-                            classLists={"capitalize"}
-
-                        />
-                    </div>
-
-                </div>
 
             </div>
             <div className="buttons flex gap-7 mt-5">

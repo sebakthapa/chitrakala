@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserData, clearUserData } from '@/redux/features/userSlice';
 import { usePathname } from 'next/navigation';
-import { signOut, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -61,7 +61,17 @@ function Navbar() {
   const handleAddClick = () => {
     const userId = session?.user.id;
     const isArtist = session?.user.isArtist;
-    console.log(isArtist)
+
+    const emailVerified = session?.user.emailVerified;
+    console.log("ev", emailVerified)
+
+    if (!emailVerified) {
+      signIn("email", { email: user?.user.email, redirect: false })
+      toast.info("Please Verify your email to Upload on Chitrakala!")
+      router.push("/auth/verify-email");
+      return;
+    }
+
     if (userId) {
       if (isArtist) {
         router.push("/upload");
@@ -71,7 +81,7 @@ function Navbar() {
       } 
     } else {
       router.push("/auth/login")
-      toast.info("Please login to upload!")
+      toast.info("Please login to upload on Chitrakala!")
     }
   }
 
@@ -114,7 +124,6 @@ function Navbar() {
 
   return (
     <>
-
       {
         showNav ? ( // showing only logo in pages like auth/login and auth/signup
           <Link className='mt-7 ml-4 xxs:3 xs:ml-7 block' href={"/"}>
@@ -143,8 +152,8 @@ function Navbar() {
                   </button >
                 </div >
                 <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
-                  <div className="flex flex-shrink-0 items-center mr-10">
-                    <Link href={"/"} className='-mr-5 lg:-mr-0'>
+                  <div className="flex flex-shrink-0  items-center mr-10">
+                    <Link href={"/"} className='-ml-5 lg:-mr-0'>
                       <span className='saman  xxs:mr-0 text-2xl text-[#ccc] font-semibold'>CHITRAKALA</span>
                     </Link>
 
@@ -156,7 +165,7 @@ function Navbar() {
                       <Link href="/artist" className={`${pathname === '/artist' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Artist</Link>
                       <Link href="/exhibition" className={`${pathname === '/exhibition' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Exhibition</Link>
                       <Link href="/about" className={`${pathname === '/about' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">About</Link>
-                      <Link href="/auth/verify-email" className={`${pathname === '/auth/verify-email' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">verify Email</Link>
+                      
 
                       {/* <Link href="/add_artist_details" className={`${pathname === '/add_artist_details' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Be an Artist</Link> */}
                     </div>

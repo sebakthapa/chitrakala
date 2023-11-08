@@ -11,13 +11,8 @@ const usersDetailsSchema = new mongoose.Schema({
     }
   },
   address: {
-    type: new mongoose.Schema({
-      country: String,
-      state: String,
-      city: String,
-      street: String
-    }),
-    default: {}
+    type: String,
+    default: "",
   },
 
   image: {

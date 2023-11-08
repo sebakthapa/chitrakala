@@ -5,7 +5,7 @@ export const defaultCollections = {
     Users: "users",
     Accounts: "accounts",
     Sessions: "sessions",
-    VerificationTokens: "verification_tokens",
+    VerificationTokens: "verificationtokens",
     UsersDetails: "usersdetails", // added this to reference userdetails collection by UserDetails
 };
 export const format = {
