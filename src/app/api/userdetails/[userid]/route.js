@@ -82,7 +82,7 @@ export const PATCH = async (request) => {
         if (isArtist != wasArtist) {
             const updatedUser = await Users.findByIdAndUpdate(userId, { isArtist }, { new: true });
 
-            res.user = updatedUser;
+            userDetailsRes.user = updatedUser;
         }
 
 
