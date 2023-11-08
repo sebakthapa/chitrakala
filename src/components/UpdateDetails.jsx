@@ -16,7 +16,7 @@ import { BiQuestionMark } from 'react-icons/bi';
 
 
 
-const UpdateDetails = ({title,  subtitle}) => {
+const UpdateDetails = ({ title, subtitle }) => {
     const dispatch = useDispatch()
     const router = useRouter()
     const searchParams = useSearchParams();
@@ -59,69 +59,49 @@ const UpdateDetails = ({title,  subtitle}) => {
         }
 
         try {
-            let userRes, userDetailsRes;
+            let res;
+            const data = {};
 
-            const userData = {};
+            if (username && username != user?.user.username) data.username = username;
+            if (phone != user?.user.phone) data.phone = phone;
 
-            if (username && username != user?.user.username) userData.username = username;
-            // if (email && email != user?.user.email) userData.email = email;
-            if (phone && phone != user?.user.phone) userData.phone = phone;
 
-            if (Object.keys(userData).length > 0) {
-                userRes = await axios.patch(`/api/users/${session?.user.id}`, userData);
-                if (userRes?.status == 200) {
-                }
-            } else {
-
-            }
-
-            const userDetailsData = {}
-            if (bio != user?.bio) userDetailsData.bio = bio;
-            if (name != user?.name) userDetailsData.name = name;
-            if (dob != user?.dob) userDetailsData.dob = dob;
-            if (address != user?.address) userDetailsData.address = address;
+            if (bio != user?.bio) data.bio = bio;
+            if (name != user?.name) data.name = name;
+            if (dob != user?.dob) data.dob = dob;
+            if (address != user?.address) data.address = address;
 
             // userDetailsData
             if (imageUrl != user?.image) {
                 const imageData = await handleFileUpload();
                 if (imageData) {
                     uploadedImage = imageData?.storageRef;
-                    userDetailsData.image = imageData.downloadURL;
+                    data.image = imageData.downloadURL;
                 } else {
                     toast("unable to upload image at the moment.")
                 }
             } else {
             }
 
-            if (Object.keys(userDetailsData).length == 0 && Object.keys(userData).length == 0) {
+            if (Object.keys(data).length == 0) {
+
+            }
+
+            if (Object.keys(data).length > 0) {
+                res = await axios.patch(`/api/userdetails/${session?.user.id}`, data);
+                if (res?.status == 200) {
+                    res?.data && dispatch(addUserData(res?.data));
+                    router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
+                    toast("Details updated successfully")
+                    await updateSession();
+                } else {
+                    await deleteObject(storageRef);
+                }
+            } else {
                 toast("No changes made to update!")
                 router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
                 return;
             }
-
-            if (Object.keys(userDetailsData).length > 0) {
-                userDetailsRes = await axios.patch(`/api/userdetails/${session?.user.id}`, userDetailsData);
-                if (userDetailsRes?.status == 200) {
-                }
-                else {
-                    await deleteObject(storageRef);
-                }
-            } else {
-            }
-
-            if (!userRes || userRes?.status == 200) {
-                if (!userDetailsRes || userDetailsRes?.status == 200) {
-                    const newUserDetails = {}
-                    dispatch(addUserData({ ...userDetailsRes?.data, user: { ...userRes?.data } }))
-                    router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
-                    toast("Details updated successfully")
-                    await updateSession();
-
-                }
-            }
-
-
-
 
         } catch (error) {
             uploadedImage && await deleteObject(uploadedImage);
@@ -136,6 +116,7 @@ const UpdateDetails = ({title,  subtitle}) => {
             } else {
                 throw error;
             }
+
         } finally {
             setIsSubmitting(false)
         }
@@ -202,7 +183,7 @@ const UpdateDetails = ({title,  subtitle}) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
             >
-                {subtitle} 
+                {subtitle}
                 <div className='block relative border-[1px] cursor-help border-gray-300 w-fit rounded-full'>
                     <BiQuestionMark className='' fill="#11111188" />
                     {/* <p className="message absolute w-auto max-w-screen w-[300px] bg-red-500">Only fields you change will be updated.</p> */}
@@ -244,6 +225,7 @@ const UpdateDetails = ({title,  subtitle}) => {
                             key={"username"}
                             label={"username"}
                             type={"text"}
+                            required
                             value={username}
                             setValue={setUsername}
                             register={register}

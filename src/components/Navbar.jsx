@@ -91,7 +91,7 @@ function Navbar() {
       const res = await signOut({ redirect: false });
       console.log(res)
       dispatch(clearUserData());
-      
+
     } catch (error) {
       throw error;
     }
@@ -151,12 +151,11 @@ function Navbar() {
 
                   </button >
                 </div >
-                <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
-                  <div className="flex flex-shrink-0  items-center mr-10">
-                    <Link href={"/"} className='-ml-5 lg:-mr-0'>
-                      <span className='saman  xxs:mr-0 text-2xl text-[#ccc] font-semibold'>CHITRAKALA</span>
+                <div className="flex flex-1 items-center justify-start ml-16 xxs:ml-20 xs:ml-0 xs:justify-center  md:items-stretch md:justify-start">
+                  <div className="flex flex-shrink-0 items-center mr-10">
+                    <Link href={"/"} className='-ml-5 xs:ml-5 lg:ml-8'>
+                      <span className='saman xs:l-10  xxs:mr-0 text-2xl xs:text-3xl text-[#ccc] font-semibold'>CHITRAKALA</span>
                     </Link>
-
                   </div>
                   <div className="hidden md:ml-6 md:block">
                     <div className="flex space-x-3 lg:space-x-5">
@@ -165,7 +164,7 @@ function Navbar() {
                       <Link href="/artist" className={`${pathname === '/artist' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Artist</Link>
                       <Link href="/exhibition" className={`${pathname === '/exhibition' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Exhibition</Link>
                       <Link href="/about" className={`${pathname === '/about' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">About</Link>
-                      
+
 
                       {/* <Link href="/add_artist_details" className={`${pathname === '/add_artist_details' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Be an Artist</Link> */}
                     </div>
@@ -178,19 +177,22 @@ function Navbar() {
                   {
                     session?.user?.id ? (
                       <>
-                        <button onClick={handleAddClick} type="button" className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                          <BsPlusCircle fill='white' fontSize={"1.5rem"} />
+                          <button
+                            onClick={handleAddClick}
+                            type="button"
+                            title='Upload your artwork.'
+                            className="relative  p-2 rounded-full  text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                          >
+                          <BsPlusCircle className='w-5 h-5 xs:w-6 xs:h-6' fill='white'  />
                         </button>
                         <div id='ppMain' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="ppMain relative ml-3">
                           <div id='ppPhoto' className='ppPhoto'>
                             <button type="button" className=" relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                               <span className="absolute -inset-1.5"></span>
                               <span className="sr-only">Open user menu</span>
-                              {
-                                user?.image ?
-                                  <Image className="h-8 w-8 rounded-full object-cover" height={100} width={100} src={user?.image} alt="profile image" /> :
-                                  <Image className="h-8 w-8 rounded-full cover" height={100} width={100} src={"/default-profile.png"} alt="profile image" />
-                              }
+
+                              <Image className="h-7 w-7 xs:h-10 xs:w-10 rounded-full object-cover" height={100} width={100} src={user?.image || "/default-profile.png"} alt="profile image" /> 
+                              
 
                             </button>
                           </div>
@@ -199,7 +201,7 @@ function Navbar() {
                               <div id='ppHover' className="ppHover    mt-4 w-48 origin-top-right rounded-md flex  flex-col gap-1  bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
                                 <span className="  font-bold w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">{user?.name}</span>
                                 <Link href="/me" className="hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">Your Profile</Link>
-                                <Link href="/me" className="hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Settings</Link>
+                                <Link href="/profile-setup?step=change-password" className="hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Change Password</Link>
                                 <span href="/" onClick={handleSignout} className="hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Sign out</span>
                               </div>
                             </div>

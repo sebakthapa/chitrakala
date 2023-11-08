@@ -55,41 +55,30 @@ export const PATCH = async (request) => {
         await dbConnect();
         const params = request.url.split('/');
         const userId = params[params.length - 1];
-        // console.log("Before")
         const { bio, image, name, address, dob, username, phone, } = dataToUpdate;
 
-
-
-        // const {updatingData, }
         const newUserDetails = { bio, image, name, address, dob };
-        // console.log("UPDATING DATA", updatingData)
-        // console.log(updatingData)
-        // { // not directely pushing dataToUpdate, so that other data won't be uploaded other than what is valid in schema
-        // if (bio) updatingData.bio = bio;
-        // if (image) updatingData.image = image;
-        // if (name) updatingData.name = name;
-        // if (dob) updatingData.dob = dob;
-        // console.log("before fisrt country")
-        // if (address) updatingData.address = address;
-        // console.log(updatingData)
-        // }
-        //address lai not done
+        const newUser = { username, phone };
 
+        let userRes, userDetailsRes;
+        if (Object.keys(newUser)?.length > 0) {
+            userRes = await Users.findByIdAndUpdate(userId, newUser, { new: true })
+        }
 
-        let res = await UsersDetails.findOneAndUpdate({ 'user': userId }, newUserDetails,
-            { new: true, }
-        )
+        if (userRes) {
+            if (Object.keys(newUserDetails)?.length > 0) {
+                userDetailsRes = await UsersDetails.findOneAndUpdate({ 'user': userId }, newUserDetails,
+                    { new: true, }
+                ).populate({ path: 'user', select: '-password' })
+            }
+        }
 
-        // console.log("no populate", res)
-        res = await res.populate({ path: 'user', select: '-password' })
-        // console.log("populate", res)
+        // userDetailsRes = await userDetailsRes.populate({ path: 'user', select: '-password' })
 
         // console.log("after find and update")
+        const wasArtist = userDetailsRes?.user?.isArtist;
 
-
-        const wasArtist = res?.user?.isArtist;
-
-        const isArtist = hasArtistDetails(res);
+        const isArtist = hasArtistDetails(userDetailsRes);
         if (isArtist != wasArtist) {
             const updatedUser = await Users.findByIdAndUpdate(userId, { isArtist }, { new: true });
 
@@ -97,7 +86,7 @@ export const PATCH = async (request) => {
         }
 
 
-        return new NextResponse(JSON.stringify(res))
+        return new NextResponse(JSON.stringify(userDetailsRes))
     } catch (error) {
         console.log("ERROR while patching userdetails \n" + error)
     }
@@ -127,3 +116,5 @@ export const DELETE = async (request) => {
     }
 
 }
+
+//
