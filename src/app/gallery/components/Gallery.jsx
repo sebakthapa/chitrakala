@@ -31,6 +31,7 @@ const Gallery = () => {
     async function fetchData() {
         try {
             const res = await axios.get(`/api/products?${query}`);
+
             if (res.status === 200) {
                 // dispatch(addGalleryData(res.data));
                 
@@ -38,6 +39,7 @@ const Gallery = () => {
                 setLoading(false)
             }
            
+
         }
         catch (error) {
             throw error;
@@ -48,7 +50,6 @@ const Gallery = () => {
     useEffect(() => {
         fetchData();
     }, []);
-
 
 
 

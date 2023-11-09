@@ -47,7 +47,7 @@ const Welcome = () => {
                         <p className='text-gray-500 group-hover:text-gray-500 italic transition duration-300'>{"I'm here to discover different arts."}</p>
                     </button>
                     <button
-                        onClick={() => router.push(`/profile-setup?step=personal-details&returnUrl=${searchParams?.get("returnUrl")}`)} className='p-10 text-left border-2 border-[rgba(0,0,0,.07)]  rounded-lg  group hover:border-gray-300 hover:shadow-sm hover:-translate-y-1 transition duration-300 '
+                        onClick={() => router.push(`/profile-setup?step=personal-details&returnUrl=${searchParams?.get("returnUrl") ? searchParams?.get("returnUrl") : ""}`)} className='p-10 text-left border-2 border-[rgba(0,0,0,.07)]  rounded-lg  group hover:border-gray-300 hover:shadow-sm hover:-translate-y-1 transition duration-300 '
                     >
                         <h6 className='text-xl font-sans font-medium text-gray-600 mb-3 group-hover:text-black transition duration-300'>Artist</h6>
                         <p className='text-gray-500 group-hover:text-gray-500 italic transition duration-300'>{"I'm here to showcase my works."}</p>

@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema(
     },
     emailVerified: {
       type: Date,
+      default:null,
       // default: false,
     },
   },

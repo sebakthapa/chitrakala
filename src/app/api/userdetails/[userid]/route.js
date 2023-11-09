@@ -10,18 +10,18 @@ import { NextResponse } from "next/server";
 export const GET = async (request) => {
     try {
         const params = request.url.split('/');
-        console.log(params)
+        // console.log(params)
         const userId = params[params.length - 1];
-        console.log(userId)
+        // console.log(userId)
         if (!(userId?.length > 0)) {
-            return new NextResponse(JSON.stringify({error: "Invalid User ID provided"}),{status:404})
+            return new NextResponse(JSON.stringify({ error: "Invalid User ID provided" }), { status: 404 })
         }
         await dbConnect();
         const res = await UsersDetails.findOne({
             'user': userId
         }).populate({
             path: "user",
-            select:"-password"
+            select: "-password"
         });
 
 
@@ -33,15 +33,16 @@ export const GET = async (request) => {
     }
 }
 
-// UPDATE => UPDATE a buyer detail
 
+
+// UPDATE => UPDATE a buyer detail
 export const PATCH = async (request) => {
     const hasArtistDetails = (details) => {
-        const { user, bio, image, name, address : {country="", state="",city="", street=""}, dob } = details;
-        
+        const { user, bio, image, name, address, dob } = details;
+
         const { email, phone, username, emailVerified } = user;
-        
-        if (bio && email && phone && name && username && image && country && state && city && street && dob && emailVerified) {
+
+        if (bio && email && phone && name && username && image && address && dob && emailVerified) {
             return true;
         }
         return false;
@@ -49,51 +50,43 @@ export const PATCH = async (request) => {
 
     try {
         console.log("try start")
-        const  dataToUpdate = await request.json();
+        const dataToUpdate = await request.json();
 
         await dbConnect();
         const params = request.url.split('/');
         const userId = params[params.length - 1];
-        console.log("Before")
-        const { bio, image, name, address, dob } = dataToUpdate;
-        let country = "", state = "", city = "", street = "";
-        if (address) {
-            ({ country, state, city, street } = address);
-        }
-        console.log("After")
-        
-        const updatingData = {}
-        
-        if (bio) updatingData.bio = bio;
-        if (image) updatingData.image = image;
-        if (name) updatingData.name = name;
-        if (dob) updatingData.dob = dob;
-        console.log("before fisrt country")
-        if (address) {
-            updatingData.address = { country, state, city, street };
+        const { bio, image, name, address, dob, username, phone, } = dataToUpdate;
+
+        const newUserDetails = { bio, image, name, address, dob };
+        const newUser = { username, phone };
+
+        let userRes, userDetailsRes;
+        if (Object.keys(newUser)?.length > 0) {
+            userRes = await Users.findByIdAndUpdate(userId, newUser, { new: true })
         }
 
-        console.log("after fisrt country")
-        
-        console.log("before find and update")
-
-        let res = await UsersDetails.findOneAndUpdate(
-            { 'user': userId },
-            updatingData,
-            { new: true }
-        )
-        res = await res.populate({path: 'user',select: '-password'})
-        console.log("after find and update")
-
-        const isArtist = hasArtistDetails(res);
-
-        if (isArtist) {
-            const updatedUser = await Users.findByIdAndUpdate(userId, { isArtist },{new:true});
-            res.user = updatedUser;
+        if (userRes) {
+            if (Object.keys(newUserDetails)?.length > 0) {
+                userDetailsRes = await UsersDetails.findOneAndUpdate({ 'user': userId }, newUserDetails,
+                    { new: true, }
+                ).populate({ path: 'user', select: '-password' })
+            }
         }
 
-        return new NextResponse(JSON.stringify(res))
+        // userDetailsRes = await userDetailsRes.populate({ path: 'user', select: '-password' })
 
+        // console.log("after find and update")
+        const wasArtist = userDetailsRes?.user?.isArtist;
+
+        const isArtist = hasArtistDetails(userDetailsRes);
+        if (isArtist != wasArtist) {
+            const updatedUser = await Users.findByIdAndUpdate(userId, { isArtist }, { new: true });
+
+            userDetailsRes.user = updatedUser;
+        }
+
+
+        return new NextResponse(JSON.stringify(userDetailsRes))
     } catch (error) {
         console.log("ERROR while patching userdetails \n" + error)
     }
@@ -123,3 +116,5 @@ export const DELETE = async (request) => {
     }
 
 }
+
+//
