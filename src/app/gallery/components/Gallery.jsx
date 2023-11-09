@@ -22,19 +22,20 @@ const Gallery = () => {
     if (category) { query += `&category=${category}`; }
     if (limit) { query += `&limit=${limit}`; }
 
-    const dispatch = useDispatch();
-    const galleryData = useSelector(state => state.gallery);
     const [filterParams, setFilterParams] = useState(filter||"newD");
     const [filteredData, setFilteredData] = useState([]);
     const [sortedData, setSortedData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [loading1, setLoading1] = useState(true);
 
     async function fetchData() {
         try {
             const res = await axios.get(`/api/products?${query}`);
             if (res.status === 200) {
                 // dispatch(addGalleryData(res.data));
-                setFilteredData(res.data)
                 
+                setFilteredData(res.data)
+                setLoading(false)
             }
            
         }
@@ -56,13 +57,13 @@ const Gallery = () => {
 
       async function fetchSortedData() {
         try {
+          setLoading1(true)
             const res = await axios.get(`/api/products?filter=${filterParams}`);
             
             if (res.status === 200) {
-                // dispatch(addGalleryData(res.data));
-                // setSortedData(res.data)
-                setSortedData(null)
+              
                 setSortedData(res.data)
+                setLoading1(false)
                 
                 
             }
@@ -79,13 +80,17 @@ const Gallery = () => {
 
     return (
         <>
-          {filteredData.length>0 ? (
-            <div className="myScroll pb-10 flex overflow-x-auto">
-              {filteredData?.map((item, index) => <ArtCard key={index} item={item} />)}
-            </div>
-          ) : (
-            <Skeleton  containerClassName="h-[2rem] w-full" count={3} />
-          )}
+
+{loading ? (
+                <div className="myScroll pb-10 flex overflow-x-auto">
+                    <Skeleton count={5} />
+                </div>
+            ) : (
+                <div className="myScroll pb-10 flex overflow-x-auto">
+                    {filteredData?.map((item, index) => <ArtCard key={index} item={item} />)}
+                </div>
+            )}
+   
           <h2 className="mb-4 text-center text-2xl text-gray-900 font-bold md:text-4xl">Explore</h2>
       
           <label htmlFor="filter" className="text-gray-400 font-bold text-xs">Sort</label>
@@ -96,15 +101,12 @@ const Gallery = () => {
               <option className="text-gray-700 block px-4 py-2 text-sm " value={"priceD"}>Price</option>
             </select>
           </div>
-      
-          {sortedData.length>0 ? (
+
             <div className="myScroll pb-10 flex overflow-x-auto">
                     {sortedData?.map((item,index) => <ArtCard key={index} item={item} />)  }
 
             </div>
-          ) : (
-            <Skeleton containerClassName="h-[2rem] w-full" count={3} />
-          )}
+  
         </>
       );
       
