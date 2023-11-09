@@ -6,9 +6,9 @@ const usersDetailsSchema = new mongoose.Schema({
     unique: [true, "The userdetails already exists"],
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users',
-    autopopulate: {
-      select: '-password' // remove listed fields from selection
-    }
+    // autopopulate: {
+    //   select: '-password' // remove listed fields from selection
+    // }
   },
   address: {
     type: String,

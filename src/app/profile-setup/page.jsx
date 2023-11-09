@@ -1,3 +1,5 @@
+import ChangePassword from '@/components/ChangePassword';
+import UpdateDetails from '@/components/UpdateDetails';
 import PersonalDetails from '@/components/profileSetup/PersonalDetails';
 import Welcome from "@/components/profileSetup/Welcome";
 
@@ -13,9 +15,13 @@ const Page = ({ searchParams }) => {
         return (
             <Welcome />
         )
-    }else if (step == "personal-details") {
+    } else if (step == "personal-details") {
         return (
-            <PersonalDetails />
+            <UpdateDetails />
+        )
+    } else if (step == "change-password") {
+        return (
+            <UpdateDetails title={"Change password"} form="password" />
         )
     }
 

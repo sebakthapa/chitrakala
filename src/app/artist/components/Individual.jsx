@@ -5,18 +5,19 @@ import { useParams } from 'next/navigation';
 import ArtCard from '@/components/ArtCard';
 import Link from 'next/link';
 import { BiSolidLeftArrowCircle } from 'react-icons/bi';
+import { useSelector } from 'react-redux';
 
 const Individual = () => {
     const { artistid: userId } = useParams()
+
+    const user = useSelector(state => state.user)
 
     const [userData, setUserData] = useState('')
 
     let likes = 0
     if (userData) {
-
         userData.map((item, index) => {
             console.log(item.likes.length)
-
             likes = likes + item.likes.length
         })
     }
@@ -40,9 +41,12 @@ const Individual = () => {
 
     }
     useEffect(() => {
-
-        fetchData();
-    }, []);
+        if (userId == user?.user.id) {
+            setUserData(user)
+        } else {
+            fetchData();
+        }
+    }, [user]);
 
     return (
         <>

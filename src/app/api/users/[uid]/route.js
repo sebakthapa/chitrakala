@@ -53,7 +53,6 @@ export const PATCH = async (request) => {
       if (existingPhone?._id) return new NextResponse(JSON.stringify({ field: "phone", message: "This phone is linked with another user." }), { status: 403, statusText: "validation_error" })
     }
 
-
     if (updatedData.email) {
       const email = updatedData.email;
 
