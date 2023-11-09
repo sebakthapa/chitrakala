@@ -1,26 +1,42 @@
 "use client"
-import { useEffect } from "react";
-import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import LoadingComponent from "./LoadingComponent";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
-export default function isAuthenticated(Component) {
+export default function isAuthenticated(Component, { authenticateUserDetails }) {
     return function IsAuthenticated(props) {
-        const { status: sessionStatus } = useSession();
+        const router = useRouter();
+        const {data:session, status: sessionStatus } = useSession();
+        const user = useSelector(store => store.user)
+
+        let authenticationStatus = "loading";
+        const [authstatus, setAuthStatus] = useState("loading")
 
         useEffect(() => {
-            if (sessionStatus == "unauthenticated") {
-                return redirect("/");
+            if (authenticateUserDetails) {
+                if (sessionStatus == "authenticated" && !user?.user._id) {
+                    setAuthStatus("loadingUser")
+                } else {
+                    setAuthStatus(sessionStatus)
+                }
+            } else {
+                setAuthStatus(sessionStatus)
             }
-        }, [sessionStatus]);
+        }, [sessionStatus, user])
 
-        if (sessionStatus == "unauthenticated") {
-            return null;
+
+        if (authstatus == "unauthenticated") {
+            toast("You must be logged in to perform this action!")
+            return router.replace("/")
+        } else if (authstatus == "loading") {
+            return <LoadingComponent  />
+        } else if (authstatus == "loadingUser") {
+            return <LoadingComponent message="Downloading User Data..." />
+        } else {
+            return <Component {...props} />;
         }
-
-        if (sessionStatus == "loading") {
-            return <h1>Loading... </h1>
-        }
-
-        return <Component {...props} />;
     };
 }
