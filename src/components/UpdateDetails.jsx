@@ -31,7 +31,7 @@ const UpdateDetails = ({ title, subtitle }) => {
     const [username, setUsername] = useState(user?.user?.username || "");
     const [bio, setBio] = useState(user?.bio || "");
     const [phone, setPhone] = useState(user?.user?.phone || "");
-    const [dob, setDob] = useState(user?.dob.split("T")[0] || "");
+    const [dob, setDob] = useState(user?.dob?.split("T")[0] || "");
     //address states
     const [address, setAddress] = useState("");
 
@@ -161,7 +161,7 @@ const UpdateDetails = ({ title, subtitle }) => {
             setEmail(email || "")
             setPhone(phone || "")
             setUsername(username || "")
-            setDob(dob.split("T")[0] || "");
+            setDob(dob?.split("T")[0] || "");
             setAddress(address || "")
         }
     }, [user])

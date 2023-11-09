@@ -61,6 +61,7 @@ function Navbar() {
   const handleAddClick = () => {
     const userId = session?.user.id;
     const isArtist = session?.user.isArtist;
+    console.log(userId,isArtist)
 
     const emailVerified = session?.user.emailVerified;
     console.log("ev", emailVerified)
