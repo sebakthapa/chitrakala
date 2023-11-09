@@ -15,7 +15,6 @@ import { addUserData } from '@/redux/features/userSlice';
 import { BiQuestionMark } from 'react-icons/bi';
 import { Tooltip } from 'react-tooltip';
 import isAuthenticated from './isAuthenticated';
-import { current } from '@reduxjs/toolkit';
 
 
 
@@ -186,12 +185,7 @@ const UpdateDetails = ({ title, subtitle, form }) => {
     }, [user])
 
 
-    useEffect(() => {
-        if (sessionStatus == "unauthenticated" || !user?.user._id) {
-            toast.error("You must login to update details!")
-            router.replace("/")
-        }
-    }, [sessionStatus, session, user])
+    
 
     if (form == "password") {
         const handlePasswordChangeClick = async (data) => {

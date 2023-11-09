@@ -52,22 +52,15 @@ function Navbar() {
 
 
   const handleAddClick = () => {
-    const userId = session?.user.id;
-    const isArtist = session?.user.isArtist;
-    console.log(userId,isArtist)
-
-    const emailVerified = session?.user.emailVerified;
-    console.log("ev", emailVerified)
-
-    if (!emailVerified) {
+    if (!session?.user.emailVerified) {
       signIn("email", { email: user?.user.email, redirect: false })
       toast.info("Please Verify your email to Upload on Chitrakala!")
       router.push("/auth/verify-email");
       return;
     }
 
-    if (userId) {
-      if (isArtist) {
+    if (session?.user.id) {
+      if (session?.user.isArtist) {
         router.push("/upload");
       } else {
         router.push("/profile-setup?step=personal-details")
@@ -121,7 +114,7 @@ function Navbar() {
       }
     }
   }
-    
+
 
   useEffect(() => {
     document.body.addEventListener("click", (e) => {
