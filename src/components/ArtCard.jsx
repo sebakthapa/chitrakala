@@ -9,6 +9,9 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import { useState,useEffect } from "react";
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import moment from "moment/moment";
 
 
 
@@ -31,7 +34,7 @@ const ArtCard = ({ item }) => {
             try {
                 console.log(galleryData)
 
-                    let newLikes = [...galleryData.likes];
+                    let newLikes = [...galleryData?.likes];
                     console.log(newLikes)
     
                     if (galleryData.likes.includes(user?._id)) { // already liked remove userid from array
@@ -70,19 +73,19 @@ const ArtCard = ({ item }) => {
 
     return (
         <>
-            {galleryData  ? (
+            {galleryData   ? (
 
                 <div className=" w-[15rem] md:min-w-[18rem] m-2  ">
                     <div className="bg-white rounded-lg overflow-hidden shadow-lg relative">
                         <div
                             className=" h-[30vh] overflow-hidden shadow-sm  "
                             onDoubleClick={() => {
-                                toggleLike(galleryData._id);
+                                toggleLike(galleryData?._id);
                             }}
                         >
                             <Image
-                                alt={galleryData.title + "image"}
-                                src={galleryData.photo}
+                                alt={galleryData?.title + "image"}
+                                src={galleryData?.photo}
                                 width={300}
                                 height={300}
                                 className="  object-contain w-full h-full "
@@ -108,7 +111,7 @@ const ArtCard = ({ item }) => {
                                     }}
                                     className="pp cursor-pointer   flex flex-col  p-1 m-1   justify-center items-center ">
                                     {
-                                        !checkLiked(galleryData.likes, user?._id) ? <BsHeart fontSize={"1rem"} fill="gray" /> :
+                                        !checkLiked(galleryData?.likes, user?._id) ? <BsHeart fontSize={"1rem"} fill="gray" /> :
                                             <motion.span
                                                 className="block"
                                                 initial={{ opacity: 0, scale: 0.5 }}
@@ -148,13 +151,13 @@ const ArtCard = ({ item }) => {
                                 </Link>
                             </div>
                             <Link
-                                href={`/gallery/${galleryData._id}`}
+                                href={`/gallery/${galleryData?._id}`}
                                 className="truncate  block text-gray-600 hover:underline font-semibold mb-2 text-lg md:text-base lg:text-lg"
                             >
-                                {galleryData.name}
+                                {galleryData?.name}
                             </Link>
                             <div className="mb-5 truncate text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
-                                {galleryData.description}
+                                {galleryData?.description || <Skeleton count={3}/>}
                             </div>
 
                             <div className="my-5 flex justify-between">
@@ -162,7 +165,7 @@ const ArtCard = ({ item }) => {
                                 <span className="rounded-lg capitalize bg-blue-100 px-5 flex items-center gap-1">  <FcTimeline /> {galleryData?.category}</span>
                             </div>
 
-                            <span className="rounded-lg text-gray-500 text-xs flex  items-center gap-2 " ><BsAppIndicator /> {galleryData?.createdAt}</span>
+                            <span className="rounded-lg text-gray-500 text-xs flex  items-center gap-2 " ><BsAppIndicator /> {galleryData?.createdAt && moment(galleryData?.createdAt).fromNow()}</span>
 
 
 

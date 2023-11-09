@@ -31,14 +31,7 @@ function Navbar() {
 
   const [showHover, setShowHover] = useState(false);
 
-  const handleMouseEnter = () => {
-    setShowHover(true);
-  }
 
-  const handleMouseLeave = () => {
-
-    setShowHover(false);
-  }
 
 
   const fetchUserDetails = async (uid) => {
@@ -59,26 +52,20 @@ function Navbar() {
 
 
   const handleAddClick = () => {
-    const userId = session?.user.id;
-    const isArtist = session?.user.isArtist;
-
-    const emailVerified = session?.user.emailVerified;
-    console.log("ev", emailVerified)
-
-    if (!emailVerified) {
+    if (!session?.user.emailVerified) {
       signIn("email", { email: user?.user.email, redirect: false })
       toast.info("Please Verify your email to Upload on Chitrakala!")
       router.push("/auth/verify-email");
       return;
     }
 
-    if (userId) {
-      if (isArtist) {
+    if (session?.user.id) {
+      if (session?.user.isArtist) {
         router.push("/upload");
       } else {
         router.push("/profile-setup?step=personal-details")
         toast.info("Fill these details about you to upload!")
-      } 
+      }
     } else {
       router.push("/auth/login")
       toast.info("Please login to upload on Chitrakala!")
@@ -118,6 +105,22 @@ function Navbar() {
       }
     }
   }, [session])
+
+
+  const handleProfileMenuToggle = (e) => {
+    if (showHover) {
+      if (!e.target.classList.contains("profileMenuItem")) {
+        setShowHover(false)
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    document.body.addEventListener("click", (e) => {
+      handleProfileMenuToggle(e);
+    })
+  })
 
 
 
@@ -177,22 +180,22 @@ function Navbar() {
                   {
                     session?.user?.id ? (
                       <>
-                          <button
-                            onClick={handleAddClick}
-                            type="button"
-                            title='Upload your artwork.'
-                            className="relative  p-2 rounded-full  text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                          >
-                          <BsPlusCircle className='w-5 h-5 xs:w-6 xs:h-6' fill='white'  />
+                        <button
+                          onClick={handleAddClick}
+                          type="button"
+                          title='Upload your artwork.'
+                          className="relative  p-2 rounded-full  text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        >
+                          <BsPlusCircle className='w-5 h-5 xs:w-6 xs:h-6' fill='white' />
                         </button>
-                        <div id='ppMain' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="ppMain relative ml-3">
+                        <div id='ppMain' className="ppMain relative ml-3 rounded-full" onClick={() => setShowHover(prev => !prev)}>
                           <div id='ppPhoto' className='ppPhoto'>
                             <button type="button" className=" relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                               <span className="absolute -inset-1.5"></span>
                               <span className="sr-only">Open user menu</span>
 
-                              <Image className="h-7 w-7 xs:h-10 xs:w-10 rounded-full object-cover" height={100} width={100} src={user?.image || "/default-profile.png"} alt="profile image" /> 
-                              
+                              <Image className="h-7 w-7 xs:h-10 xs:w-10 rounded-full object-cover" height={100} width={100} src={user?.image || "/default-profile.png"} alt="profile image" />
+
 
                             </button>
                           </div>
@@ -200,9 +203,9 @@ function Navbar() {
                             <div className="absolute top-[75%] right-0 z-10 bg-red-00">
                               <div id='ppHover' className="ppHover    mt-4 w-48 origin-top-right rounded-md flex  flex-col gap-1  bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
                                 <span className="  font-bold w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">{user?.name}</span>
-                                <Link href="/me" className="hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">Your Profile</Link>
-                                <Link href="/profile-setup?step=change-password" className="hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Change Password</Link>
-                                <span href="/" onClick={handleSignout} className="hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Sign out</span>
+                                <Link href={`/artist/${user?.user._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">My Profile</Link>
+                                <Link href="/profile-setup?step=change-password" className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Change Password</Link>
+                                <span href="/" onClick={handleSignout} className="profileMenuItem hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Sign out</span>
                               </div>
                             </div>
                           }

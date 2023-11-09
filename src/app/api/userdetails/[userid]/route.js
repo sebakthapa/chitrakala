@@ -57,6 +57,20 @@ export const PATCH = async (request) => {
         const userId = params[params.length - 1];
         const { bio, image, name, address, dob, username, phone, } = dataToUpdate;
 
+
+        // username and phone validation for unique
+
+        if (username) {
+            const existingUsername = await Users.findOne({ username });
+            if (existingUsername?._id) return new NextResponse(JSON.stringify({ field: "username", message: "Username already taken. Please choose another." }), { status: 403, statusText: "validation_error" })
+        }
+
+        if (phone) {
+            const existingPhone = await Users.findOne({ phone });
+            if (existingPhone?._id) return new NextResponse(JSON.stringify({ field: "phone", message: "Phone number is already registered." }), { status: 403, statusText: "validation_error" })
+        }
+
+
         const newUserDetails = { bio, image, name, address, dob };
         const newUser = { username, phone };
 
@@ -82,7 +96,7 @@ export const PATCH = async (request) => {
         if (isArtist != wasArtist) {
             const updatedUser = await Users.findByIdAndUpdate(userId, { isArtist }, { new: true });
 
-            res.user = updatedUser;
+            userDetailsRes.user = updatedUser;
         }
 
 
