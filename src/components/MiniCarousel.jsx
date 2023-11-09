@@ -1,97 +1,108 @@
-"use client"
-import React, { useState,useEffect } from 'react'
-import { BsFillCaretRightFill, BsFillCaretLeftFill } from 'react-icons/bs';
-import { AnimatePresence, motion } from 'framer-motion';
+"use client";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { wrap } from "framer-motion";
+import { BiSolidLeftArrow, BiSolidRightArrow } from "react-icons/bi";
 
-const MiniCarousel = ({images}) => {
+const variants = {
+  enter: (direction) => {
+    return {
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+    };
+  },
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction) => {
+    return {
+      zIndex: 0,
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0,
+    };
+  },
+};
 
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset, velocity) => {
+  return Math.abs(offset) * velocity;
+};
 
-  const [index, setIndex] = useState(0);
-  const changePic = (index) => {
+const MiniCarousel = () => {
+  const [[page, direction], setPage] = useState([0, 0]);
+  const [images, setImages] = useState([]);
+  const [descriptions, setDescriptions] = useState([]);
 
-    setIndex(prevIndex => {
-      const newIndex = prevIndex + index;
-      if(newIndex < 0) {
-        return images.length - 1; 
-      } else if (newIndex >= images.length) {
-        return 0;
-      }
-  
-      return newIndex;
-    });
-  
-  }
+  const fetchImages = async () => {
+    try {
+      const response = await fetch('/api/products?filter=likesD');
+      const data = await response.json();
+      const imagesArray = data.map((item) => item.photo || '');
+      const descriptionsArray = data.map((item) => item.description || ''); // Adjust the field name accordingly
+      setImages(imagesArray);
+      setDescriptions(descriptionsArray);
+    } catch (error) {
+      console.error('Error fetching images:', error);
+    }
+  };
+
   useEffect(() => {
-    
-   const interval = setTimeout(() => {
-      
-      changePic(1)
-    }, 5000);
-    return () => clearInterval(interval); 
-  }, [index])
-  
+    fetchImages();
+  }, []);
 
+  const imageIndex = wrap(0, images.length, page);
+
+  const paginate = (newDirection) => {
+    setPage([page + newDirection, newDirection]);
+  };
 
   return (
     <>
-      <div className="relative  h-[450px] p-2 flex w-full   flex-col rounded-xl  text-gray-700 ">
-        <div className="relative overflow-hidden rounded-xl  text-white h-full">
-          <div className='cover flex justify-center items-center h-full '>
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={images[index]}
-                src={images[index]}
-                className='rounded-lg object-cover h-full w-'
-                loading='lazy'
-
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, }}
-                exit={{ opacity: 0 }}
-              />
-            </AnimatePresence>
+      <div className="relative md:w-1/2 flex justify-center flex-col">
+        <h1 className="font-semibold font-poppins text-3xl p-5 text-center mt-5">Featured Product</h1>
+        <div className="p-5 relative h-auto">
+          <div className="absolute top-0 bottom-0 left-0 flex justify-center items-center  cursor-pointer" onClick={() => paginate(-1)}>
+            <BiSolidLeftArrow fill="#475569" />
           </div>
-          <button type="button" className="flex absolute top-0 left-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-prev onClick={() => changePic(-1)}>
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.img
+              key={page}
+              src={images[imageIndex]}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className=""
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 },
+              }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={1}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x);
 
-            <span className='  p-2 rounded-full'  > <BsFillCaretLeftFill fill='gray' /> </span>
-
-          </button>
-          <button type="button" onClick={() => changePic(1)} className="flex absolute top-0 right-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-next>
-
-            <span className='  p-2 rounded-full' > <BsFillCaretRightFill fill='gray' /> </span>
-
-
-          </button>
-
-
-        </div>
-        <div className='text-center font-sans italic'>This is some text do be displayed here Lorem ipsum dolor sit amet.</div>
-
-      </div>
-
-
-      {/* <section className="flex items-center justify-center gap-4 flex-col ">
-        
-        <AnimatePresence mode="wait">
-                <motion.img
-                key={images[index]}
-                src={images[index]}
-                
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1,}}
-                exit={{ opacity: 0 }}
-                />
+                if (swipe < -swipeConfidenceThreshold) {
+                  paginate(1);
+                } else if (swipe > swipeConfidenceThreshold) {
+                  paginate(-1);
+                }
+              }}
+            />
+          <div className="text-center ">{descriptions[imageIndex]}</div>
           </AnimatePresence>
 
-          <div className='flex justify-betweeen '>
-
-                <div  onClick={()=>changePic(-1)}> <BsFillCaretLeftFill/> </div>
-                <div>Trending</div>
-                <div onClick={()=>changePic(1)} ><BsFillCaretRightFill/></div>
+          <div className="absolute  top-0 bottom-0 right-0 flex justify-center items-center  cursor-pointer" onClick={() => paginate(1)}>
+            <BiSolidRightArrow fill="#475569" />
           </div>
-        
-    </section> */}
+        </div>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default MiniCarousel
+export default MiniCarousel;
