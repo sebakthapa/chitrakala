@@ -1,6 +1,4 @@
-import ChangePassword from '@/components/ChangePassword';
 import UpdateDetails from '@/components/UpdateDetails';
-import PersonalDetails from '@/components/profileSetup/PersonalDetails';
 import Welcome from "@/components/profileSetup/Welcome";
 
 export const metadata = {
@@ -17,7 +15,7 @@ const Page = ({ searchParams }) => {
         )
     } else if (step == "personal-details") {
         return (
-            <UpdateDetails />
+            <UpdateDetails title="Update your Profile" subtitle="Fill these details so that your viewer can know more about you."/>
         )
     } else if (step == "change-password") {
         return (

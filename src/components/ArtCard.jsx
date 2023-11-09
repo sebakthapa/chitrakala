@@ -165,7 +165,7 @@ const ArtCard = ({ item }) => {
                                 <span className="rounded-lg capitalize bg-blue-100 px-5 flex items-center gap-1">  <FcTimeline /> {galleryData?.category}</span>
                             </div>
 
-                            <span className="rounded-lg text-gray-500 text-xs flex  items-center gap-2 " ><BsAppIndicator /> {galleryData?.createdAt}</span>
+                            <span className="rounded-lg text-gray-500 text-xs flex  items-center gap-2 " ><BsAppIndicator /> {galleryData?.createdAt && moment(galleryData?.createdAt).fromNow()}</span>
 
 
 
