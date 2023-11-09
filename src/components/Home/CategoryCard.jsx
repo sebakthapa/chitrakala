@@ -3,6 +3,7 @@ import React from 'react'
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { BsArrowRight } from 'react-icons/bs';
 const CategoryCard = () => {
     const cardVariant = {
         visible: { opacity: 1, scale: 1, transition:{duration:0.3, type:"spring", stiffness:100, damping:15} },
@@ -41,19 +42,13 @@ const CategoryCard = () => {
           color: "#cfd8dc"
         },
         {
-          type: "abstract",
-          description: "Swift strokes hint at forms not yet fully revealed",
+          type: "more",
+          description: " Explore the all the masterpices art.",
           image: "https://mueblesitaliano.ph/wp-content/uploads/2019/07/Contemporary-Abstract-Art-with-Ivan-Acuna-1024x794.jpg",
-          link: `/gallery?category=abstract`,
+          link: `/gallery`,
           color: "#cfd8dc"
         },
-        {
-          type: "other",
-          description: "Swift strokes hint at forms not yet fully revealed",
-          image: "https://t4.ftcdn.net/jpg/05/62/21/11/360_F_562211118_ITosCsVOmLDnxmOAaHnlhyCqvMsb2QKr.jpg",
-          link: `/gallery?category=other`,
-          color: "#cfd8dc"
-        },
+     
     
       ]  
 
@@ -64,28 +59,28 @@ const CategoryCard = () => {
             categories.map(({ type, description, image, link, color }, idx) => {
               return (
                 <motion.div
-                  key={idx}
-                  className="block border-2  hover:shadow-lg shadow-[rgba(0,0,0,.1)] hover:border-gray-300 group  transition-all duration-300 ease-out categoryCard  rounded-lg overflow-hidden  h-fit xxs:h-[450px]"
-                  whileHover="hover"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.05 }}
-                  whileTap="active"
-                  initial="hidden"
-                  variants={cardVariant}
-                  // viewport={{ once: true }}
-                >
-                  <Link href={link} className="bg-red-500">
-                    <div className="w-full h-[70%] overflow-hidden bg-black ">
-                      <motion.img className="w-full h-full opacity-90 group-hover:opacity-100 hover:filter-none object-cover group-hover:scale-[1.07]  transition    duration-500 ease-in-out" src={image} height={200} width={350}
-                      alt={`${type} painting poster`}
-                      />
+                key={idx}
+                className="md:flex mt-8 md:-mx-4"
+                whileHover="hover"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.05 }}
+                whileTap="active"
+                initial="hidden"
+                variants={cardVariant}
+              >
+                <div className="w-full h-64 md:mx-4 rounded-md overflow-hidden bg-cover bg-center " style={{ backgroundImage: `url('${image}')` }}>
+                  <div className="bg-gray-900 bg-opacity-50 flex items-center h-full">
+                    <div className="px-10 max-w-xl">
+                      <h2 className="capitalize text-2xl text-white font-semibold">{type}</h2>
+                      <p className="mt-2 text-gray-400">{`"${description}"`}</p>
+                      <Link href={link}>
+                            <button className='group    text-gray-100 hover:text-white py-2 px-6 pr-5 rounded-full flex items-center gap-2'>View <BsArrowRight className='w-0 transition-all duration-500 ease-in-out group-hover:w-4 h-4' fill='white' /></button>
+                        </Link>
                     </div>
-                    <div className="texts relative pt-7 ">
-                      <h2 className={`categoryText text-gray-500 group-hover:scale-[1.13] transition duration-300 group-hover:text-gray-700 absolute border-[1px] border-[rgba) shadow-md shadow-gray-300 -top-[12px] left-5 rounded-full w-fit px-5 text-lg font-medium`} style={{ background: color }}>{type}</h2>
-                      <p className="descriptionText group-hover:-translate-y-[5px] transition-all duration-300 italic text-[1rem] p-5  text-gray-500 hover:text-gray-700">{`"${description}"`}</p>
-                    </div>
-                  </Link>
-                </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+              
               )
             })
           }
