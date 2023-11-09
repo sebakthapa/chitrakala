@@ -26,7 +26,6 @@ const Page = ({ searchParams }) => {
     return (
         <div>
             This is profile setup page
-
         </div>
     )
 }
