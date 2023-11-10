@@ -141,11 +141,10 @@ const Edit = ({}) => {
                 };
                 
                 const res = await axios.patch("/api/products/"+pid, data);
-                console.log(res)
 
                 if (res.status == 200) {
                     toast(" Updated");
-                    // router.push('/gallery')
+                    router.push('/gallery')
 
 
                 }
