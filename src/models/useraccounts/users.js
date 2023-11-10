@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password field is required"],
       minlength: [6, "Minimum 6 characters required for password."],
       maxlength: [256, "Password cannot exceed 256 characters."],
-
     },
     isArtist: {
       type: Boolean,

@@ -1,4 +1,4 @@
-import PersonalDetails from '@/components/profileSetup/PersonalDetails';
+import UpdateDetails from '@/components/UpdateDetails';
 import Welcome from "@/components/profileSetup/Welcome";
 
 export const metadata = {
@@ -13,16 +13,19 @@ const Page = ({ searchParams }) => {
         return (
             <Welcome />
         )
-    }else if (step == "personal-details") {
+    } else if (step == "personal-details") {
         return (
-            <PersonalDetails />
+            <UpdateDetails title="Update your Profile" subtitle="Fill these details so that your viewer can know more about you."/>
+        )
+    } else if (step == "change-password") {
+        return (
+            <UpdateDetails title={"Change password"} form="password" />
         )
     }
 
     return (
         <div>
             This is profile setup page
-
         </div>
     )
 }

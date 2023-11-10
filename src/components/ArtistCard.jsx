@@ -5,10 +5,16 @@ import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { BsPencil, BsPencilFill } from 'react-icons/bs'
+import Link from 'next/link'
+import { useSelector } from 'react-redux'
 const ArtistCard = ({ artwork, likes }) => {
   const [userData, setUserData] = useState({})
   const userId = usePathname().split('/')[2];
 
+  const [editHover, setEditHover] = useState(false)
+
+  const user = useSelector(state => state.user)
   useEffect(() => {
     async function fetchUsers() {
       const res = await fetch(`/api/userdetails/${userId}`)
@@ -19,31 +25,43 @@ const ArtistCard = ({ artwork, likes }) => {
     }
     fetchUsers()
   }, [])
+
   return (
-    <div class="bg-gray-200 font-sans h-[70vh] overflow-hidden w-full flex flex-row justify-center items-center">
-      <div class="card w-96 mx-auto bg-white  shadow-xl hover:shadow">
+    <div className="bg-gray-200 font-sans h-[70vh] overflow-hidden w-full flex flex-row justify-center items-center">
+      <div className="card relative w-[26rem] mx-auto bg-white  shadow-xl hover:shadow">
+        {
+          userId == user?.user._id && (
+            <Link onMouseEnter={() => setEditHover(true)} onMouseLeave={() => setEditHover(false)} className="edit  p-2 absolute right-0 m-2"
+              href="/profile-setup?step=personal-details" >
+              {
+                editHover ? <BsPencilFill className='w-5 h-5' /> : <BsPencil className='w-5 h-5' />
+              }
+            </Link>
+          )
+        }
+
         <img
-          class="w-32 mx-auto rounded-full -mt-20 border-8 border-white"
+          className="w-40 h-40 object-cover mx-auto rounded-full -mt-20 border-8 border-white"
           src={`${userData?.image}`}
           alt="artist image"
-          width={100}
-          height={100}
+          width={150}
+          height={150}
         />
-        <div class="text-center mt-2 text-3xl font-medium">{userData?.name || <Skeleton/>}</div>
-        <div class="text-center mt-2 text-sm font-medium">@{userData?.user?.username || <Skeleton/> }</div>
-        <div class="text-center mt-2 font-light text-sm">{userData?.user?.email || <Skeleton/>}</div>
-        <div class="text-center font-normal text-lg">{userData?.user?.address || <Skeleton/>}</div>
-        <div class="px-6 text-center mt-2 font-light text-sm">
-          <p>{userData?.bio || <Skeleton/>}</p>
+        <div className="text-center mt-2 text-3xl font-bold text-gray-950">{userData?.name || <Skeleton />}</div>
+        <div className="text-center mt text-sm font-semibold text-gray-700">{userData?.user?.username ? `@${userData.user.username}` : <Skeleton />}</div>
+        <div className="text-center mt-4 font-medium text-sm text-gray-500">{userData?.user?.email || <Skeleton />}</div>
+        <div className="text-center font-light mt- text-sm text-gray-500">{userData?.address || <Skeleton />}</div>
+        <div className="px-6  mt-4   ">
+          <p className='text-center font-medium text-gray-500 mt-8  '>{userData?.bio || <Skeleton />}</p>
         </div>
-        <hr class="mt-8" />
-        <div class="flex p-4">
-          <div class="w-1/2 text-center">
-            <span class="font-bold">{artwork}</span> ArtWorks
+        <hr className="mt-8" />
+        <div className="flex p-4">
+          <div title='Total artworks published on Chitrakala.' className="w-1/2 text-center">
+            <span className="font-bold">{artwork}</span> Artworks
           </div>
-          <div class="w-0 border border-gray-300"></div>
-          <div class="w-1/2 text-center">
-            <span class="font-bold">{likes}</span> Likes
+          <div className="w-0 border border-gray-300"></div>
+          <div title='Total likes of all artworks.' className="w-1/2 text-center">
+            <span className="font-bold">{likes}</span> Likes
           </div>
         </div>
       </div>
