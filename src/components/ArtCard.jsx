@@ -11,12 +11,12 @@ import Image from "next/image";
 import { useState,useEffect } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import moment from "moment/moment";
+import { BiCross, BiSolidPen, BiSolidPencil } from "react-icons/bi";
+import { AiFillDelete } from "react-icons/ai";
+import { useRouter } from "next/navigation";
 
-
-
-const ArtCard = ({ item }) => {
-
+const ArtCard = ({ item ,option}) => {
+    const router = useRouter()
     const user = useSelector(state => state.user)
     const [galleryData,setGalleryData] = useState(item)
 
@@ -26,7 +26,23 @@ const ArtCard = ({ item }) => {
       setGalleryData(item)
      
     }, [item])
+
+
     
+  const handleDelete =async (productId) =>{
+    try {
+        const res = await axios.delete(`/api/products/${productId}`);
+        // remove from state
+        console.log(res)
+        toast.success('Product deleted');
+      } catch (error) {
+        console.error(error);
+        toast.error('Error deleting product')
+      }
+
+  }
+
+
 
 
     const toggleLike = async (productId) => {
@@ -97,7 +113,19 @@ const ArtCard = ({ item }) => {
                                     damping: 10,
                                 }}
                             />
+                    {option===true&&(
+                           <div className=" absolute top-0 right-0 z-50 bg-black w-full">
+                           <div className="flex gap-2 p-2 cursor-pointer">
+                             <span  onClick={()=>{handleDelete(galleryData._id)}}>
+                               <AiFillDelete fill="#ed495b" />
+                             </span>
+                             <span onClick={()=>{router.push(`/gallery/edit?pid=${galleryData._id}`)}}>
+                               <BiSolidPencil fill="gray" />
 
+                             </span>
+                           </div>
+                         </div>
+                    )}
 
 
                         </div>
@@ -173,6 +201,7 @@ const ArtCard = ({ item }) => {
 
                         </div>
                     </div>
+                    
                 </div>
 
             ) : (

@@ -44,7 +44,7 @@ export const PUT = async () => {
 
 
 // DELETE a specific product by id
-export const DELETE = async () => {
+export const DELETE = async (req) => {
     try {
         const query = req.url.split("/");
         const productId = query[query.length - 1];
