@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import Users from "@/models/useraccounts/users";
 import UsersDetails from "@/models/useraccounts/usersDetail";
+import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
 
@@ -9,10 +10,10 @@ import { NextResponse } from "next/server";
 
 export const GET = async (request) => {
     try {
+
         const params = request.url.split('/');
-        // console.log(params)
         const userId = params[params.length - 1];
-        // console.log(userId)
+
         if (!(userId?.length > 0)) {
             return new NextResponse(JSON.stringify({ error: "Invalid User ID provided" }), { status: 404 })
         }
@@ -37,6 +38,9 @@ export const GET = async (request) => {
 
 // UPDATE => UPDATE a buyer detail
 export const PATCH = async (request) => {
+
+
+
     const hasArtistDetails = (details) => {
         const { user, bio, image, name, address, dob } = details;
 
@@ -49,7 +53,12 @@ export const PATCH = async (request) => {
     }
 
     try {
-        console.log("try start")
+        // checking for usersession as returned from header cookies from client request
+        const token = await getToken({ req: request })
+        if (!token?.user.id) {
+            return NextResponse.json({ message: "You must be logged in to perform edit." }, { status: 401 })
+        }
+
         const dataToUpdate = await request.json();
 
         await dbConnect();
@@ -57,13 +66,16 @@ export const PATCH = async (request) => {
         const userId = params[params.length - 1];
         const { bio, image, name, address, dob, username, phone, } = dataToUpdate;
 
+        if (!token?.user.id != userId) {
+            return NextResponse.json({ message: "You can update only your details." }, { status: 401 })
+        }
 
         // username and phone validation for unique
-
         if (username) {
             const existingUsername = await Users.findOne({ username });
             if (existingUsername?._id) return new NextResponse(JSON.stringify({ field: "username", message: "Username already taken. Please choose another." }), { status: 403, statusText: "validation_error" })
         }
+
 
         if (phone) {
             const existingPhone = await Users.findOne({ phone });
@@ -113,11 +125,20 @@ export const PATCH = async (request) => {
 export const DELETE = async (request) => {
 
     try {
+        // checking for usersession as returned from header cookies from client request
+        const token = await getToken({ req: request })
+        if (!token?.user.id) {
+            return NextResponse.json({ message: "You must be logged in to delete." }, { status: 401 })
+        }
         const userDetailData = await request.json();
 
         await dbConnect();
         const params = request.url.split('/');
         const userId = params[params.length - 1];
+
+        if (!token?.user.id !== userId) {
+            return NextResponse.json({ message: "You can modify only your details." }, { status: 401 })
+        }
 
         const res = await UsersDetails.deleteOne(
             { 'user': userId }

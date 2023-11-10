@@ -3,16 +3,17 @@ import Exhibition from "@/models/exhibition/exhibition";
 import { NextResponse } from "next/server";
 
 
-
-
-
-// GET => get all products
+// GET => get all exhibitions
 export const GET = async () => {
     try {
         await dbConnect();
 
         const res = await Exhibition.find({});
-        return new NextResponse(JSON.stringify(res))
+
+        if (res) {
+            return new NextResponse(JSON.stringify(res))
+        }
+        return new NextResponse(JSON.stringify({error: "No exibitions to load",}), {status: 400})
 
     } catch (error) {
         console.log("ERROR fetching Exhibitions  \n" + error)

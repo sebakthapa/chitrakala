@@ -12,12 +12,12 @@ export const GET = async (req,res) => {
         const res = await Products.find({})
         .populate({
             path: 'artist',
-            match: { 'user': userId } 
+            match: { 'user': userId },
+            select: "-password"
           })
         .then((items)=> items.filter(item=>item.artist != null))  
 
         return new NextResponse(JSON.stringify(res))
-
     } catch (error) {
         console.log("ERROR fetching products \n" + error)
     }

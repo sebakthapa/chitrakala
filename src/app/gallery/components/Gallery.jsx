@@ -1,5 +1,6 @@
 "use client"
 import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import ArtCard from "@/components/ArtCard";
@@ -15,6 +16,7 @@ const Gallery = () => {
     const filter = searchParams.get('filter');
     const category = searchParams.get('category');
 
+
     let query = "";
 
     if (username) { query += `&username=${username}`; }
@@ -22,6 +24,7 @@ const Gallery = () => {
     if (category) { query += `&category=${category}`; }
     if (limit) { query += `&limit=${limit}`; }
 
+    const [filterParams, setFilterParams] = useState(filter || "newD");
     const [filterParams, setFilterParams] = useState(filter || "newD");
     const [filteredData, setFilteredData] = useState([]);
     const [sortedData, setSortedData] = useState([]);
@@ -32,9 +35,9 @@ const Gallery = () => {
     async function fetchData() {
         try {
             const res = await axios.get(`/api/products?${query}`);
-
             if (res.status === 200) {
                 // dispatch(addGalleryData(res.data));
+
 
                 setFilteredData(res.data)
                 setLoading(false)
@@ -76,9 +79,11 @@ const Gallery = () => {
         }
 
         fetchSortedData();
-
+        fetchSortedData();
 
     }, [filterParams])
+
+
 
     return (
         <>

@@ -18,7 +18,7 @@ const Page = () => {
   const handleSendVerificationEmail = async () => {
     if ( user?.user?.email) {
       try {
-        toast("Verification Link sent to your email. It may take few seconds to appear.")
+        toast.info("Working on delivering link! This may take few seconds.", {autoClose: 5000, toastId:"processing_email_message"})
         console.log("sending try")
         const res = await signIn("email", { email:  user?.user?.email, redirect: false },)
         console.log(res)
@@ -26,6 +26,7 @@ const Page = () => {
           toast.success("Check your Mail!")
         } else {
           if (res.error.includes("Too many frequent requests!")) {
+            toast.dismiss("processing_email_message")
             toast.error(res.error)
           } else {
             toast.error("Unable to send verification Link! Please try again later.")

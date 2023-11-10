@@ -15,7 +15,6 @@ html {
 
 * {
     font-family: 'Inter', sans-serif;
-    color: #232323;
 }
 
 body {
@@ -23,7 +22,18 @@ body {
     /* background: red; */
 
     /* max-width: 2000px; */
+    color: #232323;
+
 }
+
+
+/* .Toastify__toast-body {
+    color:white !important;
+}
+.Toastify__toast-theme--colored {
+    color:white !important;
+} */
+
 
 @media (min-width: 2000px) {
     html {
