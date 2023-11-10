@@ -21,17 +21,17 @@ export const GET = async (req, res) => {
 
 
 
-// PUT a specific product by id
-export const PUT = async () => {
+// PATCH a specific product by id
+export const PATCH = async (req) => {
     try {
         const { seller, name, price, description = "", category, photo} = await req.json();
         const query = req.url.split("/");
         const productId = query[query.length - 1];
 
-        const updatedData = { seller, name, price, description, category, photo, like };
+        const updatedData = { seller, name, price, description, category, photo };
 
         await dbConnect();
-        const newProduct = await Products.findByIdAndUpdate(productId, updatedData).populate("seller")
+        const newProduct = await Products.findByIdAndUpdate(productId, updatedData)
     
         return new NextResponse(JSON.stringify(newProduct))
     } catch (error) {
