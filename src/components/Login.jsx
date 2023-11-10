@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { redirect, useRouter, useSearchParams } from 'next/navigation'
 import { signIn, useSession } from "next-auth/react"
 import { toast } from 'react-toastify'
+import Link from 'next/link'
 
 const Login = (props) => {
     const dispatch = useDispatch();
@@ -14,6 +15,8 @@ const Login = (props) => {
     // toast(session?.user)
     const router = useRouter()
     const searchParams = useSearchParams()
+
+    const [showForgotPassword, setShowForgotPassword] = useState(false)
 
 
 
@@ -28,13 +31,14 @@ const Login = (props) => {
     const handleLogin = async (data) => {
         try {
             setIsSubmitting(true);
+
             const data = { loginID: loginId, password };
             const res = await signIn('credentials', { ...data, redirect: false })
             console.log(res)
             if (!res.ok) {
-                toast.error(res.error)
+                toast.error(res.error, { theme: "colored" });
             } else {
-                // redirect("/add_artist_details");
+                router.replace("/");
             }
 
 
@@ -51,7 +55,7 @@ const Login = (props) => {
 
 
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (sessionStatus == "authenticated") {
             if (!session?.user.emailVerified) {
                 router.replace("/auth/verify-email");
@@ -70,7 +74,7 @@ const Login = (props) => {
     }, [session, sessionStatus, searchParams])
 
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const error = searchParams?.get("error");
         console.log(error)
         if (error == "OAuthAccountNotLinked") {
@@ -96,20 +100,23 @@ const Login = (props) => {
                     autoComplete="email username tel-local"
                 />
 
-                <Input
-                    // register={register}
-                    error={errors.password}
-                    clearErrors={clearErrors}
-                    required
-                    type="password"
-                    label="password"
-                    value={password}
-                    setValue={setPassword}
-                    classLists=""
-                    name="password"
-                    autoComplete="current-password"
-
-                />
+                <div>
+                    <Input
+                        // register={register}
+                        error={errors.password}
+                        clearErrors={clearErrors}
+                        required
+                        type="password"
+                        label="password"
+                        value={password}
+                        setValue={setPassword}
+                        classLists=""
+                        name="password"
+                        autoComplete="current-password"
+                    />
+                    
+                        <Link className='text-blue-500 hover:text-blue-500 transition  font-semibold mt-0 text-xs hover:underline' href="/auth/password-reset">Forgot password</Link>
+                </div>
             </div>
             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='bg-gray-900 text-white hover:bg-gray-700' type="submit" >
                 {

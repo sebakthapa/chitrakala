@@ -8,7 +8,7 @@ import { FcTimeline } from "react-icons/fc";
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import moment from "moment/moment";
@@ -18,15 +18,15 @@ import moment from "moment/moment";
 const ArtCard = ({ item }) => {
 
     const user = useSelector(state => state.user)
-    const [galleryData,setGalleryData] = useState(item)
+    const [galleryData, setGalleryData] = useState(item)
 
 
     useEffect(() => {
-      
-      setGalleryData(item)
-     
+
+        setGalleryData(item)
+
     }, [item])
-    
+
 
 
     const toggleLike = async (productId) => {
@@ -34,36 +34,38 @@ const ArtCard = ({ item }) => {
             try {
                 console.log(galleryData)
 
-                    let newLikes = [...galleryData?.likes];
-                    console.log(newLikes)
-    
-                    if (galleryData.likes.includes(user?._id)) { // already liked remove userid from array
-                        newLikes = newLikes.filter((id) => id !== user?._id)
-                    } else { //not liked add userid to the array
-                        newLikes.push(user?._id)
-                    }   
-                    
+                let newLikes = [...galleryData?.likes];
+                console.log(newLikes)
 
-                setGalleryData({...galleryData,likes:newLikes})
+                if (galleryData.likes.includes(user?._id)) { // already liked remove userid from array
+                    newLikes = newLikes.filter((id) => id !== user?._id)
+                } else { //not liked add userid to the array
+                    newLikes.push(user?._id)
+                }
 
-        
-                await axios.patch("/api/products/likes", {
+
+                setGalleryData({ ...galleryData, likes: newLikes })
+
+
+                const res = await axios.patch("/api/products/likes", {
                     userId: user?._id,
                     productId,
                 });
 
+                console.log(res)
+
 
             } catch (error) {
                 toast.info("Unable to like at the moment!");
-              
-                
+
+
                 console.error("Error updating like:", error);
             }
         } else {
             toast.info("Login to interact with page");
         }
     };
- 
+
 
     const checkLiked = (likes, userId) => {
         // console.log("likes, userID", likes, userId, likes?.includes(userId))
@@ -73,7 +75,7 @@ const ArtCard = ({ item }) => {
 
     return (
         <>
-            {galleryData   ? (
+            {galleryData ? (
 
                 <div className=" w-[15rem] md:min-w-[18rem] m-2  ">
                     <div className="bg-white rounded-lg overflow-hidden shadow-lg relative">
@@ -89,13 +91,13 @@ const ArtCard = ({ item }) => {
                                 width={300}
                                 height={300}
                                 className="  object-contain w-full h-full "
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                transition={{
-                                    type: "spring",
-                                    stiffness: 200,
-                                    damping: 10,
-                                }}
+                            // whileHover={{ scale: 1.1 }}
+                            // whileTap={{ scale: 0.9 }}
+                            // transition={{
+                            //     type: "spring",
+                            //     stiffness: 200,
+                            //     damping: 10,
+                            // }}
                             />
 
 
@@ -107,7 +109,7 @@ const ArtCard = ({ item }) => {
 
                                 <div
                                     onClick={() => {
-                                        toggleLike( galleryData._id);
+                                        toggleLike(galleryData._id);
                                     }}
                                     className="pp cursor-pointer   flex flex-col  p-1 m-1   justify-center items-center ">
                                     {
@@ -157,7 +159,7 @@ const ArtCard = ({ item }) => {
                                 {galleryData?.name}
                             </Link>
                             <div className="mb-5 truncate text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
-                                {galleryData?.description || <Skeleton count={3}/>}
+                                {galleryData?.description || <Skeleton count={3} />}
                             </div>
 
                             <div className="my-5 flex justify-between">

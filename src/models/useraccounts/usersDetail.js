@@ -20,7 +20,7 @@ const usersDetailsSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    maxlength: [30, "Name should not exceed 30 characters"],
+    maxlength: [150, "Name should not exceed 150 characters"],
     minLength: [3, "Minimum 3 characters required"],
   },
   bio: {

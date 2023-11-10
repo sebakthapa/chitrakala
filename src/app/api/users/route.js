@@ -3,12 +3,14 @@ import Users from "@/models/useraccounts/users";
 import UsersDetails from "@/models/useraccounts/usersDetail";
 import { NextResponse } from "next/server";
 import bcrypt, { hash } from "bcrypt"
+import { getToken } from "next-auth/jwt";
 
 
 
 // GET => get all users 
 export const GET = async () => {
   try {
+
     await dbConnect();
 
     const data = await UsersDetails.find({})
@@ -17,18 +19,13 @@ export const GET = async () => {
         select: '-password' // excludes password
       })
     const res = data.filter(doc => doc.user.isArtist);
-    console.log("res",res)
+    console.log("res", res)
     return new NextResponse(JSON.stringify(res))
 
   } catch (error) {
     console.log("ERROR fetching products \n" + error)
   }
 }
-
-
-
-
-
 
 
 
@@ -126,7 +123,7 @@ export const POST = async (request) => {
 
       const savedUserDetail = await newUserDetail.save();
 
-      const data = await savedUserDetail.populate('user', { username: 1, email: 1, _id: 1, phone: 1,emailVerified: 1, isArtist: 1 });
+      const data = await savedUserDetail.populate('user', { username: 1, email: 1, _id: 1, phone: 1, emailVerified: 1, isArtist: 1 });
 
       return new NextResponse(JSON.stringify(data))
     }
@@ -145,7 +142,18 @@ export const POST = async (request) => {
 export const PATCH = async (request) => {
 
   try {
+
+    // checking for usersession as returned from header cookies from client request
+    const token = await getToken({ req: request })
+    if (!token?.user.id) {
+      return NextResponse.json({ message: "You must be logged in to update your details." }, { status: 401 })
+    }
+
     const { id, updatedData, } = await request.json();
+
+    if (!token?.user.id != id) {
+      return NextResponse.json({ message: "You can update only your details." }, { status: 401 })
+    }
 
     await dbConnect();
 
@@ -167,8 +175,18 @@ export const PATCH = async (request) => {
 
 export const DELETE = async (request) => {
 
+
   try {
+    // checking for usersession as returned from header cookies from client request
+    const token = await getToken({ req: request })
+    if (!token?.user.id) {
+      return NextResponse.json({ message: "You must be logged in to delete your account." }, { status: 401 })
+    }
+
     const { id } = await request.json();
+    if (!token?.user.id) {
+      return NextResponse.json({ message: "You can delete your account only." }, { status: 401 })
+    }
 
     await dbConnect();
 
