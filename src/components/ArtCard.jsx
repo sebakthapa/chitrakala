@@ -14,6 +14,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { BiCross, BiSolidPen, BiSolidPencil } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useRouter } from "next/navigation";
+import moment from "moment";
 
 const ArtCard = ({ item ,option}) => {
     const router = useRouter()

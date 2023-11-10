@@ -96,6 +96,7 @@ const Edit = ({}) => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImageUrl(reader.result);
+                
             };
             reader.readAsDataURL(selectedFile);
 
@@ -113,17 +114,21 @@ const Edit = ({}) => {
         if (!session) {
             toast("Please login to upload")
         };
-        if (image) {
-            try {
-                setLoading(true);
-                const storage = getStorage(app);
-                var today = new Date();
-                const storageRef = ref(storage, `gallery/${today}.png`);
-                await uploadBytes(storageRef, image);
+        console.log(image)
+        try {
+            setLoading(true);
+            const storage = getStorage(app);
+            var today = new Date();
+            const storageRef = ref(storage, `gallery/${today}.png`);
+            let downloadURL = null
+            if (image ) {
 
-                // Get the download URL of the uploaded image
-                const downloadURL = await getDownloadURL(storageRef);
-                console.log('Image uploaded:', downloadURL);
+                await uploadBytes(storageRef, image);
+                
+                                // Get the download URL of the uploaded image
+                                downloadURL = await getDownloadURL(storageRef);
+                                console.log('Image uploaded:', downloadURL);
+            }
 
 
                 const data = {
@@ -132,13 +137,15 @@ const Edit = ({}) => {
                     price: price,
                     description: description,
                     category: category,
-                    photo: downloadURL
+                    photo: downloadURL?downloadURL:imageUrl
                 };
+                
+                const res = await axios.patch("/api/products/"+pid, data);
+                console.log(res)
 
-                const res = await axios.post("/api/products", data);
                 if (res.status == 200) {
-                    console.log(" Uploadeed");
-                    router.push('/gallery')
+                    toast(" Updated");
+                    // router.push('/gallery')
 
 
                 }
@@ -157,7 +164,7 @@ const Edit = ({}) => {
 
                 console.error('Error uploading image:', error);
             }
-        }
+        
     };
 
 
@@ -298,7 +305,7 @@ const Edit = ({}) => {
                     </div>
                 </div>
                 <button
-                    disabled={loading || (session ? false : true)}
+                    disabled={loading }
                     title={`${user?.uid ? "" : "Login or Signup to Upload"}`}
                     className={`bg-green-700 text-gray-100 rounded py-2 px-4 transition duration-300  ${session ? "hover:bg-green-800" : " cursor-not-allowed opacity-60 hover:bg-green-700"}`}
                     onClick={handleFileUpload}
