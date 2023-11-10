@@ -22,9 +22,8 @@ export const GET = async (req, res) => {
 
 }
 
-
-// PUT a specific product by id
-export const PUT = async () => {
+// PATCH a specific product by id
+export const PATCH = async (req) => {
     try {
         // checking for usersession as returned from header cookies from client request
         const token = await getToken({ req: request })
