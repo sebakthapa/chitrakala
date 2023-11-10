@@ -24,7 +24,6 @@ const Gallery = () => {
     if (limit) { query += `&limit=${limit}`; }
 
     const [filterParams, setFilterParams] = useState(filter || "newD");
-    const [filterParams, setFilterParams] = useState(filter || "newD");
     const [filteredData, setFilteredData] = useState([]);
     const [sortedData, setSortedData] = useState([]);
     const [loading, setLoading] = useState(true);
