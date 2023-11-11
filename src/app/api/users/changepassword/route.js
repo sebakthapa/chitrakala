@@ -24,7 +24,7 @@ export const PATCH = async (request) => {
 
         const { userId, currentPassword, newPassword, confirmNewPassword } = await request.json();
 
-        if (!token?.user.id != userId) {
+        if (token?.user.id != userId) {
             return NextResponse.json({ message: "You can change only your password." }, { status: 401 })
         }
 

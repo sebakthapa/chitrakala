@@ -17,7 +17,7 @@ export const GET = async (request) => {
       return NextResponse.json({ message: "You must be logged in to get your details." }, { status: 401 })
     }
 
-    if (!token?.user.id !== id) {
+    if (token?.user.id !== id) {
       return NextResponse.json({ message: "You can't view other user's detail." }, { status: 401 })
     }
 
@@ -52,7 +52,7 @@ export const PATCH = async (request) => {
     const params = request.url.split('/');
     const id = params[params.length - 1];
 
-    if (!token?.user.id != id) {
+    if (token?.user.id != id) {
       return NextResponse.json({ message: "You can't update other user's details." }, { status: 401 })
     }
 

@@ -29,7 +29,7 @@ export default function isAuthenticated(Component, { authenticateUserDetails }) 
 
 
         if (authstatus == "unauthenticated") {
-            toast("You must be logged in to perform this action!")
+            toast.warn("You must be logged in to perform this action!")
             return router.replace("/")
         } else if (authstatus == "loading") {
             return <LoadingComponent  />

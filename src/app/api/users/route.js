@@ -146,7 +146,7 @@ export const PATCH = async (request) => {
 
     const { id, updatedData, } = await request.json();
 
-    if (!token?.user.id != id) {
+    if (token?.user.id != id) {
       return NextResponse.json({ message: "You can update only your details." }, { status: 401 })
     }
 

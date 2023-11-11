@@ -87,7 +87,7 @@ const UpdateDetails = ({ title, subtitle, form }) => {
                     uploadedImage = imageData?.storageRef;
                     data.image = imageData.downloadURL;
                 } else {
-                    toast("unable to upload image at the moment.")
+                    toast.error("unable to upload image at the moment.")
                 }
             } else {
             }
@@ -97,13 +97,13 @@ const UpdateDetails = ({ title, subtitle, form }) => {
                 if (res?.status == 200) {
                     res?.data && dispatch(addUserData(res?.data));
                     router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
-                    toast("Details updated successfully")
+                    toast.success("Details updated successfully")
                     await updateSession();
                 } else {
                     await deleteObject(storageRef);
                 }
             } else {
-                toast("No changes made to update!")
+                toast.info("No changes made to update!")
                 router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
                 return;
             }
@@ -140,7 +140,7 @@ const UpdateDetails = ({ title, subtitle, form }) => {
 
     const handleFileUpload = async () => {
         if (!session?.user.id) {
-            toast("Please login to add details")
+            toast.warn("Please login to add details")
             return;
         };
         if (image) {

@@ -82,15 +82,17 @@ export const POST = async (request) => {
         
         const { artist, name, price, description = "", category, photo, } = await request.json();
 
-        if (token.user.id != artist) {
-            return NextResponse.json({message: "You can't post as other artist."}, { status: 401 })
-        }
         if (!token?.user.isArtist) {
             return NextResponse.json({message:"You aren't registered as artist!"}, { status: 400 })
         }
-
+        
         
         await dbConnect("user");
+        const userDetails = await UsersDetails.findById(artist).populate("user")
+
+        if (token.user.id != userDetails?.user._id) {
+            return NextResponse.json({message: "You can't post as other artist."}, { status: 401 })
+        }
 
         const newProduct = new Products({ artist, name, price, description, category, photo, });
         const savedProduct = await newProduct.save();

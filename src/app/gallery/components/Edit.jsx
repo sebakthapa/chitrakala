@@ -47,7 +47,7 @@ const Edit = ({}) => {
                 if(productData?.artist?.user !== session?.user?.id)
                 {
 
-                   toast("Invalid privilege ")
+                   toast.error("Invalid privilege ")
                    router.push(`/gallery/${pid}`)
                 }
               }
@@ -111,7 +111,7 @@ const Edit = ({}) => {
     const handleFileUpload = async (e) => {
         e.preventDefault();
         if (!session) {
-            toast("Please login to upload")
+            toast.error("Please login to upload")
         };
         try {
             setLoading(true);
@@ -140,7 +140,7 @@ const Edit = ({}) => {
                 const res = await axios.patch("/api/products/"+pid, data);
 
                 if (res.status == 200) {
-                    toast(" Updated");
+                    toast.success("Updated");
                     router.push('/gallery')
 
 

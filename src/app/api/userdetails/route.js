@@ -37,7 +37,7 @@ export const POST = async (request) => {
 
         const { user, address = "", photo = "", displayName = "" } = await request.json();
 
-        if (!token?.user.id == user) {
+        if (token?.user.id != user) {
             return NextResponse.json({ message: "You can add only your details." }, { status: 401 })
         }
 
@@ -68,7 +68,7 @@ export const PATCH = async (request) => {
         const { username, email, phone, address, displayName, bio, dob, photo, userId } = await request.json();
 
 
-        if (!token?.user.id != userId) {
+        if (token?.user.id != userId) {
             return NextResponse.json({ message: "You can update only your details." }, { status: 401 })
         }
 

@@ -69,7 +69,7 @@ const Upload = () => {
     const handleFileUpload = async (e) => {
         e.preventDefault();
         if (!session) {
-            toast("Please login to upload")
+            toast.error("Please login to upload")
         };
         if (image) {
             try {
@@ -95,6 +95,7 @@ const Upload = () => {
                 const res = await axios.post("/api/products", data);
                 if (res.status == 200) {
                     router.push('/gallery')
+                    toast.success("Upload success!")
 
 
                 }

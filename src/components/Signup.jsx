@@ -52,7 +52,6 @@ const Signup = () => {
                 signIn("email", { email: userData.user.email, redirect: false },)
 
                 router.replace("/auth/verify-email");
-                // toast("Update your info for getting access to ")
 
             }
         } catch (error) {

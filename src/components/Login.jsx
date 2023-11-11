@@ -12,7 +12,6 @@ import Link from 'next/link'
 const Login = (props) => {
     const dispatch = useDispatch();
     const { data: session, status: sessionStatus } = useSession();
-    // toast(session?.user)
     const router = useRouter()
     const searchParams = useSearchParams()
 
@@ -36,9 +35,9 @@ const Login = (props) => {
             const res = await signIn('credentials', { ...data, redirect: false })
             if (!res.ok) {
                 toast.error(res.error, { theme: "colored" });
+                setShowForgotPassword(true);
             } else {
                 router.replace("/");
-                setShowForgotPassword(true)
             }
         } catch (error) {
             console.log(error)
