@@ -10,16 +10,14 @@ import EmailProvider from "next-auth/providers/email";
 import bcrypt from "bcrypt"
 import { MongoDBAdapter } from "@/lib/mongoDBAdapter";
 import { createTransport } from "nodemailer";
-import { html, text } from "@/lib/email";
+import {  EmailVerifyHtml, emailVerifyText } from "@/lib/emailTemplates";
 import VerificationTokens from "@/models/others/VerificationTokens";
 
-const authOptions = {
-
-
+export const authOptions = {
     adapter: MongoDBAdapter(clientPromise, { databaseName: process.env.DATABASE_NAME }),
-
     pages: {
-        signIn: "/auth/login"
+        signIn: "/auth/login",
+        error: "auth/error"
     },
     providers: [
         CredentialsProvider({
@@ -34,61 +32,61 @@ const authOptions = {
                 // Add logic here to look up the user from the credentials supplied
                 const { loginID, password } = credentials;
                 // console.log("CREDENTIALS__________________________",{loginID, password})
-                    let query = "";
-                    const checkPasswordMatch = async (userPassword) => {
-                        const result = await bcrypt.compare(password, userPassword);
-                        return result
+                let query = "";
+                const checkPasswordMatch = async (userPassword) => {
+                    const result = await bcrypt.compare(password, userPassword);
+                    return result
+                }
+
+                await dbConnect();
+                let userIdField = "";
+
+                if (loginID.indexOf("@") > 0) {
+                    // login ID is email so search with email field
+                    query = { email: loginID };
+                    userIdField = "Email";
+                } else if (/^[0-9]*$/.test(loginID)) {
+                    // loginId is phone so search with phone field
+                    query = { phone: loginID };
+                    userIdField = "Phone";
+
+                    if (loginID.length !== 10) {
+                        // return new NextResponse(JSON.stringify({ field: "username/email/phone", message: "Please enter a valid phone number" }), { status: 401 })
+                        throw new Error("Invalid Phone provided!", )
+
                     }
+                } else {
+                    // loginId is username so  search with username field
+                    query = { username: loginID };
+                    userIdField = "Username";
 
-                    await dbConnect();
-                    let userIdField = "";
+                }
 
-                    if (loginID.indexOf("@") > 0) {
-                        // login ID is email so search with email field
-                        query = { email: loginID };
-                        userIdField = "Email";
-                    } else if (/^[0-9]*$/.test(loginID)) {
-                        // loginId is phone so search with phone field
-                        query = { phone: loginID };
-                        userIdField = "Phone";
 
-                        if (loginID.length !== 10) {
-                            // return new NextResponse(JSON.stringify({ field: "username/email/phone", message: "Please enter a valid phone number" }), { status: 401 })
-                            throw new Error("Invalid credentials provided!")
+                const user = await Users.findOne(query,);
+                console.log("USER FROM CREDENTIALS", user)
 
+                if (user?._id) {
+                    // user exists check for the password field
+                    if (await checkPasswordMatch(user.password)) {
+                        // console.log(userDetails)
+                        const returnData = {
+                            id: user._id,
+                            isArtist: user.isArtist,
+                            emailVerified: user.emailVerified,
                         }
+                        console.log("user Data", returnData)
+                        return returnData;
                     } else {
-                        // loginId is username so  search with username field
-                        query = { username: loginID };
-                        userIdField = "Username";
-
+                        // return new NextResponse(JSON.stringify({ field: "password", message: "Password is incorrect." }), { status: 401 })
+                        throw new Error("Invalid credentials provided!")
                     }
 
+                } else {
+                    // return new NextResponse(JSON.stringify({ field: "username/email/phone", message: "Username doesn't exist" }), { status: 401 })
+                    throw new Error(`${userIdField} does't exists!`)
 
-                    const user = await Users.findOne(query,);
-                    console.log("USER FROM CREDENTIALS", user)
-
-                    if (user?._id) {
-                        // user exists check for the password field
-                        if (await checkPasswordMatch(user.password)) {
-                            // console.log(userDetails)
-                            const returnData = {
-                                id: user._id,
-                                isArtist: user.isArtist,
-                                emailVerified: user.emailVerified,
-                            }
-                            console.log("user Data", returnData)
-                            return returnData;
-                        } else {
-                            // return new NextResponse(JSON.stringify({ field: "password", message: "Password is incorrect." }), { status: 401 })
-                            throw new Error("Invalid credentials provided!")
-                        }
-
-                    } else {
-                        // return new NextResponse(JSON.stringify({ field: "username/email/phone", message: "Username doesn't exist" }), { status: 401 })
-                        throw new Error(`${userIdField} does't exists!`)
-
-                    }
+                }
 
             }
         }),
@@ -127,8 +125,8 @@ const authOptions = {
                     pass: process.env.EMAIL_SERVER_PASSWORD
                 },
             },
-            // from: process.env.EMAIL_FROM,
-            maxAge: 24 * 60 * 60, //in ms
+            from: process.env.EMAIL_FROM,
+            maxAge: 24 * 60 * 60, //in s
             async sendVerificationRequest({ identifier: email, url, provider: { server, from }, }) {
                 const { host } = new URL(url)
                 // NOTE: You are not required to use `nodemailer`, use whatever you want.
@@ -137,8 +135,8 @@ const authOptions = {
                     to: email,
                     from: from,
                     subject: `Sign in to ${host}`,
-                    text: text({ url, host }),
-                    html: html({ url, host }),
+                    text: emailVerifyText({ url, host }),
+                    html: EmailVerifyHtml({ url, host }),
                 })
                 const failed = result.rejected.concat(result.pending).filter(Boolean)
                 if (failed.length) {
@@ -155,6 +153,7 @@ const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     debug: process.env.NODE_ENV === "development",
     database: process.env.MONGODB_URI, //
+
     callbacks: {
         async session({ session, token, user }) {
             // console.log("FROM SeSSION CALLBACK", session)
@@ -165,36 +164,29 @@ const authOptions = {
             return session;
         },
 
-        async jwt({token, user, trigger,...rest}) {
+        async jwt({ token, user, trigger, ...rest }) {
             // console.log("FROM JWT CALLBACK", {token, user, ...rest})
             if (trigger == "update") {
                 console.log("TRIGGER=UPDATE____________________________________________")
                 await dbConnect()
                 const { isArtist, emailVerified, _id: id } = await Users.findById(token?.user.id).select("isArtist emailVerified")
-                const userData = {isArtist, emailVerified ,id}
+                const userData = { isArtist, emailVerified, id }
                 console.log("DB USER", userData)
                 token.user = userData;
                 console.log("____________________________________________")
-
             }
             if (user) {
                 token.user = user;
                 console.log("there is user and ")
-            }   
+            }
             return token;
         },
 
         async signIn({ profile, account, metadata, email, ...props }) {
             if (account.provider == "email") {
-                console.log("123213123213213213213213213213213213213213")
-                console.log("++++++++++++++++signin Callbakck", profile)
-                const verificationRequest = profile?.verificationRequest;
-                console.log("verificationRequesrt")
+
                 if (email?.verificationRequest) {
                     // check for no of verification tokens generated for that user. If it is large return too many reuest try later
-                    console.log("_____________________INSIDE SIGNIN / VERIFICATION REQUEST CALLBACK");
-                    console.log("email", account.userId)
-
                     try {
                         await dbConnect();
                         let res = await VerificationTokens.find({ identifier: account.userId }, { expires: 1, _id: 0 }).sort({ expires: "desc" });
@@ -284,7 +276,6 @@ const authOptions = {
 
         async redirect({ url, baseUrl }) {
 
-            // console.log("CONSOLONG FROM REDIRECT", { url, baseUrl });
             return url
         }
 

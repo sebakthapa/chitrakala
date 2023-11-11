@@ -1,5 +1,6 @@
-import dbConnect  from "@/lib/dbConnect";
+import dbConnect from "@/lib/dbConnect";
 import UserDetails from "@/models/useraccounts/usersDetail";
+import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
 
@@ -19,22 +20,32 @@ export const GET = async () => {
     } catch (error) {
         console.log("ERROR fetching all  user detail \n" + error)
         return new NextResponse.json({ error: error })
-    } 
+    }
 }
 
 
 
-// POST => POST a product
+// POST => create a user details
 
 export const POST = async (request) => {
 
     try {
+        // checking for usersession as returned from header cookies from client request
+        const token = await getToken({ req: request })
+        if (!token?.user.id) {
+            return NextResponse.json({ message: "You must be logged in to post." }, { status: 401 })
+        }
+
         const { user, address = "", photo = "", displayName = "" } = await request.json();
+
+        if (!token?.user.id == user) {
+            return NextResponse.json({ message: "You can add only your details." }, { status: 401 })
+        }
 
         await dbConnect();
 
-        
-        const newUserDetail = new UserDetails({ user, address, photo, displayName  });
+
+        const newUserDetail = new UserDetails({ user, address, photo, displayName });
 
         const savedUserDetail = await newUserDetail.save();
 
@@ -49,15 +60,26 @@ export const POST = async (request) => {
 export const PATCH = async (request) => {
 
     try {
-        const { username,email,phone,address, displayName, bio,dob,photo ,userId } = await request.json();
+        // checking for usersession as returned from header cookies from client request
+        const token = await getToken({ req: request })
+        if (!token?.user.id) {
+            return NextResponse.json({ message: "You must be logged in to edit your details." }, { status: 401 })
+        }
+
+        const { username, email, phone, address, displayName, bio, dob, photo, userId } = await request.json();
+
+
+        if (!token?.user.id != userId) {
+            return NextResponse.json({ message: "You can update only your details." }, { status: 401 })
+        }
 
         await dbConnect();
 
-        const res = await UserDetails.findOneAndUpdate({'user':userId},{  address, displayName, photo ,bio , dob },{new:true})
+        const res = await UserDetails.findOneAndUpdate({ 'user': userId }, { address, displayName, photo, bio, dob }, { new: true })
 
         if (!res) {
-            return new Response('User not found', {status: 404});
-          }
+            return new Response('User not found', { status: 404 });
+        }
 
         return new NextResponse(JSON.stringify(res))
 

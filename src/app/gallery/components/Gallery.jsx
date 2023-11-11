@@ -15,6 +15,7 @@ const Gallery = () => {
     const filter = searchParams.get('filter');
     const category = searchParams.get('category');
 
+
     let query = "";
 
     if (username) { query += `&username=${username}`; }
@@ -31,9 +32,9 @@ const Gallery = () => {
     async function fetchData() {
         try {
             const res = await axios.get(`/api/products?${query}`);
-
             if (res.status === 200) {
                 // dispatch(addGalleryData(res.data));
+
 
                 setFilteredData(res.data)
                 setLoading(false)
@@ -75,9 +76,11 @@ const Gallery = () => {
         }
 
         fetchSortedData();
-
+        fetchSortedData();
 
     }, [filterParams])
+
+
 
     return (
         <>

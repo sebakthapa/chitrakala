@@ -27,8 +27,10 @@ const ArtistCard = ({ artwork, likes }) => {
   }, [])
 
   return (
-    <div className="pt-10 bg-gray-200 font-sans h-[70vh] overflow-hidden w-full flex flex-row justify-center items-center">
-      <div className="card relative w-[26rem] mx-auto bg-white  shadow-xl hover:shadow">
+
+    <div className="bg-gray-200 font-sans h-[70vh] overflow-hidden w-full flex flex-row justify-center items-center">
+      <div className="card mt-14 relative w-[26rem] mx-auto bg-white  shadow-xl hover:shadow">
+
         {
           userId == user?.user._id && (
             <Link onMouseEnter={() => setEditHover(true)} onMouseLeave={() => setEditHover(false)} className="edit  p-2 absolute right-0 m-2"
@@ -40,13 +42,15 @@ const ArtistCard = ({ artwork, likes }) => {
           )
         }
 
-        <img
-          className="w-40 h-40 object-cover mx-auto rounded-full -mt-20 border-8 border-white"
+        {
+          userData?.image ? <Image
+          className="w-36 h-36 object-cover mx-auto rounded-full -mt-20 border-8 border-white"
           src={`${userData?.image}`}
           alt="artist image"
           width={150}
           height={150}
-        />
+        /> : ""
+        }
         <div className="text-center mt-2 text-3xl font-bold text-gray-950">{userData?.name || <Skeleton />}</div>
         <div className="text-center mt text-sm font-semibold text-gray-700">{userData?.user?.username ? `@${userData.user.username}` : <Skeleton />}</div>
         <div className="text-center mt-4 font-medium text-sm text-gray-500">{userData?.user?.email || <Skeleton />}</div>
