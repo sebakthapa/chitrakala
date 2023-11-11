@@ -27,7 +27,7 @@ const ArtistCard = ({ artwork, likes }) => {
   }, [])
 
   return (
-    <div className="bg-gray-200 font-sans h-[70vh] overflow-hidden w-full flex flex-row justify-center items-center">
+    <div className="pt-10 bg-gray-200 font-sans h-[70vh] overflow-hidden w-full flex flex-row justify-center items-center">
       <div className="card relative w-[26rem] mx-auto bg-white  shadow-xl hover:shadow">
         {
           userId == user?.user._id && (
