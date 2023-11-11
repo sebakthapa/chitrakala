@@ -1,4 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
+import { passwordResetSuccessHtml, passwordResetsuccessText } from "@/lib/emailTemplates";
+import { sendEmail } from "@/lib/sendEmail";
 import Users from "@/models/useraccounts/users";
 import bcrypt from "bcrypt"
 import { getToken } from "next-auth/jwt";
@@ -58,6 +60,14 @@ export const PATCH = async (request) => {
 
         existingUser.password = hash;
         await existingUser.save()
+
+        const {  host, origin } = new URL(req.url);
+        const html = passwordResetSuccessHtml({  host:origin });
+        const text = passwordResetsuccessText({  host:origin });
+        const subject = `Password changed for ${host}`;
+
+        const emailRes = await sendEmail({ subject, email, text, html })
+
 
         return new NextResponse(JSON.stringify({ message: "Password change successful!", status: 200, statusText: "ok" }))
 

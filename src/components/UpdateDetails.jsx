@@ -15,6 +15,7 @@ import { addUserData } from '@/redux/features/userSlice';
 import { BiQuestionMark } from 'react-icons/bi';
 import { Tooltip } from 'react-tooltip';
 import isAuthenticated from './isAuthenticated';
+import Link from 'next/link';
 
 
 
@@ -334,6 +335,11 @@ const UpdateDetails = ({ title, subtitle, form }) => {
 
 
                 </form>
+
+
+                <div className="changePwwithLink mt-10">
+                    <Link className=' hover:no-underline underline  block font-bold text-gray-500 transition duration-300' href="/auth/password-reset">Change Password with an email Link?</Link>
+                </div>
             </motion.div >
         )
     }
