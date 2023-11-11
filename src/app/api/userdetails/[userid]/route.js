@@ -101,7 +101,6 @@ export const PATCH = async (request) => {
 
         // userDetailsRes = await userDetailsRes.populate({ path: 'user', select: '-password' })
 
-        // console.log("after find and update")
         const wasArtist = userDetailsRes?.user?.isArtist;
 
         const isArtist = hasArtistDetails(userDetailsRes);

@@ -34,11 +34,10 @@ const ArtCard = ({ item ,option}) => {
     try {
         const res = await axios.delete(`/api/products/${productId}`);
         // remove from state
-        console.log(res)
         toast.success('Product deleted');
       } catch (error) {
         console.error(error);
-        toast.error('Error deleting product')
+        toast.error('Unable to delete at the moment.')
       }
 
   }
@@ -49,10 +48,8 @@ const ArtCard = ({ item ,option}) => {
     const toggleLike = async (productId) => {
         if (user?._id) {
             try {
-                console.log(galleryData)
 
                 let newLikes = [...galleryData?.likes];
-                console.log(newLikes)
 
                 if (galleryData.likes.includes(user?._id)) { // already liked remove userid from array
                     newLikes = newLikes.filter((id) => id !== user?._id)
@@ -69,13 +66,10 @@ const ArtCard = ({ item ,option}) => {
                     productId,
                 });
 
-                console.log(res)
 
 
             } catch (error) {
                 toast.info("Unable to like at the moment!");
-
-
                 console.error("Error updating like:", error);
             }
         } else {
@@ -85,7 +79,6 @@ const ArtCard = ({ item ,option}) => {
 
 
     const checkLiked = (likes, userId) => {
-        // console.log("likes, userID", likes, userId, likes?.includes(userId))
         return likes?.includes(userId);
     };
 

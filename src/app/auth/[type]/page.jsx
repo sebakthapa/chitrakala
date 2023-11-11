@@ -18,10 +18,7 @@ const Page = ({ params, searchParams, ...props }) => {
  
   const handleGoogleSignin = async () => {
     try {
-      console.log(searchParams?.returnUrl ? searchParams?.returnUrl : "/")
       const res = await signIn("google", { callbackUrl: `${searchParams?.returnUrl ? searchParams?.returnUrl : "/"}`, redirect: false, });
-      console.log(res)
-      // console.log(res)
     } catch (error) {
       throw error
     }

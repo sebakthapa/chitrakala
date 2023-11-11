@@ -28,8 +28,6 @@ const Signup = () => {
 
 
     const handleSignup = async ({ username, email, password, fullname, phone, }) => {
-        if (errors?.email && errors?.phone && errors?.username) { console.log("error xa"); return; }
-        console.log("error xaina")
         // function is run only if there are no errors
         // watch can be used to update state(errors) onchange
         // if (usernameFetchStatus === "available") { //change this condition if username availability is checked on change
@@ -38,25 +36,19 @@ const Signup = () => {
         const data = {
             username, email, password
         }
-        // console.log(data)
 
         // phone && (data.phone = phone);
         fullName && (data.name = fullName);
 
         try {
             const res = await axios.post("/api/users", data);
-            // console.log("RESPONSE > \n", res);
-            // console.log("RESPONSE STATUS > \n", res.status);
             if (res.status == 200) {
                 // setUsernameFetchStatus("notAvailable")
                 toast.success("Account registered successfully!");
                 setSubmitMessage("Logging In!")
                 const userData = res.data;
 
-                console.log(userData);
-                console.log(password);
                 const loginRes = await signIn("credentials", { loginID: userData.user.email, password: password, redirect: false })
-                console.log(loginRes)
                 signIn("email", { email: userData.user.email, redirect: false },)
 
                 router.replace("/auth/verify-email");

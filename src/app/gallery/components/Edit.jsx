@@ -60,7 +60,6 @@ const Edit = ({}) => {
               setImageUrl(productData.photo || '');
             }
           } catch (error) {
-            console.error('Error fetching product data:', error);
           } finally {
             setLoadingpage(false); // Set loading to false once data is fetched or an error occurs
           }
@@ -114,7 +113,6 @@ const Edit = ({}) => {
         if (!session) {
             toast("Please login to upload")
         };
-        console.log(image)
         try {
             setLoading(true);
             const storage = getStorage(app);
@@ -127,7 +125,6 @@ const Edit = ({}) => {
                 
                                 // Get the download URL of the uploaded image
                                 downloadURL = await getDownloadURL(storageRef);
-                                console.log('Image uploaded:', downloadURL);
             }
 
 
@@ -149,7 +146,6 @@ const Edit = ({}) => {
 
                 }
                 else {
-                    console.error("Failed................................")
                     setLoading(false);
 
                     await deleteObject(storageRef);
@@ -161,7 +157,6 @@ const Edit = ({}) => {
             } catch (error) {
                 setLoading(false);
 
-                console.error('Error uploading image:', error);
             }
         
     };
@@ -182,7 +177,6 @@ const Edit = ({}) => {
 
         const files = e.dataTransfer.files;
         // Handle the dropped files, e.g., upload or process them
-        console.log('Dropped files:', files);
 
         setImageUrl(files[0])
         const selectedFile = files[0];

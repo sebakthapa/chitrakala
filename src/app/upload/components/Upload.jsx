@@ -81,7 +81,6 @@ const Upload = () => {
 
                 // Get the download URL of the uploaded image
                 const downloadURL = await getDownloadURL(storageRef);
-                console.log('Image uploaded:', downloadURL);
 
 
                 const data = {
@@ -95,7 +94,6 @@ const Upload = () => {
 
                 const res = await axios.post("/api/products", data);
                 if (res.status == 200) {
-                    console.log(" Uploadeed");
                     router.push('/gallery')
 
 
@@ -103,16 +101,13 @@ const Upload = () => {
                 else {
                     console.error("Failed................................")
                     setLoading(false);
-
                     await deleteObject(storageRef);
-
                 }
 
                 setLoading(false);
                 // You can now save the downloadURL to your database or use it in your application as needed
             } catch (error) {
                 setLoading(false);
-
                 console.error('Error uploading image:', error);
             }
         }
@@ -134,7 +129,6 @@ const Upload = () => {
 
         const files = e.dataTransfer.files;
         // Handle the dropped files, e.g., upload or process them
-        console.log('Dropped files:', files);
 
         setImageUrl(files[0])
         const selectedFile = files[0];

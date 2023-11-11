@@ -18,7 +18,6 @@ const Artist = () => {
     fetchUsers()
   }, [])
 
-  console.log(users)
 
   return (
     <>

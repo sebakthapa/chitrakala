@@ -21,7 +21,6 @@ const ArtistCard = ({ artwork, likes }) => {
       const data = await res.json()
       setUserData(data)
 
-      console.log(userData)
     }
     fetchUsers()
   }, [])

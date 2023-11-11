@@ -31,7 +31,6 @@ export const authOptions = {
             async authorize(credentials, req) {
                 // Add logic here to look up the user from the credentials supplied
                 const { loginID, password } = credentials;
-                // console.log("CREDENTIALS__________________________",{loginID, password})
                 let query = "";
                 const checkPasswordMatch = async (userPassword) => {
                     const result = await bcrypt.compare(password, userPassword);
@@ -64,18 +63,15 @@ export const authOptions = {
 
 
                 const user = await Users.findOne(query,);
-                console.log("USER FROM CREDENTIALS", user)
 
                 if (user?._id) {
                     // user exists check for the password field
                     if (await checkPasswordMatch(user.password)) {
-                        // console.log(userDetails)
                         const returnData = {
                             id: user._id,
                             isArtist: user.isArtist,
                             emailVerified: user.emailVerified,
                         }
-                        console.log("user Data", returnData)
                         return returnData;
                     } else {
                         // return new NextResponse(JSON.stringify({ field: "password", message: "Password is incorrect." }), { status: 401 })
@@ -101,9 +97,7 @@ export const authOptions = {
             //     }
             //   },
             profile(profile) {
-                // console.log("PROFILE FROM PROFIE CALLBACK OF GOOGLE", profile)
                 const { email, email_verified, name, picture, sub } = profile;
-                // console.log("Email Verified", email_verified)
                 return {
                     email,
                     name,
@@ -156,7 +150,6 @@ export const authOptions = {
 
     callbacks: {
         async session({ session, token, user }) {
-            // console.log("FROM SeSSION CALLBACK", session)
 
             session.user = token.user;
             const { id, emailVerified, isArtist } = session.user;
@@ -165,19 +158,14 @@ export const authOptions = {
         },
 
         async jwt({ token, user, trigger, ...rest }) {
-            // console.log("FROM JWT CALLBACK", {token, user, ...rest})
             if (trigger == "update") {
-                console.log("TRIGGER=UPDATE____________________________________________")
                 await dbConnect()
                 const { isArtist, emailVerified, _id: id } = await Users.findById(token?.user.id).select("isArtist emailVerified")
                 const userData = { isArtist, emailVerified, id }
-                console.log("DB USER", userData)
                 token.user = userData;
-                console.log("____________________________________________")
             }
             if (user) {
                 token.user = user;
-                console.log("there is user and ")
             }
             return token;
         },
@@ -194,7 +182,6 @@ export const authOptions = {
 
                         //check if there are too many email links sent
                         const presentTime = new Date().valueOf();
-                        console.log(res)
 
                         const validTokens = [];
                         res?.forEach((object) => {
@@ -207,7 +194,6 @@ export const authOptions = {
                                 validTokens.push(hourDiff)
                             }
                         });
-                        console.log("validTokens", validTokens)
                         const validTokenLength = validTokens.length;
 
                         if (validTokenLength > 1) { // validate frequent request only if at least one link is sent
@@ -224,12 +210,9 @@ export const authOptions = {
 
                             // diffHr goes in least to high
                             validTokens.forEach((diffHr) => { //diffHr = remaining validity time in hours / comes in asc
-                                console.log(diffHr)
                                 diffHr = 24 - diffHr; // diff hr changes to time in hour since token generated / comes in desc
-                                console.log(diffHr)
                                 if (diffHr <= idealHourDiff) {
                                     const waitTime = (idealHourDiff - diffHr) * 60;
-                                    console.log("waitTime", waitTime)
 
                                     if (waitTime > 40) {
                                         throw "Too many frequent requests! Try again after about an hour."
@@ -244,11 +227,9 @@ export const authOptions = {
                             })
                         }
                     } catch (error) {
-                        console.log(error)
                         throw error;
                     }
                 } else {
-                    console.log("verificationRequest is not triggered")
                 }
                 return true;
             }
@@ -256,10 +237,7 @@ export const authOptions = {
                 // if (account.provider == "google") {
                 //     // //++++++++++++++++++++ Logic to redirect user to welcome page only on first signin
                 //     await dbConnect();
-                //     console.log("++++++++++++++++EMAIL", profile.email)
                 //     const res = await Users.findOne({ email: profile.email });
-                //     console.log("_______+++++++++++++_____________++++++++++\n RES \n", res)
-                //     // // console.log("_______+++++++++++++_____________++++++++++\n metadata \n", metadata)
                 //     if (res !== null) {
                 //         return true
                 //     } else{

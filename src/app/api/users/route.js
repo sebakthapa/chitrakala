@@ -19,7 +19,6 @@ export const GET = async () => {
         select: '-password' // excludes password
       })
     const res = data.filter(doc => doc.user.isArtist);
-    console.log("res", res)
     return new NextResponse(JSON.stringify(res))
 
   } catch (error) {
@@ -54,7 +53,6 @@ export const POST = async (request) => {
 
     await dbConnect();
 
-    // console.log("email", email)
 
 
 
@@ -80,16 +78,13 @@ export const POST = async (request) => {
     //     displayName: existingEmail.name,
     //     photo: existingEmail.image,
     //   }
-    //   console.log("existingEmail", existingEmail)
 
     //   const testuser = await Users.findOne({ email });
-    //   console.log("TEST USER", testuser)
 
     //   const doc = await Users.findOneAndUpdate(
     //     { email: existingEmail.email },
     //     { ...updatedUser},
     //     { new: true });
-    //   console.log("DOC", doc)
     //   // const savedData = await doc.save();
 
     //   const userDetails =  new UsersDetails({ ...userData, user: doc._id })

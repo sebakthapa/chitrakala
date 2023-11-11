@@ -17,7 +17,6 @@ const Individual = () => {
     let likes = 0
     if (userData) {
         userData.map((item, index) => {
-            console.log(item.likes.length)
             likes = likes + item.likes.length
         })
     }

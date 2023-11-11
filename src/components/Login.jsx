@@ -34,14 +34,12 @@ const Login = (props) => {
 
             const data = { loginID: loginId, password };
             const res = await signIn('credentials', { ...data, redirect: false })
-            console.log(res)
             if (!res.ok) {
                 toast.error(res.error, { theme: "colored" });
             } else {
                 router.replace("/");
+                setShowForgotPassword(true)
             }
-
-
         } catch (error) {
             console.log(error)
         } finally {
@@ -60,13 +58,6 @@ const Login = (props) => {
             if (!session?.user.emailVerified) {
                 router.replace("/auth/verify-email");
             } else {
-                const callbackUrl = searchParams?.get("callbackUrl");
-                // if (searchParams?.get("returning-user") == true) {
-                //     console.log("returning user")
-                //     router.replace(searchParams?.get("returnUrl") ? searchParams?.get("returnUrl") : "/");
-                // } else {
-                //     router.replace("/profile-setup?step=welcome")
-                // }
                 router.replace(searchParams?.get("returnUrl") ? searchParams?.get("returnUrl") : "/");
 
             }
@@ -76,7 +67,6 @@ const Login = (props) => {
 
     useEffect(() => {
         const error = searchParams?.get("error");
-        console.log(error)
         if (error == "OAuthAccountNotLinked") {
             toast.error("The email is already linked to another account!", { autoClose: 10000, })
         }
@@ -115,7 +105,11 @@ const Login = (props) => {
                         autoComplete="current-password"
                     />
                     
-                        <Link className='text-blue-500 hover:text-blue-500 transition  font-semibold mt-0 text-xs hover:underline' href="/auth/password-reset">Forgot password</Link>
+                    {
+                        showForgotPassword && (
+                            <Link className='text-blue-500 hover:text-blue-500 transition  font-semibold mt-0 text-xs hover:underline' href="/auth/password-reset">Forgot password</Link>
+                        )
+                    }
                 </div>
             </div>
             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.9 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='bg-gray-900 text-white hover:bg-gray-700' type="submit" >

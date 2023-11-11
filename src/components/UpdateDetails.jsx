@@ -192,11 +192,9 @@ const UpdateDetails = ({ title, subtitle, form }) => {
             setIsSubmitting(true)
             try {
                 const res = await axios.patch(`/api/users/changepassword`, { userId: session?.user.id, currentPassword, newPassword, confirmNewPassword });
-                console.log(res)
                 if (res.status == 200) {
                     toast.success("Password Changed successfully!");
                     const res = await signOut({ redirect: "/auth/login" });
-                    console.log(res)
                     if (res) {
                         router.push("/auth/login")
                         dispatch(clearUserData());

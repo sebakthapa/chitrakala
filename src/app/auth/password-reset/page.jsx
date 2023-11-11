@@ -27,13 +27,11 @@ const Page = ({ searchParams }) => {
 
         try {
             const res = await axios.post("/api/password-reset", { email });
-            console.log(res)
             if (res.status == 200) {
                 toast.success("Password reset email sent! Check your Mail.");
                 router.replace("/auth/login");
             }
         } catch (error) {
-            console.log(error)
             const status = error.response.status;
             const errorMessage = error?.response?.data?.error
             if (status == 400) {
@@ -51,14 +49,12 @@ const Page = ({ searchParams }) => {
     }
 
     const handlePasswordReset = async (data) => {
-        console.log(data)
         setIsSubmitting(true)
 
         try {
 
             const res = await axios.patch("/api/password-reset", { password, confirmPassword, email: searchParams?.email, token: searchParams?.token });
 
-            console.log(res)
 
             if (res.status == 200) {
                 toast.success("Password reset successfull.");
