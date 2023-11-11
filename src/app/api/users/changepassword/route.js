@@ -1,9 +1,12 @@
 import dbConnect from "@/lib/dbConnect";
 import Users from "@/models/useraccounts/users";
 import bcrypt from "bcrypt"
+import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
 export const PATCH = async (request) => {
+
+
     const saltRounds = 10;
     const hashPassword = (password) => {
         return new Promise((resolve, reject) => {
@@ -15,31 +18,39 @@ export const PATCH = async (request) => {
     }
 
     try {
-        console.log("t")
+        // checking for usersession as returned from header cookies from client request
+        const token = await getToken({ req: request })
+        if (!token?.user.id) {
+            return NextResponse.json({ message: "You must be logged in to change your password." }, { status: 401 })
+        }
+
         const { userId, currentPassword, newPassword, confirmNewPassword } = await request.json();
-        console.log("pt")
+
+        if (!token?.user.id != userId) {
+            return NextResponse.json({ message: "You can change only your password." }, { status: 401 })
+        }
 
         if (!newPassword || !currentPassword || !confirmNewPassword) {
-            return new NextResponse(JSON.stringify({field:"multiple", message: "One or more field data is missing." }), { status: 400, statusText: "bad request" })
+            return new NextResponse(JSON.stringify({ field: "multiple", message: "One or more field data is missing." }), { status: 400, statusText: "bad request" })
         }
 
         if (newPassword != confirmNewPassword) {
-            return new NextResponse(JSON.stringify({field:"confirmnewpassword", message: "Confirm Password didn't match." }), { status: 400, statusText: "bad request" })
+            return new NextResponse(JSON.stringify({ field: "confirmnewpassword", message: "Confirm Password didn't match." }), { status: 400, statusText: "bad request" })
         }
 
         await dbConnect();
 
-        const existingUser = await Users.findById(userId, {password:1});
+        const existingUser = await Users.findById(userId, { password: 1 });
 
         if (!existingUser) {
             return new NextResponse(JSON.stringify({ message: "User doesn't exist to perform the desired action." }), { status: 400, statusText: "bad request" })
         }
 
         if (!existingUser.password) {
-            return new NextResponse(JSON.stringify({field:"multiple", message: "You can change password only via email link." }), { status: 400, statusText: "bad request" })
+            return new NextResponse(JSON.stringify({ field: "multiple", message: "You can change password only via email link." }), { status: 400, statusText: "bad request" })
         }
 
-        console.log({currentPassword, newPassword, confirmNewPassword, existingUser})
+        console.log({ currentPassword, newPassword, confirmNewPassword, existingUser })
 
         const isPwCorrect = await bcrypt.compare(currentPassword, existingUser.password)
         if (!isPwCorrect) {
@@ -51,7 +62,7 @@ export const PATCH = async (request) => {
         existingUser.password = hash;
         await existingUser.save()
 
-        return new NextResponse(JSON.stringify({message:"Password change successful!", status:200, statusText:"ok"}))
+        return new NextResponse(JSON.stringify({ message: "Password change successful!", status: 200, statusText: "ok" }))
 
     } catch (error) {
         console.log("ERROR while changing password for user \n" + error);
