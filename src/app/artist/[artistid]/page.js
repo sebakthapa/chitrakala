@@ -9,8 +9,10 @@ const Page = () => {
 
   return (
     <>
-   
+   <div className=''>
+
    <Individual/>
+   </div>
     </>
   )
 }

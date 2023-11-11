@@ -24,7 +24,10 @@ const ArtCard = ({ item ,option}) => {
 
     useEffect(() => {
 
-        setGalleryData(item)
+        option = false
+      
+      setGalleryData(item)
+     
 
     }, [item])
 
@@ -90,7 +93,7 @@ const ArtCard = ({ item ,option}) => {
                 <div className=" w-[15rem] md:min-w-[18rem] m-2  ">
                     <div className="bg-white rounded-lg overflow-hidden shadow-lg relative">
                         <div
-                            className=" h-[30vh] overflow-hidden shadow-sm  "
+                            className=" h-[30vh] overflow-hidden shadow-sm  mt-10 "
                             onDoubleClick={() => {
                                 toggleLike(galleryData?._id);
                             }}
@@ -104,7 +107,7 @@ const ArtCard = ({ item ,option}) => {
                                 
                             />
                     {option===true&&(
-                           <div className=" absolute top-0 right-0 z-50 bg-black w-full">
+                           <div className=" absolute float-right top-0 right-0 z-50 bg-gray-700 shadow-lg w-full">
                            <div className="flex gap-2 p-2 cursor-pointer">
                              <span  onClick={()=>{handleDelete(galleryData._id)}}>
                                <AiFillDelete fill="#ed495b" />
@@ -179,7 +182,7 @@ const ArtCard = ({ item ,option}) => {
                             </div>
 
                             <div className="my-5 flex justify-between">
-                                <span className="rounded-lg bg-yellow-100 px-5" >${galleryData?.price}</span>
+                                <span className="rounded-lg bg-yellow-100 px-5" >NPR {galleryData?.price}</span>
                                 <span className="rounded-lg capitalize bg-blue-100 px-5 flex items-center gap-1">  <FcTimeline /> {galleryData?.category}</span>
                             </div>
 
