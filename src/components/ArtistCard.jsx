@@ -27,8 +27,10 @@ const ArtistCard = ({ artwork, likes }) => {
   }, [])
 
   return (
+
     <div className="bg-gray-200 font-sans h-[70vh] overflow-hidden w-full flex flex-row justify-center items-center">
       <div className="card mt-14 relative w-[26rem] mx-auto bg-white  shadow-xl hover:shadow">
+
         {
           userId == user?.user._id && (
             <Link onMouseEnter={() => setEditHover(true)} onMouseLeave={() => setEditHover(false)} className="edit  p-2 absolute right-0 m-2"

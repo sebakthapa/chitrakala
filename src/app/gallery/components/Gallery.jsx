@@ -23,12 +23,11 @@ const Gallery = () => {
     if (category) { query += `&category=${category}`; }
     if (limit) { query += `&limit=${limit}`; }
 
-    const [filterParams, setFilterParams] = useState(filter || "newD");
+    const [filterParams, setFilterParams] = useState(filter || "newA");
     const [filteredData, setFilteredData] = useState([]);
     const [sortedData, setSortedData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loading1, setLoading1] = useState(true);
-    const isLoading = loading || loading1;
 
     async function fetchData() {
         try {
@@ -85,7 +84,7 @@ const Gallery = () => {
 
     return (
         <>
-            {isLoading ? (
+            {loading ? (
                 <div className="myScroll pb-10 flex overflow-x-auto">
                     <Skeleton height={400} width={300} containerClassName="m-5 shiny_effect flex-1 flex gap-2" count={4} />
                 </div>
@@ -112,7 +111,7 @@ const Gallery = () => {
                         className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm "
                         value={filterParams}
                     >
-                        <option className="text-gray-700 block px-4 py-2 text-sm " value="newD">
+                        <option className="text-gray-700 block px-4 py-2 text-sm " value="newA">
                             Added Newest
                         </option>
                         <option className="text-gray-700 block px-4 py-2 text-sm " value={"likesD"}>
@@ -125,7 +124,7 @@ const Gallery = () => {
                 </div>
             </div>
 
-            {isLoading ? (
+            {loading1 ? (
                 <div className="myScroll pb-10 flex overflow-x-auto">
                     <Skeleton height={400} width={300} containerClassName="shiny_effect flex-1 flex gap-2 mt-20" count={4} />
 
