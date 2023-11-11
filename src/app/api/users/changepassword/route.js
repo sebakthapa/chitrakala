@@ -5,8 +5,6 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
 export const PATCH = async (request) => {
-
-
     const saltRounds = 10;
     const hashPassword = (password) => {
         return new Promise((resolve, reject) => {
@@ -26,7 +24,7 @@ export const PATCH = async (request) => {
 
         const { userId, currentPassword, newPassword, confirmNewPassword } = await request.json();
 
-        if (!token?.user.id != userId) {
+        if (token?.user.id != userId) {
             return NextResponse.json({ message: "You can change only your password." }, { status: 401 })
         }
 
@@ -50,7 +48,6 @@ export const PATCH = async (request) => {
             return new NextResponse(JSON.stringify({ field: "multiple", message: "You can change password only via email link." }), { status: 400, statusText: "bad request" })
         }
 
-        console.log({ currentPassword, newPassword, confirmNewPassword, existingUser })
 
         const isPwCorrect = await bcrypt.compare(currentPassword, existingUser.password)
         if (!isPwCorrect) {

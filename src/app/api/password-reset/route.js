@@ -21,7 +21,6 @@ const generateHash = (text, saltRounds = 10) => {
 export const POST = async (req) => {
     try {
         const { email } = await req.json();
-        console.log(email)
         const isValidEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
 
         if (!isValidEmail) {
@@ -53,7 +52,6 @@ export const POST = async (req) => {
             createdAt: Date.now(),
         }).save();
 
-        console.log({ savedData })
 
 
         const { origin: host, host:webname } = new URL(req.url);
@@ -64,7 +62,6 @@ export const POST = async (req) => {
 
         const emailRes = await sendEmail({ subject, email, text, html })
 
-        console.log(emailRes)
 
         return NextResponse.json({ link, message: "Password reset Email sent!" }, { status: 200 })
 
@@ -102,9 +99,7 @@ export const PATCH = async (req) => {
         const { expires, token: hashedToken, createdAt } = tokenData;
 
 
-        console.log({ token, hashedToken })
         const isValid = await bcrypt.compare(token, hashedToken);
-        console.log(isValid)
         if (!isValid) {
             return NextResponse.json({ error: "Invalid or expired link!" }, { status: 401 });
         }

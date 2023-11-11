@@ -387,7 +387,6 @@ export function emailVerifyText(params) {
 
 export const passwordResetHtml = (params) => {
   const { url, host } = params;
-  console.log("URL AND HOST FROM HTML", { url, host })
   const escapedHost = host.replace(/\./g, "&#8203;.")
 
   return `<!DOCTYPE html>

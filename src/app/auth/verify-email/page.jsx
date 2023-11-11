@@ -19,9 +19,7 @@ const Page = () => {
     if ( user?.user?.email) {
       try {
         toast.info("Working on delivering link! This may take few seconds.", {autoClose: 5000, toastId:"processing_email_message"})
-        console.log("sending try")
         const res = await signIn("email", { email:  user?.user?.email, redirect: false },)
-        console.log(res)
         if (res.error == null) {
           toast.success("Check your Mail!")
         } else {
@@ -33,7 +31,6 @@ const Page = () => {
           }
         }
       } catch (error) {
-        console.log("ERROR while sending email verification link")
         throw error;
       }
     } else {

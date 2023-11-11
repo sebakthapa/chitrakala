@@ -47,7 +47,7 @@ const Edit = ({}) => {
                 if(productData?.artist?.user !== session?.user?.id)
                 {
 
-                   toast("Invalid privilege ")
+                   toast.error("Invalid privilege ")
                    router.push(`/gallery/${pid}`)
                 }
               }
@@ -60,7 +60,6 @@ const Edit = ({}) => {
               setImageUrl(productData.photo || '');
             }
           } catch (error) {
-            console.error('Error fetching product data:', error);
           } finally {
             setLoadingpage(false); // Set loading to false once data is fetched or an error occurs
           }
@@ -112,9 +111,8 @@ const Edit = ({}) => {
     const handleFileUpload = async (e) => {
         e.preventDefault();
         if (!session) {
-            toast("Please login to upload")
+            toast.error("Please login to upload")
         };
-        console.log(image)
         try {
             setLoading(true);
             const storage = getStorage(app);
@@ -127,7 +125,6 @@ const Edit = ({}) => {
                 
                                 // Get the download URL of the uploaded image
                                 downloadURL = await getDownloadURL(storageRef);
-                                console.log('Image uploaded:', downloadURL);
             }
 
 
@@ -143,13 +140,12 @@ const Edit = ({}) => {
                 const res = await axios.patch("/api/products/"+pid, data);
 
                 if (res.status == 200) {
-                    toast(" Updated");
+                    toast.success("Updated");
                     router.push('/gallery')
 
 
                 }
                 else {
-                    console.error("Failed................................")
                     setLoading(false);
 
                     await deleteObject(storageRef);
@@ -161,7 +157,6 @@ const Edit = ({}) => {
             } catch (error) {
                 setLoading(false);
 
-                console.error('Error uploading image:', error);
             }
         
     };
@@ -182,7 +177,6 @@ const Edit = ({}) => {
 
         const files = e.dataTransfer.files;
         // Handle the dropped files, e.g., upload or process them
-        console.log('Dropped files:', files);
 
         setImageUrl(files[0])
         const selectedFile = files[0];

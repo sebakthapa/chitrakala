@@ -73,7 +73,6 @@ const Exhibition = () => {
   
           // Get the download URL of the uploaded image
           const downloadURL = await getDownloadURL(storageRef);
-          console.log('Image uploaded:', downloadURL);
   
   
           const data = {
@@ -87,7 +86,6 @@ const Exhibition = () => {
   
           const res = await axios.post("/api/exhibition", data);
           if (res.status == 200) {
-            console.log(" Uploadeed");
             router.push('/exhibition') 
 
           }
