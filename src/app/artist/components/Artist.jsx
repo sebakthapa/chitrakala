@@ -60,7 +60,7 @@ const Artist = () => {
                         {item.bio}
                       </div>
 
-                      <div className="flex  bg-slate-300 rounded-full px-5 gap-2 mt-2 lg:absolute bottom-0 mb-4 md:hidden lg:block">
+                      <div className="flex flex-col  gap-2 mt-2 lg:absolute bottom-0 mb-4 md:hidden lg:block">
                         <span
                           className="flex   items-center gap-2 mr-2   py-1 px-2 rounded-full text-xs lowercase text-gray-700"
 

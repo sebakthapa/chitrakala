@@ -86,7 +86,7 @@ const Gallery = () => {
         <>
             {loading ? (
                 <div className="myScroll pb-10 flex overflow-x-auto">
-                    <Skeleton height={400} width={300} containerClassName="m-5 shiny_effect flex-1 flex gap-2" count={4} />
+                    <Skeleton height={400} width={500} containerClassName="myScroll overflow-x-auto  gap-2 m-5 shiny_effect " count={1} />
                 </div>
             ) : (
                 <div className="myScroll pb-10 flex overflow-x-auto">
@@ -96,7 +96,7 @@ const Gallery = () => {
                 </div>
             )}
 
-            <h2 className="mb-4 text-center text-2xl text-gray-900 font-bold md:text-4xl">Explore</h2>
+            <h2 className="my-10 text-center text-2xl text-gray-900 font-bold md:text-4xl">Explore</h2>
             <div>
 
                 <label htmlFor="filter" className="text-gray-400 font-bold text-xs">
@@ -125,10 +125,9 @@ const Gallery = () => {
             </div>
 
             {loading1 ? (
-                <div className="myScroll pb-10 flex overflow-x-auto">
-                    <Skeleton height={400} width={300} containerClassName="shiny_effect flex-1 flex gap-2 mt-20" count={4} />
-
-                </div>
+                            <div className="myScroll pb-10 flex overflow-x-auto">
+                            <Skeleton height={400} width={500} containerClassName="myScroll overflow-x-auto  gap-2 m-5 shiny_effect " count={1} />
+                        </div>
             ) : (
                 <div className="myScroll pb-10 flex overflow-x-auto">
                     {sortedData?.map((item, index) => (
