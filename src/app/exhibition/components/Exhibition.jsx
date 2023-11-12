@@ -16,6 +16,8 @@ const Exhibition = () => {
     }, []);
   return (
     <>
+    {exhibition.length > 0 ?(
+
               <div class="block md:flex  md:-mx-2">
             {exhibition.map((item, index) => (
               <div key={index} class="w-full lg:w-1/4 md:mx-2 mb-4 md:mb-0">
@@ -65,6 +67,12 @@ const Exhibition = () => {
               </div>
             ))}
           </div>
+    ):(
+      <div className="container">
+          <h1>Comming Soon..</h1>
+      </div>)
+      }
+   
     </>
   )
 }
