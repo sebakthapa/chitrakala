@@ -40,7 +40,7 @@ export const PATCH = async (request) => {
 
         await dbConnect();
 
-        const existingUser = await Users.findById(userId, { password: 1 });
+        const existingUser = await Users.findById(userId, { password: 1, email:1 });
 
         if (!existingUser) {
             return new NextResponse(JSON.stringify({ message: "User doesn't exist to perform the desired action." }), { status: 400, statusText: "bad request" })
@@ -61,12 +61,12 @@ export const PATCH = async (request) => {
         existingUser.password = hash;
         await existingUser.save()
 
-        const {  host, origin } = new URL(req.url);
+        const {  host, origin } = new URL(request.url);
         const html = passwordResetSuccessHtml({  host:origin });
         const text = passwordResetsuccessText({  host:origin });
         const subject = `Password changed for ${host}`;
 
-        const emailRes = await sendEmail({ subject, email, text, html })
+        await sendEmail({ subject, email:existingUser.email, text, html })
 
 
         return new NextResponse(JSON.stringify({ message: "Password change successful!", status: 200, statusText: "ok" }))
