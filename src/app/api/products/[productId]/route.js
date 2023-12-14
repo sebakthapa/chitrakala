@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import Products from "@/models/useraccounts/products";
 import { getServerSession } from "next-auth/next";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import { getToken } from "next-auth/jwt";
 
@@ -25,8 +25,8 @@ export const GET = async (req, res) => {
 // PATCH a specific product by id
 export const PATCH = async (req) => {
     try {
-        // checking for usersession as returned from header cookies from client request
-        const token = await getToken({ req: request })
+        // checking for usersession as returned from header cookies from client req
+        const token = await getToken({ req: req })
         if (!token?.user.id) {
             return NextResponse.json({message: "You must be logged in to perform edit."}, { status: 401 })
         }
@@ -36,18 +36,20 @@ export const PATCH = async (req) => {
 
 
         const query = req.url.split("/");
+
         const productId = query[query.length - 1];
 
-        const updatedData = { artist, name, price, description, category, photo, like };
+        const updatedData = { artist, name, price, description, category, photo };
 
         await dbConnect();
-        const existingProduct = await Products.findById(productId);
+        const existingProduct = await Products.findById(productId).populate("artist");
 
-        if (existingProduct.artist != token.user.id) {
+
+        if (existingProduct.artist.user != token.user.id) {
             return NextResponse.json({ message: "You can't edit this product!" }, { status: 401 })
         }
 
-        const newProduct = await Products.findByIdAndUpdate(productId, updatedData).populate("artist")
+        const newProduct = await Products.findByIdAndUpdate(productId, updatedData, {new: true}).populate("artist")
 
         return new NextResponse(JSON.stringify(newProduct))
     } catch (error) {
@@ -62,19 +64,19 @@ export const PATCH = async (req) => {
 export const DELETE = async (req, res) => {
     try {
 
-        // checking for usersession as returned from header cookies from client request
-        const token = await getToken({ req: request })
+        // checking for usersession as returned from header cookies from client req
+        const token = await getToken({ req: req })
         if (!token?.user.id) {
             return NextResponse.json({message:"You must be logged in to perform delete."}, { status: 401 })
         }
 
         const query = req.url.split("/");
         const productId = query[query.length - 1];
-
         await dbConnect();
 
-        const existingProduct = await Products.findById(productId);
-        if (existingProduct.artist != token.user.artist) {
+        const existingProduct = await Products.findById(productId).populate("artist");
+        if (existingProduct.artist.user != token.user.id) {
+         
             return NextResponse.json({message: "You can't delete this product!"}, { status: 401 })
         }
 
