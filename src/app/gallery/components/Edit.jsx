@@ -137,11 +137,11 @@ const Edit = ({}) => {
                     photo: downloadURL?downloadURL:imageUrl
                 };
                 
-                const res = await axios.patch("/api/products/"+pid, data);
+                const res = await axios.patch("/api/products/"+ pid, data);
 
                 if (res.status == 200) {
                     toast.success("Updated");
-                    router.push('/gallery')
+                    router.back()
 
 
                 }
