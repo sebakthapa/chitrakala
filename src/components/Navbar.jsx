@@ -37,11 +37,8 @@ function Navbar() {
   const fetchUserDetails = async (uid) => {
     try {
       const res = await axios.get(`/api/userdetails/${uid}`);
-      // console.log(res)
       if (res.status == 200) {
-        // console.log("FETCHING")
         dispatch(addUserData(res.data))
-        // console.log(user)
         return res;
       }
       return;
@@ -76,7 +73,6 @@ function Navbar() {
   const handleSignout = async () => {
     try {
       const res = await signOut({ redirect: false });
-      console.log(res)
       dispatch(clearUserData());
 
     } catch (error) {
@@ -86,8 +82,6 @@ function Navbar() {
 
 
   useEffect(() => {
-    console.log(session)
-
 
     const sessionUser = session?.user?.id;
     const reduxUser = user?.user?._id;

@@ -39,7 +39,6 @@ export const PATCH = async (request) => {
     // Get product
     const product = await Products.findById(productId);
     const userdetails = await UsersDetails.findById(userId);
-    console.log(product, userdetails)
 
     // Check if userdetails already liked
     const userHasLiked = product.likes.includes(userId);

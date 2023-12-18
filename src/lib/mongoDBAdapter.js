@@ -66,7 +66,6 @@ export function MongoDBAdapter(client, options = {}) {
     })();
     return {
         async createUser(data) {
-            console.log("CREATING NEW USER", data)
             const { email, name, image, isEmailVerified, isArtist } = data;
             let user;
             if (isEmailVerified) {

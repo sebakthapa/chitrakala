@@ -29,7 +29,7 @@ export const POST = async (request) => {
 
     try {
         const { title, description = "",location, status="open", datetime, photo } = await request.json();
-        console.log(datetime,photo);
+        // console.log(datetime,photo);
         await dbConnect();
 
         const newExhibiiton = new Exhibition({ title, location, description, status, photo,datetime });

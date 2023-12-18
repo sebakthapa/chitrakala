@@ -66,7 +66,7 @@ export const PATCH = async (request) => {
         const userId = params[params.length - 1];
         const { bio, image, name, address, dob, username, phone, } = dataToUpdate;
 
-        if (!token?.user.id != userId) {
+        if (token?.user.id != userId) {
             return NextResponse.json({ message: "You can update only your details." }, { status: 401 })
         }
 
@@ -101,7 +101,6 @@ export const PATCH = async (request) => {
 
         // userDetailsRes = await userDetailsRes.populate({ path: 'user', select: '-password' })
 
-        // console.log("after find and update")
         const wasArtist = userDetailsRes?.user?.isArtist;
 
         const isArtist = hasArtistDetails(userDetailsRes);
@@ -136,7 +135,7 @@ export const DELETE = async (request) => {
         const params = request.url.split('/');
         const userId = params[params.length - 1];
 
-        if (!token?.user.id !== userId) {
+        if (token?.user.id !== userId) {
             return NextResponse.json({ message: "You can modify only your details." }, { status: 401 })
         }
 

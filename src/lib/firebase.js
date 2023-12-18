@@ -39,7 +39,6 @@ const storeImage = async (path) => {
 export default storeImage
 
 
-
 export const sendEmailVerificationLink = async () => {
   const addUser = async () => {
     const { uid, displayName, photoURL, emailVerified, } = auth.currentUser;

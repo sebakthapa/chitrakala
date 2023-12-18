@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export function EmailVerifyHtml(params) {
   const { url, host, theme } = params;
   const escapedHost = host.replace(/\./g, "&#8203;.")
@@ -387,7 +389,6 @@ export function emailVerifyText(params) {
 
 export const passwordResetHtml = (params) => {
   const { url, host } = params;
-  console.log("URL AND HOST FROM HTML", { url, host })
   const escapedHost = host.replace(/\./g, "&#8203;.")
 
   return `<!DOCTYPE html>
@@ -906,7 +907,7 @@ export const passwordResetSuccessHtml = (params) => {
   </head>
   <body class="dark-bg-gray-900" style="margin: 0; width: 100%; padding: 0; word-break: break-word; -webkit-font-smoothing: antialiased; background-color: #F7F8FA">
     <div style="display: none">
-      Your password has been changed
+      Your password has been changed.
       &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;
     </div>
     <div role="article" aria-roledescription="email" aria-label="Let's get you signed in" lang="en" style="font-size: 16px; font-size: 1rem; font-size: max(16px, 1rem)">
@@ -994,7 +995,7 @@ export const passwordResetSuccessHtml = (params) => {
                                   <br>
                                   <br>
                                   -->
-                                 Your password has been changed successfully.<br />
+                                 Your password has been changed successfully on ${moment(new Date()).format("Do-MMM YYYY, h:mm a")}.<br />
                                  You can now login with your new password.
                                 </p>
                               </td>
@@ -1156,5 +1157,5 @@ export const passwordResetSuccessHtml = (params) => {
 
 export function passwordResetsuccessText(params) {
   const {  host } = params;
-  return `Your password has been Changed for ${host}.\n click on the link below to proceed to login page. \n ${host}/auth/login\n\n`
+  return `Your password has been Changed for ${host} on ${moment(new Date()).format("Do-MMM YYYY, h:mm a")}.\n click on the link below to proceed to login page. \n ${host}/auth/login\n\n`
 }

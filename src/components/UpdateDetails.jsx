@@ -15,6 +15,7 @@ import { addUserData } from '@/redux/features/userSlice';
 import { BiQuestionMark } from 'react-icons/bi';
 import { Tooltip } from 'react-tooltip';
 import isAuthenticated from './isAuthenticated';
+import Link from 'next/link';
 
 
 
@@ -87,7 +88,7 @@ const UpdateDetails = ({ title, subtitle, form }) => {
                     uploadedImage = imageData?.storageRef;
                     data.image = imageData.downloadURL;
                 } else {
-                    toast("unable to upload image at the moment.")
+                    toast.error("unable to upload image at the moment.")
                 }
             } else {
             }
@@ -97,13 +98,13 @@ const UpdateDetails = ({ title, subtitle, form }) => {
                 if (res?.status == 200) {
                     res?.data && dispatch(addUserData(res?.data));
                     router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
-                    toast("Details updated successfully")
+                    toast.success("Details updated successfully")
                     await updateSession();
                 } else {
                     await deleteObject(storageRef);
                 }
             } else {
-                toast("No changes made to update!")
+                toast.info("No changes made to update!")
                 router.push(searchParams.get("returnurl") ? searchParams.get("returnurl") : "/");
                 return;
             }
@@ -140,7 +141,7 @@ const UpdateDetails = ({ title, subtitle, form }) => {
 
     const handleFileUpload = async () => {
         if (!session?.user.id) {
-            toast("Please login to add details")
+            toast.warn("Please login to add details")
             return;
         };
         if (image) {
@@ -192,11 +193,9 @@ const UpdateDetails = ({ title, subtitle, form }) => {
             setIsSubmitting(true)
             try {
                 const res = await axios.patch(`/api/users/changepassword`, { userId: session?.user.id, currentPassword, newPassword, confirmNewPassword });
-                console.log(res)
                 if (res.status == 200) {
                     toast.success("Password Changed successfully!");
                     const res = await signOut({ redirect: "/auth/login" });
-                    console.log(res)
                     if (res) {
                         router.push("/auth/login")
                         dispatch(clearUserData());
@@ -336,6 +335,11 @@ const UpdateDetails = ({ title, subtitle, form }) => {
 
 
                 </form>
+
+
+                <div className="changePwwithLink mt-10">
+                    <Link className=' hover:no-underline underline  block font-bold text-gray-500 transition duration-300' href="/auth/password-reset">Change Password with an email Link?</Link>
+                </div>
             </motion.div >
         )
     }

@@ -49,7 +49,7 @@ const Welcome = () => {
 
                 <div className="buttons flex flex-col sm:flex-row items-center  gap-10">
                     <button
-                        onClick={() => { router.push(searchParams?.get("returnUrl") || "/"); toast(`Thank you, ${user?.name}. You may now continue browsing on Chitrakala.`, {}) }}
+                        onClick={() => { router.push(searchParams?.get("returnUrl") || "/"); toast(`Thank you, ${user?.name}. You may now continue browsing on Chitrakala.`, {hideProgressBar:false}) }}
                         className=' p-7 xxs:p-10 text-center border-2 border-[rgba(0,0,0,.07)] rounded-lg  group hover:border-gray-300 hover:shadow-sm hover:-translate-y-1 transition duration-300 w-fit max-w-[240px] '
                     >
                         <h6 className='text-xl font-sans font-medium text-gray-600 mb-3 group-hover:text-black transition duration-300'>Visitor</h6>

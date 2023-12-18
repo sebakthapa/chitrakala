@@ -18,7 +18,6 @@ const Artist = () => {
     fetchUsers()
   }, [])
 
-  console.log(users)
 
   return (
     <>
@@ -57,7 +56,7 @@ const Artist = () => {
                       >
                         {item.name.toLowerCase()}
                       </span>
-                      <div className="text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
+                      <div className=" truncate text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
                         {item.bio}
                       </div>
 

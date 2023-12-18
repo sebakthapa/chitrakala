@@ -4,12 +4,13 @@ import { BsHeartFill } from 'react-icons/bs';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import moment from 'moment';
 const ArtDetail = ({artdata}) => {
 
   return (
     <>
 
-      <section class="flex flex-col justify-center antialiased bg-white text-gray-200 min-h-screen">
+      <section class="flex flex-col justify-center antialiased bg-white text-gray-800 min-h-screen">
     <div class="max-w-6xl mx-auto p-4 sm:px-6 h-full">
         <article class="max-w-sm mx-auto md:max-w-none grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-12 xl:gap-16 items-center">
             <a class="relative block group" href="#0">
@@ -33,7 +34,7 @@ const ArtDetail = ({artdata}) => {
                     <div class="mb-3">
                         <ul class="flex flex-wrap text-xs font-medium -m-1">
                             <li class="m-1">
-                                <a class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full bg-purple-600 hover:bg-purple-700 transition duration-150 ease-in-out" href="#0">{artdata?.category}</a>
+                                <Link class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full bg-purple-600 hover:bg-purple-700 transition duration-150 ease-in-out" href={`/gallery?category=${artdata?.category}`}>{artdata?.category}</Link>
                             </li>
                             <li class="m-1">
                                 <a class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full bg-blue-500 hover:bg-blue-600 transition duration-150 ease-in-out" href="#0">${artdata?.price}</a>
@@ -45,10 +46,10 @@ const ArtDetail = ({artdata}) => {
                         </ul>
                     </div>
                     <h3 class="text-2xl lg:text-3xl font-bold leading-tight mb-2">
-                        <a class="hover:text-gray-100 transition duration-150 ease-in-out" href="#0">{artdata?.name}</a>
+                        <span class=" transition duration-150 ease-in-out" href="#0">{artdata?.name}</span>
                     </h3>
                 </header>
-                <p class="text-lg text-gray-400 flex-grow">{artdata?.description}</p>
+                <p class="text-lg text-gray-600 flex-grow">{artdata?.description}</p>
                 <footer class="flex items-center mt-4">
                     <Link href={`/artist/${artdata?.artist?.user}`}>
                  
@@ -66,12 +67,12 @@ const ArtDetail = ({artdata}) => {
                     </Link>
                     
                     <div className='pointer' > 
-                        <Link class="font-medium text-gray-500 hover:text-gray-100 transition duration-150 ease-in-out"
+                        <Link class="font-medium text-gray-500 hover:underline transition duration-150 ease-in-out"
                         href={`/artist/${artdata?.artist?.user}`}
                         >
                           @{artdata?.artist?.name}</Link>
                         <span class="text-gray-700"> - </span>
-                        <span class="text-gray-300">{artdata?.createdAt && artdata.createdAt.split('T')[0]}</span>
+                        <span class="text-gray-400">{artdata?.createdAt && moment(artdata.createdAt).format("Do-MMM YYYY")}</span>
                     </div>
                  
                 </footer>
