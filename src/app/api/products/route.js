@@ -10,39 +10,39 @@ export const GET = async (req) => {
     try {
         const { searchParams } = new URL(req.url);
         const username = searchParams.get('username');
-        const limit = searchParams.get('limit');
-        const filter = searchParams.get('filter');
+        const sort = searchParams.get('sort');
         const category = searchParams.get('category');
+        const page = searchParams.get('page') || 1;
         let query = {}
-        let sort = {}
+        let sortQuery = {}
         if (category) {
             query.category = category
         }
-        if (filter) {
-            switch (filter) {
+        if (sort) {
+            switch (sort) {
                 case 'priceA':
-                    sort = { price: 1 };
+                    sortQuery = { price: 1 };
                     break;
                 case 'priceD':
-                    sort = { price: -1 };
+                    sortQuery = { price: -1 };
                     break;
                 case 'likesA':
-                    sort = { likes: 1 }
+                    sortQuery = { likes: 1 }
                     break;
                 case 'likesD':
-                    sort = { likes: -1 }
+                    sortQuery = { likes: -1 }
                     break;
                 case 'newA':
-                    sort = { createdAt: 1 }
+                    sortQuery = { createdAt: 1 }
                     break;
                 case 'newD':
-                    sort = { updatedAt: -1 }
+                    sortQuery = { updatedAt: -1 }
                     break;
                 default:
                     break;
             }
         }
-        console.log(sort)
+        console.log(sortQuery)
 
         await dbConnect();
         const populateOpts = {
@@ -57,9 +57,11 @@ export const GET = async (req) => {
         }
 
         const res = await Products.find(query)
-            .limit(limit)
-            .sort(sort)
+            .skip((page-1) * 12)
+            .limit(12)
+            .sort(sortQuery)
             .populate(populateOpts)
+        
         const filtered = res.filter(p => p.artist && p.artist.user)
 
         return new NextResponse(JSON.stringify(filtered))
