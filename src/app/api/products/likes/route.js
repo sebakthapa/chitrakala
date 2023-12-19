@@ -68,10 +68,9 @@ export const PATCH = async (request) => {
     // Update the database
 
     // now update add the updated likes data to db
-    product.likes = updatedLikes;
-    userdetails.likeProducts = updatedLikesUser;
-    const updatedProduct = await product.save();
-    await userdetails.save();
+    const updatedProduct = await Products.findByIdAndUpdate(productId,{likes:updatedLikes});
+    const userDetails = await UsersDetails.findByIdAndUpdate(userId, {likeProducts: updatedLikesUser})
+
 
     // Update product with new data
     return new NextResponse(JSON.stringify(updatedProduct));
