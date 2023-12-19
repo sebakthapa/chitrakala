@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { BsArrowRight } from 'react-icons/bs';
 import moment from 'moment';
+import { categoriesColor } from '@/lib/utils';
 const CategoryCard = () => {
   const cardVariant = {
     visible: { opacity: 1, scale: 1, transition: { duration: 0.3, type: "spring", stiffness: 100, damping: 15 } },
@@ -19,35 +20,30 @@ const CategoryCard = () => {
       description: "A realm where brushstrokes whispers stories",
       image: "/landing/oil.jpg",
       link: `/gallery?category=oil`,
-      color: "#D4AB9C"
     },
     {
       type: "water",
       description: "Washes of liquid color bloom across thirsty paper",
       image: "/landing/water.jpg",
       link: `/gallery?category=water`,
-      color: "#B3E1EB"
     },
     {
       type: "digital",
       description: "Pixels unite to sing a song of light.",
       image: "/landing/digital.jpg",
       link: `/gallery?category=digital`,
-      color: "#9AAAC5"
     },
     {
       type: "sketch",
       description: "Swift strokes hint at forms not yet fully revealed",
       image: "/landing/sketch.jpg",
       link: `/gallery?category=sketch`,
-      color: "#DCDCDC"
     },
     {
       type: "more",
       description: "Explore the all the masterpiece artworks.",
       image: "https://mueblesitaliano.ph/wp-content/uploads/2019/07/Contemporary-Abstract-Art-with-Ivan-Acuna-1024x794.jpg",
       link: `/gallery`,
-      color: "#C9B5A5"
     },
 
 
@@ -59,7 +55,7 @@ const CategoryCard = () => {
     <>
       <div className="categoriesContainer px-5 grid flex-wrap gap-10 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 place-items-center items-center justify-center">
         {
-          categories.map(({ type, description, image, link, color }, idx) => {
+          categories.map(({ type, description, image, link }, idx) => {
             return (
               <motion.div
                 key={idx}
@@ -77,7 +73,7 @@ const CategoryCard = () => {
                     <Image className='w-full h-full object-cover group-hover:brightness-50 transition duration-500' src={image} alt={`${type} category image`} height={300} width={300} />
 
                     <motion.div
-                      style={{ background: `${color}bb` }}
+                      style={{ background: `${categoriesColor[type]}bb` }}
                       className={`opacity-90 group-hover:opacity-100 group-hover:left-[-25%] p-[25%] group-hover:top-[-25%] rounded-full absolute  top-[-110%] left-[-110%] transition-all ease-out duration-300 z-20  bg-opacity-50 flex items-center h-[150%] w-[150%] `}>
                       <div className="px-10 max-w-xl">
                         <h2 className="capitalize text-2xl font-sans opacity-0 group-hover:opacity-100  transition duration-1000  text-white font-extrabold">{type}</h2>

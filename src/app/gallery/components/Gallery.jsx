@@ -7,134 +7,207 @@ import { addGalleryData } from "@/redux/features/gallerySlice";
 import { useSearchParams } from "next/navigation";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { useSession } from "next-auth/react";
+
 
 const Gallery = () => {
+    const { data: session, status: sessionStatus } = useSession();
     const searchParams = useSearchParams();
+
     const username = searchParams.get('username');
     const limit = searchParams.get('limit');
-    const filter = searchParams.get('filter');
+    const sort = searchParams.get('sort');
     const category = searchParams.get('category');
 
+    const [selectedType, setSelectedType] = useState("Popular")
+    const [galleryTypes, setGalleryTypes] = useState(["popular", "New & Noteworthy"])
 
     let query = "";
 
     if (username) { query += `&username=${username}`; }
-    if (filter) { query += `&filter=${filter}`; } else { query += '&filter=likesD&limit=10'; }
+    if (sort) { query += `&sort=${sort}`; } else { query += '&sort=likesD&limit=10'; }
     if (category) { query += `&category=${category}`; }
     if (limit) { query += `&limit=${limit}`; }
 
-    const [filterParams, setFilterParams] = useState(filter || "newA");
+
+    const [sortParams, setSortParams] = useState(sort || "likesD");
+
     const [filteredData, setFilteredData] = useState([]);
     const [sortedData, setSortedData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loading1, setLoading1] = useState(true);
+    let fetchedPage = 1;
 
-    async function fetchData() {
+
+    async function fetchData(url) {
         try {
-            const res = await axios.get(`/api/products?${query}`);
+            const res = await axios.get(url || `/api/products?${query}`);
             if (res.status === 200) {
                 // dispatch(addGalleryData(res.data));
-
-
                 setFilteredData(res.data)
                 setLoading(false)
             }
-
-
         }
         catch (error) {
             throw error;
         }
     }
-
-
+    
     useEffect(() => {
-        fetchData();
+        // fetchData();
+        window.addEventListener("scroll", () => {
+            const page = 1 + window.scrollY / window.innerHeight;
+            // console.log(page)
+
+            //fetch new data on new page
+            // if (page > fetchedPage) {
+            // }
+        })
     }, []);
 
+    
+
+    useEffect(() => {
+        if (sessionStatus == "authenticated") {
+            // setSelectedType("Following")
+            galleryTypes.includes("Following") || setGalleryTypes(prev => ["Following", ...prev] )
+        } else {
+        }
+    }, [sessionStatus])
+
+
+    useEffect(() => {
+        // async function fetchSortedData() {
+        //     try {
+        //         setLoading1(true)
+        //         const res = await axios.get(`/api/products?sort=${sortParams}`);
+        //         if (res.status === 200) {
+        //             setSortedData(res.data)
+        //             setLoading1(false)
+        //         }
+        //     }
+        //     catch (error) {
+        //         throw error;
+        //     }
+        // }
+
+        // fetchSortedData();
+        // fetchSortedData();
+
+    }, [sortParams])
+
 
 
 
     useEffect(() => {
-
-        async function fetchSortedData() {
-            try {
-                setLoading1(true)
-                const res = await axios.get(`/api/products?filter=${filterParams}`);
-
-                if (res.status === 200) {
-
-                    setSortedData(res.data)
-                    setLoading1(false)
-
-
-                }
-            }
-            catch (error) {
-                throw error;
-            }
+        console.log(selectedType)
+        if (selectedType == "Popular") {
+            fetchData("/api/products?sort=likesD")
+        } else if (selectedType == "Following") {
+            
+        } else if (selectedType == "New & Noteworthy") {
+            
         }
+    }, [selectedType])
 
-        fetchSortedData();
-        fetchSortedData();
+    function classNames(...classes) {
+        return classes.filter(Boolean).join(' ')
+    }
 
-    }, [filterParams])
 
 
 
     return (
         <>
-            {loading ? (
-                <div className="myScroll pb-10 flex overflow-x-auto">
-                    <Skeleton height={400} width={500} containerClassName="myScroll overflow-x-auto  gap-2 m-5 shiny_effect " count={1} />
-                </div>
-            ) : (
-                <div className="myScroll pb-10 flex overflow-x-auto">
-                    {filteredData?.map((item, index) => (
-                        <ArtCard key={index} item={item} />
-                    ))}
-                </div>
-            )}
+            <header  className="galleryNav">
+                <Menu as="div" className="relative inline-block text-left capitalize">
+                    <div>
+                        <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold capitalize text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                            {selectedType}
+                            <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+                        </Menu.Button>
+                    </div>
 
-            <h2 className="my-10 text-center text-2xl text-gray-900 font-bold md:text-4xl">Explore</h2>
-            <div>
-
-                <label htmlFor="filter" className="text-gray-400 font-bold text-xs">
-                    Sort
-                </label>
-                <div id="filter" className=" flex items-center gap-3">
-                    <select
-                        onChange={(e) => {
-                            setFilterParams(e.target.value);
-                        }}
-                        id="status"
-                        className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm "
-                        value={filterParams}
+                    <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
                     >
-                        <option className="text-gray-700 block px-4 py-2 text-sm " value="newA">
-                            Added Newest
-                        </option>
-                        <option className="text-gray-700 block px-4 py-2 text-sm " value={"likesD"}>
-                            Likes
-                        </option>
-                        <option className="text-gray-700 block px-4 py-2 text-sm " value={"priceD"}>
-                            Price
-                        </option>
-                    </select>
-                </div>
-            </div>
+                        <Menu.Items className="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="py-1">
 
-            {loading1 ? (
-                            <div className="myScroll pb-10 flex overflow-x-auto">
-                            <Skeleton height={400} width={500} containerClassName="myScroll overflow-x-auto  gap-2 m-5 shiny_effect " count={1} />
-                        </div>
-            ) : (
-                <div className="myScroll pb-10 flex overflow-x-auto">
-                    {sortedData?.map((item, index) => (
-                        <ArtCard key={index} item={item} />
-                    ))}
-                </div>
-            )}
+
+                                {
+                                    galleryTypes.map((itm, idx) => (
+                                        <Menu.Item key={idx}>
+                                            {({ active }) => (
+                                                <span
+                                                    href="#"
+                                                    className={classNames(
+                                                        itm == selectedType ? ' text-gray-900' : 'text-gray-700',
+                                                        'block px-4 py-2 text-sm cursor-pointer',
+                                                        'hover:bg-gray-100'
+                                                    )}
+                                                    onClick={() => setSelectedType(itm)}
+                                                >
+                                                    {itm}
+                                                </span>
+                                            )}
+                                        </Menu.Item>
+                                    ))
+                                }
+                                {/* <Menu.Item>
+                                    {({ active }) => (
+                                        <span
+                                            href="#"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Support
+                                        </span>
+                                    )}
+                                </Menu.Item>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <span
+                                            href="#"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            License
+                                        </span>
+                                    )}
+                                </Menu.Item> */}
+
+                            </div>
+                        </Menu.Items>
+                    </Transition>
+                </Menu>
+
+            </header>
+            <main className="gallery min-h-[100vh] mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-10 gap-x-5">
+                {
+                    filteredData?.map((itm, idx) => (
+                        <ArtCard key={idx} item={itm} />
+                    ))
+                }
+            </main>
+            {/* <div className="min-h-screen border-black border-2"></div>
+            <div className="min-h-screen border-black border-2"></div>
+            <div className="min-h-screen border-black border-2"></div>
+            <div className="min-h-screen border-black border-2"></div>
+            <div className="min-h-screen border-black border-2"></div> */}
         </>
     );
 
