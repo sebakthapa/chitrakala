@@ -90,7 +90,7 @@ const ArtCard = ({ item ,option}) => {
         <>
             {galleryData ? (
 
-                <div className=" min-w-[18rem] md:w-[18rem] m-2  ">
+                <div className=" min-w-[18rem] m-2  ">
                     <div className="bg-white rounded-lg overflow-hidden shadow-lg relative">
                         <div
                             className=" h-[30vh] overflow-hidden shadow-sm  mt-10 "

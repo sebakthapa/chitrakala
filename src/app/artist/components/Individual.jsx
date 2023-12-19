@@ -60,7 +60,7 @@ const Individual = () => {
         <>
             <div className="text-center ">
                 <span onClick={()=>{router.back()}}  passHref>
-                    <span className="text-blue-500 absolute left-0  m-5"><BiSolidLeftArrowCircle fontSize={"2rem"} /></span>
+                    <span className="text-[#1f2937] absolute left-0 cursor-pointer m-5"><BiSolidLeftArrowCircle fontSize={"2rem"} /></span>
                 </span>
             </div>
 
