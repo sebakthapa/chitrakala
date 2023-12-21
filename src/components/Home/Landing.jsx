@@ -16,13 +16,13 @@ function Landing() {
                         transition={{ ease: 'easeOut', duration: .7 }}
                         className='  text-5xl xxs:text-6xl xs:text-7xl saman  px-5  font-extrabold'
                     >
-                        Chitrakala
+                        {/* Chitrakala */}
                     </motion.span>
                     <motion.span
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ ease: "easeOut", duration: 1, delay: 0.4 }}
-                        className='text-xl xxs:text-2xl sm:text-3xl  text  px-5 pt-3  font-semibold'
+                        className=' font-serif text-3xl xxs:text-5xl sm:text-6xl    px-5 pt-3 font-[100] tracking-[5px]'
                     >
                         Where Imagination Meets Canvas
                     </motion.span>

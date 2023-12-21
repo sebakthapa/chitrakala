@@ -1,88 +1,127 @@
 "use client"
-import React, { useState } from 'react'
-import { BsHeartFill } from 'react-icons/bs';
+import React, { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import moment from 'moment';
-const ArtDetail = ({artdata}) => {
+import ArtCard from './ArtCard';
+import { BsAppIndicator, BsHeart, BsHeartFill } from "react-icons/bs";
+const ArtDetail = ({ artdata }) => {
+    console.log(artdata)
 
-  return (
-    <>
+    const [relatedartData, setRelatedArtData] = useState();
 
-      <section class="flex flex-col justify-center antialiased bg-white text-gray-800 min-h-screen">
-    <div class="max-w-6xl mx-auto p-4 sm:px-6 h-full">
-        <article class="max-w-sm mx-auto md:max-w-none grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-12 xl:gap-16 items-center">
-            <a class="relative block group" href="#0">
-                <div class="absolute inset-0 bg-gray-800 hidden md:block transform md:translate-y-2 md:translate-x-4 xl:translate-y-4 xl:translate-x-8 group-hover:translate-x-0 group-hover:translate-y-0 transition duration-700 ease-out pointer-events-none" aria-hidden="true"></div>
-                <figure class="relative h-0 pb-[56.25%] md:pb-[75%] lg:pb-[56.25%] overflow-hidden transform md:-translate-y-2 xl:-translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0 transition duration-700 ease-out">
-                <AnimatePresence mode="wait">
-                  </AnimatePresence>
-            <Image
-              
-              src={artdata?.photo}
-              className="absolute  inset-0 w-full h-full object-cover transform hover:scale-105 transition duration-700 ease-out"
-              
-              width="540" 
-              height="303"
-              />
-                  
-                </figure>
-            </a>
-            <div>
-                <header>
-                    <div class="mb-3">
-                        <ul class="flex flex-wrap text-xs font-medium -m-1">
-                            <li class="m-1">
-                                <Link class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full bg-purple-600 hover:bg-purple-700 transition duration-150 ease-in-out" href={`/gallery?category=${artdata?.category}`}>{artdata?.category}</Link>
-                            </li>
-                            <li class="m-1">
-                                <a class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full bg-blue-500 hover:bg-blue-600 transition duration-150 ease-in-out" href="#0">${artdata?.price}</a>
-                            </li>
-                            <li class="m-1">
-                                <a class="inline-flex items-center gap-2 text-center text-gray-100 py-1 px-3 rounded-full bg-blue-500 hover:bg-blue-600 transition duration-150 ease-in-out" href="#0"><BsHeartFill/>{artdata?.likes?.length} </a>
-                            </li>
-                     
-                        </ul>
+
+    async function fetchData() {
+        try {
+            const res = await fetch(`/api/products?limit=5`)
+
+
+            if (res.status == 200) {
+                const data = await res.json()
+                setRelatedArtData(data)
+            }
+
+        } catch (error) {
+            throw error
+        }
+
+    }
+    useEffect(() => {
+
+        fetchData();
+
+    }, []);
+
+    return (
+        <>
+
+
+
+            <section className="sm:pt-10 m-5 mt-20 sm:max-w-full h-auto  sm:w-[75%]  flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow`  hover:bg-gray-100 ">
+                <img className="object-contain w-full rounded-t-lg h-auto sm:h-96 " src={artdata?.photo} alt="" />
+                <div className="flex flex-col justify-between p-4 leading-normal">
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{artdata?.name}</h5>
+                    <p className="mb-3 font-normal text-gray-700 ">{artdata?.description}</p>
+
+                    <ul role="list" className="divide-y divide-gray-200 ">
+                        <li className="py-3 sm:py-4">
+                            <div className="flex items-center">
+                                <Link
+
+                                    href="/artist/[artistId]"
+                                    as={`/artist/${artdata?.artist?.user?._id}`}
+                                    className="flex-shrink-0">
+
+                                    <AnimatePresence mode="wait">
+
+                                        <motion.img
+                                            className="w-10 h-10 rounded-full border-2 border-gray-300"
+                                            src={artdata?.artist?.image}
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1, }}
+                                            exit={{ opacity: 0 }}
+                                        />
+                                    </AnimatePresence>
+
+                                </Link>
+                                <div className="flex-1 min-w-0 ms-4">
+                                    <p className="text-sm font-medium text-gray-900 truncate ">
+                                        {artdata?.artist?.name}
+                                    </p>
+                                    <p className="text-sm text-gray-500 truncate ">
+                                        @{artdata?.artist?.user?.username}
+                                    </p>
+
+                                </div>
+                                <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                                    Rs.{artdata?.price}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div className="text-xs text-gray-500 flex justify-between">
+                        <div className='flex gap-5'>
+
+                            <div >
+                                <span>Likes: </span>
+                                <span>{artdata?.likes?.length} </span>
+                            </div>
+                            <div>
+                                <span>Category: </span>
+                                <span className=" capitalize ">{artdata?.category} </span>
+                            </div>
+                        </div>
+                        <div>
+                        <p className='text-xs flex items-center gap-2 text-gray-400'>
+                                    <BsAppIndicator/> {artdata?.createdAt && moment(artdata?.createdAt).fromNow()}
+                                    </p>
+                        </div>
                     </div>
-                    <h3 class="text-2xl lg:text-3xl font-bold leading-tight mb-2">
-                        <span class=" transition duration-150 ease-in-out" href="#0">{artdata?.name}</span>
-                    </h3>
-                </header>
-                <p class="text-lg text-gray-600 flex-grow">{artdata?.description}</p>
-                <footer class="flex items-center mt-4">
-                    <Link href={`/artist/${artdata?.artist?.user}`}>
-                 
+                </div>
+            </section>
 
-                        <AnimatePresence mode="wait">
-            <motion.img
-              
-              src={artdata?.artist?.image}
-              className=" w-10 h-10 rounded-full flex-shrink-0 mr-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, }}
-              exit={{ opacity: 0 }}
-              />
-          </AnimatePresence>
-                    </Link>
-                    
-                    <div className='pointer' > 
-                        <Link class="font-medium text-gray-500 hover:underline transition duration-150 ease-in-out"
-                        href={`/artist/${artdata?.artist?.user}`}
-                        >
-                          @{artdata?.artist?.name}</Link>
-                        <span class="text-gray-700"> - </span>
-                        <span class="text-gray-400">{artdata?.createdAt && moment(artdata.createdAt).format("Do-MMM YYYY")}</span>
-                    </div>
-                 
-                </footer>
-            </div>
-        </article>    
-    </div>
-</section>
-  
-    </>
-  )
+            <section className="pt-10 m-5 mt-20 w-full  sm:w-[25%] h-auto sm:h-[95vh]  flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow`  hover:bg-gray-100   ">
+                <h2 className='text-2xl font-bold tracking-tight text-gray-900 '>Related Arts</h2>
+                <div className=" flex myScroll  overflow-scroll  w-full sm:block ">
+
+                    {
+                        relatedartData?.length > 0 && relatedartData?.map((item, index) => {
+
+                            return <ArtCard key={index} item={item} />
+                        }
+                        )
+
+                    }
+                </div>
+            </section>
+
+
+
+
+
+        </>
+    )
 }
 
 export default ArtDetail
