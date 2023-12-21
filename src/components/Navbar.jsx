@@ -178,7 +178,7 @@ function Navbar() {
                           onClick={handleAddClick}
                           type="button"
                           title='Upload your artwork.'
-                          className="relative  p-2 rounded-full  text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                          className="relative  p-2 rounded-full border-none  text-gray-400 hover:text-white "
                         >
                           <BsPlusCircle className='w-5 h-5 xs:w-6 xs:h-6' fill='white' />
                         </button>
