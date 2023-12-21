@@ -74,6 +74,7 @@ const ArtCard = ({ item, option }) => {
 
 
     const formatLengthByWidth = (text, width) => {
+        if (!text) return "";
         const charCount = Math.floor(width / 10)
         if (charCount >= text.length) return text;
         const formatted = text.substring(0, charCount) + "...";
@@ -98,7 +99,7 @@ const ArtCard = ({ item, option }) => {
 
                         <span className="text-sm w-fit font-semibold text-gray-100 darkk:text-white">
                             {
-                                artData?.price ? `Rs ${formatNumberWithLetter(artData?.price)}` : "Free"
+                                artData?.price ? `Rs ${formatNumberWithLetter(artData?.price)}` : <span className=" bg-lime-600  p-1 px-2 rounded-full text-xs">Showcase</span>
                             }
 
                         </span>
