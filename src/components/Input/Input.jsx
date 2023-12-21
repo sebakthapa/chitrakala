@@ -25,6 +25,7 @@ const Input = ({
     setImage,
     imageUrl,
     submitting: isSubmitting,
+    containerClassName,
 
     ...props
 }) => {
@@ -51,7 +52,7 @@ const Input = ({
 
     if (type == "textarea") {
         return (
-            <div className="INPUT input_field w-full">
+            <div className={`INPUT input_field w-full ${containerClassName}`}>
 
                 <div className="relative w-full flex flex-col-reverse ">
                     <textarea
@@ -101,11 +102,11 @@ const Input = ({
 
     } else if (type == "image") {
         return (
-            <UploadImage imageUrl={imageUrl} id={id} required={required} label={label} setImage={setImage} setDragging={setDragging} setImageUrl={setImageUrl} />
+            <UploadImage containerClassName={containerClassName} imageUrl={imageUrl} id={id} required={required} label={label} setImage={setImage} setDragging={setDragging} setImageUrl={setImageUrl} />
         )
     } else {
         return (
-            <div className={`INPUT input_field w-full ${isSubmitting && "pointer-events-none"}`}>
+            <div className={`INPUT input_field w-full ${isSubmitting && "pointer-events-none"} ${containerClassName}`}>
                 {label &&
                     <label htmlFor={id}>{label} {required && <span className="text-red-500 -ml-1">*</span>}</label>
                 }
@@ -118,7 +119,7 @@ const Input = ({
                         {...register || { onChange: handleChange }}
 
                         required={required}
-                        className={`${classLists} ${type == "password" ? "pr-[100px]" : ""} w-full`}
+                        className={`${classLists && classLists} ${type == "password" ? "pr-[100px]" : ""} w-full `}
                         type={showPassword ? "text" : type}
                         id={id}
                         {...props}

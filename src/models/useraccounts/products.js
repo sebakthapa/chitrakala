@@ -16,7 +16,6 @@ const productsSchema = new mongoose.Schema({
 
   price: {
     type: Number,
-    required: [true, 'Price is required'],
     min: [1, 'Price must be greater than zero']
   },
 
@@ -39,10 +38,15 @@ const productsSchema = new mongoose.Schema({
   },
   likes: {
       type: [mongoose.Schema.Types.ObjectId],
+  },
+  size: {
+    type: String,
 
+  },
+  notForSale: {
+    type: Boolean,
+    default: false,
   }
-
-
 },{timestamps:true});
 
 mongoose.models = {}

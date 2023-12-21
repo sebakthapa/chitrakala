@@ -10,7 +10,7 @@ import { PiCameraLight, PiCameraThin, PiUserCircleLight, PiUserCircleThin, PiUse
 import { BiSolidUser } from "react-icons/bi";
 
 
-const UploadImage = ({ type, setDragging, setImage, setImageUrl, label, required, id, }) => {
+const UploadImage = ({ type, setDragging, setImage, setImageUrl, label, required, id,containerClassName }) => {
     const user = useSelector(state => state.user)
 
     const [dragging, setDraggingL] = useState(false);
@@ -106,6 +106,7 @@ const UploadImage = ({ type, setDragging, setImage, setImageUrl, label, required
         <div
             className={`image input_field_container mb-10
             ${type == "profile" ? "w-fit items-center" : "w-full"}
+            ${containerClassName}
             `}
         >
             {

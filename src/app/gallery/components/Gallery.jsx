@@ -48,6 +48,7 @@ const Gallery = () => {
             if (res.status === 200) {
                 // dispatch(addGalleryData(res.data));
                 setFilteredData(res.data)
+                console.log("res",res.data)
                 setLoading(false)
             }
         }
@@ -60,8 +61,6 @@ const Gallery = () => {
         // fetchData();
         window.addEventListener("scroll", () => {
             const page = 1 + window.scrollY / window.innerHeight;
-            // console.log(page)
-
             //fetch new data on new page
             // if (page > fetchedPage) {
             // }
@@ -99,9 +98,6 @@ const Gallery = () => {
 
     }, [sortParams])
 
-
-
-
     useEffect(() => {
         console.log(selectedType)
         if (selectedType == "Popular") {
@@ -116,9 +112,6 @@ const Gallery = () => {
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
     }
-
-
-
 
     return (
         <>
