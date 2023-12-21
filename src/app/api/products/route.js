@@ -37,13 +37,13 @@ export const GET = async (req) => {
                     sortQuery = { createdAt: 1 }
                     break;
                 case 'newD':
-                    sortQuery = { updatedAt: -1 }
+                    sortQuery = { createdAt: -1 }
                     break;
                 default:
                     break;
             }
         }
-        console.log(sortQuery)
+        // console.log(sortQuery)
 
         await dbConnect();
         const populateOpts = {
@@ -58,7 +58,7 @@ export const GET = async (req) => {
         }
 
         let res;
-        if (sort.includes("likes")) {
+        if (sort?.includes("likes")) {
             res = await Products.aggregate([
                 {
                     $addFields: {
@@ -92,14 +92,14 @@ export const GET = async (req) => {
                 },
                 {
                     $addFields: {
-                      'artist.user': '$user', // Assign the same name as the field to the populated field inside 'artist'
+                        'artist.user': '$user', // Assign the same name as the field to the populated field inside 'artist'
                     },
-                  },
-                  {
+                },
+                {
                     $project: {
-                      user: 0, // Exclude redundant field
+                        user: 0, // Exclude redundant field
                     },
-                  },
+                },
                 {
                     $project: {
                         likesCount: 0, // Remove the likesCount field if you don't want it in the final result
@@ -114,9 +114,9 @@ export const GET = async (req) => {
             ])
         } else {
             res = await Products.find(query)
+                .sort(sortQuery)
                 .skip((page - 1) * pageSize)
                 .limit(pageSize)
-                .sort(sortQuery)
                 .populate(populateOpts)
         }
         // return those product only whose artsit and artist.user exists

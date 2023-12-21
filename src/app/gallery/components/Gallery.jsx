@@ -17,97 +17,89 @@ const Gallery = () => {
     const { data: session, status: sessionStatus } = useSession();
     const searchParams = useSearchParams();
 
+    const [query, setQuery] = useState("");
+    const [selectedType, setSelectedType] = useState("")
+    const [galleryTypes, setGalleryTypes] = useState(["Popular", "New & Noteworthy"])
+    const [loading, setLoading] = useState(true);
+    const [galleryData, setGalleryData] = useState([]);
+
+
+
     const username = searchParams.get('username');
     const limit = searchParams.get('limit');
     const sort = searchParams.get('sort');
     const category = searchParams.get('category');
 
-    const [selectedType, setSelectedType] = useState("Popular")
-    const [galleryTypes, setGalleryTypes] = useState(["popular", "New & Noteworthy"])
-
-    let query = "";
-
-    if (username) { query += `&username=${username}`; }
-    if (sort) { query += `&sort=${sort}`; } else { query += '&sort=likesD&limit=10'; }
-    if (category) { query += `&category=${category}`; }
-    if (limit) { query += `&limit=${limit}`; }
-
-
-    const [sortParams, setSortParams] = useState(sort || "likesD");
-
-    const [filteredData, setFilteredData] = useState([]);
-    const [sortedData, setSortedData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [loading1, setLoading1] = useState(true);
+    let appendData = true;
     let fetchedPage = 1;
 
-
-    async function fetchData(url) {
+    async function fetchData(query) {
         try {
-            const res = await axios.get(url || `/api/products?${query}`);
+            console.log(query, appendData, fetchedPage)
+            const res = await axios.get(`/api/products?${query}&page=${fetchedPage}`);
             if (res.status === 200) {
                 // dispatch(addGalleryData(res.data));
-                setFilteredData(res.data)
-                console.log("res",res.data)
-                setLoading(false)
+                setGalleryData(prevGalleryData => {
+                    return appendData ? [...prevGalleryData, ...res.data] : res.data;
+                  });
+                console.log(res.data)
             }
         }
         catch (error) {
             throw error;
+        } finally {
+            setLoading(false)
         }
     }
-    
-    useEffect(() => {
-        // fetchData();
-        window.addEventListener("scroll", () => {
-            const page = 1 + window.scrollY / window.innerHeight;
-            //fetch new data on new page
-            // if (page > fetchedPage) {
-            // }
-        })
-    }, []);
-
-    
 
     useEffect(() => {
         if (sessionStatus == "authenticated") {
             // setSelectedType("Following")
-            galleryTypes.includes("Following") || setGalleryTypes(prev => ["Following", ...prev] )
+            setSelectedType("Popular")
+
+            galleryTypes.includes("Following") || setGalleryTypes(prev => ["Following", ...prev])
         } else {
+            setSelectedType("Popular")
         }
     }, [sessionStatus])
 
 
     useEffect(() => {
-        // async function fetchSortedData() {
-        //     try {
-        //         setLoading1(true)
-        //         const res = await axios.get(`/api/products?sort=${sortParams}`);
-        //         if (res.status === 200) {
-        //             setSortedData(res.data)
-        //             setLoading1(false)
-        //         }
-        //     }
-        //     catch (error) {
-        //         throw error;
-        //     }
-        // }
+        if (username)  setQuery((q) => q + `&username=${username}`); 
+        if (sort) setQuery((q) => q + `&sort=${sort}`);
+        if (category)  setQuery((q) => q + `&category=${category}`); 
+        if (limit) setQuery((q) => q + `&limit=${limit}`);
 
-        // fetchSortedData();
-        // fetchSortedData();
 
-    }, [sortParams])
+        window.addEventListener("scroll", () => {
+            const page = Math.ceil(window.scrollY / window.innerHeight);
+            //fetch new data on new page
+            if (page == fetchedPage) {
+                appendData = true;
+                fetchedPage++;
+                fetchData();
+                console.log("Fetching page: " + fetchedPage)
+            }
+        })
+    }, []);
+
 
     useEffect(() => {
+        fetchedPage = 1;
+        appendData = false;
         console.log(selectedType)
         if (selectedType == "Popular") {
-            fetchData("/api/products?sort=likesD")
+            setQuery(`&sort=likesD`);
+            fetchData("&sort=likesD");
+
         } else if (selectedType == "Following") {
-            
+
         } else if (selectedType == "New & Noteworthy") {
-            
+            setQuery(`&sort=newD`);
+            fetchData("&sort=newD");
         }
     }, [selectedType])
+
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
@@ -115,7 +107,7 @@ const Gallery = () => {
 
     return (
         <>
-            <header  className="galleryNav">
+            <header className="galleryNav">
                 <Menu as="div" className="relative inline-block text-left capitalize">
                     <div>
                         <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold capitalize text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
@@ -191,9 +183,10 @@ const Gallery = () => {
             </header>
             <main className="gallery min-h-[100vh] mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-10 gap-x-5">
                 {
-                    filteredData?.map((itm, idx) => (
-                        <ArtCard key={idx} item={itm} />
-                    ))
+                    galleryData?.length > 0 && galleryData?.map((itm, idx) => {
+                        if (!itm?.name || !itm?.photo) return "";
+                        return <ArtCard key={idx} item={itm} />
+                    })
                 }
             </main>
             {/* <div className="min-h-screen border-black border-2"></div>
