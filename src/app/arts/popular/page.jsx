@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import Gallery from "../components/Gallery"
 import { useEffect } from "react"
 import useInfiniteScroll from "@/hooks/useInfiniteScroll"
-import { addPopularArts } from "@/redux/features/gallerySlice/popularSlice"
+import { addPopularArts, sortPopularArts } from "@/redux/features/gallerySlice/popularSlice"
 import { pageSize } from "@/lib/utils"
 
 
@@ -18,6 +18,10 @@ const Page = () => {
             dispatch(addPopularArts(data))
         }
     }, [data, dispatch]);
+
+    useEffect(() => {
+        dispatch(sortPopularArts())
+    }, [])
 
     return (
         <div>

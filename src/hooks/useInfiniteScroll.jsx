@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 const useInfiniteScroll = ({ url, hasData=false, nextPage:np=1 }) => {
     const [data, setData] = useState([]);
-    const [nextPage, setNextPage] = useState(Math.max(np, 1));
+    const [nextPage, setNextPage] = useState(Math.max(np+1, 1));
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingNewPage, setIsLoadingNewPage] = useState(false);
     const [hasMore, setHasMore] = useState(true);
@@ -33,11 +33,11 @@ const useInfiniteScroll = ({ url, hasData=false, nextPage:np=1 }) => {
             const response = await fetch(`${url}&page=${nextPage}`);
             const newData = await response.json();
 
-            if (newData.page == newData.totalPages) {
+            if (newData.page == newData.totalPages || newData.data?.length == 0) {
                 setHasMore(false);
             }
             if (newData.page <= newData.totalPages) {
-                setNextPage((prevPage) => prevPage + 1);
+                setNextPage((prevPage) => newData.page + 1);
                 setData((prevData) => [...prevData, ...newData.data]);
                 fetchedPage = newData.page;
 
@@ -61,6 +61,7 @@ const useInfiniteScroll = ({ url, hasData=false, nextPage:np=1 }) => {
     }, [isLoading, hasMore, isLoadingNewPage]);
 
     useEffect(() => {
+        
         if (!hasData) {
             loadMore();
         }
