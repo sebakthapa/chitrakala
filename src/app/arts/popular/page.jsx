@@ -4,16 +4,20 @@ import Gallery from "../components/Gallery"
 import { useEffect } from "react"
 import useInfiniteScroll from "@/hooks/useInfiniteScroll"
 import { addPopularArts } from "@/redux/features/gallerySlice/popularSlice"
+import { pageSize } from "@/lib/utils"
 
 
 const Page = () => {
     const popularArts = useSelector((store) => store.popularArts);
     const dispatch = useDispatch();
-    const { data, isLoading, isLoadingNewPage, hasMore } = useInfiniteScroll({ url: "/api/products?sort=likesD"});
+    const { data, isLoading, isLoadingNewPage, hasMore } = useInfiniteScroll({ url: "/api/products?sort=likesD", hasData:popularArts?.length > 0, nextPage: Math.ceil(popularArts?.length / pageSize) });
 
 
-    dispatch(addPopularArts(data))
-
+    useEffect(() => {
+        if (data?.length > 0) {
+            dispatch(addPopularArts(data))
+        }
+    }, [data, dispatch]);
 
     return (
         <div>

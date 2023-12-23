@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { BsAppIndicator, BsHeart, BsHeartFill } from "react-icons/bs";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LoadingComponent from "./LoadingComponent";
 import { FcTimeline } from "react-icons/fc";
 import axios from "axios";
@@ -17,9 +17,13 @@ import { useRouter } from "next/navigation";
 import moment from "moment";
 import { categoriesColor, formatNumberWithLetter } from "@/lib/utils";
 import ContentLoader from "react-content-loader";
+import { togglePopularArtsLike } from "@/redux/features/gallerySlice/popularSlice";
+import { toggleFollowingArtsLike } from "@/redux/features/gallerySlice/followingSlice";
+import { toggleNewArtsLike } from "@/redux/features/gallerySlice/newSlice";
 
 const ArtCard = ({ item, option }) => {
     const router = useRouter()
+    const dispatch = useDispatch()
     const user = useSelector(state => state.user)
     const [artData, setArtData] = useState(item)
     const [artistName, setArtistName] = useState("")
@@ -49,8 +53,10 @@ const ArtCard = ({ item, option }) => {
                 }
 
 
-                setArtData({ ...artData, likes: newLikes })
-                item.likes = [newLikes]
+                setArtData({ ...artData, likes: newLikes });
+                dispatch(togglePopularArtsLike({userId: user._id , productId: artData._id }))
+                dispatch(toggleFollowingArtsLike({userId: user._id , productId: artData._id }))
+                dispatch(toggleNewArtsLike({userId: user._id , productId: artData._id }))
 
                 const res = await axios.patch("/api/products/likes", {
                     userId: user?._id,
@@ -62,6 +68,15 @@ const ArtCard = ({ item, option }) => {
 
             } catch (error) {
                 toast.info("Unable to like at the moment!");
+
+                //reset local state if unable to like while querying database
+                let newLikes = [...item.likes,];
+                newLikes = newLikes.filter((id) => id !== user?._id)
+
+                setArtData({ ...artData, likes: likes });
+                dispatch(togglePopularArtsLike({userId: user._id , productId: artData._id }))
+                dispatch(toggleFollowingArtsLike({userId: user._id , productId: artData._id }))
+                dispatch(toggleNewArtsLike({userId: user._id , productId: artData._id }))
                 console.error("Error updating like:", error);
             }
         } else {

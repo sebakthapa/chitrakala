@@ -10,7 +10,7 @@ const followingSlice = createSlice({
             const { payload: followingArts } = action;
             return followingArts;
         },
-        toggleArtLike: (state, { payload }) => {
+        toggleFollowingArtsLike: (state, { payload }) => {
             const { userId, productId } = payload;
             const newState = state?.map((item) => {
                 let newLikes = [...item.likes];
@@ -31,6 +31,6 @@ const followingSlice = createSlice({
     }
 })
 
-export const { toggleArtLike, appendFollowingArts, addFollowingArts } = followingSlice.actions;
+export const { toggleFollowingArtsLike, appendFollowingArts, addFollowingArts } = followingSlice.actions;
 
 export default followingSlice.reducer;

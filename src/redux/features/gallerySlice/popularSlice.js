@@ -10,7 +10,7 @@ const popularSlice = createSlice({
             const { payload: popularArts } = action;
             return popularArts;
         },
-        toggleArtLike: (state, { payload }) => {
+        togglePopularArtsLike: (state, { payload }) => {
             const { userId, productId } = payload;
             const newState = state?.map((item) => {
                 let newLikes = [...item.likes];
@@ -31,6 +31,6 @@ const popularSlice = createSlice({
     }
 })
 
-export const { toggleArtLike, appendPopularArts, addPopularArts } = popularSlice.actions;
+export const { togglePopularArtsLike, appendPopularArts, addPopularArts } = popularSlice.actions;
 
 export default popularSlice.reducer;

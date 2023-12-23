@@ -10,7 +10,7 @@ const newSlice = createSlice({
             const { payload: newArts } = action;
             return newArts;
         },
-        toggleArtLike: (state, { payload }) => {
+        toggleNewArtsLike: (state, { payload }) => {
             const { userId, productId } = payload;
             const newState = state?.map((item) => {
                 let newLikes = [...item.likes];
@@ -31,5 +31,5 @@ const newSlice = createSlice({
     }
 })
 
-export const { toggleArtLike, appendNewArts, addNewArts } = newSlice.actions;
+export const { toggleNewArtsLike, appendNewArts, addNewArts } = newSlice.actions;
 export default newSlice.reducer;
