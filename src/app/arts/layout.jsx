@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
     return (
         <>
             {
-                route === "arts" && <GalleryHeader />
+                (route === "recent" || route === "following" || route === "popular" ) && <GalleryHeader />
             }
             
             {children}
