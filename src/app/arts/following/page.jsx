@@ -10,7 +10,7 @@ import { pageSize } from "@/lib/utils"
 const Page = () => {
   const followingArts = useSelector((store) => store.followingArts);
   const dispatch = useDispatch();
-  const { data, isLoading, isLoadingNewPage, hasMore } = useInfiniteScroll({ url: "/api/products?sort=newD", hasData:followingArts?.length > 0, nextPage: Math.ceil(followingArts?.length / pageSize) });
+  const { data, isLoading, isLoadingNewPage, hasMore } = useInfiniteScroll({ url: "/api/products?sort=newD", data:followingArts, nextPage: Math.ceil(followingArts?.length / pageSize) });
 
 
   useEffect(() => {

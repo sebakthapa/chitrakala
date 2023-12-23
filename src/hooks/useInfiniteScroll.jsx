@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 
-const useInfiniteScroll = ({ url, hasData=false, nextPage:np=1 }) => {
-    const [data, setData] = useState([]);
+const useInfiniteScroll = ({ url, data:localData, nextPage:np=1 }) => {
+    const [data, setData] = useState([...localData]);
     const [nextPage, setNextPage] = useState(Math.max(np+1, 1));
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingNewPage, setIsLoadingNewPage] = useState(false);
     const [hasMore, setHasMore] = useState(true);
+    const hasData = localData?.length > 0;
     let fetchedPage = np;
     let isAddingData = false; //useState has slight delay in updating. That caused it to take time to setLoading(true) and setLoadingNewPage(true) to take time resulting multiple load data to be called on scroll.
 
@@ -37,10 +38,10 @@ const useInfiniteScroll = ({ url, hasData=false, nextPage:np=1 }) => {
                 setHasMore(false);
             }
             if (newData.page <= newData.totalPages) {
-                setNextPage((prevPage) => newData.page + 1);
+                setNextPage(newData.page + 1);
+                console.log("rpev data", data)
                 setData((prevData) => [...prevData, ...newData.data]);
                 fetchedPage = newData.page;
-
             }
 
         } catch (error) {

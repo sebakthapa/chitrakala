@@ -10,7 +10,7 @@ import { pageSize } from "@/lib/utils"
 const Page = () => {
     const popularArts = useSelector((store) => store.popularArts);
     const dispatch = useDispatch();
-    const { data, isLoading, isLoadingNewPage, hasMore } = useInfiniteScroll({ url: "/api/products?sort=likesD", hasData:popularArts?.length > 0, nextPage: Math.ceil(popularArts?.length / pageSize) });
+    const { data, isLoading, isLoadingNewPage, hasMore } = useInfiniteScroll({ url: "/api/products?sort=likesD", data:popularArts, nextPage: Math.ceil(popularArts?.length / pageSize) });
 
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const Page = () => {
     }, [data, dispatch]);
 
     useEffect(() => {
-        dispatch(sortPopularArts())
+        // dispatch(sortPopularArts())
     }, [])
 
     return (
