@@ -11,7 +11,7 @@ const Page = () => {
   const dispatch = useDispatch();
   const newArts = useSelector((store) => store.newArts);
   console.log(newArts)
-  const { data, isLoading, isLoadingNewPage, hasMore } = useInfiniteScroll({ url: "/api/products?sort=newD", hasData:newArts?.length > 0, nextPage: Math.ceil(newArts?.length / pageSize) });
+  const { data, isLoading, isLoadingNewPage, hasMore } = useInfiniteScroll({ url: "/api/products?sort=newD", data:newArts, nextPage: Math.ceil(newArts?.length / pageSize) });
   
   useEffect(() => {
     if (data?.length > 0) {
