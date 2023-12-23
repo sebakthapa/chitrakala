@@ -1,54 +1,21 @@
 "use client"
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/userSlice';
-import galleryReducer from './features/gallerySlice';
-import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore} from 'redux-persist';
-import { IS_CLIENT } from '@/lib/utils';
-import createWebStorage from 'redux-persist/es/storage/createWebStorage';
+import popularArtsReducer from './features/gallerySlice/popularSlice';
+import followingArtsReducer from './features/gallerySlice/followingSlice';
+import newArtsReducer from './features/gallerySlice/newSlice';
 
 
 const rootReducer = combineReducers({
-   user: userReducer,
-   gallery: galleryReducer
+  user: userReducer,
+  popularArts: popularArtsReducer,
+  followingArts: followingArtsReducer,
+  newArts: newArtsReducer,
 })
-
-
-// to solve problem
-// const createNoopStorage = () => {
-//   return {
-//      getItem(_key) {
-//         return Promise.resolve(null);
-//      },
-//      setItem(_key, value) {
-//         return Promise.resolve(value);
-//      },
-//      removeItem(_key) {
-//         return Promise.resolve();
-//      },
-//   };
-// };
-
-
-// const persistConfig = {
-//   key: "root",
-//   storage:IS_CLIENT ? createWebStorage("local") : createNoopStorage(),
-//   whitelist:["user"]
-// }
-
-// const persistedReducer = persistReducer(persistConfig, rootReducer)
-
 
 const store = configureStore({
   reducer: rootReducer,
-  // middleware: (getDefaultMiddleware) =>
-  // getDefaultMiddleware({
-  //   serializableCheck: {
-  //     ignoredActions: [FLUSH, REHYDRATE, PAUSE, PURGE, REGISTER, PERSIST],
-  //   },
-  // }),
 });
 
 
 export default store;
-
-// export const persistor = persistStore(store)

@@ -1,20 +1,16 @@
 const { createSlice } = require("@reduxjs/toolkit");
 
-let initialState = null;
+let initialState = [];
 
-const gallerySlice = createSlice({
-    name: "gallery",
+const newSlice = createSlice({
+    name: "newArts",
     initialState,
     reducers: {
-        addGalleryData: (state, action) => {
-            const { payload: galleryData } = action;
-            return galleryData;
+        addNewArts: (state, action) => {
+            const { payload: newArts } = action;
+            return newArts;
         },
-        addSingleGalleryData: (state, action) => {
-            const { payload: singleGalleryData } = action;
-            return [...state, singleGalleryData];
-        },
-        toggleArtLike: (state, { payload }) => {
+        toggleNewArtsLike: (state, { payload }) => {
             const { userId, productId } = payload;
             const newState = state?.map((item) => {
                 let newLikes = [...item.likes];
@@ -28,11 +24,12 @@ const gallerySlice = createSlice({
             })
 
             return newState;
+        },
+        appendNewArts: (state, { payload }) => {
+            return [...state, ...payload]
         }
-
     }
 })
 
-export const { toggleArtLike, addSingleGalleryData, addGalleryData } = gallerySlice.actions;
-
-export default gallerySlice.reducer;
+export const { toggleNewArtsLike, appendNewArts, addNewArts } = newSlice.actions;
+export default newSlice.reducer;

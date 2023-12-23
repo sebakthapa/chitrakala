@@ -50,3 +50,10 @@ export const categoriesColor = {
         sketch: "#DCDCDC",
         more: "#C9B5A5",
 }
+
+
+export function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
+
+export const pageSize = 12;

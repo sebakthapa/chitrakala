@@ -19,7 +19,7 @@ import { toast } from 'react-toastify';
 function Navbar() {
 
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session, status:sessionStatus } = useSession();
 
   const pathname = usePathname();
   const dispatch = useDispatch();
@@ -157,7 +157,7 @@ function Navbar() {
                   <div className="hidden md:ml-6 md:block">
                     <div className="flex space-x-3 lg:space-x-5">
                       <Link href="/" className={`${pathname === '/' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Home</Link>
-                      <Link href="/gallery" className={`${pathname === '/gallery' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Gallery</Link>
+                      <Link href={`/arts/${user?.following?.length > 0 ? "popular" : "popular"}`} className={`${pathname === '/arts' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Gallery</Link>
                       <Link href="/artist" className={`${pathname === '/artist' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Artist</Link>
                       <Link href="/exhibition" className={`${pathname === '/exhibition' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Exhibition</Link>
                       <Link href="/about" className={`${pathname === '/about' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">About</Link>
@@ -251,7 +251,7 @@ function Navbar() {
 
                 <Link onClick={() => { setIsOpen(false) }} href="/" className={` border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center flex gap-6  items-center hover:bg-gray-700 text-gray-300   px-7 py-2 text-base font-medium ${pathname === '/' ? 'active' : ''} } `} ria-current="page"> <AiFillHome className='w-5 h-5' fill='#ccc' /> Home</Link>
 
-                <Link onClick={() => { setIsOpen(false) }} href="/gallery" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white flex gap-6  items-center  px-7 py-2 text-base font-medium ${pathname === '/gallery' ? 'active' : ''} `}> <AiFillPicture className='w-5 h-5' fill='#ccc' /> Gallery</Link>
+                  <Link onClick={() => { setIsOpen(false) }} href={`/arts/${user?.following?.length > 0 ? "popular" : "popular"}`} className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white flex gap-6  items-center  px-7 py-2 text-base font-medium ${pathname === '/arts' ? 'active' : ''} `}> <AiFillPicture className='w-5 h-5' fill='#ccc' /> Gallery</Link>
 
                 <Link onClick={() => { setIsOpen(false) }} href="/artist" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white flex gap-6  items-center  px-7 py-2 text-base font-medium ${pathname === '/artist' ? 'active' : ''} `}> <ImProfile className='w-5 h-5' fill='#ccc' /> Artist</Link>
 
