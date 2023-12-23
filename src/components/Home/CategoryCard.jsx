@@ -78,12 +78,7 @@ const CategoryCard = () => {
                       <div className="px-10 max-w-xl">
                         <h2 className="capitalize text-2xl font-sans opacity-0 group-hover:opacity-100  transition duration-1000  text-white font-extrabold">{type}</h2>
                         <p className="mt-2 text-lg italic  text-gray-200 opacity-0 group-hover:opacity-100  transition duration-1000">{`"${description}"`}</p>
-                        <button className='group animate-pulse  text-gray-300 hover:text-white mt-3 rounded-full flex items-center gap-2 text-xs opacity-0 group-hover:opacity-100  transition duration-1000'>
-                          <span>Click to browse</span>
-                          <span className=' '>
-                            <BsArrowRight className='w-0  transition-all duration-500 ease-in-out group-hover:w-4 h-4' fill='white' />
-                          </span>
-                        </button>
+                        
                       </div>
                     </motion.div>
                     <h3 className="category group-hover:opacity-0 transition duration- absolute top-[10%] left-[-40%] center  capitalize font-extrabold text-white -rotate-[40deg] text-2xl z-50   bg-re text-center w-full">{type}</h3>

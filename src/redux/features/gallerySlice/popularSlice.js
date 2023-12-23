@@ -1,18 +1,14 @@
 const { createSlice } = require("@reduxjs/toolkit");
 
-let initialState = null;
+let initialState = [];
 
-const gallerySlice = createSlice({
-    name: "gallery",
+const popularSlice = createSlice({
+    name: "popularArts",
     initialState,
     reducers: {
-        addGalleryData: (state, action) => {
-            const { payload: galleryData } = action;
-            return galleryData;
-        },
-        addSingleGalleryData: (state, action) => {
-            const { payload: singleGalleryData } = action;
-            return [...state, singleGalleryData];
+        addPopularArts: (state, action) => {
+            const { payload: popularArts } = action;
+            return popularArts;
         },
         toggleArtLike: (state, { payload }) => {
             const { userId, productId } = payload;
@@ -28,11 +24,13 @@ const gallerySlice = createSlice({
             })
 
             return newState;
+        },
+        appendPopularArts: (state, { payload }) => {
+            return [...state, ...payload]
         }
-
     }
 })
 
-export const { toggleArtLike, addSingleGalleryData, addGalleryData } = gallerySlice.actions;
+export const { toggleArtLike, appendPopularArts, addPopularArts } = popularSlice.actions;
 
-export default gallerySlice.reducer;
+export default popularSlice.reducer;

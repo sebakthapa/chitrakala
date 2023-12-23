@@ -1,4 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
+import { pageSize as documentPerPage } from "@/lib/utils";
 import Products from "@/models/useraccounts/products";
 import UsersDetails from "@/models/useraccounts/usersDetail";
 import { getToken } from "next-auth/jwt";
@@ -8,7 +9,7 @@ import { NextResponse, NextRequest } from "next/server";
 // GET => get all products
 export const GET = async (req) => {
     try {
-        const pageSize = 12; // Represents the number of document for a page
+        const pageSize = documentPerPage; // Represents the number of document for a page
         const { searchParams } = new URL(req.url);
         const username = searchParams.get('username');
         const sort = searchParams.get('sort');
@@ -45,7 +46,7 @@ export const GET = async (req) => {
         }
         // console.log(sortQuery)
 
-        await dbConnect();
+        const db = await dbConnect();
         const populateOpts = {
             path: 'artist',
             populate: {
@@ -56,6 +57,11 @@ export const GET = async (req) => {
         if (username) {
             populateOpts.populate.match = { username }
         }
+
+        const totalProducts = await Products.countDocuments();
+        const totalPages = Math.ceil(totalProducts / pageSize);
+
+        
 
         let res;
         if (sort?.includes("likes")) {
@@ -122,7 +128,15 @@ export const GET = async (req) => {
         // return those product only whose artsit and artist.user exists
         const filtered = res.filter(p => (p.artist && p.artist.user))
 
-        return new NextResponse(JSON.stringify(res))
+        const finalData = {
+            totalPages: totalPages,
+            pageSize: pageSize,
+            page: +page,
+            documentSize: filtered.length,
+            data: filtered,
+        }
+
+        return  NextResponse.json(finalData)
 
     } catch (error) {
         console.log("ERROR fetching products \n" + error)
