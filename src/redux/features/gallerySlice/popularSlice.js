@@ -25,12 +25,17 @@ const popularSlice = createSlice({
 
             return newState;
         },
+        sortPopularArts: (state, action) => {
+            const sortedData = state.sort((a, b) => b.likes.length - a.likes.length);
+            return sortedData;
+
+        },
         appendPopularArts: (state, { payload }) => {
             return [...state, ...payload]
         }
     }
 })
 
-export const { togglePopularArtsLike, appendPopularArts, addPopularArts } = popularSlice.actions;
+export const { togglePopularArtsLike, appendPopularArts, addPopularArts,sortPopularArts } = popularSlice.actions;
 
 export default popularSlice.reducer;
