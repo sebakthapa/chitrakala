@@ -1,13 +1,16 @@
+import { pageSize } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 
-const useInfiniteScroll = ({ url, data:localData, nextPage:np=1 }) => {
-    const [data, setData] = useState([...localData]);
-    const [nextPage, setNextPage] = useState(Math.max(np+1, 1));
+const useInfiniteScroll = ({ url, data: localData = [] }) => {
+    const fetchedLocalPage = Math.ceil(localData.length / pageSize); // page that is already stored in client side store
+    const [data, setData] = useState(localData ? [...localData] : []);
+    const [nextPage, setNextPage] = useState(Math.max(fetchedLocalPage + 1, 1));
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingNewPage, setIsLoadingNewPage] = useState(false);
     const [hasMore, setHasMore] = useState(true);
+    const [error, setError] = useState(false)
     const hasData = localData?.length > 0;
-    let fetchedPage = np;
+    let fetchedPage = fetchedLocalPage ;
     let isAddingData = false; //useState has slight delay in updating. That caused it to take time to setLoading(true) and setLoadingNewPage(true) to take time resulting multiple load data to be called on scroll.
 
 
@@ -21,8 +24,11 @@ const useInfiniteScroll = ({ url, data:localData, nextPage:np=1 }) => {
 
     const loadMore = async () => {
 
-        if (isLoading || !hasMore || isLoadingNewPage || isAddingData ) return;
-        if (nextPage <= fetchedPage) return;
+        if (isLoading || !hasMore || isLoadingNewPage || isAddingData) return;
+        
+        if (nextPage <= fetchedPage) {
+            return;
+        } 
 
         try {
             isAddingData = true;
@@ -39,17 +45,20 @@ const useInfiniteScroll = ({ url, data:localData, nextPage:np=1 }) => {
             }
             if (newData.page <= newData.totalPages) {
                 setNextPage(newData.page + 1);
-                console.log("rpev data", data)
                 setData((prevData) => [...prevData, ...newData.data]);
                 fetchedPage = newData.page;
             }
 
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching data:', error.message);
+            setError("error")
+            
         } finally {
             setIsLoading(false)
             setIsLoadingNewPage(false)
             isAddingData = false
+
+
         }
     };
 
@@ -69,7 +78,7 @@ const useInfiniteScroll = ({ url, data:localData, nextPage:np=1 }) => {
 
     }, [])
 
-    return { data, isLoading, loadMore, isLoadingNewPage, hasMore };
+    return { data, isLoading, loadMore, isLoadingNewPage, hasMore, error };
 };
 
 export default useInfiniteScroll;

@@ -19,7 +19,7 @@ import { categoriesColor, formatNumberWithLetter } from "@/lib/utils";
 import ContentLoader from "react-content-loader";
 import { togglePopularArtsLike } from "@/redux/features/gallerySlice/popularSlice";
 import { toggleFollowingArtsLike } from "@/redux/features/gallerySlice/followingSlice";
-import { toggleNewArtsLike } from "@/redux/features/gallerySlice/newSlice";
+import { toggleRecentArtsLike } from "@/redux/features/gallerySlice/recentSlice";
 
 const ArtCard = ({ item, option }) => {
     const router = useRouter()
@@ -41,7 +41,6 @@ const ArtCard = ({ item, option }) => {
 
     const toggleLike = async (productId) => {
         if (user?._id) {
-            console.log(productId, user._id)
             try {
 
                 let newLikes = [...item.likes,];
@@ -56,14 +55,13 @@ const ArtCard = ({ item, option }) => {
                 setArtData({ ...artData, likes: newLikes });
                 dispatch(togglePopularArtsLike({userId: user._id , productId: artData._id }))
                 dispatch(toggleFollowingArtsLike({userId: user._id , productId: artData._id }))
-                dispatch(toggleNewArtsLike({userId: user._id , productId: artData._id }))
+                dispatch(toggleRecentArtsLike({userId: user._id , productId: artData._id }))
 
                 const res = await axios.patch("/api/products/likes", {
                     userId: user?._id,
                     productId,
                 });
                 if (res.status == 200) {
-                    console.log("Liked")
                 }
 
             } catch (error) {
@@ -89,21 +87,6 @@ const ArtCard = ({ item, option }) => {
     };
 
 
-    const formatLengthByWidth = (text, width) => {
-        if (!text) return "";
-        const charCount = Math.floor(width / 10)
-        if (charCount >= text.length) return text;
-        const formatted = text.substring(0, charCount) + "...";
-        return formatted;
-    }
-
-
-    useEffect(() => {
-        // console.log(artistNameRef?.current?.clientWidth, artistNameRef?.current?.getBoundingClientRect().width, artistNameRef?.current?.offsetWidth, window.getComputedStyle(artistNameRef?.current).width)
-        setArtName(formatLengthByWidth(artData?.name, artNameRef?.current?.clientWidth))
-        setArtistName(formatLengthByWidth(artData?.artist?.name, artistNameRef?.current?.clientWidth))
-    })
-
 
     return (
         <>
@@ -111,12 +94,13 @@ const ArtCard = ({ item, option }) => {
                 <Link href={`/arts/${artData?._id}`} className="block w-full aspect-[5/4] relative group">
                     <Image height={400} width={400} className=" rounded-lg object-cover w-full h-full" src={artData?.photo} alt="art image" />
                     <div className="texts  flex items-end pb-4 px-3 justify-between absolute w-full bottom-0 left-0 h-[100px] from-transparent to-[rgba(0,0,0,.6)] from-0% bg-gradient-to-b text-gray-100 font-medium opacity-0 group-hover:opacity-100 rounded-lg transition duration-300">
-                        <p ref={artNameRef} className="title w-full flex-1 ">{artName} &nbsp;</p>
+                        <p ref={artNameRef} className="title w-full flex-1 line-clamp-1">{artData?.name} &nbsp;</p>
 
                         <span className="text-sm w-fit font-semibold text-gray-100 darkk:text-white">
                             {
                                 artData?.price ? `Rs ${formatNumberWithLetter(artData?.price)}` : <span className=" bg-lime-600  p-1 px-2 rounded-full text-xs">Showcase</span>
                             }
+                            {artData.category}
 
                         </span>
 
@@ -127,8 +111,8 @@ const ArtCard = ({ item, option }) => {
                     <div className="head flex justify-between items-center">
                         <Link href={`/artist/%${artData?.artist?._id}`} className="flex items-center gap-3 w-full flex-1">
                             <Image title={artData?.artist?.name} width={30} height={30} alt="artist image" src={artData?.artist?.image} className="rounded-full aspect-square object-cover" />
-                            <h6 ref={artistNameRef} className="font-semibold hover:underline  w-full flex-1 h-fulltracking-tight text-gray-700 darkk:text-white ">
-                                {artistName}
+                            <h6 ref={artistNameRef} className="font-medium  w-full flex-1 h-fulltracking-tight text-gray-700 darkk:text-white capitalize">
+                                {artData?.artist?.name.toLowerCase()}
                                 &nbsp;
                             </h6>
                         </Link>
@@ -179,7 +163,7 @@ export const ArtCardSkeleton = () => {
             viewBox="0 0 400 350"
             height={"100%"}
             width={"100%"}
-            title="loading"
+            title="🖌️ Loading Artistry... 🎨"
             speed={1.5}
             interval={0.4}
             backgroundColor="#eee"
