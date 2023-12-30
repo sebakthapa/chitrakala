@@ -51,9 +51,47 @@ export const categoriesColor = {
         more: "#C9B5A5",
 }
 
+export const categories = [
+    {
+      type: "oil",
+      description: "A realm where brushstrokes whispers stories",
+      image: "/landing/oil.jpg",
+      link: `/arts?category=oil`,
+    },
+    {
+      type: "water",
+      description: "Washes of liquid color bloom across thirsty paper",
+      image: "/landing/water.jpg",
+      link: `/arts?category=water`,
+    },
+    {
+      type: "digital",
+      description: "Pixels unite to sing a song of light.",
+      image: "/landing/digital.jpg",
+      link: `/arts?category=digital`,
+    },
+    {
+      type: "sketch",
+      description: "Swift strokes hint at forms not yet fully revealed",
+      image: "/landing/sketch.jpg",
+      link: `/arts?category=sketch`,
+    },
+    // {
+    //   type: "more",
+    //   description: "Explore the all the masterpiece artworks.",
+    //   image: "https://mueblesitaliano.ph/wp-content/uploads/2019/07/Contemporary-Abstract-Art-with-Ivan-Acuna-1024x794.jpg",
+    //   link: `/arts`,
+    // },
+
+
+  ]
+
 
 export function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
+
+
+export const discoverTypes = ["popular", "recent", "following"]
 
 export const pageSize = 12;

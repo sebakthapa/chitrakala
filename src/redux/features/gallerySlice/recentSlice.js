@@ -2,15 +2,15 @@ const { createSlice } = require("@reduxjs/toolkit");
 
 let initialState = [];
 
-const newSlice = createSlice({
-    name: "newArts",
+const recentSlice = createSlice({
+    name: "recentArts",
     initialState,
     reducers: {
-        addNewArts: (state, action) => {
-            const { payload: newArts } = action;
-            return newArts;
+        addRecentArts: (state, action) => {
+            const { payload: recentArts } = action;
+            return recentArts;
         },
-        toggleNewArtsLike: (state, { payload }) => {
+        toggleRecentArtsLike: (state, { payload }) => {
             const { userId, productId } = payload;
             const newState = state?.map((item) => {
                 let newLikes = [...item.likes];
@@ -25,11 +25,11 @@ const newSlice = createSlice({
 
             return newState;
         },
-        appendNewArts: (state, { payload }) => {
+        appendRecentArts: (state, { payload }) => {
             return [...state, ...payload]
         }
     }
 })
 
-export const { toggleNewArtsLike, appendNewArts, addNewArts } = newSlice.actions;
-export default newSlice.reducer;
+export const { toggleRecentArtsLike, appendRecentArts, addRecentArts } = recentSlice.actions;
+export default recentSlice.reducer;

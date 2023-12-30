@@ -3,14 +3,16 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/userSlice';
 import popularArtsReducer from './features/gallerySlice/popularSlice';
 import followingArtsReducer from './features/gallerySlice/followingSlice';
-import newArtsReducer from './features/gallerySlice/newSlice';
+import recentArtsReducer from './features/gallerySlice/recentSlice';
+import artsQueryReducer from './features/gallerySlice/querySlice';
 
 
 const rootReducer = combineReducers({
   user: userReducer,
   popularArts: popularArtsReducer,
   followingArts: followingArtsReducer,
-  newArts: newArtsReducer,
+  recentArts: recentArtsReducer,
+  artsQuery: artsQueryReducer,
 })
 
 const store = configureStore({

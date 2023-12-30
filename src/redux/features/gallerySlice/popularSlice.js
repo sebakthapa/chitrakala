@@ -8,7 +8,6 @@ const popularSlice = createSlice({
     reducers: {
         addPopularArts: (state, action) => {
             const { payload: popularArts } = action;
-            console.log(state, popularArts)
             return popularArts;
         },
         togglePopularArtsLike: (state, { payload }) => {

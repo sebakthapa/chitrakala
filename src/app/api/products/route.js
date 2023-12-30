@@ -67,6 +67,9 @@ export const GET = async (req) => {
         if (sort?.includes("likes")) {
             res = await Products.aggregate([
                 {
+                    $match: query
+                },
+                {
                     $addFields: {
                         likesCount: { $size: '$likes' },
                     },
