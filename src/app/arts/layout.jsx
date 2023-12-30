@@ -1,12 +1,8 @@
-"use client"
-import { usePathname } from "next/navigation"
-import GalleryHeader from "./components/GalleryHeader"
+// export const dynamicParams = false // true | false,
 
 const Layout = ({ children }) => {
-    const pathname = usePathname()  
     return (
         <>
-
             {children}
         </>
     )
