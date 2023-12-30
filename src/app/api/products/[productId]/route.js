@@ -12,7 +12,14 @@ export const GET = async (req, res) => {
         const productId = query[query.length - 1];
 
         await dbConnect();
-        const product = await Products.findById(productId).populate("artist")
+        const product = await Products.findById(productId).populate({
+            path: 'artist',
+            populate : {
+                path:'user'
+            }
+        })
+        
+
         return new NextResponse(JSON.stringify(product))
     } catch (error) {
         console.log("ERROR while getting single product" + error)

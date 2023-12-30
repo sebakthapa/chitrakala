@@ -7,7 +7,7 @@ export const metadata = {
   description: "Art marketplace and showcase.",
 };
 
-
+console.log("haha")
 const Page = async ({ searchParams }) => {
   return (
     <>

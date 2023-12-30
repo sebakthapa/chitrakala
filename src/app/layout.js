@@ -2,7 +2,7 @@ import './globals.css';
 import ReduxProvider from '@/components/ReduxProvider';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
-import {  ToastContainer, Zoom } from 'react-toastify';
+import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import SessionProvider from '../../context/SessionProvider';
 
@@ -21,7 +21,7 @@ export default function RootLayout({ children, ...props }) {
           <SessionProvider>
             <ToastContainer
               // bodyClassName={() => "text-white"}
-              style={{color:"white"}}
+              style={{ color: "white" }}
               position="bottom-right"
               autoClose={4000}
               hideProgressBar
