@@ -106,7 +106,14 @@ const GalleryHeader = ({ slug }) => {
                         categories?.map(({ type }, idx) => {
                             return (
                                 <li key={idx} className={`capitalize  rounded-full px-4 py-2 font-medium text-gray-800 hover:text-gray-500 transition ${selectedCategory == type ? "bg-stone-100 hover:text-gray-800" : "bg-blue-10"}`}>
-                                    <Link title={type} className='block' href={`/arts/${slug}/${type}`} >{type}</Link>
+                                    <Link
+                                        title={type}
+                                        className='block'
+                                        // href={"/arts/[slug]/[category]"}
+                                        href={`/arts/${slug}/${type}`}
+                                    >
+                                        {type}
+                                    </Link>
                                 </li>
                             )
                         })

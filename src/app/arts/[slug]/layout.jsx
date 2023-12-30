@@ -1,6 +1,5 @@
 import GalleryHeader from "../components/GalleryHeader"
 
-export const dynamicParams = false // true | false,
 
 const layout = ({ children, params }) => {
     return (

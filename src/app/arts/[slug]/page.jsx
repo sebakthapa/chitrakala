@@ -1,5 +1,4 @@
 "use client"
-import { categories } from "@/lib/utils";
 import Gallery from "../components/Gallery";
 import { addPopularArts } from "@/redux/features/gallerySlice/popularSlice";
 import { addFollowingArts } from "@/redux/features/gallerySlice/followingSlice";
@@ -8,8 +7,8 @@ import Individual from "@/app/artist/components/Individual";
 
 
 export const generateStaticParams = async () => {
-  const cats = categories.map(({ type }) => ({
-    category: type,
+  const cats = discoverTypes.map((type) => ({
+    sluga: type,
   }))
   return cats;
 }

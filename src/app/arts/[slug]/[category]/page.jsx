@@ -2,9 +2,10 @@ import { categories, discoverTypes } from "@/lib/utils";
 import Gallery from "../../components/Gallery";
 
 export const generateStaticParams = async () => {
-  const cats = discoverTypes.map((type) => ({
-    slug: type,
-  }))
+  const cats = categories.map(({ type:categoryType }) => {
+    return {category: categoryType}
+  })
+  console.log(cats)
   return cats;
 }
 
