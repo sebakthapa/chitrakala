@@ -3,7 +3,7 @@ import Gallery from "../components/Gallery";
 import { addPopularArts } from "@/redux/features/gallerySlice/popularSlice";
 import { addFollowingArts } from "@/redux/features/gallerySlice/followingSlice";
 import { addRecentArts } from "@/redux/features/gallerySlice/recentSlice";
-import Individual from "@/app/artist/components/Individual";
+import Individual from "@/app/arts/components/Individual";
 
 
 export const generateStaticParams = async () => {
@@ -22,7 +22,7 @@ const Page = ({ params: { slug } }) => {
     case "recent":
       return <Gallery url={"/api/products?sort=newD"} reduxName={"recentArts"} dispatch={addRecentArts} />
     default:
-      return <Individual />
+      return <Individual productId={slug} />
     
   }
 };

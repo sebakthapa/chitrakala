@@ -155,7 +155,7 @@ const Upload = () => {
 
     return (
         <>
-            <form action="#" onSubmit={handleFileUpload} className="flex flex-col gap-8 justify-center w-full ">
+            <form action="#" onSubmit={handleFileUpload} className="flex flex-col gap-8 justify-center w-full bg-white p-10 shadow-md ">
                 <h1 className='text-center font-extrabold text-3xl'>Showcase your Masterpiece</h1>
 
 

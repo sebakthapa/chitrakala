@@ -21,8 +21,8 @@ const Artist = () => {
 
   return (
     <>
-      <main className="py-4">
-        <div className="px-4">
+      <main className=" bg-white m-5 p-10">
+        
           <div className="block md:flex  md:-mx-2">
             {users?.length > 0 && users.map((item, index) => {
               if (item.artWorks.length == 0) return;
@@ -82,7 +82,7 @@ const Artist = () => {
 
             })}
           </div>
-        </div>
+      
       </main>
 
     </>

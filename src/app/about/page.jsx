@@ -9,7 +9,7 @@ export const metadata = {
 
 const Page = () => {
   return (
-    <div className="container mx-auto p-8 max-w-[50rem] text-justify">
+    <div className="container mx-auto p-8 max-w-[50rem] text-justify bg-white m-5">
       <header className="text-3xl font-bold mb-8">
         About Chitrakala
       </header>

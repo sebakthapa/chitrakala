@@ -5,8 +5,9 @@ import ArtDetails from "@/components/ArtDetail";
 import { BsBack, BsBackspaceFill } from "react-icons/bs";
 import Link from "next/link";
 import { BiSolidLeftArrow, BiSolidLeftArrowCircle } from "react-icons/bi";
-const Individual = () => {
-    const { artId: productId } = useParams()
+const Individual = ({productId}) => {
+    // const { artId: productId } = useParams()
+    console.log(productId)
     const router = useRouter();
 
 
@@ -18,6 +19,7 @@ const Individual = () => {
 
             if (res.status == 200) {
                 const data = await res.json();
+                console.log(data)
                 setArtData(data);
             }
         } catch (error) {
@@ -35,7 +37,7 @@ const Individual = () => {
                 </button>
             </div>
 
-            <div className="flex flex-col sm:flex-row  justify-center items-center h-1/2 ">
+            <div className="flex flex-col sm:flex-row  justify-center h-min overflow-hidden">
                 <ArtDetails artdata={artData} />
             </div>
 
