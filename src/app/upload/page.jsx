@@ -12,7 +12,7 @@ const Page = () => {
 
   return (
     <>
-      <div className="container my-12 w-full max-w-[600px] flex justify-center items-center mx-auto ">
+      <div className="container  my-12 w-full max-w-[600px] flex justify-center items-center mx-auto ">
         <Upload/>
       </div>
 

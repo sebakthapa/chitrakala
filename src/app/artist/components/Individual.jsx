@@ -58,9 +58,9 @@ const Individual = () => {
 
     return (
         <>
-            <div className="text-center ">
+            <div className="text-center  ">
                 <span onClick={()=>{router.back()}}  passHref>
-                    <span className="text-[#1f2937] absolute left-0 cursor-pointer m-5"><BiSolidLeftArrowCircle fontSize={"2rem"} /></span>
+                    <span className="text-[#1f2937] absolute left-5 cursor-pointer m-5"><BiSolidLeftArrowCircle fontSize={"2rem"} /></span>
                 </span>
             </div>
 
@@ -71,7 +71,7 @@ const Individual = () => {
             <ArtistCard artwork={userData?.length} likes={likes} />
               
 
-            <div className=" myScroll overflow-x-scroll flex py-5">
+            <div className="bg-white m-5 myScroll overflow-x-scroll flex gap-5 p-5">
                 {
                     userData?.length > 0 && userData?.map((item, index) => {
 

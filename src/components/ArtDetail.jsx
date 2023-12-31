@@ -18,7 +18,7 @@ const ArtDetail = ({ artdata }) => {
 
 
             if (res.status == 200) {
-                const data = await res.json()
+                const {data} = await res.json()
                 setRelatedArtData(data)
             }
 
@@ -38,9 +38,9 @@ const ArtDetail = ({ artdata }) => {
 
 
 
-            <section className="sm:pt-10 m-5 mt-20 sm:max-w-full h-auto  sm:w-[75%]  flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow`  hover:bg-gray-100 ">
-                <img className="object-contain w-full rounded-t-lg h-auto sm:h-96 " src={artdata?.photo} alt="" />
-                <div className="flex flex-col justify-between p-4 leading-normal">
+            <section className=" sm: border-gray-300 border-r sm:pt-10 m-5 mt-20 sm:max-w-full  sm:w-[80%]  flex flex-col items-center bg-white max-h-[150vh]   ">
+                <img className="object-contain w-full rounded-t-lg  h-[100vh]" src={artdata?.photo} alt="" />
+                <div className="flex flex-col w-full justify-between p-4 leading-normal">
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{artdata?.name}</h5>
                     <p className="mb-3 font-normal text-gray-700 ">{artdata?.description}</p>
 
@@ -80,7 +80,7 @@ const ArtDetail = ({ artdata }) => {
                             </div>
                         </li>
                     </ul>
-                    <div className="text-xs text-gray-500 flex justify-between">
+                    <div className="text-xs  text-gray-500 flex justify-between">
                         <div className='flex gap-5'>
 
                             <div >
@@ -93,17 +93,23 @@ const ArtDetail = ({ artdata }) => {
                             </div>
                         </div>
                         <div>
-                        <p className='text-xs flex items-center gap-2 text-gray-400'>
-                                    <BsAppIndicator/> {artdata?.createdAt && moment(artdata?.createdAt).fromNow()}
-                                    </p>
+                            <p className='text-xs flex items-center gap-2 text-gray-400'>
+                                <BsAppIndicator /> {artdata?.createdAt && moment(artdata?.createdAt).fromNow()}
+                            </p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className="pt-10 m-5 mt-20 w-full  sm:w-[25%] h-auto sm:h-[95vh]  flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow`  hover:bg-gray-100   ">
-                <h2 className='text-2xl font-bold tracking-tight text-gray-900 '>Related Arts</h2>
-                <div className=" flex myScroll  overflow-scroll  w-full sm:block ">
+            <section className="  mt-20  overflow-scroll  p-5  flex flex-col   bg-white sm:w-1/3  h-[150vh]  ">
+
+                <h1 className="subHead  font-serif  bg-white ">Related arts
+                    <p className=" text-sm xxs:text-base  sm:text-[1.08rem]  leading-relaxed text-gray-700 antialiased py-5"
+                    >
+                        Discover similar artworks from artists you like.
+                    </p>
+                </h1>
+                <div className="  myScroll gap-5 overflow-scroll  w-full flex sm:block ">
 
                     {
                         relatedartData?.length > 0 && relatedartData?.map((item, index) => {

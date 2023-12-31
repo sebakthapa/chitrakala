@@ -16,19 +16,42 @@ const Page = () => {
       <Landing />
 
 
-      <section className=" bg-slate-100 categoriesSection  md:py-36 md:px-5 md:pb-36">
-        <h1 className="font-semibold font-poppins text-3xl p-10 text-center mb-5">Explore by Category<span className="font-semibold font-sans text-5xl animate_blink">_</span></h1>
+      <section className="  mx-5 my-5  categoriesSection ">
+        <h1 className="mainHead  font-serif p-10  mb-5 bg-white ">Explore by Category
+        {/* <span className="font-semibold font-sans text-5xl animate_blink">_</span> */}
+        <p
+         className=" text-sm xxs:text-base  sm:text-[1.08rem]  leading-relaxed text-gray-700 antialiased py-5"
+        >
+          Browse through our curated collection of artworks categorized under various themes. <br /> From abstract expressionism to surrealist dreamscapes,
+        </p>
+        </h1>
+        <div className="bg-white pb-10">
+
         <CategoryCard />
+        </div>
       </section>
 
 
 
-      <div className=" font-sans h-screen w-full flex flex-row justify-center items-center mt-20">
-        <div className="w-full flex justify-center">
+    
+
+      <section className="mx-5  lg:flex justify-between items-center bg-white overflow-hidden ">
+      <h1 className="mainHead h-full w-full  font-serif p-10  mb-5 bg-white ">Featured Products
+        {/* <span className="font-semibold font-sans text-5xl animate_blink">_</span> */}
+        <p
+         className=" text-sm xxs:text-base  sm:text-[1.08rem]  leading-relaxed text-gray-700 antialiased py-5"
+        >
+          Check out our featured products.
+        </p>
+        </h1>
+
+    
+        <div className="w-full flex justify-center bg-white">
           <MiniCarousel />
 
         </div>
-      </div>
+      
+      </section>
     </>
   );
 };
