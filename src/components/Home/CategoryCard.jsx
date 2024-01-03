@@ -36,7 +36,7 @@ const CategoryCard = () => {
                 variants={cardVariant}
               >
                 <Link href={`/arts/popular/${type}`} className='w-full' >
-                  <div className="relative  z-0 w-full h-full rounded-md overflow-hidden bg-cover bg-center ">
+                  <div className="relative  z-0 w-full h-full rounded-sm overflow-hidden bg-cover bg-center ">
                     <Image className='w-full h-full object-cover  opacity-100 transition duration-500' src={image} alt={`${type} category image`} height={300} width={300} />
 
                     <motion.div

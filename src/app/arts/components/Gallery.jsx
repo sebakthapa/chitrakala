@@ -50,7 +50,7 @@ const Gallery = ({ url = "/api/products?", reduxName, dispatch: dispatchGallery 
         }
         return (
             <>
-                <main className="gallery min-h-[100vh] mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-10 gap-x-5 mx-4">
+                <main className="gallery bg-white m-5 mt-0 min-h-[100vh] p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8  ">
                     {
                         Array.from(Array(12)).map((itm, idx) => {
                             return (
@@ -70,8 +70,6 @@ const Gallery = ({ url = "/api/products?", reduxName, dispatch: dispatchGallery 
             <main className="gallery bg-white m-5 mt-0 min-h-[100vh] p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8  ">
                 {
                     galleryData?.length > 0 && galleryData?.map((itm, idx) => {
-
-
                         if (!itm?.name || !itm?.photo) return "";
                         return <ArtCard id={`artcardskeleton${idx}`} key={idx} item={itm} />
                     })
