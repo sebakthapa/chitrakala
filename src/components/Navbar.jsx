@@ -131,7 +131,7 @@ function Navbar() {
             <div className="bg-white mx-auto px-0 xxs:px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
-                  <button onClick={() => setIsOpen(!isOpen)} type="button" className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-800 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                  <button onClick={() => setIsOpen(!isOpen)} type="button" className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-800 hover:bg-gray-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
                     <span className="absolute -inset-0.5"></span>
                     <span className="sr-only">Open main menu</span>
                     {!isOpen ? (
@@ -163,7 +163,7 @@ function Navbar() {
                       <Link href="/about" className={`${pathname === '/about' ? 'active' : ''} hover:bg-gray-100 text-gray-800  rounded-full px-2 lg:px-3 py-2 text-sm font-semibold`} aria-current="page">About</Link>
 
 
-                      {/* <Link href="/add_artist_details" className={`${pathname === '/add_artist_details' ? 'active' : ''} hover:bg-gray-700 text-gray-300 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Be an Artist</Link> */}
+                      {/* <Link href="/add_artist_details" className={`${pathname === '/add_artist_details' ? 'active' : ''} hover:bg-gray-100 text-gray-800 hover:text-white rounded-md px-2 lg:px-3 py-2 text-sm font-medium`} aria-current="page">Be an Artist</Link> */}
                     </div>
 
                   </div>
@@ -180,7 +180,7 @@ function Navbar() {
                           title='Upload your artwork.'
                           className="relative  p-2 rounded-full border-none  text-gray-400 hover:text-white "
                         >
-                          <BsPlusCircle className='w-5 h-5 xs:w-6 xs:h-6' fill='white' />
+                          <BsPlusCircle className='w-5 h-5 xs:w-6 xs:h-6' fill='#1f2937' />
                         </button>
                         <div id='ppMain' className="ppMain relative ml-3 rounded-full" onClick={() => setShowHover(prev => !prev)}>
                           <div id='ppPhoto' className='ppPhoto'>
@@ -220,7 +220,7 @@ function Navbar() {
                                 <Link className='inline-block font-bold text-gray-100 py-[0.35rem] px-3 lg:py-[0.4rem] lg:px-5 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
                               </motion.button>
 
-                              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='hidden md:block bg-gray-100 border-2 border-gray-900 rounded-full'>
+                              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='hidden md:block border-2 border-gray-900 rounded-full'>
                                 <Link className='inline-block text-gray-800 py-[0.35rem] px-3 lg:py-[0.4rem] lg:px-5 ' href={`/auth/signup?returnUrl=${pathname}`}>Sign Up</Link>
                               </motion.button>
 
@@ -236,30 +236,30 @@ function Navbar() {
 
             {isOpen && (
 
-              <div className={`${!isOpen ? "hidden" : " "} md:hidden absolute t-0  float-right  w-full h-screen bg-transparent `} onClick={() => { setIsOpen(false) }}>
+              <div className={`${!isOpen ? "hidden " : " "} md:hidden absolute t-0  float-right  w-full h-screen bg-black opacity-50 `} onClick={() => { setIsOpen(false) }}>
               </div>
             )}
 
 
             <div
-              className={`pt-3 border-t-2  border-[rgba(255,255,255,.1)]  min-h-screen h-fit pb-5 md:hidden bg-gray-800 z-20 w-1/2 min-w-[15rem]  absolute  transition-all duration-[300ms] ${isOpen ? " opacity-100 left-0 " : "-left-[100%] opacity-50"
+              className={`pt-3 border-t-2 shadow-lg  border-[rgba(255,255,255,.1)]  min-h-screen h-fit pb-5 md:hidden bg-white z-20 w-1/2 min-w-[15rem]  absolute  transition-all duration-[300ms] ${isOpen ? " opacity-100 left-0 " : "-left-[100%] opacity-50"
                 }`}
               id="mobile-menu"
             >
 
               <div className="space-y-1 px-2 pb-3 pt-2 flex flex-col  items-center w-full gap-3 ">
 
-                <Link onClick={() => { setIsOpen(false) }} href="/" className={` border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center flex gap-6  items-center hover:bg-gray-700 text-gray-300   px-7 py-2 text-base font-medium ${pathname === '/' ? 'active' : ''} } `} ria-current="page"> <AiFillHome className='w-5 h-5' fill='#ccc' /> Home</Link>
+                <Link onClick={() => { setIsOpen(false) }} href="/" className={` border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center flex gap-6  items-center hover:bg-gray-100 text-gray-800   px-7 py-2 text-bold font-medium ${pathname === '/' ? 'active' : ''} } `} ria-current="page"> <AiFillHome className='w-5 h-5' fill='#1f2937' /> Home</Link>
 
-                  <Link onClick={() => { setIsOpen(false) }} href={`/arts/${user?.following?.length > 0 ? "popular" : "popular"}`} className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white flex gap-6  items-center  px-7 py-2 text-base font-medium ${pathname === '/arts' ? 'active' : ''} `}> <AiFillPicture className='w-5 h-5' fill='#ccc' /> Gallery</Link>
+                  <Link onClick={() => { setIsOpen(false) }} href={`/arts/${user?.following?.length > 0 ? "popular" : "popular"}`} className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-800 hover:bg-gray-100 flex gap-6  items-center  px-7 py-2 text-bold font-medium ${pathname === '/arts' ? 'active' : ''} `}> <AiFillPicture className='w-5 h-5' fill='#1f2937' /> Gallery</Link>
 
-                <Link onClick={() => { setIsOpen(false) }} href="/artist" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white flex gap-6  items-center  px-7 py-2 text-base font-medium ${pathname === '/artist' ? 'active' : ''} `}> <ImProfile className='w-5 h-5' fill='#ccc' /> Artist</Link>
+                <Link onClick={() => { setIsOpen(false) }} href="/artist" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-800 hover:bg-gray-100 flex gap-6  items-center  px-7 py-2 text-bold font-medium ${pathname === '/artist' ? 'active' : ''} `}> <ImProfile className='w-5 h-5' fill='#1f2937' /> Artist</Link>
 
-                <Link onClick={() => { setIsOpen(false) }} href="/exhibition" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white flex gap-6  items-center  px-7 py-2 text-base font-medium ${pathname === '/exhibition' ? 'active' : ''} `}> <SiIconfinder className='w-5 h-5' fill='#ccc' /> Exhibition</Link>
+                <Link onClick={() => { setIsOpen(false) }} href="/exhibition" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-800 hover:bg-gray-100 flex gap-6  items-center  px-7 py-2 text-bold font-medium ${pathname === '/exhibition' ? 'active' : ''} `}> <SiIconfinder className='w-5 h-5' fill='#1f2937' /> Exhibition</Link>
 
-                <Link onClick={() => { setIsOpen(false) }} href="/about" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-300 hover:bg-gray-700 hover:text-white flex gap-6  items-center  px-7 py-2 text-base font-medium ${pathname === '/about' ? 'active' : ''} `}> <ImInfo className='w-5 h-5' fill='#ccc' /> About</Link>
+                <Link onClick={() => { setIsOpen(false) }} href="/about" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-800 hover:bg-gray-100 flex gap-6  items-center  px-7 py-2 text-bold font-medium ${pathname === '/about' ? 'active' : ''} `}> <ImInfo className='w-5 h-5' fill='#1f2937' /> About</Link>
 
-                <div className="border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-white flex gap-2  items-center  px-4 py-5 mt-5 text-base font-medium " aria-current="page">
+                <div className="border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-white flex gap-2  items-center  px-4 py-5 mt-5 text-bold font-medium " aria-current="page">
                   {user?.user?._id ? (
                     <></>
 
@@ -269,8 +269,8 @@ function Navbar() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                        className='  w-full border-[1px] border-[#ffffff77]'>
-                        <Link className='w-full inline-block text-gray-100 py-[0.5rem] px-2 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
+                        className='  w-full border-[1px] border-gray-900 rounded-full'>
+                        <Link className='w-full inline-block text-gray-800 py-[0.5rem] px-2 ' href={`/auth/login?returnUrl=${pathname}`}>Log In</Link>
                       </motion.button>
 
                       <motion.button
@@ -280,7 +280,7 @@ function Navbar() {
                           type: "spring",
                           stiffness: 200, damping: 10
                         }}
-                        className=' w-full bg-gray-900 border-[1px] border-gray-900'
+                        className=' w-full bg-gray-900 border-[1px] border-gray-900 rounded-full'
                       >
                         <Link className='inline-block w-full  text-gray-200 py-[0.5rem] px-2 ' href={`/auth/signup?returnUrl=${pathname}`}>Sign Up</Link>
                       </motion.button>
