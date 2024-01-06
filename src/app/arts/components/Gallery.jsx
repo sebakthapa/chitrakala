@@ -67,7 +67,7 @@ const Gallery = ({ url = "/api/products?", reduxName, dispatch: dispatchGallery 
 
     return (
         <>
-            <main className="gallery bg-white m-5 mt-0 min-h-[100vh] p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8  ">
+            <main className="gallery bg-white sm:m-5 mt-0 min-h-[100vh] p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8  ">
                 {
                     galleryData?.length > 0 && galleryData?.map((itm, idx) => {
 
@@ -85,8 +85,8 @@ const Gallery = ({ url = "/api/products?", reduxName, dispatch: dispatchGallery 
                 }
                 {
                     !hasMore && (
-                        <div className="text-center p-5 text-gray-600 w-full ">
-                            <h1 className="mainHead  font-serif p-10  mb-5 bg-white "> {"🎨 Bravo!"}
+                        <div className="text-center p-5 text-gray-600 w-full opacity-50 ">
+                            <h1 className="mainHead  font-serif p-10  mb-5  "> {"🎨 Bravo!"}
                                 {/* <span className="font-semibold font-sans text-5xl animate_blink">_</span> */}
                                 <p
                                     className=" text-sm xxs:text-base  sm:text-[1.08rem]  leading-relaxed text-gray-700 antialiased py-5"

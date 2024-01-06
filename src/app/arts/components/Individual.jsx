@@ -1,12 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import ArtDetails from "@/components/ArtDetail";
-import { BsBack, BsBackspaceFill } from "react-icons/bs";
-import Link from "next/link";
-import { BiSolidLeftArrow, BiSolidLeftArrowCircle } from "react-icons/bi";
+
+import { BiSolidLeftArrowCircle } from "react-icons/bi";
 const Individual = ({productId}) => {
-    // const { artId: productId } = useParams()
+
     console.log(productId)
     const router = useRouter();
 
@@ -28,6 +27,7 @@ const Individual = ({productId}) => {
     }
     useEffect(() => {
         fetchData();
+        console.log(artData)
     }, []);
     return (
         <>

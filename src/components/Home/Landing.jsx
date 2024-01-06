@@ -7,7 +7,7 @@ import { BsArrowRight } from 'react-icons/bs';
 function Landing() {
     return (
         <>
-            <div className='landing m-5 flex shrink-0 justify-between items-center overflow-hidden  bg-[#fff] min-h-[50vh] h-[90vh]'>
+            <div className='landing sm:m-5 flex shrink-0 justify-between items-center overflow-hidden  bg-[#fff] min-h-[50vh] h-[90vh]'>
 
                 <div className="flex-[100%] shiny_effect md:-mr-28  relative  max-w-[650px] flex flex-col justify-center md:pl-5 lg:pl-10">
                     <motion.span

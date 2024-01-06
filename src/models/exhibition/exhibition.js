@@ -16,7 +16,11 @@ const exhibitionSchema = new mongoose.Schema({
     maxlength: [100, 'Location cannot exceed 100 characters']
   },
 
-  datetime: {
+  openDate: {
+    type: Date,
+    required: [true, 'Datetime is required']
+  },
+  closeDate: {
     type: Date,
     required: [true, 'Datetime is required']
   },

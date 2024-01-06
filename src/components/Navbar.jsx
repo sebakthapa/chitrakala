@@ -125,9 +125,10 @@ function Navbar() {
         showNav ? ( // showing only logo in pages like auth/login and auth/signup
           <Link className='mt-7 ml-4 xxs:3 xs:ml-7 block' href={"/"}>
             <span className='saman text-4xl  text-[#222] font-semibold'>CHITRAKALA</span>
+            <Image height={5} width={5} src="/logo.svg" alt="logo"  />
           </Link>
         ) : ( // showing full nav with navitems in other pages
-          <nav className="z-20 bg-gray-800 mt-2 relative m-5 shadow-md ">
+          <nav className="z-20 bg-gray-800 mt-2 relative sm:m-5 shadow-md ">
             <div className="bg-white mx-auto px-0 xxs:px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
@@ -150,8 +151,10 @@ function Navbar() {
                 </div >
                 <div className="flex flex-1 items-center justify-start ml-16 xxs:ml-20 xs:ml-0 xs:justify-center  md:items-stretch md:justify-start">
                   <div className="flex flex-shrink-0 items-center mr-10">
-                    <Link href={"/"} className='-ml-5 xs:ml-5 lg:ml-8'>
-                      <span className='saman xs:l-10  xxs:mr-0 text-2xl xs:text-3xl text-[#222] font-semibold'>CHITRAKALA</span>
+                    <Link href={"/"} className='-ml-5 xs:ml-5 lg:ml-8 flex items-center '>
+                      <Image height={25} width={25} src="/logo.svg" alt="logo"  />
+                      <span className='saman xs:l-10  xxs:mr-0 text-2xl xs:text-3xl text-[#222] font-semibold'>HITRAKALA</span>
+
                     </Link>
                   </div>
                   <div className="hidden md:ml-6 md:block">

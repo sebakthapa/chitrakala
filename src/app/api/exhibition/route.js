@@ -28,11 +28,11 @@ export const GET = async () => {
 export const POST = async (request) => {
 
     try {
-        const { title, description = "",location, status="open", datetime, photo } = await request.json();
+        const { title, description = "",location, status="open", openDate,closeDate, photo } = await request.json();
         // console.log(datetime,photo);
         await dbConnect();
 
-        const newExhibiiton = new Exhibition({ title, location, description, status, photo,datetime });
+        const newExhibiiton = new Exhibition({ title, location, description, status, photo,openDate,closeDate });
 
         const savedExhibition = await newExhibiiton.save();
 

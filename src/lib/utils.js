@@ -76,12 +76,7 @@ export const categories = [
       image: "/landing/sketch.jpg",
       link: `/arts?category=sketch`,
     },
-    // {
-    //   type: "more",
-    //   description: "Explore the all the masterpiece artworks.",
-    //   image: "https://mueblesitaliano.ph/wp-content/uploads/2019/07/Contemporary-Abstract-Art-with-Ivan-Acuna-1024x794.jpg",
-    //   link: `/arts`,
-    // },
+
 
 
   ]
