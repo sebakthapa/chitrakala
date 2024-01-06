@@ -49,8 +49,8 @@ const Artist = () => {
 
   const filterSearchHandle = () => {
 
-    if (search) {
-      let filteredData = users.filter((item) => (item?.name?.toLowerCase().includes(search)) || item?.user?.username.toLowerCase().includes(search));
+    if (search){
+      let filteredData = users.filter((item)=> (item?.name?.toLowerCase().includes(search)) || item?.user?.username.toLowerCase().includes(search));
       setFilteredUsers(filteredData)
     }
     else {

@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import { passwordResetSuccessHtml, passwordResetsuccessText } from "@/lib/emailTemplates";
 import { sendEmail } from "@/lib/sendEmail";
-import Users from "@/models/useraccounts/users";
+import Users from "@/models/users/users";
 import bcrypt from "bcrypt"
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";

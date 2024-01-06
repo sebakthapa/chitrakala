@@ -1,10 +1,14 @@
 import GalleryHeader from "../components/GalleryHeader"
 
 
-const layout = ({ children, params }) => {
+const layout = ({ children, params:{slug} }) => {
+    const showHeader = slug == "popular" || slug == "recent" || slug == "following"
     return (
         <>
-            <GalleryHeader slug={params.slug} />
+            {
+                showHeader && <GalleryHeader slug={slug} />
+            }
+            
             {children}
         </>
     )

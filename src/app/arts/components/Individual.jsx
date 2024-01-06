@@ -5,8 +5,7 @@ import ArtDetails from "@/components/ArtDetail";
 
 import { BiSolidLeftArrowCircle } from "react-icons/bi";
 const Individual = ({productId}) => {
-
-    console.log(productId)
+    // const { artId: productId } = useParams()
     const router = useRouter();
 
 
@@ -18,7 +17,6 @@ const Individual = ({productId}) => {
 
             if (res.status == 200) {
                 const data = await res.json();
-                console.log(data)
                 setArtData(data);
             }
         } catch (error) {

@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
-import Products from "@/models/useraccounts/products";
+import Products from "@/models/users/products";
 import { getServerSession } from "next-auth/next";
 import {  NextResponse } from "next/server";
 import { authOptions } from "../../auth/[...nextauth]/route";
