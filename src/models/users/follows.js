@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const FollowsSchema = new mongoose.Schema({
-    user: {
+    userDetails: {
         type: mongoose.Schema.ObjectId,
-        ref: "users",
+        ref: "UsersDetails",
         unique: true,
-        required: [true, "User reference Id is required"]
+        required: [true, "User details reference Id is required"]
     },
     following: {
         type: [mongoose.Schema.Types.ObjectId],

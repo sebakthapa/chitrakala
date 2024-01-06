@@ -12,6 +12,7 @@ import { updateUserData } from '@/redux/features/userSlice'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { toggleFollowing } from '@/redux/features/followingSlice'
+import { addFollowingArts } from '@/redux/features/gallerySlice/followingSlice'
 const ArtistCard = ({ artwork, likes }) => {
   const [artistData, setArtistData] = useState({})
   const pathname = usePathname()
@@ -40,15 +41,16 @@ const ArtistCard = ({ artwork, likes }) => {
 
 
   const handleToggleFollow = async () => {
-    if (!user?.user?._id && !artistId) {
+    if (!user?._id && !artistId) {
       toast.error("Unable to follow!")
       return;
     }
 
     dispatch(toggleFollowing(artistId))
     try {
-      await axios.patch(`/api/follow/${user?.user?._id}`, {artistId} )
+      await axios.patch(`/api/follow/${user?._id}`, {artistId, userId: user?.user?._id, artistDetailsId: artistData._id} )
       // throw "error"
+      dispatch(addFollowingArts([]))
 
     } catch (error) {
       dispatch(toggleFollowing(artistId))

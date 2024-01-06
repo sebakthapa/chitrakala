@@ -21,7 +21,7 @@ const Page = ({ params: { slug } }) => {
     case "popular":
       return <Gallery url={"/api/products?sort=likesD"} reduxName={"popularArts"} dispatch={addPopularArts} />
     case "following":
-      return <Gallery dependencies={[user?.user?._id]} url={`/api/products/following/${user?.user?._id}?`} reduxName={"followingArts"} dispatch={addFollowingArts}  />
+      return <Gallery dependencies={[user?._id]} url={`/api/products/following/${user?._id}?`} reduxName={"followingArts"} dispatch={addFollowingArts}  />
     case "recent":
       return <Gallery url={"/api/products?sort=newD"} reduxName={"recentArts"} dispatch={addRecentArts} />
     default:

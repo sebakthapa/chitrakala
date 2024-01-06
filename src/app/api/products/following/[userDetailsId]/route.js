@@ -2,31 +2,34 @@ import dbConnect from "@/lib/dbConnect"
 import { pageSize } from "@/lib/utils"
 import Follows from "@/models/users/follows"
 import Products from "@/models/users/products"
+import UsersDetails from "@/models/users/usersDetail"
 import { getToken } from "next-auth/jwt"
 import { NextResponse } from "next/server"
 
 export const GET = async (req, response) => {
 
     try {
-        const userId = req.url.split("/").at(-1).split("?")[0]
+        const userDetailsId = req.url.split("/").at(-1).split("?")[0]
         const { searchParams } = new URL(req.url);
         
         const page = searchParams.get("page") || 1;
 
-        if(!userId) return NextResponse.json({ error: true, errorMessage: "User Id is required!" }, { status: 400 })
+        if(!userDetailsId) return NextResponse.json({ error: true, errorMessage: "User Id is required!" }, { status: 400 })
         
         const token = await getToken({ req })
-        console.log(token.user.id, userId)
-
         
-
-        if (!token || token.user.id != userId) {
+        
+        
+        if (!token ) {
+            return NextResponse.json({ error: true, errorMessage: "Unauthorized access!" }, { status: 401 })
+        }
+        const userDetails = await UsersDetails.findById(userDetailsId)
+        if (token.user.id != userDetails?.user ) {
             return NextResponse.json({ error: true, errorMessage: "Unauthorized access!" }, { status: 401 })
         }
         const db = await dbConnect();
 
-        const followingRes = await Follows.findOne({ user: userId })
-        console.log("FOLLOWING RES", followingRes.following)
+        const followingRes = await Follows.findOne({ userDetails:userDetailsId })
 
         if (followingRes == null) {
             return NextResponse.json([], { status: 200 })
@@ -38,14 +41,13 @@ export const GET = async (req, response) => {
         })
         const totalPages = Math.ceil(totalSize / pageSize);
 
-        console.log("total size and total pages: ", totalSize, totalPages)
 
         const productRes = await Products.find({
             artist: {
                 $in: followingRes.following,
             }
         })
-            .sort({ createdAt: 1 })
+            .sort({ createdAt: -1 })
             .skip((page - 1) * pageSize)
             .limit(pageSize)
             .populate({
@@ -55,11 +57,16 @@ export const GET = async (req, response) => {
                     select:"-password"
                 }
             })
-        console.log("PRODUCT RES", productRes)
-        console.log("----------------------------------------------------------------")
-
-        return NextResponse.json(productRes)
-
+            
+            const finalData = {
+                totalPages,
+                pageSize: pageSize,
+                page: +page,
+                documentSize: productRes.length,
+                data: productRes,
+            }
+            
+        return NextResponse.json(finalData)
 
 
     } catch (error) {

@@ -1,7 +1,7 @@
 import { pageSize } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 
-const useInfiniteScroll = ({ url, data: localData = [], dependencies }) => {
+const useInfiniteScroll = ({ url, data: localData = [], dependencies=[] }) => {
     const fetchedLocalPage = Math.ceil(localData.length / pageSize); // page that is already stored in client side store
     const [data, setData] = useState(localData ? [...localData] : []);
     const [nextPage, setNextPage] = useState(Math.max(fetchedLocalPage + 1, 1));
@@ -13,16 +13,16 @@ const useInfiniteScroll = ({ url, data: localData = [], dependencies }) => {
     let fetchedPage = fetchedLocalPage ;
     let isAddingData = false; //useState has slight delay in updating. That caused it to take time to setLoading(true) and setLoadingNewPage(true) to take time resulting multiple load data to be called on scroll.
 
-    if (dependencies && dependencies?.length > 0) {
-        dependencies?.map((dep) => {
-            if (!dep) {
-                setIsLoading(true)
-            } else {
-                setIsLoading(false)
-            }
-        })
-        return { data, isLoading, loadMore, isLoadingNewPage, hasMore, error };
-    }
+    // if (dependencies && dependencies?.length > 0) {
+    //     dependencies?.map((dep) => {
+    //         if (!dep) {
+    //             setIsLoading(true)
+    //         } else {
+    //             setIsLoading(false)
+    //         }
+    //     })
+    //     return { data, isLoading, loadMore, isLoadingNewPage, hasMore, error };
+    // }
 
     const handleScroll = () => {
         const scrollOffset = 800; // value above the end of scroll to start fetching new page
@@ -34,7 +34,7 @@ const useInfiniteScroll = ({ url, data: localData = [], dependencies }) => {
 
     const loadMore = async () => {
 
-        if (isLoading || !hasMore || isLoadingNewPage || isAddingData) return;
+        if (isLoading || !hasMore || isLoadingNewPage || isAddingData || dependencies.some(dep => dep == undefined)) return;
         
         if (nextPage <= fetchedPage) {
             return;
@@ -78,7 +78,7 @@ const useInfiniteScroll = ({ url, data: localData = [], dependencies }) => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [isLoading, hasMore, isLoadingNewPage]);
+    }, [isLoading, hasMore, isLoadingNewPage, ...dependencies]);
 
     useEffect(() => {
         
@@ -86,7 +86,7 @@ const useInfiniteScroll = ({ url, data: localData = [], dependencies }) => {
             loadMore();
         }
 
-    }, [])
+    }, [...dependencies])
 
     return { data, isLoading, loadMore, isLoadingNewPage, hasMore, error };
 };
