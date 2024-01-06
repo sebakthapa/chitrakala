@@ -90,9 +90,9 @@ const ArtCard = ({ item, option }) => {
 
     return (
         <>
-            <div className="w-full bg-white rounded-lg  darkk:bg-gray-800 darkk:border-gray-700">
+            <div className="w-full min-w-[300px] bg-white rounded-sm  darkk:bg-gray-800 darkk:border-gray-700">
                 <Link href={`/arts/${artData?._id}`} className="block w-full aspect-[5/4] relative group">
-                    <Image height={400} width={400} className=" rounded-lg object-cover w-full h-full" src={artData?.photo} alt="art image" />
+                    <Image height={400} width={400} className=" rounded-sm object-cover w-full h-full" src={artData?.photo} alt="art image" />
                     <div className="texts  flex items-end pb-4 px-3 justify-between absolute w-full bottom-0 left-0 h-[100px] from-transparent to-[rgba(0,0,0,.6)] from-0% bg-gradient-to-b text-gray-100 font-medium opacity-0 group-hover:opacity-100 rounded-lg transition duration-300">
                         <p ref={artNameRef} className="title w-full flex-1 line-clamp-1">{artData?.name} &nbsp;</p>
 
@@ -100,7 +100,7 @@ const ArtCard = ({ item, option }) => {
                             {
                                 artData?.price ? `Rs ${formatNumberWithLetter(artData?.price)}` : <span className=" bg-lime-600  p-1 px-2 rounded-full text-xs">Showcase</span>
                             }
-                            {artData.category}
+                            {/* {artData.category} */}
 
                         </span>
 
@@ -109,7 +109,7 @@ const ArtCard = ({ item, option }) => {
                 </Link>
                 <div className="px-1 pb-5 my-2.5">
                     <div className="head flex justify-between items-center">
-                        <Link href={`/artist/%${artData?.artist?._id}`} className="flex items-center gap-3 w-full flex-1">
+                        <Link href={`/artist/${artData?.artist?.user?._id}`} className="flex items-center gap-3 w-full flex-1">
                             <Image title={artData?.artist?.name} width={30} height={30} alt="artist image" src={artData?.artist?.image} className="rounded-full aspect-square object-cover" />
                             <h6 ref={artistNameRef} className="font-medium  w-full flex-1 h-fulltracking-tight text-gray-700 darkk:text-white capitalize">
                                 {artData?.artist?.name.toLowerCase()}

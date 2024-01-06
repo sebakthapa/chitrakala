@@ -63,7 +63,7 @@ const Input = ({
                         {...register && { ...register(id, { ...validation, onChange: handleChange }) }}
                         {...register || { onChange: handleChange }}
                         required={required}
-                        className={`${classLists}  w-full`}
+                        className={`${classLists}  w-full `}
                         type={type}
                         {...props}
                     />

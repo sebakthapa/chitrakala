@@ -48,9 +48,9 @@ const GalleryHeader = ({ slug }) => {
     }, [sessionStatus])
 
     return (
-        <header className="galleryNav p-6 mt-3 pb-0 flex justify-between items-center">
-            <Menu as="div" className="relative inline-block text-left capitalize">
-                <div>
+        <header className="galleryNav p-5 bg-white  flex m-5 mb-0 justify-between">
+            <Menu as="div" className="relative inline-block text-left capitalize ">
+                <div >
                     <Menu.Button id='menu_button' className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-4 py-[0.65rem] text-sm font-semibold capitalize text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                         {
                             galleryTypes.map(({ title, link }) => {

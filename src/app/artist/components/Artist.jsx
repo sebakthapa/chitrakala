@@ -5,84 +5,100 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { AiOutlineMail, AiFillPhone } from 'react-icons/ai'
 
-const Artist = () => {
 
+const Artist = () => {
   const [users, setUsers] = useState([])
+  const [filteredusers, setFilteredUsers] = useState([])
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
     async function fetchUsers() {
       const res = await fetch('/api/users')
       const data = await res.json()
       setUsers(data)
+      setFilteredUsers(data)
     }
     fetchUsers()
   }, [])
 
+  const handleSearch= (e) => {
+    setSearch(e.toLowerCase());
+
+  }
+
+  useEffect(()=>{
+
+    if (search){
+      let filteredData = users.filter((item)=> (item?.name?.toLowerCase().includes(search)) || item?.user?.username.toLowerCase().includes(search));
+      setFilteredUsers(filteredData)
+    }
+  },[search])
+  
+
 
   return (
     <>
-      <main className="py-4">
-        <div className="px-4">
-          <div className="block md:flex  md:-mx-2">
-            {users?.length > 0 && users.map((item, index) => {
-              if (item.artWorks.length == 0) return;
+      <main className=" bg-white m-5 p-10 flex flex-col ">
 
-              return (<div key={index} className="w-full lg:w-1/4 md:mx-2 mb-4 md:mb-0">
-                <Link href="/artists/[id]" as={`/artist/${item?.user?._id}`}>
-                  <div className="bg-white rounded-lg overflow-hidden shadow relative">
-                    <div className=" h-[30vh] overflow-hidden  ">
-                      <motion.img
-                        key={index}
-                        src={item?.artWorks[0]?.photo}
-
-                        transition={{
-                          type: "spring",
-                          stiffness: 200,
-                          damping: 10,
-                        }}
-                      />
-
-                      <div className="pp flex-initial overflow-hidden border-white border-[2px] top-1 bg-black text-white w-12 text-center h-12 m-1 rounded-full absolute bottom-0">
-                        <Image alt='default avatar' src={item.image || "/avatar.png"} width={50} height={50} />
-                      </div>
-                    </div>
-
-                    <div className="p-4 h-auto md:h-40 lg:h-48">
-                      <div className="text-gray-600  text-xl leading-relaxed block md:text-xs lg:text-sm">
-                        @{item.user.username}
-                      </div>
-                      <span
-                        className="block capitalize text-gray-700 hover:underline font-semibold mb-2 text-lg md:text-base lg:text-lg"
-                      >
-                        {item.name.toLowerCase()}
-                      </span>
-                      <div className=" truncate text-gray-600 text-sm leading-relaxed block md:text-xs lg:text-sm">
-                        {item.bio}
-                      </div>
-
-                      <div className="flex flex-col  gap-2 mt-2 lg:absolute bottom-0 mb-4 md:hidden lg:block">
-                        <span
-                          className="flex   items-center gap-2 mr-2   py-1 px-2 rounded-full text-xs lowercase text-gray-700"
-
-                        >
-                          <AiOutlineMail /> {item.user.email}
-                        </span>
-                        <span
-                          className="flex items-center gap-2  py-1 px-2 rounded-full text-xs lowercase text-gray-700"
-                        >
-                          {/* {item.dob?.split('T')[0]} */}
-                          <AiFillPhone /> {item.user?.phone}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-              )
-
-            })}
+        <div class="searchBar flex   items-center max-w-md my-5 bg-white rounded-full border border-gray-800 " x-data="{ search: '' }">
+          <div class="w-full">
+            <input type="search" class="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none"
+              placeholder="Search" x-model="search" onChange={(e)=>{handleSearch(e.target.value) }} />
+          </div>
+          <div>
+            <button type="submit" class="flex items-center  justify-center w-12 h-12 text-gray-800 rounded-r-lg">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </button>
           </div>
         </div>
+
+
+      
+          <ul class="max-w-md ">
+            {filteredusers?.length > 0 ? (filteredusers.map((item, index) => {
+              if (item.artWorks.length == 0) return;
+
+              return (
+
+
+                <Link
+                href={`/artist/${item?.user?._id}`}
+             
+                key={index}
+                 className="pb-3 sm:pb-4 ">
+                  <div className="flex items-center space-x-4 rtl:space-x-reverse pb-3 sm:pb-4">
+                    <div className="flex-shrink-0">
+                      <Image height={400} width={400} className="w-20 h-20 rounded-full" src={item?.image} alt=" image" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate capitalize cursor-pointer hover:underline">
+                      {(item?.name)} 
+                      </p>
+                      <p className="text-sm text-gray-500 truncate dark:text-gray-400 cursor-pointer hover:underline">
+                      @{(item?.user.username)}  
+                      </p>
+                      <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                      {(item?.user.email)}  
+                      </p>
+                    </div>
+                    <p  href={`/artist/${item?.user?._id}`} className="inline-flex items-center hover:underline text-xs font-semibold text-gray-900 cursor-pointer ">
+                      Learn More 
+                    </p>
+                  </div>
+                </Link>
+
+
+              )
+
+            })):(
+              <h1 className='text-red-500'>Oops, Nothig to show...</h1>
+            )}
+          </ul>
+
       </main>
 
     </>

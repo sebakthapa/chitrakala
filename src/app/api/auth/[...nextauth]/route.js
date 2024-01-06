@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import clientPromise from "@/lib/mongodb";
-import Users from "@/models/useraccounts/users";
-import UsersDetails from "@/models/useraccounts/usersDetail";
+import Users from "@/models/users/users";
+import UsersDetails from "@/models/users/usersDetail";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -11,7 +11,7 @@ import bcrypt from "bcrypt"
 import { MongoDBAdapter } from "@/lib/mongoDBAdapter";
 import { createTransport } from "nodemailer";
 import {  EmailVerifyHtml, emailVerifyText } from "@/lib/emailTemplates";
-import VerificationTokens from "@/models/others/VerificationTokens";
+import VerificationTokens from "@/models/tokens/VerificationTokens";
 
 export const authOptions = {
     adapter: MongoDBAdapter(clientPromise, { databaseName: process.env.DATABASE_NAME }),

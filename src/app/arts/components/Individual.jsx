@@ -5,8 +5,8 @@ import ArtDetails from "@/components/ArtDetail";
 import { BsBack, BsBackspaceFill } from "react-icons/bs";
 import Link from "next/link";
 import { BiSolidLeftArrow, BiSolidLeftArrowCircle } from "react-icons/bi";
-const Individual = () => {
-    const { artId: productId } = useParams()
+const Individual = ({productId}) => {
+    // const { artId: productId } = useParams()
     const router = useRouter();
 
 
@@ -35,7 +35,7 @@ const Individual = () => {
                 </button>
             </div>
 
-            <div className="flex flex-col sm:flex-row  justify-center items-center h-1/2 ">
+            <div className="flex flex-col sm:flex-row  justify-center h-min overflow-hidden">
                 <ArtDetails artdata={artData} />
             </div>
 

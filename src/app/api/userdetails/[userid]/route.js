@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
-import Users from "@/models/useraccounts/users";
-import UsersDetails from "@/models/useraccounts/usersDetail";
+import Users from "@/models/users/users";
+import UsersDetails from "@/models/users/usersDetail";
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
@@ -18,18 +18,14 @@ export const GET = async (request) => {
             return new NextResponse(JSON.stringify({ error: "Invalid User ID provided" }), { status: 404 })
         }
         await dbConnect();
-        const res = await UsersDetails.findOne({
-            'user': userId
-        }).populate({
+        const res = await UsersDetails.findOne({ 'user': userId }).populate({
             path: "user",
             select: "-password"
         });
 
-
-        return new NextResponse(JSON.stringify(res))
-
+        return NextResponse.json(res)
     } catch (error) {
-        console.log("ERROR fetching user detail \n" + error)
+        console.log("ERROR fetching user detail of specifit user \n" + error)
         // return new NextResponse(error);
     }
 }
@@ -38,9 +34,6 @@ export const GET = async (request) => {
 
 // UPDATE => UPDATE a buyer detail
 export const PATCH = async (request) => {
-
-
-
     const hasArtistDetails = (details) => {
         const { user, bio, image, name, address, dob } = details;
 
@@ -53,6 +46,7 @@ export const PATCH = async (request) => {
     }
 
     try {
+
         // checking for usersession as returned from header cookies from client request
         const token = await getToken({ req: request })
         if (!token?.user.id) {
@@ -64,11 +58,16 @@ export const PATCH = async (request) => {
         await dbConnect();
         const params = request.url.split('/');
         const userId = params[params.length - 1];
-        const { bio, image, name, address, dob, username, phone, } = dataToUpdate;
+        const { bio, image, name, address, dob, username, phone } = dataToUpdate;
+
+
+
 
         if (token?.user.id != userId) {
             return NextResponse.json({ message: "You can update only your details." }, { status: 401 })
         }
+
+        
 
         // username and phone validation for unique
         if (username) {
@@ -83,7 +82,9 @@ export const PATCH = async (request) => {
         }
 
 
-        const newUserDetails = { bio, image, name, address, dob };
+
+
+        const newUserDetails = { bio, image, name, address, dob, };
         const newUser = { username, phone };
 
         let userRes, userDetailsRes;

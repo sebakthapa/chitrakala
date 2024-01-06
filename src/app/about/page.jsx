@@ -1,5 +1,6 @@
 import React from 'react'
 import Loading from '@/components/LoadingComponent'
+import Link from 'next/link'
 
 
 export const metadata = {
@@ -9,7 +10,7 @@ export const metadata = {
 
 const Page = () => {
   return (
-    <div className="container mx-auto p-8 max-w-[50rem] text-justify">
+    <div className="container mx-auto p-8 max-w-[50rem] text-justify bg-white m-5">
       <header className="text-3xl font-bold mb-8">
         About Chitrakala
       </header>
@@ -45,7 +46,7 @@ const Page = () => {
           {`Embark on a journey of artistic discovery with Chitrakala. Follow us on social media, engage with our vibrant community, and be the first to experience the latest additions to our ever-expanding gallery. Together, let's celebrate the beauty of art and the boundless creativity that defines Chitrakala.`}
         </p>
         <p className="mt-4">
-          <a href="/gallery" className="text-blue-500 hover:underline">Explore Our Gallery</a> | <a href="/artists" className="text-blue-500 hover:underline">Meet Our Artists</a> | <a href="/gallery" className="text-blue-500 hover:underline">Shop the Collection</a>
+          <Link href="/arts/popular" className="text-blue-500 hover:underline">Explore Our Gallery</Link> | <Link href="/artists" className="text-blue-500 hover:underline">Meet Our Artists</Link> | <Link href="/gallery" className="text-blue-500 hover:underline">Shop the Collection</Link>
         </p>
       </section>
     </div>

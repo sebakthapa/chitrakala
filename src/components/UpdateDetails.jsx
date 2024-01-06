@@ -221,7 +221,7 @@ const UpdateDetails = ({ title, subtitle, form }) => {
         }
 
         return (
-            <motion.div className={`${isSubmitting && "pointer-events-none"} w-full max-w-[500px] m-auto font-serif border- p-2 xs:p-5 mt-10 rounded-lg`
+            <motion.div className={`${isSubmitting && "pointer-events-none"} bg-white shadow-md w-full max-w-[500px] m-auto font-serif border- p-2 xs:p-5 mt-10 rounded-lg`
             }
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}

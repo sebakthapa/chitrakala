@@ -69,7 +69,14 @@ const Exhibition = () => {
           </div>
     ):(
       <div className="container">
-          <h1>Comming Soon..</h1>
+          <h1 className="mainHead  font-serif p-5  m-5 bg-white w-full">Exhibition
+        {/* <span className="font-semibold font-sans text-5xl animate_blink">_</span> */}
+        <p
+         className=" text-sm xxs:text-base  sm:text-[1.08rem]  leading-relaxed text-gray-700 antialiased py-5"
+        >
+          Hold Tight, This Feature is coming soon...
+        </p>
+        </h1>
       </div>)
       }
    

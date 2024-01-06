@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import { pageSize as documentPerPage } from "@/lib/utils";
-import Products from "@/models/useraccounts/products";
-import UsersDetails from "@/models/useraccounts/usersDetail";
+import Products from "@/models/users/products";
+import UsersDetails from "@/models/users/usersDetail";
 import { getToken } from "next-auth/jwt";
 import { NextResponse, NextRequest } from "next/server";
 

@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
-import UserDetails from "@/models/useraccounts/usersDetail";
+import UserDetails from "@/models/users/usersDetail";
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 

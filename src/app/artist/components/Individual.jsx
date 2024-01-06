@@ -12,11 +12,10 @@ import { useRouter } from 'next/navigation';
 const Individual = () => {
     const router = useRouter()
     const { artistid: userId } = useParams()
-    const {data:session} = useSession()
+    const { data: session } = useSession()
     let option = false;
-    if (userId === session?.user?.id)
-    {
-         option = true;
+    if (userId === session?.user?.id) {
+        option = true;
     }
 
     const user = useSelector(state => state.user)
@@ -58,20 +57,20 @@ const Individual = () => {
 
     return (
         <>
-            <div className="text-center ">
-                <span onClick={()=>{router.back()}}  passHref>
-                    <span className="text-[#1f2937] absolute left-0 cursor-pointer m-5"><BiSolidLeftArrowCircle fontSize={"2rem"} /></span>
+            <div className="text-center  ">
+                <span onClick={() => { router.back() }} passHref>
+                    <span className="text-[#1f2937] absolute left-5 cursor-pointer m-5"><BiSolidLeftArrowCircle fontSize={"2rem"} /></span>
                 </span>
             </div>
 
 
 
-               
+
 
             <ArtistCard artwork={userData?.length} likes={likes} />
-              
 
-            <div className=" myScroll overflow-x-scroll flex py-5">
+
+            <div className="gallery bg-white m-5 mt-0 min-h-[100vh] p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8  ">
                 {
                     userData?.length > 0 && userData?.map((item, index) => {
 

@@ -42,8 +42,8 @@ const MiniCarousel = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await fetch('/api/products?filter=likesD');
-      const data = await response.json();
+      const response = await fetch('/api/products?sort=likesD');
+      const {data} = await response.json();
       // const imagesArray = ;
       const descriptionsArray = data.map((item) => item.description || ''); // Adjust the field name accordingly
       setImages(data);
@@ -69,12 +69,11 @@ const MiniCarousel = () => {
 
   return (
     <>
-      <div className="relative  flex justify-center items-center flex-col p-5">
-        <h1 className="font-semibold font-poppins text-3xl p-5 text-center mt-5 mb-8">Featured Product</h1>
+      <div className=" overflow-hidden w-full  flex justify-center items-center flex-col ">
         {
           (motion && images?.length > 0 && descriptions?.length > 0) ? (
-            <div className=" w-screen max-w-[800px] overflow-hidden  relative  h-screen max-h-[400px] xs:max-h-[600px]">
-              <div className="absolute  top-1/2 -translate-y-1/2 p-3 h-fit rounded-full  bg-[rgba(0,0,0,.4)]  bottom-0 left-0 flex justify-center items-center  cursor-pointer z-50" onClick={() => paginate(-1)}>
+            <div className=" w-screen sm:max-w-[50rem]    relative  h-screen max-h-[400px] xs:max-h-[600px]">
+              <div className="absolute  top-1/2 -translate-y-1/2 p-3 h-fit rounded-full  bg-[rgba(0,0,0,.4)]  bottom-0  ml-10 flex justify-center items-center  cursor-pointer z-50" onClick={() => paginate(-1)}>
                 <BiSolidLeftArrow fill="#fefefe" />
               </div>
               <AnimatePresence >
@@ -104,32 +103,33 @@ const MiniCarousel = () => {
                     }
                   }}
                 >
-
+                    
                   <Image
                     loading="lazy"
-                    className="h-full w-full object-cover pointer-events-none"
+                    className="h-full max-w-full object-cover  pointer-events-none"
                     src={images[imageIndex]?.photo}
                     alt="Artwork image"
-                    height={500}
-                    width={1000}
+                    height={2000}
+                    width={2000}
                   />
                   <div className="overlay absolute  bottom-0 left-0 h-[20%] w-full  bg-gradient-to-t from-[rgba(0,0,0,.8)] to-transparent">
 
-                    <div className="text-center absolute    w-full py-3 px-2  bottom-0 left-0 mt-5 text-gray-200 font-medium font-sans  text-lg">
-                      <p className="text-base font-normal pb-2"> {images[imageIndex].description}  </p>
+                    <div className="text-center absolute    left-[25%]   w-1/2 py-3 px-2  bottom-0  mt-5 text-gray-200 font-medium font-sans  text-lg">
+                      <p className="text-base font-normal pb-2"> {images[imageIndex].name}  </p>
+                      <p className="text-xs  w-full font-extralight pb-2 truncate"> {images[imageIndex].description}  </p>
                     </div>
                   </div>
                 </motion.div>
 
               </AnimatePresence>
 
-              <div className="absolute z-50  bg-[rgba(0,0,0,.4)] h-fit  top-1/2 -translate-y-1/2 p-3 rounded-full  bottom-0 right-0 flex justify-center items-center  cursor-pointer" onClick={() => paginate(1)}>
+              <div className="absolute z-50  bg-[rgba(0,0,0,.4)] h-fit  mr-10 top-1/2 -translate-y-1/2 p-3 rounded-full  bottom-0 right-0 flex justify-center items-center  cursor-pointer" onClick={() => paginate(1)}>
                 <BiSolidRightArrow fill="#fefefe" />
               </div>
             </div>
           ) : (
             <div className="w-screen max-w-[800px] overflow-hidden  relative  h-screen max-h-[400px] xs:max-h-[600px]">
-              <Skeleton height={400} width={300} containerClassName="m-5 shiny_effect flex-1 flex gap-2" count={4} />
+              <Skeleton height={400} width={300} containerClassName="m-5 shiny_effect flex-1 flex gap-2" count={1} />
             </div>
           )
         }

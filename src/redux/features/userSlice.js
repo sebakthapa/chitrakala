@@ -1,12 +1,12 @@
 const { createSlice } = require("@reduxjs/toolkit");
 
-let initialState = null ;
+let initialState = null;
 
 const userSlice = createSlice({
     name: "user",
-    initialState ,
+    initialState,
     reducers: {
-        addUserData:  (state, action) => {
+        addUserData: (state, action) => {
             const { payload: userData } = action;
             // const { address, photo, displayName,user  } = userData;
             // const { email, username, phone, _id } = user;
@@ -17,10 +17,17 @@ const userSlice = createSlice({
         clearUserData: (state, action) => {
             return null;
         },
+        updateUserData: (state, action) => {
+            const { payload: dataToUpdate } = action;
+            const updatedData = { ...state, ...dataToUpdate, }
+            console.log(updatedData)
+            return updatedData;
+        },
+        
 
     }
 })
 
-export const { addUserData, clearUserData } = userSlice.actions;
+export const { addUserData, clearUserData, updateUserData } = userSlice.actions;
 
 export default userSlice.reducer;
