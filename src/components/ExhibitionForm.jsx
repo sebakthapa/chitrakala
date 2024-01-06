@@ -146,10 +146,12 @@ const ExhibitionForm = () => {
             classes="my-5 "
             name="file"
             types={fileTypes}
-            children = {DragDrop}
+            // children = {[DragDrop]}
             onDraggingStateChange = {()=>(setDrag(prev  => !prev))}
 
-          />
+          >
+           {DragDrop}
+          </FileUploader>
           {/* <input
             className='p-5 border-gray-300 bg-transparent border-2 hover:border-gray-400 my-2 rounded-md'
             type="file"
