@@ -156,32 +156,7 @@ const Upload = () => {
     return (
         <>
             <form action="#" onSubmit={handleFileUpload} className="flex flex-col gap-8 justify-center w-full bg-white p-10 shadow-md ">
-                <h1 className='text-center font-extrabold text-3xl'>Showcase your Masterpiece</h1>
-
-
-                <div className="title input_field_container">
-                    <Input
-
-                        required
-                        type="text"
-                        label="title"
-                        value={title}
-                        setValue={setTitle}
-                        classLists=""
-                    />
-                </div>
-
-                <div className="description input_field_container">
-
-                    <label htmlFor="post-description" className='text-gray-500 -mb-2' >Description</label>
-                    <textarea
-                        type="text"
-                        id='post-description'
-                        value={description}
-                        onChange={handleDescriptionChange}
-                        className=" bg-transparent border-2 border-gray-300 hover:border-gray-400 transition duration-300 rounded py-[0.4rem] pl-3 pr-9 "
-                    />
-                </div>
+                <h1 className='text-center font-extrabold text-3xl mb-4'>Showcase your Masterpiece</h1>
 
                 <div className=" image input_field_container ">
                     <label htmlFor="uploadimage" className='text-gray-500 -mb-2' >Your Work<span className="text-red-500">*</span></label>
@@ -211,7 +186,30 @@ const Upload = () => {
                             )}
                     </div>
                 </div>
+                <div className="title input_field_container">
+                    <Input
 
+                        required
+                        type="text"
+                        label="title"
+                        value={title}
+                        setValue={setTitle}
+                        classLists=""
+                    />
+                </div>
+
+                <div className="description input_field_container">
+
+                    <label htmlFor="post-description" className='text-gray-500' >Description</label>
+                    <textarea
+                        type="text"
+                        id='post-description'
+                        value={description}
+                        placeholder='Every masterpiece has its background. Tell us about this...'
+                        onChange={handleDescriptionChange}
+                        className=" bg-transparent border-2 border-gray-300 hover:border-gray-400 transition duration-300 rounded -mt-3 py-[0.4rem] pl-3 pr-9 placeholder:text-sm placeholder:text-slate-300 "
+                    />
+                </div>
 
 
 
@@ -253,6 +251,7 @@ const Upload = () => {
                             setValue={setPrice}
                             onChange={handlePriceChange}
                             className=" border-gray-400 border-2 rounded-md p-2 "
+                            required={!notForSale}
                         />
 
                     </div>
@@ -260,7 +259,7 @@ const Upload = () => {
                 </div>
                 <div className="input_field_container" >
                     <label className='-mb-3 ' htmlFor="width">{`Size(cms)`}</label>
-                    <div className="flex items-center -mt-4">
+                    <div className="flex items-center -mt-4 gap-4">
                         <Input
                             type="number"
                             placeholder="Width"

@@ -15,6 +15,7 @@ import { SiIconfinder } from 'react-icons/si'
 import { AiFillPicture, AiFillHome, AiFillInfoCircle } from 'react-icons/ai';
 import { ImInfo, ImProfile } from 'react-icons/im'
 import { toast } from 'react-toastify';
+import { addFollowingData, toggleFollowing } from '@/redux/features/followingSlice';
 
 function Navbar() {
 
@@ -41,11 +42,27 @@ function Navbar() {
         dispatch(addUserData(res.data))
         return res;
       }
+      
       return;
     } catch (error) {
       throw error
     }
   }
+
+  const fetchFollowing = async (uid) => {
+    try {
+      const res = await axios.get(`/api/follow/${uid}`);
+      if (res.status == 200) {
+        dispatch(addFollowingData(res.data))
+        return res;
+      }
+      
+      return;
+    } catch (error) {
+      throw error
+    }
+  }
+  
 
 
   const handleAddClick = () => {
@@ -91,6 +108,7 @@ function Navbar() {
       if (sessionUser) {
         // fetch user details and store in redux store
         fetchUserDetails(sessionUser);
+        fetchFollowing(sessionUser)
       }
     } else {
       if (sessionUser && sessionUser != reduxUser) {

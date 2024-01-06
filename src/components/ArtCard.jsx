@@ -109,7 +109,7 @@ const ArtCard = ({ item, option }) => {
                 </Link>
                 <div className="px-1 pb-5 my-2.5">
                     <div className="head flex justify-between items-center">
-                        <Link href={`/artist/%${artData?.artist?._id}`} className="flex items-center gap-3 w-full flex-1">
+                        <Link href={`/artist/${artData?.artist?.user?._id}`} className="flex items-center gap-3 w-full flex-1">
                             <Image title={artData?.artist?.name} width={30} height={30} alt="artist image" src={artData?.artist?.image} className="rounded-full aspect-square object-cover" />
                             <h6 ref={artistNameRef} className="font-medium  w-full flex-1 h-fulltracking-tight text-gray-700 darkk:text-white capitalize">
                                 {artData?.artist?.name.toLowerCase()}

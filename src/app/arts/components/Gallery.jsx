@@ -5,7 +5,7 @@ import ThreeDotsLoader from "@/components/Loader/ThreeDotsLoader";
 import { useDispatch, useSelector } from "react-redux";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
-const Gallery = ({ url = "/api/products?", reduxName, dispatch: dispatchGallery }) => {
+const Gallery = ({ url = "/api/products?", reduxName, dispatch: dispatchGallery, dependencies }) => {
     // console.log(url, reduxName, (dispatchGallery !== undefined) )
     const dispatch = useDispatch();
     const reduxArts = useSelector((store) => store[reduxName]);
@@ -14,6 +14,7 @@ const Gallery = ({ url = "/api/products?", reduxName, dispatch: dispatchGallery 
     const { data, error, isLoading, isLoadingNewPage, hasMore } = useInfiniteScroll({
         url,
         data: reduxArts,
+        dependencies,
     });
 
 
