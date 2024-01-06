@@ -55,9 +55,9 @@ function Navbar() {
       if (res.status == 200) {
         dispatch(addFollowingData(res.data))
         return res;
+      } else {
+        throw res
       }
-      
-      return;
     } catch (error) {
       throw error
     }
