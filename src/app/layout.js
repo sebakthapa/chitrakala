@@ -16,6 +16,7 @@ export default function RootLayout({ children, ...props }) {
 
   return (
     <html lang="en">
+     <link rel="icon" href="/brand/smLogo.png" type="image/png" sizes="32x32" />
       <body className=''>
         <ReduxProvider>
           <SessionProvider>

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import moment from 'moment';
 import ArtCard from './ArtCard';
-import { BsAppIndicator, BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsAppIndicator } from "react-icons/bs";
 const ArtDetail = ({ artdata }) => {
     console.log(artdata)
 
