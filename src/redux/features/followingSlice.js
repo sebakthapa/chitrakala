@@ -1,6 +1,6 @@
 const { createSlice } = require("@reduxjs/toolkit")
 
-const initialState = [1]
+const initialState = null
 
 const followingSlice = createSlice({
     name: "followingArtists",

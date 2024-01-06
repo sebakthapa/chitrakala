@@ -41,19 +41,19 @@ const ArtistCard = ({ artwork, likes }) => {
 
 
   const handleToggleFollow = async () => {
-    if (!user?._id && !artistId) {
+    if (!user?._id && !artistData._id) {
       toast.error("Unable to follow!")
       return;
     }
 
-    dispatch(toggleFollowing(artistId))
+    dispatch(toggleFollowing(artistData._id))
     try {
       await axios.patch(`/api/follow/${user?._id}`, {artistId, userId: user?.user?._id, artistDetailsId: artistData._id} )
       // throw "error"
       dispatch(addFollowingArts([]))
 
     } catch (error) {
-      dispatch(toggleFollowing(artistId))
+      dispatch(toggleFollowing(artistData._id))
       console.log(error)
       toast.error("Some error occured!")
     }
@@ -88,7 +88,7 @@ const ArtistCard = ({ artwork, likes }) => {
             <div className='followingbuttoncontainer p-2 absolute right-0 m-2'>
               <button onClick={handleToggleFollow} className="FollowButoon px-2 py-1 font-medium rounded hover:bg-gray-100 active:bg-white border-2 text-xs">
                 {
-                  followingArtists?.length > 0 && followingArtists?.includes(artistId) ? "Unfollow" : "Follow"
+                  followingArtists?.length > 0 && followingArtists?.includes(artistData?._id) ? "Unfollow" : "Follow"
                 }
               </button>
             </div>
