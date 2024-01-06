@@ -7,7 +7,6 @@ import Link from "next/link";
 import { BiSolidLeftArrow, BiSolidLeftArrowCircle } from "react-icons/bi";
 const Individual = ({productId}) => {
     // const { artId: productId } = useParams()
-    console.log(productId)
     const router = useRouter();
 
 
@@ -19,7 +18,6 @@ const Individual = ({productId}) => {
 
             if (res.status == 200) {
                 const data = await res.json();
-                console.log(data)
                 setArtData(data);
             }
         } catch (error) {

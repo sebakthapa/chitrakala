@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
-import Products from "@/models/useraccounts/products";
+import Products from "@/models/users/products";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET a specific product by id

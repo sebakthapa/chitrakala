@@ -1,7 +1,7 @@
 
 import dbConnect from "@/lib/dbConnect";
-import Products from "@/models/useraccounts/products";
-import UsersDetails from "@/models/useraccounts/usersDetail";
+import Products from "@/models/users/products";
+import UsersDetails from "@/models/users/usersDetail";
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 

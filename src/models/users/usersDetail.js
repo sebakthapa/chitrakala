@@ -45,14 +45,15 @@ const usersDetailsSchema = new mongoose.Schema({
     default: []
 
 
-},
-  likeProducts : 
+  },
+  likeProducts:
   {
     ref: 'Products',
-    type:[mongoose.Schema.Types.ObjectId],
+    type: [mongoose.Schema.Types.ObjectId],
     default: []
-  }
+  },
   
+
 
 
 },

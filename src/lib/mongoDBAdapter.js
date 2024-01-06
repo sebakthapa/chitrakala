@@ -1,5 +1,5 @@
 
-import UsersDetails from "@/models/useraccounts/usersDetail";
+import UsersDetails from "@/models/users/usersDetail";
 import { ObjectId } from "mongodb";
 export const defaultCollections = {
     Users: "users",

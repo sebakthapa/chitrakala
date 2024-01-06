@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
-import Users from "@/models/useraccounts/users";
-import UsersDetails from "@/models/useraccounts/usersDetail";
+import Users from "@/models/users/users";
+import UsersDetails from "@/models/users/usersDetail";
 import { NextResponse } from "next/server";
 import bcrypt, { hash } from "bcrypt"
 import { getToken } from "next-auth/jwt";
