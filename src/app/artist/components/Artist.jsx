@@ -54,6 +54,7 @@ const Artist = () => {
       setFilteredUsers(filteredData)
     }
     else {
+      
       setFilteredUsers(users)
     }
   }

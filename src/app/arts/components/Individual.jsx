@@ -7,9 +7,14 @@ import { BiSolidLeftArrowCircle } from "react-icons/bi";
 const Individual = ({productId}) => {
     // const { artId: productId } = useParams()
     const router = useRouter();
-
+    const [loading,setLoading] = useState(true)
 
     const [artData, setArtData] = useState("");
+
+  
+
+  
+    
 
     async function fetchData() {
         try {
@@ -18,6 +23,7 @@ const Individual = ({productId}) => {
             if (res.status == 200) {
                 const data = await res.json();
                 setArtData(data);
+                setLoading(false)
             }
         } catch (error) {
             throw error;
@@ -25,7 +31,8 @@ const Individual = ({productId}) => {
     }
     useEffect(() => {
         fetchData();
-        console.log(artData)
+      
+
     }, []);
     return (
         <>
@@ -35,10 +42,10 @@ const Individual = ({productId}) => {
                 </button>
             </div>
 
-            <div className="flex flex-col sm:flex-row  justify-center h-min overflow-hidden">
-                <ArtDetails artdata={artData} />
-            </div>
-
+           
+                <ArtDetails status={loading} artdata={artData}   />
+            
+   
             
 
    
