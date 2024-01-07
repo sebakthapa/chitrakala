@@ -146,11 +146,11 @@ function Navbar() {
             <Image height={5} width={5} src="/logo.svg" alt="logo"  />
           </Link>
         ) : ( // showing full nav with navitems in other pages
-          <nav className="z-20 bg-gray-800 mt-2 relative sm:m-5 shadow-md ">
+          <nav  className="z-20 bg-gray-800 mt-2 relative sm:m-5 shadow-md ">
             <div className="bg-white mx-auto px-0 xxs:px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
-                  <button onClick={() => setIsOpen(!isOpen)} type="button" className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-800 hover:bg-gray-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                  <button onClick={() => setIsOpen((prev)=> !prev)} type="button" className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-800 hover:bg-gray-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
                     <span className="absolute -inset-0.5"></span>
                     <span className="sr-only">Open main menu</span>
                     {!isOpen ? (
@@ -204,7 +204,7 @@ function Navbar() {
                           <BsPlusCircle className='w-5 h-5 xs:w-6 xs:h-6' fill='#1f2937' />
                         </button>
                         <div id='ppMain' className="ppMain relative ml-3 rounded-full" onClick={() => setShowHover(prev => !prev)}>
-                          <div id='ppPhoto' className='ppPhoto'>
+                          <div id='ppPhoto'  onClick={() => { setIsOpen(false) }} className='ppPhoto'>
                             <button type="button" className=" relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                               <span className="absolute -inset-1.5"></span>
                               <span className="sr-only">Open user menu</span>

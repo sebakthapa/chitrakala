@@ -195,7 +195,7 @@ const ArtDetail = ({ artdata, status }) => {
                         <h1 className="subHead font-serif bg-white py-5">
                             More from {artdata?.artist?.name}
                         </h1>
-                        <div className="myScroll gap-5 overflow-scroll w-full flex ">
+                        <div className="myScroll gap-5 overflow-x-scroll overflow-y-auto w-full flex ">
                             {artistArtData?.length > 0 &&
                                 artistArtData?.map((item, index) => (
                                     <ArtCard key={index} item={item} />

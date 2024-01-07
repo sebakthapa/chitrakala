@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { BsCalendar } from "react-icons/bs";
 import { BiSolidMap } from "react-icons/bi";
 import { Dialog, Transition } from '@headlessui/react';
+import LoadingComponent from "@/components/LoadingComponent";
 import Image from "next/image";
 import moment from "moment";
 const Exhibition = () => {
@@ -46,7 +47,7 @@ const Exhibition = () => {
       </h1>
 
       {loading ? (
-        <h1>Loading...</h1>
+        <h1> <LoadingComponent></LoadingComponent> </h1>
       ) : (
         exhibition.length > 0 ? (
           <div className="block sm:flex md:-mx-2">
