@@ -57,9 +57,9 @@ const Exhibition = () => {
                   onClick={() => openModal(index)}
                   className="sm:mx-5 flex flex-col"
                 >
-                  <div className="w-full ">
+                  <div className="w-full  ">
 
-                    <Image className=" object-cover" src={item?.photo} width={300} height={200} />
+                    <Image className=" object-cover rounded w-full h-full" src={item?.photo} width={300} height={200} />
                   </div>
 
                   <div className="flex justify-between w-full font-bold text-sm ">
@@ -79,7 +79,7 @@ const Exhibition = () => {
                 </button>
 
                 <Transition appear show={isOpen[index]} as={Fragment} key={index}>
-                  <Dialog as="div" className="relative z-10" onClose={() => closeModal(index)}>
+                  <Dialog as="div" className="relative z-[1000]" onClose={() => closeModal(index)}>
                     <Transition.Child
                       as={Fragment}
                       enter="ease-out duration-300"
@@ -104,7 +104,7 @@ const Exhibition = () => {
                           leaveTo="opacity-0 scale-95"
                         >
                           <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                            <div className="w-full ">
+                            <div className="w-full  ">
 
                               <Image className=" object-cover w-full" src={item?.photo} width={300} height={200} />
                             </div>
@@ -127,7 +127,7 @@ const Exhibition = () => {
                             </div>
                             <div className="mt-2 flex justify-between">
                               <p className="text-sm text-gray-500">
-                                {moment(item?.openDate).calendar()}-{moment(item?.closeDate).calendar()}
+                                {moment(item?.openDate).calendar()}-{moment().calendar()}
                               </p>
                               <p>
                               <span className={getStatusClassName(item?.openDate, item?.closeDate)}>

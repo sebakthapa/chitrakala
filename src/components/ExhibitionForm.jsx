@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Input from './Input';
 import { FileUploader } from "react-drag-drop-files";
-
+import { FaArrowRotateLeft } from "react-icons/fa6";
 
 
 const fileTypes = ["JPG", "PNG", "GIF"];
@@ -22,6 +22,7 @@ const ExhibitionForm = () => {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [drag, setDrag] = useState(true);
+  const [drop, setDrop] = useState(false);
   // const [title, setTitle] = useState('');
   // const [description, setDescription] = useState('');
   // const [location, setLocation] = useState('');
@@ -38,23 +39,12 @@ const ExhibitionForm = () => {
     console.log(formData)
   }
 
-  const DragDrop =(
-    <p className={`p-5 w-full text-center flex flex-col font-semibold gap-1 border-2 rounded-lg border-dotted ${drag?`opacity-0`:'opacity-100'}`}>
-    <span className={`text-2xl text-[rgba(0,0,0,.3)] `}>Drag & drop image  here </span>
-    <span className="text-base  text-[rgba(0,0,0,.4)]">
-        or &nbsp;
-        <span
-            className="text-blue-600 opacity-90 underline font-bold cursor-pointer hover:no-underline"
-            
-        >
-            Browse images
-        </span>
-        &nbsp;on your device
-    </span>
-    </p>
-    )
+ 
 
-
+  
+    const handleDrop = () =>{
+      setDrop(true)
+    }
 
 
   const handleFileChange = (file) => {
@@ -148,9 +138,45 @@ const ExhibitionForm = () => {
             types={fileTypes}
             // children = {[DragDrop]}
             onDraggingStateChange = {()=>(setDrag(prev  => !prev))}
+            onDrop = {handleDrop}
+            onSelect = {handleDrop}
 
           >
-           {DragDrop}
+    {!drop ?(
+               <p className={`p-5 w-full text-center flex flex-col font-semibold gap-1 border-2 rounded-lg border-dotted ${drag?`opacity-0`:'opacity-100'}`}>
+      
+    <span className={`text-2xl text-[rgba(0,0,0,.3)] `}>Drag & drop image  here </span>
+
+      
+    <span className="text-base  text-[rgba(0,0,0,.4)]">
+        or &nbsp;
+        <span
+            className="text-blue-600 opacity-90 underline font-bold cursor-pointer hover:no-underline"
+            
+        >
+            Browse images
+        </span>
+        &nbsp;on your device
+    </span>
+      
+        </p>
+      ):(
+
+      <p className={`p-5 w-full text-center flex flex-col font-semibold gap-1 border-2 rounded-lg border-dotted `}>
+        
+      <span className={`text-2xl text-[rgba(0,0,0,.3)] `}>
+      {imageUrl && (<>
+          <div className='flex justify-between items-center m-2'>
+            <Image className=' group-hover:text-gray-700 ' src={imageUrl} alt="Selected" width="100" height="100" />
+            <button onClick={()=>{setImage(null);setImageUrl(null);setDrop(false)}}  className='group text-gray-500  h-fit '><FaArrowRotateLeft/>  </button>
+          </div>
+        </>
+
+        )}
+         </span>
+      
+      </p>
+      )}
           </FileUploader>
           {/* <input
             className='p-5 border-gray-300 bg-transparent border-2 hover:border-gray-400 my-2 rounded-md'
@@ -160,14 +186,7 @@ const ExhibitionForm = () => {
             id='photo'
             onChange={handleFileChange}
              /> */}
-          {imageUrl && (<>
-            <div className='flex justify-between items-center m-2'>
-              <Image className=' group-hover:text-gray-700 ' src={imageUrl} alt="Selected" width="100" height="100" />
-              <button onClick={()=>{setImage(null);setImageUrl(null)}}  className='group text-red-500  h-fit '>X</button>
-            </div>
-          </>
-
-          )}
+     
 
 
 
