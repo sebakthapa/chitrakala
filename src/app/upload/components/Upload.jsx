@@ -100,7 +100,7 @@ const Upload = () => {
 
                 const res = await axios.post("/api/products", data);
                 if (res.status == 200) {
-                    router.push('/gallery')
+                    router.push('/arts')
                     toast.success("Upload success!")
                 }
                 else {

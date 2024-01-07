@@ -42,13 +42,13 @@ const Edit = ({}) => {
             const res = await axios.get(`/api/products/${pid}`);
             if (res.status === 200) {
               const productData = res.data;
-              if(productData?.artist?.user && session?.user?.id)
+              if(productData?.artist?.user?._id && session?.user?.id)
               {
-                if(productData?.artist?.user !== session?.user?.id)
+                if(productData?.artist?.user?._id !== session?.user?.id)
                 {
 
                    toast.error("Invalid privilege ")
-                   router.push(`/gallery/${pid}`)
+                   router.push(`/arts/${pid}`)
                 }
               }
   
