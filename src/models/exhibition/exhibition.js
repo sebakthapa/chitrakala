@@ -9,7 +9,7 @@ const exhibitionSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    maxlength: [300, 'Description cannot exceed 500 characters']
+    maxlength: [1000, 'Description cannot exceed 1000 characters']
   },
   location: {
     type: String,
