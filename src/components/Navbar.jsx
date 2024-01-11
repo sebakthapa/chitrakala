@@ -20,7 +20,7 @@ import { addFollowingData, toggleFollowing } from '@/redux/features/followingSli
 function Navbar() {
 
   const router = useRouter();
-  const { data: session, status:sessionStatus } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
 
   const pathname = usePathname();
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ function Navbar() {
         dispatch(addUserData(res.data))
         return res;
       }
-      
+
       return;
     } catch (error) {
       throw error
@@ -62,7 +62,7 @@ function Navbar() {
       throw error
     }
   }
-  
+
 
 
   const handleAddClick = () => {
@@ -175,7 +175,7 @@ function Navbar() {
                   <div className="hidden md:ml-6 md:block">
                     <div className="flex space-x-3 lg:space-x-5 ">
                       <Link href="/" className={`${pathname === '/' ? 'active' : ''} hover:bg-gray-100 text-gray-800  rounded-full px-2 lg:px-3 py-2 text-sm font-semibold`} aria-current="page">Home</Link>
-                      <Link href={`/arts/${user?.following?.length > 0 ? "popular" : "popular"}`} className={`${pathname.includes( '/arts') ? 'active' : ''} hover:bg-gray-100 text-gray-800  rounded-full px-2 lg:px-3 py-2 text-sm font-semibold`} aria-current="page">Gallery</Link>
+                      <Link href={`/arts/${user?.following?.length > 0 ? "popular" : "popular"}`} className={`${pathname.includes('/arts') ? 'active' : ''} hover:bg-gray-100 text-gray-800  rounded-full px-2 lg:px-3 py-2 text-sm font-semibold`} aria-current="page">Gallery</Link>
                       <Link href="/artist" className={`${pathname === '/artist' ? 'active' : ''} hover:bg-gray-100 text-gray-800  rounded-full px-2 lg:px-3 py-2 text-sm font-semibold`} aria-current="page">Artist</Link>
                       <Link href="/exhibition" className={`${pathname === '/exhibition' ? 'active' : ''} hover:bg-gray-100 text-gray-800  rounded-full px-2 lg:px-3 py-2 text-sm font-semibold`} aria-current="page">Exhibition</Link>
                       <Link href="/about" className={`${pathname === '/about' ? 'active' : ''} hover:bg-gray-100 text-gray-800  rounded-full px-2 lg:px-3 py-2 text-sm font-semibold`} aria-current="page">About</Link>
@@ -206,7 +206,7 @@ function Navbar() {
                               <span className="absolute -inset-1.5"></span>
                               <span className="sr-only">Open user menu</span>
 
-                              <Image className="h-7 w-7 xs:h-10 xs:w-10 rounded-full object-cover" height={100} width={100} src={user?.image || "/default-profile.png"} alt="profile image" />
+                              <Image className="h-7  w-7 xs:h-10 xs:w-10 rounded-full object-cover" height={100} width={100} src={user?.image || "/default-profile.png"} alt="profile image" />
 
 
                             </button>
@@ -269,7 +269,7 @@ function Navbar() {
 
                 <Link onClick={() => { setIsOpen(false) }} href="/" className={` border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center flex gap-6  items-center hover:bg-gray-100 text-gray-800   px-7 py-2 text-bold font-medium ${pathname === '/' ? 'active' : ''} } `} ria-current="page"> <AiFillHome className='w-5 h-5' fill='#1f2937' /> Home</Link>
 
-                  <Link onClick={() => { setIsOpen(false) }} href={`/arts/${user?.following?.length > 0 ? "popular" : "popular"}`} className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-800 hover:bg-gray-100 flex gap-6  items-center  px-7 py-2 text-bold font-medium ${pathname === '/arts' ? 'active' : ''} `}> <AiFillPicture className='w-5 h-5' fill='#1f2937' /> Gallery</Link>
+                <Link onClick={() => { setIsOpen(false) }} href={`/arts/${user?.following?.length > 0 ? "following" : "popular"}`} className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-800 hover:bg-gray-100 flex gap-6  items-center  px-7 py-2 text-bold font-medium ${pathname === '/arts' ? 'active' : ''} `}> <AiFillPicture className='w-5 h-5' fill='#1f2937' /> Gallery</Link>
 
                 <Link onClick={() => { setIsOpen(false) }} href="/artist" className={`border-b-[px] font-sans border-[rgba(255,255,255,.1)] pb- w-full text-center text-gray-800 hover:bg-gray-100 flex gap-6  items-center  px-7 py-2 text-bold font-medium ${pathname === '/artist' ? 'active' : ''} `}> <ImProfile className='w-5 h-5' fill='#1f2937' /> Artist</Link>
 
