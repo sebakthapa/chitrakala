@@ -18,11 +18,11 @@ const ArtistCard = ({ artwork, likes }) => {
   const pathname = usePathname()
   const artistId = pathname.split('/').at(-1);
   const dispatch = useDispatch();
-  
+
 
   const user = useSelector((store) => store.user)
   const followingArtists = useSelector((store) => store.followingArtists)
-  
+
   // const
 
   async function fetchUsers() {
@@ -48,7 +48,7 @@ const ArtistCard = ({ artwork, likes }) => {
 
     dispatch(toggleFollowing(artistData._id))
     try {
-      await axios.patch(`/api/follow/${user?._id}`, {artistId, userId: user?.user?._id, artistDetailsId: artistData._id} )
+      await axios.patch(`/api/follow/${user?._id}`, { artistId, userId: user?.user?._id, artistDetailsId: artistData._id })
       // throw "error"
       dispatch(addFollowingArts([]))
 
@@ -81,17 +81,23 @@ const ArtistCard = ({ artwork, likes }) => {
                     </span>
                   </div>
                 </>
-
               }
             </Link>
           ) : (
-            <div className='followingbuttoncontainer p-2 absolute right-0 m-2'>
-              <button onClick={handleToggleFollow} className="FollowButoon px-2 py-1 font-medium rounded hover:bg-gray-100 active:bg-white border-2 text-xs">
-                {
-                  followingArtists?.length > 0 && followingArtists?.includes(artistData?._id) ? "Unfollow" : "Follow"
-                }
-              </button>
-            </div>
+            <>
+              {
+                followingArtists && (
+                  <div className='followingbuttoncontainer p-2 absolute right-0 m-2'>
+                    <button onClick={handleToggleFollow} className="FollowButoon px-2 py-1 font-medium rounded hover:bg-gray-100 active:bg-white border-2 text-xs">
+                      {
+                        followingArtists?.length > 0 && followingArtists?.includes(artistData?._id) ? "Unfollow" : "Follow"
+                      }
+                    </button>
+                  </div>
+                )
+              }
+
+            </>
           )
         }
 
@@ -104,7 +110,7 @@ const ArtistCard = ({ artwork, likes }) => {
             height={150}
           /> : ""
         }
-        <div className="text-center mt-2 text-3xl font-bold text-gray-950">{artistData?.name || <Skeleton />}</div>
+        <div className="text-center mt-2 text-3xl font-bold  text-gray-950">{artistData?.name || <Skeleton />}</div>
         <div className="text-center mt text-sm font-semibold text-gray-700">{artistData?.user?.username ? `@${artistData.user.username}` : <Skeleton />}</div>
         <div className="text-center mt-4 font-medium text-sm text-gray-500">{artistData?.user?.email || <Skeleton />}</div>
         <div className="text-center font-light mt- text-sm text-gray-500">{artistData?.address || <Skeleton />}</div>
