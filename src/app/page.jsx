@@ -31,10 +31,6 @@ const Page = () => {
         </div>
       </section>
 
-
-
-    
-
       <section className="sm:mx-5  lg:flex justify-between items-center bg-white overflow-hidden ">
       <h1 className="mainHead h-full w-full  font-serif p-10  mb-5 bg-white ">Featured Products
         {/* <span className="font-semibold font-sans text-5xl animate_blink">_</span> */}
@@ -52,6 +48,8 @@ const Page = () => {
         </div>
       
       </section>
+
+   
     </>
   );
 };

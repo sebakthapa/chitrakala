@@ -63,8 +63,8 @@ const ArtistCard = ({ artwork, likes }) => {
 
   return (
 
-    <div className="bg-white  m-5 font-sans h-[70vh] overflow-hidden w-full flex flex-row justify-center items-center">
-      <div className="card  border-2 border-gray-100 rounded-sm mt-14 relative w-[26rem] mx-auto bg-white shadow-lg ">
+    <div className="bg-white  font-sans h-[70vh]   flex justify-center items-center sm:m-5">
+      <div className="  border-2 border-gray-100 rounded-sm mt-14 relative md:w-1/3 mx-auto bg-white shadow-lg ">
 
         {
           artistId == user?.user._id ? (

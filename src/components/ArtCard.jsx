@@ -108,7 +108,7 @@ const ArtCard = ({ item }) => {
     
     return (
         <>
-            <div className="w-full min-w-[300px] max-w-[400px] bg-white rounded-lg  darkk:bg-gray-800 darkk:border-gray-700">
+            <div className="w-full min-w-[300px] sm;max-w-[400px] bg-white rounded-lg  darkk:bg-gray-800 darkk:border-gray-700">
                 <Link href={`/arts/${artData?._id}`} className="block w-full aspect-[5/4] relative group">
                     <Image height={400} width={400} className=" rounded-lg object-cover w-full h-full" src={artData?.photo} alt="art image" />
                     <div className="texts  flex items-end pb-4 px-3 justify-between absolute w-full bottom-0 left-0 h-[100px] from-transparent to-[rgba(0,0,0,.6)] from-0% bg-gradient-to-b text-gray-100 font-medium opacity-0 group-hover:opacity-100 rounded-lg transition duration-300">
