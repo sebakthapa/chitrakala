@@ -107,7 +107,7 @@ const ArtCard = ({ item }) => {
 
     return (
         <>
-            <div className="w-full min-w-[300px] max-w-[400px] bg-white rounded-lg  darkk:bg-gray-800 darkk:border-gray-700">
+            <div className="w-full min-w-[300px] sm;max-w-[400px] bg-white rounded-lg  darkk:bg-gray-800 darkk:border-gray-700">
                 <Link href={`/arts/${artData?._id}`} className="block w-full aspect-[5/4] relative group">
                     <Image height={400} width={400} className=" rounded-lg object-cover w-full h-full" src={artData?.photo} alt="art image" />
                     <div className="texts  flex items-end pb-4 px-3 justify-between absolute w-full bottom-0 left-0 h-[100px] from-transparent to-[rgba(0,0,0,.6)] from-0% bg-gradient-to-b text-gray-100 font-medium opacity-0 group-hover:opacity-100 rounded-lg transition duration-300">
@@ -170,21 +170,25 @@ const ArtCard = ({ item }) => {
                         </div>
                     </div>
                     <div className={`absolute right-0 z-10 ${!dotOpen ? 'hidden' : 'block'}`}>
-                        <div className="ppHover mt-1 w-48 origin-top-right rounded-md flex flex-col gap-1 bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
-                            {isOwner ? (
-                                <>
-                                    <Link href={`/arts/edit?pid=${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Edit</Link>
-                                    {loading ? (
-                                        <span className="profileMenuItem bg-red-700 w-full cursor-pointer block px-4 py-2 text-sm text-gray-100">Deleting...</span>
-                                    ) : (
-                                        <span onClick={() => { handleDelete(artData?._id) }} href="/" className="profileMenuItem hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-red-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Delete</span>
-                                    )}
-                                </>
+                <div className="ppHover mt-4 w-48 origin-top-right rounded-md flex flex-col gap-1 bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
+                    {isOwner ? (
+                        <>
+                            <Link href={`/arts/edit?pid=${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Edit</Link>
+                            {loading ? (
+                                <span className="profileMenuItem bg-red-700 w-full cursor-pointer block px-4 py-2 text-sm text-gray-100">Deleting...</span>
                             ) : (
-                                <Link href={`/arts/${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">View</Link>
+                                <span onClick={() => { handleDelete(artData?._id) }} href="/" className="profileMenuItem hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-red-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Delete</span>
                             )}
-                        </div>
-                    </div>
+                        </>
+                    ) : (
+                        <>
+                        <Link href={`/arts/${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">View</Link>
+                        <Link href={`#`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">Add to Wishlist</Link>
+                        <Link href={`#`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">Order</Link>
+                        </>
+                    )}
+                </div>
+            </div>
                 </div>
             </div >
 

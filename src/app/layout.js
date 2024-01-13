@@ -9,6 +9,7 @@ import Notification from '@/components/Notification';
 
 
 export const metadata = {
+  manifest: "/manifest.json",
   title: 'Chitrakala - Art Marketplace & Gallery',
   description: 'Art gallery and marketplace.',
 }

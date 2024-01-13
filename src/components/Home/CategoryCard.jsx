@@ -40,8 +40,8 @@ const CategoryCard = () => {
                     <Image className='w-full h-full object-cover  opacity-100 transition duration-500' src={image} alt={`${type} category image`} height={300} width={300} />
 
                     <motion.div
-                      style={{ background: `${categoriesColor[type]}a0` }}
-                      className={` opacity-100 p-10 w-full h-full absolute  top-[0] left-[0] transition-all ease-out duration-300 z-20  flex items-center  `}>
+                      style={{ background: `${categoriesColor[type]}7a` }}
+                      className={` opacity-100 p-10 w-full h-full backdrop-blur-sm absolute  top-[0] left-[0] transition-all ease-out duration-300 z-20  flex items-center  `}>
                       <div className="px-10 max-w-xl">
                       <h2 className="capitalize text-2xl font-sans   transition duration-1000  text-gray-700 font-extrabold">{type}</h2>
                         <p className="mt-2 text-lg italic  text-gray-700   transition duration-1000">{`"${description}"`}</p>

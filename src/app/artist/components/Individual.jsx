@@ -70,7 +70,7 @@ const Individual = () => {
             <ArtistCard artwork={userData?.length} likes={likes} />
 
 
-            <div className="gallery bg-white m-5 mt-0 min-h-[100vh] p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8  ">
+            <div className="gallery bg-white sm:m-5 mt-0  mx-auto  p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8  ">
                 {
                     userData?.length > 0 && userData?.map((item, index) => {
 
