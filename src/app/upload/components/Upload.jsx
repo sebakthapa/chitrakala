@@ -100,7 +100,7 @@ const Upload = () => {
 
                 const res = await axios.post("/api/products", data);
                 if (res.status == 200) {
-                    router.push('/gallery')
+                    router.push('/arts')
                     toast.success("Upload success!")
                 }
                 else {
@@ -215,7 +215,7 @@ const Upload = () => {
 
 
 
-                <div className="flex justify-between items-center gap-5">
+                <div className="flex flex-wrap justify-between items-center gap-5">
 
                     <div className=" input_field_container flex-1 flex flex-row justify-between">
                         <div className="flex flex-col gap-3">
@@ -259,7 +259,7 @@ const Upload = () => {
                 </div>
                 <div className="input_field_container" >
                     <label className='-mb-3 ' htmlFor="width">{`Size(cms)`}</label>
-                    <div className="flex items-center -mt-4 gap-4">
+                    <div className="flex flex-wrap items-center -mt-4 gap-4">
                         <Input
                             type="number"
                             placeholder="Width"

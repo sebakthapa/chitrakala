@@ -1,16 +1,20 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import ArtDetails from "@/components/ArtDetail";
-import { BsBack, BsBackspaceFill } from "react-icons/bs";
-import Link from "next/link";
-import { BiSolidLeftArrow, BiSolidLeftArrowCircle } from "react-icons/bi";
+
+import { BiSolidLeftArrowCircle } from "react-icons/bi";
 const Individual = ({productId}) => {
     // const { artId: productId } = useParams()
     const router = useRouter();
-
+    const [loading,setLoading] = useState(true)
 
     const [artData, setArtData] = useState("");
+
+  
+
+  
+    
 
     async function fetchData() {
         try {
@@ -19,6 +23,7 @@ const Individual = ({productId}) => {
             if (res.status == 200) {
                 const data = await res.json();
                 setArtData(data);
+                setLoading(false)
             }
         } catch (error) {
             throw error;
@@ -26,6 +31,8 @@ const Individual = ({productId}) => {
     }
     useEffect(() => {
         fetchData();
+      
+
     }, []);
     return (
         <>
@@ -35,10 +42,10 @@ const Individual = ({productId}) => {
                 </button>
             </div>
 
-            <div className="flex flex-col sm:flex-row  justify-center h-min overflow-hidden">
-                <ArtDetails artdata={artData} />
-            </div>
-
+           
+                <ArtDetails status={loading} artdata={artData}   />
+            
+   
             
 
    

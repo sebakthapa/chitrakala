@@ -9,12 +9,15 @@
 }
 
 html {
-    @apply 2xl:text-[105%]
+    @apply 2xl:text-[105%];
+    scroll-behavior: smooth;
+
 }
 
 
 * {
     font-family: 'Inter', sans-serif;
+
 }
 
 body {
@@ -54,7 +57,7 @@ li {
 
 /* SHINY EFFECT for landing text (animation delay managed for that purpost)*/
 
-.shiny_effect{
+.shiny_effect {
     position: relative;
     overflow: hidden;
 }
@@ -65,34 +68,49 @@ li {
     display: block;
     pointer-events: none;
     top: -50%;
-    left:0;
+    left: 0;
     /* transform: translateX(100%); */
-    width:50%;
+    width: 50%;
     height: 200%;
     position: absolute;
     z-index: 1;
-    animation: 2s ease-in-out slide ;
+    animation: 2s ease-in-out slide;
     animation-delay: 2s;
     transform: rotateZ(25deg) translateX(-100%);
     opacity: .6;
-    background: rgb(255,255,255);
-background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5691526610644257) 25%, rgba(255,255,255,1) 49%, rgba(255,255,255,0.4431022408963585) 75%, rgba(255,255,255,0) 100%);
-   
+    background: rgb(255, 255, 255);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5691526610644257) 25%, rgba(255, 255, 255, 1) 49%, rgba(255, 255, 255, 0.4431022408963585) 75%, rgba(255, 255, 255, 0) 100%);
+
 }
+
 @keyframes slide {
-	0% {transform:translateX(-100%) rotateZ(25deg);}
-	100% {transform:translateX(100%) rotateZ(25deg);}
+    0% {
+        transform: translateX(-100%) rotateZ(25deg);
+    }
+
+    100% {
+        transform: translateX(100%) rotateZ(25deg);
+    }
 }
 
 
 /* animate_blink */
-.animate_blink{
+.animate_blink {
     animation: 1s linear blink infinite
 }
 
 @keyframes blink {
-    0%,100%, 49%{opacity: 0}
-    50%, 99%{opacity: 1}
+
+    0%,
+    100%,
+    49% {
+        opacity: 0
+    }
+
+    50%,
+    99% {
+        opacity: 1
+    }
 }
 
 
@@ -127,7 +145,7 @@ background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.56
 
 
 .active {
-    @apply bg-gray-100  
+    @apply bg-gray-100
 }
 
 
@@ -157,23 +175,25 @@ background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.56
 }
 
 .input_field_container .input_field input:focus,
-.input_field_container .input_field textarea:focus{
+.input_field_container .input_field textarea:focus {
     @apply border-gray-500 outline-none text-gray-800;
 }
-.input_field_container .input_field input:focus ~ label,
-.input_field_container .input_field textarea:focus ~ label{
+
+.input_field_container .input_field input:focus~label,
+.input_field_container .input_field textarea:focus~label {
     @apply opacity-100;
 }
+
 form .form_title {
     @apply capitalize font-extrabold text-2xl opacity-95
 }
 
 form button,
 form input[type="button"] {
-    @apply py-3 px-5 rounded font-semibold transition-colors duration-500  
+    @apply py-3 px-5 rounded font-semibold transition-colors duration-500
 }
 
-.input_row{
+.input_row {
     @apply flex;
 }
 
@@ -198,47 +218,65 @@ input[type=number] {
 
 /* width */
 .myScroll::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
- 
-  }  
-  /* Track */
-  .myScroll::-webkit-scrollbar-track {
-    @apply bg-transparent
-  }
-   
-  /* Handle */
-  .myScroll::-webkit-scrollbar-thumb {
-    @apply bg-gray-800 
-  }
+    width: 2px;
+    height: 2px;
 
-  /* global scrollbar  */
+}
+
+/* Track */
+.myScroll::-webkit-scrollbar-track {
+    @apply bg-transparent
+}
+
+/* Handle */
+.myScroll::-webkit-scrollbar-thumb {
+    @apply bg-gray-800
+}
+
+/* global scrollbar  */
 
 /* width */
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 1px;
     height: 5px;
- 
-  }  
-  /* Track */
-  ::-webkit-scrollbar-track {
+
+}
+
+/* Track */
+::-webkit-scrollbar-track {
     @apply bg-transparent
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    @apply bg-gray-800 
-  }
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    @apply bg-gray-800
+}
+
+.hide_scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+
+}
+
+.hide_scrollbar::-webkit-scrollbar {
+    width: 0px;
+}
+
+.hide_scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.hide_scrollbar::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
 
 
+/* heading  */
 
-  /* heading  */
-
-  .mainHead
-  {
+.mainHead {
     @apply text-4xl
-  }
-  .subHead
-  {
+}
+
+.subHead {
     @apply text-3xl
-  }
+}

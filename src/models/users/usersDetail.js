@@ -13,7 +13,7 @@ const usersDetailsSchema = new mongoose.Schema({
   address: {
     type: String,
     default: "",
-  },
+  },  
 
   image: {
     type: String,
@@ -52,7 +52,12 @@ const usersDetailsSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     default: []
   },
-  
+  wishLists:
+  {
+    ref: 'Products',
+    type: [mongoose.Schema.Types.ObjectId],
+    default: []
+  }
 
 
 

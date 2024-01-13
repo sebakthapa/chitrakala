@@ -58,11 +58,12 @@ export const PATCH = async (req, res) => {
 }
 
 export const GET = async (req, response) => {
-    const userDetailsId = req.url.split("/").at(-1);
+    const userId = req.url.split("/").at(-1); //this is user ID
 
-    if (!userDetailsId) return NextResponse.json({ error: true, errorMessage: "User Id is required" }, { status: 400 })
+    if (!userId) return NextResponse.json({ error: true, errorMessage: "User Id is required" }, { status: 400 })
+    const userDetails = await UsersDetails.findOne({ user: userId })
    
-    const res = await Follows.findOne({ userDetails: userDetailsId });
+    const res = await Follows.findOne({ userDetails: userDetails?._id });
 
 
     return NextResponse.json(res?.following || [])

@@ -7,7 +7,7 @@ import { BsArrowRight } from 'react-icons/bs';
 function Landing() {
     return (
         <>
-            <div className='landing m-5 flex shrink-0 justify-between items-center overflow-hidden  bg-[#fff] min-h-[50vh] h-[90vh]'>
+            <div className='landing sm:m-5 flex shrink-0 justify-between items-center overflow-hidden  bg-[#fff] min-h-[50vh] h-[90vh]'>
 
                 <div className="flex-[100%] shiny_effect md:-mr-28  relative  max-w-[650px] flex flex-col justify-center md:pl-5 lg:pl-10">
                     <motion.span
@@ -47,7 +47,7 @@ function Landing() {
                         <Link href="/about">
                             <button className='border text-gray-800 border-gray-800 hover:bg-gray-800 hover:text-white py-2 px-6 rounded-full transition duration-300'>About</button>
                         </Link>
-                        <Link href="/gallery">
+                        <Link href="/arts/popular">
                             <button className='group border  border-gray-800 bg-gray-800 text-gray-100 hover:text-white py-2 px-6 pr-5 rounded-full flex items-center gap-2'>Explore <BsArrowRight className='w-0 transition-all duration-500 ease-in-out group-hover:w-4 h-4' fill='white' /></button>
                         </Link>
                     </motion.div>
