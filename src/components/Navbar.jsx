@@ -10,10 +10,11 @@ import Image from 'next/image';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { showNavigationMenu } from '@/lib/utils';
-import { BsPlusCircle } from 'react-icons/bs';
+import { BsPlusCircle ,BsBookmarks,BsBookmarksFill } from 'react-icons/bs';
 import { SiIconfinder } from 'react-icons/si'
 import { AiFillPicture, AiFillHome, AiFillInfoCircle } from 'react-icons/ai';
 import { ImInfo, ImProfile } from 'react-icons/im'
+import { FaBell, FaRegBell } from "react-icons/fa6";
 import { toast } from 'react-toastify';
 import { addFollowingData, toggleFollowing } from '@/redux/features/followingSlice';
 
@@ -202,6 +203,20 @@ function Navbar() {
                           className="relative  p-2 rounded-full border-none  text-gray-400 hover:text-white "
                         >
                           <BsPlusCircle className='w-5 h-5 xs:w-6 xs:h-6' fill='#1f2937' />
+                        </button>
+                        <button
+                          type="button"
+                          title='Notifications'
+                          className="relative  p-2 rounded-full border-none  text-gray-400 hover:text-white "
+                        >
+                          <BsBookmarks className='w-5 h-5 xs:w-6 xs:h-6' fill='#1f2937' />
+                        </button>
+                        <button
+                          type="button"
+                          title='Wishlists'
+                          className="relative  p-2 rounded-full border-none  text-gray-400 hover:text-white "
+                        >
+                          <FaRegBell className='w-5 h-5 xs:w-6 xs:h-6' fill='#1f2937' />
                         </button>
                         <div id='ppMain' className="ppMain relative ml-3 rounded-full" onClick={() => setShowHover(prev => !prev)}>
                           <div id='ppPhoto'  onClick={() => { setIsOpen(false) }} className='ppPhoto'>
