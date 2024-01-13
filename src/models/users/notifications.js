@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 
 const notificationSchema = new mongoose.Schema({
+  userDetails: {
+    type: mongoose.Schema.ObjectId,
+    ref: "UsersDetails",
+    unique: true,
+    required: [true, "User details reference Id is required"]
+},
   content: {
     type: String,
     maxlength: [350, "Notification should not exceed 350 characters"],
@@ -13,6 +19,8 @@ const notificationSchema = new mongoose.Schema({
   },
  
 },{ timestamps: true });
+
+mongoose.models = {}
 
 const Notification = mongoose.model('Notification', notificationSchema);
 

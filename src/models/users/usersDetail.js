@@ -13,7 +13,7 @@ const usersDetailsSchema = new mongoose.Schema({
   address: {
     type: String,
     default: "",
-  },
+  },  
 
   image: {
     type: String,
