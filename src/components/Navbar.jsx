@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
+import React, {useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserData, clearUserData } from '@/redux/features/userSlice';
@@ -11,14 +11,42 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { showNavigationMenu } from '@/lib/utils';
 import { BsPlusCircle ,BsBookmarks,BsBookmarksFill } from 'react-icons/bs';
+import { FaHouse } from "react-icons/fa6";
 import { SiIconfinder } from 'react-icons/si'
-import { AiFillPicture, AiFillHome, AiFillInfoCircle } from 'react-icons/ai';
+import { AiFillPicture, AiFillHome, AiFillInfoCircle, AiFillAccountBook } from 'react-icons/ai';
+import { AiOutlineLogin } from "react-icons/ai";
 import { ImInfo, ImProfile } from 'react-icons/im'
 import { FaBell, FaRegBell } from "react-icons/fa6";
 import { toast } from 'react-toastify';
 import { addFollowingData, toggleFollowing } from '@/redux/features/followingSlice';
 
 function Navbar() {
+
+
+  const [visible, setVisible] = useState(false);  
+  const divRef = useRef();
+  
+ 
+
+    let prevScrollPos ;
+    useEffect(() => {
+       prevScrollPos = window.pageYOffset;
+      const handleScroll = () => {
+        const currentScrollPos = window.pageYOffset;
+        if (prevScrollPos > currentScrollPos) {
+          setVisible(true);
+        } else {
+          setVisible(false);
+        }
+        prevScrollPos = currentScrollPos;
+      }
+      
+      window.addEventListener('scroll', handleScroll);
+      
+      return () => window.removeEventListener('scroll', handleScroll);
+  
+    }, [prevScrollPos]);
+  
 
   const router = useRouter();
   const { data: session, status: sessionStatus } = useSession();
@@ -140,16 +168,100 @@ function Navbar() {
 
   return (
     <>
+    
+
+<div ref={divRef}  className={`md:hidden transition-all  fixed z-[10] w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 ${!visible ? ' translate-y-full ' : 'translate-y-0 '}`}>
+    <div className="grid h-full max-w-lg grid-cols-5 mx-auto">
+  
+        <Link href={"/arts"} data-tooltip-target="tooltip-gallery" type="button" className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 group">
+        <AiFillPicture size={20} />
+            <span className="sr-only">Arts</span>
+        </Link>
+        <Link href={"/artist"} data-tooltip-target="tooltip-artist" type="button" className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 group">
+        <ImProfile size={20} />
+            <span className="sr-only">Artist</span>
+        </Link>
+        <Link href={"/"} data-tooltip-target="tooltip-home" type="button" className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 group">
+        <AiFillHome size={30} />
+            <span className="sr-only">Home</span>
+        </Link>
+        <Link href={"/exhibition"} data-tooltip-target="tooltip-exhibition" type="button" className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 group">
+        <SiIconfinder size={20} />
+            <span className="sr-only">Exhibition</span>
+        </Link>
+    
+    
+        <button data-tooltip-target="tooltip-profile" type="button" className="inline-flex flex-col items-center justify-center px-5  hover:bg-gray-50  group">
+        {
+                    session?.user?.id ? (
+                      <>
+
+                        <div id='ppMain' className="ppMain relative ml-3 rounded-full" onClick={() => setShowHover(prev => !prev)}>
+                          <div id='ppPhoto'  onClick={() => { setIsOpen(false) }} className='ppPhoto w-full h-full'>
+                            <button type="button" className=" relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                              <span className="absolute -inset-1.5"></span>
+                              <span className="sr-only">Open user menu</span>
+
+                              <Image className= "  w-auto xs:h-10 xs:w-10 rounded-full object-cover" height={100} width={100} src={user?.image || "/default-profile.png"} alt="profile image" />
+
+
+                            </button>
+                          </div>
+                          {showHover &&
+                            <div className="absolute bottom-[120%] right-0 z-10 bg-red-00">
+                              <div id='ppHover' className="ppHover    mt-4 w-48  rounded-md flex  flex-col gap-1  bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
+                                <span className="  font-bold w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">{user?.name}</span>
+                                <Link href={`/artist/${user?.user._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">My Profile</Link>
+                                <Link href="/profile-setup?step=change-password" className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Change Password</Link>
+                                <span href="/" onClick={handleSignout} className="profileMenuItem hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Sign out</span>
+                              </div>
+                            </div>
+                          }
+                        </div>
+
+
+                      </>
+                    ) : (
+                      <>
+                        {
+                          showNav || (
+                            <div className="handlers authButtons text-[#556f5f] pt-0  flex gap-2 w-fit lg:gap-5 text-sm ">
+                              <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                                className='  rounded-full border-[1px] border-[#ffffff44]'>
+                                <Link className='inline-block font-bold text-gray-500 py-[0.35rem] px-3 lg:py-[0.4rem] lg:px-5 ' href={`/auth/login?returnUrl=${pathname}`}>
+                                <AiOutlineLogin size={25} />
+                                </Link>
+                              </motion.button>
+
+                              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 200, damping: 10 }} className='hidden md:block border-2 border-gray-900 rounded-full'>
+                                <Link className='inline-block text-gray-800 py-[0.35rem] px-3 lg:py-[0.4rem] lg:px-5 ' href={`/auth/signup?returnUrl=${pathname}`}>Sign Up</Link>
+                              </motion.button>
+
+                            </div>
+                          )
+                        }
+                      </>
+                    )}
+        </button>
+   
+    </div>
+</div>
+
       {
         showNav ? ( // showing only logo in pages like auth/login and auth/signup
           <Link className='mt-7 ml-4 xxs:3 xs:ml-7 block' href={"/"}>
-            <span className='saman text-4xl  text-[#222] font-semibold'>CHITRAKALA</span>
-            <Image height={5} width={5} src="/logo.svg" alt="logo"  />
+            <Image height={25} width={25} src="/logo.svg" alt="logo"  />
+            <span className='saman text-4xl  text-[#222] font-semibold'>HITRAKALA</span>
           </Link>
         ) : ( // showing full nav with navitems in other pages
           <nav  className="z-20 bg-gray-800 mt-2 relative sm:m-5 shadow-md ">
+            
             <div className="bg-white mx-auto px-0 xxs:px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
+                  {/* toggle button  */}
                 <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
                   <button onClick={() => setIsOpen((prev)=> !prev)} type="button" className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-800 hover:bg-gray-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
                     <span className="absolute -inset-0.5"></span>
@@ -168,11 +280,13 @@ function Navbar() {
 
                   </button >
                 </div >
-                <div className="flex flex-1 items-center justify-start ml-16 xxs:ml-20 xs:ml-0 xs:justify-center  md:items-stretch md:justify-start">
+
+                {/* logo and quick links  */}
+                <div onClick={() => { setIsOpen(false) }} className="flex flex-1 items-center justify-start ml-16 xxs:ml-20 xs:ml-5 sm:ml-10   md:ml-0 ">
                   <div className="flex flex-shrink-0 items-center mr-10">
-                    <Link href={"/"} className='-ml-5 xs:ml-5 lg:ml-8 flex items-center '>
+                    <Link href={"/"} className='-ml-5 xs:ml-5 lg:ml-8 flex items-center  '>
                       <Image height={25} width={25} src="/logo.svg" alt="logo"  />
-                      <span className='saman xs:l-10  xxs:mr-0 text-2xl xs:text-3xl text-[#222] font-semibold'>HITRAKALA</span>
+                      <span className='  saman xs:l-10  xxs:mr-0 text-2xl xs:text-3xl text-[#222] font-semibold'>HITRAKALA</span>
 
                     </Link>
                   </div>
@@ -191,8 +305,8 @@ function Navbar() {
                   </div>
                 </div>
 
-
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0 gap-0 xxs:gap-1 xs:gap-5">
+                {/* accounts , cart , wishlist and upload  */}
+                <div onClick={() => { setIsOpen(false) }} className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0 gap-0 xxs:gap-1 xs:gap-5">
                   {
                     session?.user?.id ? (
                       <>
@@ -218,7 +332,7 @@ function Navbar() {
                         >
                           <FaRegBell className='w-5 h-5 xs:w-6 xs:h-6' fill='#1f2937' />
                         </button>
-                        <div id='ppMain' className="ppMain relative ml-3 rounded-full" onClick={() => setShowHover(prev => !prev)}>
+                        <div id='ppMain' className="hidden md:block ppMain relative ml-3 rounded-full" onClick={() => setShowHover(prev => !prev)}>
                           <div id='ppPhoto'  onClick={() => { setIsOpen(false) }} className='ppPhoto'>
                             <button type="button" className=" relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                               <span className="absolute -inset-1.5"></span>
@@ -267,12 +381,13 @@ function Navbar() {
                     )}
 
                 </div>
+                
               </div >
             </div >
 
             {isOpen && (
 
-              <div className={`${!isOpen ? "hidden " : " "} md:hidden absolute t-0  float-right  w-full h-screen bg-black opacity-50 `} onClick={() => { setIsOpen(false) }}>
+              <div className={`${!isOpen ? "hidden " : " "} md:hidden absolute t-0 float-right  w-full h-screen bg-black opacity-50 `} onClick={() => { setIsOpen(false) }}>
               </div>
             )}
 
