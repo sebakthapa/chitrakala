@@ -1,4 +1,5 @@
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
+
 
 let initialState = [];
 
@@ -27,10 +28,25 @@ const followingSlice = createSlice({
         },
         appendFollowingArts: (state, { payload }) => {
             return [...state, ...payload]
-        }
+        },
+        deleteFollowingArts: (state, { payload:pid }) => {
+            const prevState = state;
+            const newState = prevState.filter((product) => product._id !== pid)
+            return newState;
+        },
+        editFollowingArts: (state, { payload:updatedData }) => {
+            const prevState = state;
+            const newState = prevState.map((prod) => {
+                if (prod._id == updatedData.id) {
+                    return {...prod, ...updatedData}
+                }
+                return prod;
+            })
+            return newState;
+        },
     }
 })
 
-export const { toggleFollowingArtsLike, appendFollowingArts, addFollowingArts } = followingSlice.actions;
+export const { toggleFollowingArtsLike, appendFollowingArts, addFollowingArts, deleteFollowingArts, editFollowingArts } = followingSlice.actions;
 
 export default followingSlice.reducer;

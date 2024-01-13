@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import SessionProvider from '../../context/SessionProvider';
+import Notification from '@/components/Notification';
 
 
 export const metadata = {
@@ -13,7 +14,6 @@ export const metadata = {
 }
 
 export default function RootLayout({ children, ...props }) {
-
   return (
     <html lang="en">
      <link rel="icon" href="/brand/smLogo.png" type="image/png" sizes="32x32" />
@@ -44,6 +44,7 @@ export default function RootLayout({ children, ...props }) {
 
             </div>
             <Footer />
+            <Notification />
           </SessionProvider>
         </ReduxProvider>
       </body>

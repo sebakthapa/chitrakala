@@ -1,5 +1,7 @@
+"use client"
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 import { getStorage, ref } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -22,8 +24,6 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 
-
-
 const storeImage = async (path) => {
   try {
     const storage = getStorage(app);
@@ -32,8 +32,6 @@ const storeImage = async (path) => {
   } catch (error) {
     console.log("ERROR uploading Image \n" + error)
   }
-
-
 }
 
 export default storeImage
@@ -80,3 +78,45 @@ export const sendEmailVerificationLink = async () => {
     alert(getErrMsg(err.message));
   }
 }
+
+export const messaging = getMessaging(app);
+
+
+
+
+export function requestPermission() {
+  console.log('Requesting permission...');
+  Notification.requestPermission()
+    .then((permission) => {
+      console.log("insider req")
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+
+        getToken(
+          messaging,
+          { vapidKey: 'BFmqko324doub33JHrjbYqOc30pGsN8dJqKZjmysr9ZGojgD0yu-8VQ-w-lsL3qeWuCTk_Bw4WjR34HBPf8AYgo' }
+        )
+          .then((currentToken) => {
+            if (currentToken) {
+              console.log("Token Generated",currentToken)
+              // Send the token to your server and update the UI if necessary
+              // ...
+            } else {
+              // Show permission request UI
+              console.log('No registration token available. Request permission to generate one.');
+              // ...
+            }
+          }).catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
+            // ...
+          });
+      }
+    })
+
+}
+
+onMessage(messaging, (payload) => {
+  console.log('Message received. ', payload);
+});
+
+

@@ -1,26 +1,21 @@
 "use client"
 import { motion } from "framer-motion";
-import { BsAppIndicator, BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import LoadingComponent from "./LoadingComponent";
-import { FcTimeline } from "react-icons/fc";
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import { useState, useEffect, useRef } from "react";
 import 'react-loading-skeleton/dist/skeleton.css'
-import { BiCross, BiSolidPen, BiDotsVertical  } from "react-icons/bi";
-import { AiFillDelete } from "react-icons/ai";
+import { BiDotsVertical } from "react-icons/bi";
 import { useRouter } from "next/navigation";
-import moment from "moment";
-import { categoriesColor, formatNumberWithLetter } from "@/lib/utils";
+import { formatNumberWithLetter } from "@/lib/utils";
 import ContentLoader from "react-content-loader";
-import { togglePopularArtsLike } from "@/redux/features/gallerySlice/popularSlice";
-import { toggleFollowingArtsLike } from "@/redux/features/gallerySlice/followingSlice";
-import { toggleRecentArtsLike } from "@/redux/features/gallerySlice/recentSlice";
-import {  useSession } from 'next-auth/react';
+import { deletePopularArts, togglePopularArtsLike } from "@/redux/features/gallerySlice/popularSlice";
+import { deleteFollowingArts, toggleFollowingArtsLike } from "@/redux/features/gallerySlice/followingSlice";
+import { deleteRecentArts, toggleRecentArtsLike } from "@/redux/features/gallerySlice/recentSlice";
+import { useSession } from 'next-auth/react';
 const ArtCard = ({ item }) => {
     const { data: session } = useSession();
     const router = useRouter()
@@ -29,8 +24,7 @@ const ArtCard = ({ item }) => {
     const [artData, setArtData] = useState(item)
     const [dotOpen, setDotOpen] = useState(false)
     const [loading, setLoading] = useState(false);
-    const isOwner = session?.user?.id === artData?.artist?.user;
-        console.log(session?.user?.id , artData)
+    const [isOwner, setIsOwner] = useState(false)
 
     const artistNameRef = useRef(null)
     const artNameRef = useRef(null)
@@ -39,8 +33,11 @@ const ArtCard = ({ item }) => {
             if (session?.user?.id) {
                 setLoading(true);
                 await axios.delete(`/api/products/${pid}`);
-                router.push(`/arts/popular`)
-                toast.info("Deleted")
+                // router.push(`/arts/popular`)
+                toast.info(`Deleted ${artData.name}`);
+                dispatch(deleteFollowingArts(artData._id))
+                dispatch(deleteRecentArts(artData._id))
+                dispatch(deletePopularArts(artData._id))
             }
         } catch (error) {
             console.error("Error deleting:", error);
@@ -51,7 +48,9 @@ const ArtCard = ({ item }) => {
 
 
     useEffect(() => {
-        setArtData(item)
+        setArtData(item);
+        setIsOwner(session?.user?.id === artData?.artist?.user || session?.user?.id === artData?.artist?.user._id);
+
     }, [item])
 
 
@@ -60,7 +59,7 @@ const ArtCard = ({ item }) => {
         if (user?._id) {
             try {
 
-              
+
                 let newLikes = [...item.likes,];
 
                 if (artData.likes.includes(user?._id)) { // already liked remove userid from array
@@ -71,9 +70,9 @@ const ArtCard = ({ item }) => {
 
 
                 setArtData({ ...artData, likes: newLikes });
-                dispatch(togglePopularArtsLike({userId: user._id , productId: artData._id }))
-                dispatch(toggleFollowingArtsLike({userId: user._id , productId: artData._id }))
-                dispatch(toggleRecentArtsLike({userId: user._id , productId: artData._id }))
+                dispatch(togglePopularArtsLike({ userId: user._id, productId: artData._id }))
+                dispatch(toggleFollowingArtsLike({ userId: user._id, productId: artData._id }))
+                dispatch(toggleRecentArtsLike({ userId: user._id, productId: artData._id }))
 
                 const res = await axios.patch("/api/products/likes", {
                     userId: user?._id,
@@ -90,9 +89,9 @@ const ArtCard = ({ item }) => {
                 newLikes = newLikes.filter((id) => id !== user?._id)
 
                 setArtData({ ...artData, likes: likes });
-                dispatch(togglePopularArtsLike({userId: user._id , productId: artData._id }))
-                dispatch(toggleFollowingArtsLike({userId: user._id , productId: artData._id }))
-                dispatch(toggleNewArtsLike({userId: user._id , productId: artData._id }))
+                dispatch(togglePopularArtsLike({ userId: user._id, productId: artData._id }))
+                dispatch(toggleFollowingArtsLike({ userId: user._id, productId: artData._id }))
+                dispatch(toggleNewArtsLike({ userId: user._id, productId: artData._id }))
                 console.error("Error updating like:", error);
             }
         } else {
@@ -105,7 +104,7 @@ const ArtCard = ({ item }) => {
     };
 
 
-    
+
     return (
         <>
             <div className="w-full min-w-[300px] max-w-[400px] bg-white rounded-lg  darkk:bg-gray-800 darkk:border-gray-700">
@@ -116,9 +115,9 @@ const ArtCard = ({ item }) => {
 
                         <span className="text-sm w-fit font-semibold text-gray-100 darkk:text-white">
                             {
-                                artData?.price ? `Rs ${formatNumberWithLetter(artData?.price)}` : <span className=" bg-lime-600  p-1 px-2 rounded-full text-xs">Showcase </span>
+                                artData?.price ? <span className=" bg-green-700  p-1 px-2 rounded-full text-xs">Rs ${formatNumberWithLetter(artData?.price)} </span> : <span className=" bg-lime-600  p-1 px-2 rounded-full text-xs">Showcase </span>
                             }
-                            {artData.category}
+                            {/* {artData.category} */}
 
                         </span>
 
@@ -128,7 +127,7 @@ const ArtCard = ({ item }) => {
                 </Link>
                 <div className="px-1 pb-5 my-2.5 relative">
                     <div className="head flex justify-between items-center">
-                        <Link href={`/artist/%${artData?.artist?._id}`} className="flex items-center gap-3 w-full flex-1">
+                        <Link href={`/artist/${artData?.artist?.user?._id}`} className="flex items-center gap-3 w-full flex-1">
                             <Image title={artData?.artist?.name} width={30} height={30} alt="artist image" src={artData?.artist?.image} className="rounded-full aspect-square object-cover" />
                             <h6 ref={artistNameRef} className="font-medium  w-full flex-1 h-fulltracking-tight text-gray-700 darkk:text-white capitalize">
                                 {artData?.artist?.name.toLowerCase()}
@@ -167,25 +166,25 @@ const ArtCard = ({ item }) => {
 
                                 {formatNumberWithLetter(artData?.likes?.length) || 0}
                             </span>
-            <span onClick={()=>setDotOpen(prev=>!prev)}  className="opencloseHandler text-sm hover:bg-gray-200 flex justify-center items-center float-right font-semibold text-gray-800 ml-5 w-5 h-5 rounded-full "><BiDotsVertical /></span>
+                            <span onClick={() => setDotOpen(prev => !prev)} className="opencloseHandler text-sm hover:bg-gray-200 flex justify-center items-center float-right font-semibold text-gray-800 ml-5 w-5 h-5 rounded-full "><BiDotsVertical /></span>
                         </div>
                     </div>
                     <div className={`absolute right-0 z-10 ${!dotOpen ? 'hidden' : 'block'}`}>
-                <div className="ppHover mt-4 w-48 origin-top-right rounded-md flex flex-col gap-1 bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
-                    {isOwner ? (
-                        <>
-                            <Link href={`/arts/edit?pid=${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Edit</Link>
-                            {loading ? (
-                                <span className="profileMenuItem bg-red-700 w-full cursor-pointer block px-4 py-2 text-sm text-gray-100">Deleting...</span>
+                        <div className="ppHover mt-1 w-48 origin-top-right rounded-md flex flex-col gap-1 bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
+                            {isOwner ? (
+                                <>
+                                    <Link href={`/arts/edit?pid=${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Edit</Link>
+                                    {loading ? (
+                                        <span className="profileMenuItem bg-red-700 w-full cursor-pointer block px-4 py-2 text-sm text-gray-100">Deleting...</span>
+                                    ) : (
+                                        <span onClick={() => { handleDelete(artData?._id) }} href="/" className="profileMenuItem hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-red-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Delete</span>
+                                    )}
+                                </>
                             ) : (
-                                <span onClick={() => { handleDelete(artData?._id) }} href="/" className="profileMenuItem hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-red-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Delete</span>
+                                <Link href={`/arts/${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">View</Link>
                             )}
-                        </>
-                    ) : (
-                        <Link href={`/arts/${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">View</Link>
-                    )}
-                </div>
-            </div>
+                        </div>
+                    </div>
                 </div>
             </div >
 
