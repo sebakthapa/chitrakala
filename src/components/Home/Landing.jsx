@@ -47,7 +47,7 @@ function Landing() {
                         <Link href="/about">
                             <button className='border text-gray-800 border-gray-800 hover:bg-gray-800 hover:text-white py-2 px-6 rounded-full transition duration-300'>About</button>
                         </Link>
-                        <Link href="/gallery">
+                        <Link href="/arts/popular">
                             <button className='group border  border-gray-800 bg-gray-800 text-gray-100 hover:text-white py-2 px-6 pr-5 rounded-full flex items-center gap-2'>Explore <BsArrowRight className='w-0 transition-all duration-500 ease-in-out group-hover:w-4 h-4' fill='white' /></button>
                         </Link>
                     </motion.div>

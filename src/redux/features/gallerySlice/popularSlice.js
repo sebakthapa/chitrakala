@@ -1,4 +1,5 @@
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
+
 
 let initialState = [];
 
@@ -32,10 +33,25 @@ const popularSlice = createSlice({
         },
         appendPopularArts: (state, { payload }) => {
             return [...state, ...payload]
-        }
+        },
+        deletePopularArts: (state, { payload:pid }) => {
+            const prevState = state;
+            const newState = prevState.filter((product) => product._id !== pid)
+            return newState;
+        },
+        editPopularArts: (state, { payload:updatedData }) => {
+            const prevState = state;
+            const newState = prevState.map((prod) => {
+                if (prod._id == updatedData.id) {
+                    return {...prod, ...updatedData}
+                }
+                return prod;
+            })
+            return newState;
+        },
     }
 })
 
-export const { togglePopularArtsLike, appendPopularArts, addPopularArts,sortPopularArts } = popularSlice.actions;
+export const { togglePopularArtsLike, appendPopularArts, addPopularArts, sortPopularArts, deletePopularArts, editPopularArts } = popularSlice.actions;
 
 export default popularSlice.reducer;

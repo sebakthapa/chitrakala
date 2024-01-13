@@ -1,4 +1,5 @@
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
+
 
 let initialState = [];
 
@@ -27,9 +28,24 @@ const recentSlice = createSlice({
         },
         appendRecentArts: (state, { payload }) => {
             return [...state, ...payload]
-        }
+        },
+        deleteRecentArts: (state, { payload:pid }) => {
+            const prevState = state;
+            const newState = prevState.filter((product) => product._id !== pid)
+            return newState;
+        },
+        editRecentArts: (state, { payload:updatedData }) => {
+            const prevState = state;
+            const newState = prevState.map((prod) => {
+                if (prod._id == updatedData.id) {
+                    return {...prod, ...updatedData}
+                }
+                return prod;
+            })
+            return newState;
+        },
     }
 })
 
-export const { toggleRecentArtsLike, appendRecentArts, addRecentArts } = recentSlice.actions;
+export const { toggleRecentArtsLike, appendRecentArts, addRecentArts, deleteRecentArts, editRecentArts } = recentSlice.actions;
 export default recentSlice.reducer;
