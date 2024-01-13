@@ -1,20 +1,32 @@
 "use client"
-import { messaging, requestPermission } from "@/lib/firebase"
-import { onMessage } from "firebase/messaging"
+import { app, requestPermission } from "@/lib/firebase"
+import { IS_CLIENT } from "@/lib/utils"
+import { getMessaging, onMessage } from "firebase/messaging"
 import { useEffect } from "react"
+import { Bounce, toast } from "react-toastify"
+
+const registerServiceWorker = async () => {
+  navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    .then((registration) => {
+      console.log('Registration successful, scope is:', registration.scope);
+    })
+}
 
 const Notification = () => {
   useEffect(() => {
-    requestPermission();
+    IS_CLIENT && requestPermission();
+    IS_CLIENT && registerServiceWorker();
+
+    const messaging =  IS_CLIENT && getMessaging(app)
+    IS_CLIENT && onMessage(messaging, (payload) => {
+      console.log('Message received. vayo hai ', payload);
+      toast(payload.notification.title, {transition: Bounce})
+    });
   }, [])
 
-  onMessage(messaging, (payload) => {
-    console.log('Message received. ', payload);
-    // ...
-  });
   return (
     <div>
-      
+
     </div>
   )
 }

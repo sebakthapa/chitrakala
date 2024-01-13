@@ -1,9 +1,10 @@
 "use client"
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
 
 import { getStorage, ref } from "firebase/storage";
+import { IS_CLIENT } from "./utils";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -34,7 +35,7 @@ const storeImage = async (path) => {
   }
 }
 
-export default storeImage
+export default storeImage;
 
 
 export const sendEmailVerificationLink = async () => {
@@ -79,12 +80,10 @@ export const sendEmailVerificationLink = async () => {
   }
 }
 
-export const messaging = getMessaging(app);
-
-
-
 
 export function requestPermission() {
+  if (!IS_CLIENT) return;
+  const messaging = IS_CLIENT && getMessaging(app)
   console.log('Requesting permission...');
   Notification.requestPermission()
     .then((permission) => {
@@ -98,7 +97,7 @@ export function requestPermission() {
         )
           .then((currentToken) => {
             if (currentToken) {
-              console.log("Token Generated",currentToken)
+              console.log("Token Generated", currentToken)
               // Send the token to your server and update the UI if necessary
               // ...
             } else {
@@ -115,8 +114,5 @@ export function requestPermission() {
 
 }
 
-onMessage(messaging, (payload) => {
-  console.log('Message received. ', payload);
-});
 
 

@@ -17,7 +17,7 @@ export const metadata = {
 export default function RootLayout({ children, ...props }) {
   return (
     <html lang="en">
-     <link rel="icon" href="/brand/smLogo.png" type="image/png" sizes="32x32" />
+      <link rel="icon" href="/brand/smLogo.png" type="image/png" sizes="32x32" />
       <body className=''>
         <ReduxProvider>
           <SessionProvider>
@@ -37,7 +37,7 @@ export default function RootLayout({ children, ...props }) {
               transition={Zoom}
               limit={4}
             />
-
+            <Notification />
             <Navbar />
             < div className='max-w-[2000px] m-auto min-h-screen'>
               {children}
@@ -45,7 +45,6 @@ export default function RootLayout({ children, ...props }) {
 
             </div>
             <Footer />
-            <Notification />
           </SessionProvider>
         </ReduxProvider>
       </body>

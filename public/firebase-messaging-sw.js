@@ -1,3 +1,4 @@
+"use client"
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
 
@@ -14,8 +15,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
-const messaging = firebase.messaging();
-messaging.onBackgroundMessage( (payload) => {
+const messaging = typeof (window) != undefined && firebase.messaging();
+typeof (window) != undefined && messaging.onBackgroundMessage((payload) => {
     console.log('[firebase-messaging-sw.js] Received background message ', payload);
     // Customize notification here
     const notificationTitle = payload.notification.title;
