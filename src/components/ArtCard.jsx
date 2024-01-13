@@ -182,7 +182,11 @@ const ArtCard = ({ item }) => {
                             )}
                         </>
                     ) : (
+                        <>
                         <Link href={`/arts/${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">View</Link>
+                        <Link href={`#`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">Add to Wishlist</Link>
+                        <Link href={`#`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">Order</Link>
+                        </>
                     )}
                 </div>
             </div>
