@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-
+import ContentLoader from 'react-content-loader'
 
 const Artist = () => {
   const [users, setUsers] = useState([])
@@ -85,7 +85,10 @@ const Artist = () => {
 
         <ul className="max-w-md">
           {status.loading ? (
-            <p>Loading...</p>
+            <>
+            <ArtistLoadingSkeleton/>
+            <ArtistLoadingSkeleton/>
+            </>
           ) : filteredusers?.length > 0 ? (
             filteredusers.map((item, index) => {
               if (item.artWorks.length === 0) return null;
@@ -130,3 +133,25 @@ const Artist = () => {
 }
 
 export default Artist
+
+
+const ArtistLoadingSkeleton = () => {
+  return (
+    <ContentLoader
+    speed={2}
+    width={400}
+    height={100}
+    viewBox="0 0 400 100"
+      title="🖌️ Loading Artist... 🔔"
+   
+      interval={0.4}
+      backgroundColor="#eee"
+      foregroundColor="#f9f9f9"
+      gradientDirection="top-down"
+    >
+    <circle cx="39" cy="29" r="29" /> 
+    <rect x="76" y="8" rx="2" ry="2" width="209" height="15" /> 
+    <rect x="76" y="32" rx="2" ry="2" width="209" height="15" />
+    </ContentLoader>
+  );
+};

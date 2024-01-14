@@ -19,6 +19,8 @@ import { ImInfo, ImProfile } from 'react-icons/im'
 import { FaBell, FaRegBell } from "react-icons/fa6";
 import { toast } from 'react-toastify';
 import { addFollowingData, toggleFollowing } from '@/redux/features/followingSlice';
+import Notification from './Home/Notification';
+import Wishlist from './Home/Wishlist';
 
 function Navbar() {
 
@@ -168,6 +170,8 @@ function Navbar() {
 
   return (
     <>
+
+
       <div ref={divRef} className={`md:hidden transition-all  fixed z-[10] w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 ${!visible ? ' translate-y-full ' : 'translate-y-0 '}`}>
         <div className="grid h-full max-w-lg grid-cols-5 mx-auto">
 
@@ -189,7 +193,7 @@ function Navbar() {
           </Link>
 
 
-          <div data-tooltip-target="tooltip-profile" type="button" className="inline-flex flex-col items-center justify-center px-5  hover:bg-gray-50  group">
+          <button data-tooltip-target="tooltip-profile" type="button" className="inline-flex flex-col items-center justify-center px-5  hover:bg-gray-50  group">
             {
               session?.user?.id ? (
                 <>
@@ -243,7 +247,7 @@ function Navbar() {
                   }
                 </>
               )}
-          </div>
+          </button>
 
         </div>
       </div>
@@ -316,20 +320,12 @@ function Navbar() {
                         >
                           <BsPlusCircle className='w-5 h-5 xs:w-6 xs:h-6' fill='#1f2937' />
                         </button>
-                        <button
-                          type="button"
-                          title='Notifications'
-                          className="relative  p-2 rounded-full border-none  text-gray-400 hover:text-white "
-                        >
-                          <BsBookmarks className='w-5 h-5 xs:w-6 xs:h-6' fill='#1f2937' />
-                        </button>
-                        <button
-                          type="button"
-                          title='Wishlists'
-                          className="relative  p-2 rounded-full border-none  text-gray-400 hover:text-white "
-                        >
-                          <FaRegBell className='w-5 h-5 xs:w-6 xs:h-6' fill='#1f2937' />
-                        </button>
+
+
+
+                        <Notification userId={session?.user.id} />
+                        <Wishlist userId={session?.user.id} />
+
                         <div id='ppMain' className="hidden md:block ppMain relative ml-3 rounded-full" onClick={() => setShowHover(prev => !prev)}>
                           <div id='ppPhoto' onClick={() => { setIsOpen(false) }} className='ppPhoto'>
                             <button type="button" className=" relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">

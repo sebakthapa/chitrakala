@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { BsCalendar } from "react-icons/bs";
 import { BiSolidMap } from "react-icons/bi";
 import { Dialog, Transition } from '@headlessui/react';
-import LoadingComponent from "@/components/LoadingComponent";
+import ContentLoader from "react-content-loader";
 import Image from "next/image";
 import moment from "moment";
 const Exhibition = () => {
@@ -47,7 +47,9 @@ const Exhibition = () => {
       </h1>
 
       {loading ? (
-        <h1> <LoadingComponent></LoadingComponent> </h1>
+        <>
+         <ExhibitionLoadingSkeleton/>
+         </>
       ) : (
         exhibition.length > 0 ? (
           <div className="block sm:flex md:-mx-2">
@@ -192,4 +194,27 @@ const getStatusClassName = (openDatetime, closeDatetime) => {
   } else {
     return 'text-blue-800 text-xs rounded-full p-1';
   }
+};
+
+
+const ExhibitionLoadingSkeleton = () => {
+  return (
+    <ContentLoader
+    speed={2}
+    width={400}
+    height={460}
+    viewBox="0 0 400 460"
+      title="🖌️ Loading Exhibition... 🔔"
+   
+      interval={0.4}
+      backgroundColor="#eee"
+      foregroundColor="#f9f9f9"
+      gradientDirection="top-down"
+    >
+   <circle cx="33" cy="440" r="15" /> 
+    <rect x="60" y="427" rx="2" ry="2" width="140" height="10" /> 
+    <rect x="60" y="443" rx="2" ry="2" width="140" height="10" /> 
+    <rect x="18" y="5" rx="2" ry="2" width="400" height="400" />
+    </ContentLoader>
+  );
 };
