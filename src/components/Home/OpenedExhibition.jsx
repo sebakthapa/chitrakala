@@ -7,9 +7,12 @@ import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
+import ContentLoader from 'react-content-loader';
+
 const LatestExhibition = () => {
   const [exhibitions, setExhibitions] = useState([]);
   let [isOpen, setIsOpen] = useState([])
+  const [loading, setLoading] = useState(true);
 
   const closeModal = (index) => {
     const newIsOpen = [...isOpen];
@@ -42,9 +45,11 @@ const LatestExhibition = () => {
 
         setExhibitions(runningExhibitions);
         setIsOpen(new Array(data.length).fill(false));
+        setLoading(false);
 
       } catch (error) {
         console.error('Error fetching exhibitions:', error);
+        setLoading(false);
       }
     };
 
@@ -55,7 +60,12 @@ const LatestExhibition = () => {
     <>
       <div className='sm:mx-5 p-5'>
 
-
+      {loading ? (
+          <ExhibitionLoadingSkeleton/>
+        ) : exhibitions.length === 0 ? (
+          <p>No exhibitions available</p>
+        ) : (
+          <>
         {/* Render your running exhibitions here */}
         {exhibitions.map((item, index) => (
           <div
@@ -168,6 +178,9 @@ const LatestExhibition = () => {
             View All <FaArrowUpRightFromSquare/>
           </Link>
         </div>
+
+        </>
+        )}
       </div>
 
 
@@ -205,4 +218,25 @@ const getStatusClassName = (openDatetime, closeDatetime) => {
   } else {
     return 'text-blue-800 text-xs rounded-full p-1';
   }
+};
+
+const ExhibitionLoadingSkeleton = () => {
+  return (
+    <ContentLoader
+    speed={2}
+    width={400}
+    height={100}
+    viewBox="0 0 400 100"
+      title="🖌️ Loading Notifications... 🔔"
+   
+      interval={0.4}
+      backgroundColor="#eee"
+      foregroundColor="#f9f9f9"
+      gradientDirection="top-down"
+    >
+    <circle cx="39" cy="29" r="29" /> 
+    <rect x="76" y="8" rx="2" ry="2" width="209" height="15" /> 
+    <rect x="76" y="32" rx="2" ry="2" width="209" height="15" />
+    </ContentLoader>
+  );
 };

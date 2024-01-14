@@ -2,9 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import ContentLoader from 'react-content-loader';
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 const RatedArtists = () => {
     const [artists, setArtists] = useState([]);
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchArtists = async () => {
             try {
@@ -17,8 +19,11 @@ const RatedArtists = () => {
     
                 // Set the filtered artists to the state
                 setArtists(filteredArtists);
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching artists:', error);
+                setLoading(false);
+
             }
         };
     
@@ -29,7 +34,12 @@ const RatedArtists = () => {
         <>
             <div className=' p-5 sm:mx-5'>
 
-
+            {loading ? (
+          <ArtistLoadingSkeleton/>
+        ) : artists.length === 0 ? (
+          <p>No exhibitions available</p>
+        ) : (
+          <>
                 {/* Render your running exhibitions here */}
                 {artists.map((item, index) => (
                     <Link
@@ -64,9 +74,33 @@ const RatedArtists = () => {
                         View All <FaArrowUpRightFromSquare/>
                     </Link>
                 </div>
+
+                </>
+        )}
             </div>
         </>
     );
 };
 
 export default RatedArtists;
+
+const ArtistLoadingSkeleton = () => {
+    return (
+      <ContentLoader
+      speed={2}
+      width={400}
+      height={100}
+      viewBox="0 0 400 100"
+        title="🖌️ Loading Notifications... 🔔"
+     
+        interval={0.4}
+        backgroundColor="#eee"
+        foregroundColor="#f9f9f9"
+        gradientDirection="top-down"
+      >
+      <circle cx="39" cy="29" r="29" /> 
+      <rect x="76" y="8" rx="2" ry="2" width="209" height="15" /> 
+      <rect x="76" y="32" rx="2" ry="2" width="209" height="15" />
+      </ContentLoader>
+    );
+  };
