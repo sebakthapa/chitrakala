@@ -29,32 +29,33 @@ export const GET = async (req) => {
 
 
 
-export const POST = async (req) => {
+export const PATCH = async (req) => {
   try {
     await dbConnect();
     
-    const { userDetails, notifications } = await req.json();
+    const { userId, notifications } = await req.json();
 
     // Validation checks
-    if (!userDetails || !notifications) {
-      return NextResponse.json({ message: "Invalid request. userDetails and notifications are required.", error: null }, { status: 400 });
+    if (!userId || !notifications) {
+      return NextResponse.json({ message: "Invalid request. userId and notifications are required.", error: null }, { status: 400 });
     }
 
-    let updatedUser = await Notifications.findOneAndUpdate(
-      { userDetails },
+    let updatedNotification = await Notifications.findOneAndUpdate(
+      { userId },
       { $push: { notifications } },
       { new: true }
     );
 
-    if (!updatedUser) {
-      updatedUser = await Notifications.create({ userDetails, notifications });
+    if (!updatedNotification) {
+      const newNotification = new  Notifications({ userId, notifications });
+      newNotification.save()
     }
     
-    if (updatedUser) {
-      await updatedUser.deleteExpiredNotifications();
+    if (updatedNotification) {
+      await updatedNotification.deleteExpiredNotifications();
     }
 
-    return NextResponse.json({ message: "Notification added successfully", data: updatedUser }, { status: 200 });
+    return NextResponse.json({ message: "Notification added successfully", data: updatedNotification }, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "Error adding notification", error: error.message }, { status: 500 });

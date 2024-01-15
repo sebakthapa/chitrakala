@@ -3,15 +3,21 @@ import Follows from "@/models/users/follows";
 import UsersDetails from "@/models/users/usersDetail";
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
+import sendNotification from "@/lib/sendNotification";
+
 
 const toggleFollowing = (array,  element) => {
     if (array.includes(element)) {
+
         array = array.filter((elem) => elem != element)
+       
     } else {
         array.push(element)
+  
     }
     return array;
 }
+
 
 // 
 export const PATCH = async (req, res) => {
@@ -29,26 +35,56 @@ export const PATCH = async (req, res) => {
         }
         await dbConnect();
 
-        let userRes = await Follows.findOne({ userDetails: userDetailsId }); // this is followng array of user. (lists to whom has user followed)
-        let artistRes = await Follows.findOne({ userDetails: artistDetailsId }); // this is followers array (lists who has followed the artist) of artist who is being followed
-        console.log("userres: ", userRes)
+        let userRes = await Follows.findOne({ userDetails: userDetailsId }).populate("userDetails"); // this is followng array of user. (lists to whom has user followed)
+        let artistRes = await Follows.findOne({ userDetails: artistDetailsId }).populate("userDetails"); // this is followers array (lists who has followed the artist) of artist who is being followed
+        let isFollow;
         if (userRes == null) {
             const userFollow = new Follows({ userDetails: userDetailsId, following: [artistDetailsId] })
             await userFollow.save();
+            isFollow = true;
         } else {
             let following = userRes.following
+            isFollow = following.includes(artistDetailsId)
+            
             following = toggleFollowing(following, artistDetailsId)
             await Follows.findOneAndUpdate({ userDetails: userDetailsId }, { following })
         }
-
         if (artistRes == null) {
             const artistFollow = new Follows({ userDetails: artistDetailsId, followers: [userDetailsId] })
             await artistFollow.save();
         } else {
             let followers = artistRes.followers
             followers = toggleFollowing(followers, userDetailsId)
+
             await Follows.findOneAndUpdate({ userDetails: artistDetailsId }, { followers })
         }
+
+        const userDetails = await UsersDetails.findById(userDetailsId)
+        const artistDetails = await UsersDetails.findById(artistDetailsId)
+        const notificationMessage = isFollow
+        ? `${userDetails?.name} started following you`
+        : `${userDetails?.name} unfollowed you`;
+
+        const updatedNotification = {
+            title: isFollow ? "You got a new follower" : "Someone unfollowed you",
+            body: notificationMessage,
+            image: userDetails?.image,
+            redirect:  `/artist/${artistDetailsId}` ,
+        };
+       
+            try {
+              
+              const res = await sendNotification(artistDetails?.user, updatedNotification)
+               // Handle the result if needed
+              console.log(res.message);
+              console.log(res.data);
+            } catch (error) {
+              console.error(error.message);
+            }
+      
+
+
+
 
         return NextResponse.json({ error: false, }, { status: 200 })
     } catch (error) {
