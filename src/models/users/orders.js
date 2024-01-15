@@ -4,7 +4,7 @@ const orderSchema = new mongoose.Schema({
     userDetails: {
         type: mongoose.Schema.ObjectId,
         ref: "UsersDetails",
-        unique: true,
+        sparse: true,
         required: [true, "User details reference Id is required"]
     },
   items: [

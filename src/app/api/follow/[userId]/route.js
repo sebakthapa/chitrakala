@@ -44,10 +44,10 @@ export const PATCH = async (req, res) => {
             isFollow = true;
         } else {
             let following = userRes.following
-            isFollow = following.includes(artistDetailsId)
             
             following = toggleFollowing(following, artistDetailsId)
             await Follows.findOneAndUpdate({ userDetails: userDetailsId }, { following })
+            isFollow = following.includes(artistDetailsId)
         }
         if (artistRes == null) {
             const artistFollow = new Follows({ userDetails: artistDetailsId, followers: [userDetailsId] })
