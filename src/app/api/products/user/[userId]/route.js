@@ -13,9 +13,13 @@ export const GET = async (req,res) => {
         .populate({
             path: 'artist',
             match: { 'user': userId },
-            select: "-password"
+            select: "-password",
+            populate: {
+                path: 'user'
+            }
           })
         .then((items)=> items.filter(item=>item.artist != null))  
+        
 
         return new NextResponse(JSON.stringify(res))
     } catch (error) {

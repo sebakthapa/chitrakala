@@ -1,12 +1,9 @@
-
+import sendNotification from "@/lib/sendNotification";
 import dbConnect from "@/lib/dbConnect";
 import Products from "@/models/users/products";
 import UsersDetails from "@/models/users/usersDetail";
-import Notifications from "@/models/users/notifications";
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
-import axios from "axios";
-import sendNotification from "@/lib/sendNotification";
 
 // GET => get all products
 export const GET = async () => {
@@ -40,7 +37,7 @@ export const PATCH = async (request) => {
     }
 
     // Get product
-    const product = await Products.findById(productId).populate("artist");
+    const product = await Products.findById(productId);
     const userdetails = await UsersDetails.findById(userId);
 
     // Check if userdetails already liked
@@ -56,7 +53,6 @@ export const PATCH = async (request) => {
     }
     else {
       updatedLikesUser.push(productId);
-
     }
 
     // Update likes array for products
@@ -67,34 +63,35 @@ export const PATCH = async (request) => {
     } else { // not liked add userid in likes array
       updatedLikes.push(userId);
       status = "liked"
-          // Update the database
-          const updatedNotification = {
-            title : `${userDetails?.name} has liked your art.`,
-            body : `${userDetails?.name} has liked your art (${updatedProduct?.name})`,
-            image : `${userDetails?.image}`,
-            redirect : `/arts/${productId}`,
-          }
-       
-            try {
-              
-              const res = await sendNotification(updatedProduct?.artist?.user, updatedNotification)
-               // Handle the result if needed
-              console.log(res.message);
-              console.log(res.data);
-            } catch (error) {
-              console.error(error.message);
-            }
-      
-        }
-        
-        
-        
-        // now update add the updated likes data to db
-        const updatedProduct = await Products.findByIdAndUpdate(productId,{likes:updatedLikes});
-        const userDetails = await UsersDetails.findByIdAndUpdate(userId, {likeProducts: updatedLikesUser})
+    }
 
+    // Update the database
+
+    // now update add the updated likes data to db
+    const updatedProduct = await Products.findByIdAndUpdate(productId,{likes:updatedLikes}).populate("artist");
+    const userDetails = await UsersDetails.findByIdAndUpdate(userId, {likeProducts: updatedLikesUser})
+
+    //update notification
+    const notificationMessage = status === 'liked'
+    ? `${userDetails?.name} liked your product ${updatedProduct?.name}`
+    : `${userDetails?.name} unliked your product ${updatedProduct?.name}`
    
 
+    const updatedNotification = {
+        title: status==="liked" ? "You got a liked" : "Someone unliked",
+        body: notificationMessage,
+        image: userDetails?.image,
+        redirect:  `/product/${productId}` ,
+    };
+
+    try {
+      
+      const res = await sendNotification(updatedProduct.artist.user,updatedNotification)
+      console.log(res.message);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error.message);
+    }
 
     // Update product with new data
     return new NextResponse(JSON.stringify(updatedProduct));
