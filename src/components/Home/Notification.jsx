@@ -2,7 +2,8 @@ import { Popover, Transition } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
 import { FaRegBell } from 'react-icons/fa';
 import ContentLoader from 'react-content-loader';
-
+import Link from 'next/link';
+import moment from 'moment';
 
 
 export default function Notification({ userId }) {
@@ -30,7 +31,8 @@ export default function Notification({ userId }) {
 
   return (
     <>
-      <Popover className="relative">
+    
+      <Popover className="sm:relative">
         {({ open }) => (
           <>
             <Popover.Button
@@ -52,7 +54,7 @@ export default function Notification({ userId }) {
             >
               <Popover.Panel className="absolute right-0 z-10 mt-3 w-screen max-w-sm transform px-4 sm:px-0 lg:max-w-3xl">
                 <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
-                  <div className="bg-gray-50 p-4">
+                  <div className="bg-gray-50 p-4 ">
                     {notifications.length === 0 ? (
                       // Check for an empty array to determine the loading state
                       <>
@@ -61,20 +63,24 @@ export default function Notification({ userId }) {
                       </>
                     ) : (
                       notifications.map((notification) => (
-                        <div
+                        <Link
                           key={notification._id} // Add a unique key based on your notification data
+                          href={notification?.redirect}
                           className="-m-3 mb-5 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50"
                         >
                           <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
-                            <img src="/brand/logo.svg" alt="" srcSet="" />
+                            <img src={notification?.image}alt="" srcSet="" />
                           </div>
                           <div className="ml-4">
                             <p className="text-sm font-medium text-gray-900">
                               {notification.title}
                             </p>
                             <p className="text-sm text-gray-500">{notification.body}</p>
+                            <span className='text-sm text-gray-500  float-right absolute '>
+                              {moment(notification.createdAt).calendar()}
+                              </span>
                           </div>
-                        </div>
+                        </Link>
                       ))
                     )}
                   </div>

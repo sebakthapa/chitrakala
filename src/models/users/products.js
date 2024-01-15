@@ -38,6 +38,7 @@ const productsSchema = new mongoose.Schema({
   },
   likes: {
       type: [mongoose.Schema.Types.ObjectId],
+      ref : "UsersDetails"
   },
   size: {
     type: String,
