@@ -6,6 +6,7 @@ const notificationSchema = new mongoose.Schema({
     ref: "Users",
     unique: true,
     required: true,
+    sparse:true
   },
   notifications: [
     {
