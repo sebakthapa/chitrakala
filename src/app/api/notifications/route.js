@@ -61,3 +61,41 @@ export const PATCH = async (req) => {
     return NextResponse.json({ message: "Error adding notification", error: error.message }, { status: 500 });
   }
 };
+
+
+
+
+// DELETE request handler
+export const DELETE = async (req) => {
+  try {
+    // Connect to the database
+    await dbConnect();
+
+    // Extract userId and notificationId from the request body
+    const { userId, notificationId } = await req.json();
+
+    // Validation checks
+    if (!userId || !notificationId) {
+      return NextResponse.json({ message: "Invalid request. userId and notificationId are required.", error: null }, { status: 400 });
+    }
+
+    // Find the user based on userId
+    const user = await Notifications.findOne({ userId });
+
+    // Check if the user exists
+    if (!user) {
+      return NextResponse.json({ message: "User not found", error: null }, { status: 404 });
+    }
+
+    // Filter out the notification to be deleted from the notifications array
+    user.notifications =  user.notifications.filter(notification => notification._id.toString() !== notificationId);
+
+    // Save the updated user
+    await user.save();
+
+    return new NextResponse(JSON.stringify({message:"Deleted notification", data: user }), { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return new NextResponse(JSON.stringify({ error: "Error while deleting notifivation" }), { status: 500 });
+  }
+};

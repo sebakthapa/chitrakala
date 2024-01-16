@@ -177,19 +177,19 @@ function Navbar() {
 
           <Link href={"/arts"} data-tooltip-target="tooltip-gallery" type="button" className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 group">
             <AiFillPicture size={20} />
-            <span className="sr-only">Arts</span>
+            <span  className="text-xs font-bold">Arts</span>
           </Link>
           <Link href={"/artist"} data-tooltip-target="tooltip-artist" type="button" className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 group">
             <ImProfile size={20} />
-            <span className="sr-only">Artist</span>
+            <span  className="text-xs font-bold">Artist</span>
           </Link>
           <Link href={"/"} data-tooltip-target="tooltip-home" type="button" className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 group">
             <AiFillHome size={30} />
-            <span className="sr-only">Home</span>
+            <span  className="text-xs font-bold">Home</span>
           </Link>
           <Link href={"/exhibition"} data-tooltip-target="tooltip-exhibition" type="button" className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 group">
             <SiIconfinder size={20} />
-            <span className="sr-only">Exhibition</span>
+            <span  className="text-xs font-bold">Exhibition</span>
           </Link>
 
 
@@ -202,12 +202,13 @@ function Navbar() {
                     <div id='ppPhoto' onClick={() => { setIsOpen(false) }} className='ppPhoto w-full h-full'>
                       <button type="button" className=" relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                         <span className="absolute -inset-1.5"></span>
-                        <span className="sr-only">Open user menu</span>
+                        
 
                         <Image className="  w-auto xs:h-10 xs:w-10 rounded-full object-cover" height={100} width={100} src={user?.image || "/default-profile.png"} alt="profile image" />
 
 
                       </button>
+                      
                     </div>
                     {showHover &&
                       <div className="absolute bottom-[120%] right-0 z-10 bg-red-00">
@@ -235,6 +236,7 @@ function Navbar() {
                           className='  rounded-full border-[1px] border-[#ffffff44]'>
                           <Link className='inline-block font-bold text-gray-500 py-[0.35rem] px-3 lg:py-[0.4rem] lg:px-5 ' href={`/auth/login?returnUrl=${pathname}`}>
                             <AiOutlineLogin size={25} />
+                            <span  className="text-xs font-bold">Login </span>
                           </Link>
                         </motion.button>
 

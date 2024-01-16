@@ -28,10 +28,8 @@ export default function Wishlist({ userId }) {
   };
 
   const deleteWishlistItem = async (productId) => {
-    toast("start")
     try {
       dispatch(deleteWishList(productId));
-      toast("dispached")
       const response = await axios.delete(`/api/wishlist`, {
         data: {
           user: userId,
@@ -83,7 +81,9 @@ export default function Wishlist({ userId }) {
                   <div className="bg-gray-50 p-4">
                     {loading ? (
                       <WishlistLoadingSkeleton />
-                    ) : (
+                    ) :wishlists.length === 0 ?(
+                      <p className="text-gray-500">Your wishlist is empty.</p>
+                    ): (
                       wishlists.map((wishlist) => (
                         <div key={wishlist._id} className="mb-5 flex">
                           <Link

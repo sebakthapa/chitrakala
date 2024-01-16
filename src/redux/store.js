@@ -6,6 +6,7 @@ import followingArtsReducer from './features/gallerySlice/followingSlice';
 import recentArtsReducer from './features/gallerySlice/recentSlice';
 import followingArtistsReducer from './features/followingSlice';
 import wishListReducer from './features/wishListSlice';
+import notificationReducer from './features/notificationSlice';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   followingArts: followingArtsReducer,
   recentArts: recentArtsReducer,
   followingArtists: followingArtistsReducer,
-  wishList : wishListReducer
+  wishList : wishListReducer,
+  notification: notificationReducer
 })
 
 const store = configureStore({
