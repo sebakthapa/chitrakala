@@ -27,7 +27,6 @@ export const PATCH = async (request) => {
     if (!token?.user.id) {
       return NextResponse.json({message: "You must be logged in to interact!"}, {status:401 })
     }
-
     const { productId, userId } = await request.json();
     let status = false;
     let count = 0
@@ -85,10 +84,12 @@ export const PATCH = async (request) => {
     };
 
     try {
-      
-      const res = await sendNotification(updatedProduct.artist.user,updatedNotification)
-      console.log(res.message);
-      console.log(res.data);
+      if(token?.user.id !== userDetails.user.toString())
+      {
+
+        const res = await sendNotification(updatedProduct.artist.user,updatedNotification)
+      }
+     
     } catch (error) {
       console.error(error.message);
     }

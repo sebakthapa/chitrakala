@@ -42,6 +42,7 @@ const usersDetailsSchema = new mongoose.Schema({
   artWorks: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Products',
+    sparse: true,
     default: []
 
 
@@ -50,11 +51,13 @@ const usersDetailsSchema = new mongoose.Schema({
   {
     ref: 'Products',
     type: [mongoose.Schema.Types.ObjectId],
+    sparse: true,
     default: []
   },
   wishLists:
   {
     ref: 'Products',
+    sparse: true,
     type: [mongoose.Schema.Types.ObjectId],
     default: []
   }

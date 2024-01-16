@@ -15,16 +15,19 @@ import ContentLoader from "react-content-loader";
 import { deletePopularArts, togglePopularArtsLike } from "@/redux/features/gallerySlice/popularSlice";
 import { deleteFollowingArts, toggleFollowingArtsLike } from "@/redux/features/gallerySlice/followingSlice";
 import { deleteRecentArts, toggleRecentArtsLike } from "@/redux/features/gallerySlice/recentSlice";
+import { addWishList,deleteWishList } from "@/redux/features/wishListSlice";
+
 import { useSession } from 'next-auth/react';
 const ArtCard = ({ item }) => {
     const { data: session } = useSession();
     const router = useRouter()
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
-    const [artData, setArtData] = useState(item)
-    const [dotOpen, setDotOpen] = useState(false)
+    const [artData, setArtData] = useState(item);
+    const [dotOpen, setDotOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [isOwner, setIsOwner] = useState(false)
+    const [isOwner, setIsOwner] = useState(false);
+    const [addToWishlistLoading, setAddToWishlistLoading] = useState(false);
 
     const artistNameRef = useRef(null)
     const artNameRef = useRef(null)
@@ -43,6 +46,38 @@ const ArtCard = ({ item }) => {
             console.error("Error deleting:", error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const addToWishlist = async () => {
+        try {
+            if (session?.user?.id) {
+                setAddToWishlistLoading(true);
+
+                // Call your API endpoint to add the artwork to the wishlist
+                const res = await axios.post("/api/wishlist", {
+                    user: session.user.id,
+                    productId: item._id,
+                });
+
+                if (res.status === 200) {
+                    // Display a toast message indicating success
+                    toast.success("Added to Wishlist!");
+                    console.log(res.data)
+                    dispatch(addWishList(res.data))
+                } else {
+                    // Handle the case when adding to the wishlist fails
+                    toast.error("Unable to add to Wishlist. Please try again.");
+                }
+            } else {
+                // Handle the case when the user is not logged in
+                toast.info("Login to add to Wishlist");
+            }
+        } catch (error) {
+            // Handle any unexpected errors
+            console.error("Error adding to Wishlist:", error);
+        } finally {
+            setAddToWishlistLoading(false);
         }
     };
 
@@ -170,25 +205,27 @@ const ArtCard = ({ item }) => {
                         </div>
                     </div>
                     <div className={`absolute right-0 z-10 ${!dotOpen ? 'hidden' : 'block'}`}>
-                <div className="ppHover mt-4 w-48 origin-top-right rounded-md flex flex-col gap-1 bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
-                    {isOwner ? (
-                        <>
-                            <Link href={`/arts/edit?pid=${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Edit</Link>
-                            {loading ? (
-                                <span className="profileMenuItem bg-red-700 w-full cursor-pointer block px-4 py-2 text-sm text-gray-100">Deleting...</span>
+                        <div className="ppHover mt-4 w-48 origin-top-right rounded-md flex flex-col gap-1 bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
+                            {isOwner ? (
+                                <>
+                                    <Link href={`/arts/edit?pid=${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Edit</Link>
+                                    {loading ? (
+                                        <span className="profileMenuItem bg-red-700 w-full cursor-pointer block px-4 py-2 text-sm text-gray-100">Deleting...</span>
+                                    ) : (
+                                        <span onClick={() => { handleDelete(artData?._id) }} href="/" className="profileMenuItem hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-red-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Delete</span>
+                                    )}
+                                </>
                             ) : (
-                                <span onClick={() => { handleDelete(artData?._id) }} href="/" className="profileMenuItem hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-red-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Delete</span>
+                                <>
+                                    <Link href={`/arts/${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">View</Link>
+                                    <Link href={`#`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" onClick={addToWishlist}>
+                                        {addToWishlistLoading ? "Adding to Wishlist..." : "Add to Wishlist"}
+                                    </Link>
+                                    <Link href={`#`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">Order</Link>
+                                </>
                             )}
-                        </>
-                    ) : (
-                        <>
-                        <Link href={`/arts/${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">View</Link>
-                        <Link href={`#`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">Add to Wishlist</Link>
-                        <Link href={`#`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">Order</Link>
-                        </>
-                    )}
-                </div>
-            </div>
+                        </div>
+                    </div>
                 </div>
             </div >
 
