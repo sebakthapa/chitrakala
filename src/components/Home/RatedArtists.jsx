@@ -37,7 +37,7 @@ const RatedArtists = () => {
             {loading ? (
           <ArtistLoadingSkeleton/>
         ) : artists.length === 0 ? (
-          <p>No exhibitions available</p>
+          <p>No artist available. You can become </p>
         ) : (
           <>
                 {/* Render your running exhibitions here */}

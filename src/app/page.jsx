@@ -4,6 +4,7 @@ import Landing from "@/components/Home/Landing";
 import CategoryCard from "@/components/Home/CategoryCard";
 import OpenedExhibition from "@/components/Home/OpenedExhibition";
 import RatedArtists from "@/components/Home/RatedArtists";
+import Contact from "@/components/Home/Contact";
 export const metadata = {
   title: "Home - Chitrakala",
   description: "Art marketplace and showcase.",
@@ -75,7 +76,7 @@ const Page = () => {
         </div>
       </section>
 
-
+     
     </>
   );
 };

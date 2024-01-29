@@ -93,7 +93,7 @@ const Gallery = ({ url = "/api/products?", reduxName, dispatch: dispatchGallery,
                                     {"You've Explored Every Brushstroke. 🌈"}
                                     <br />{"The canvas is complete, but your art journey continues. 🚀"}
 
-                                </p>
+                                </p> 
                             </h1>
 
                         </div>
