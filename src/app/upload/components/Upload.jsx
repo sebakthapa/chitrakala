@@ -13,6 +13,9 @@ import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 
 import React from 'react'
+import { deleteFollowingArts } from '@/redux/features/gallerySlice/followingSlice';
+import { deletePopularArts } from '@/redux/features/gallerySlice/popularSlice';
+import { deleteRecentArts } from '@/redux/features/gallerySlice/recentSlice';
 
 const Upload = () => {
     const { data: session } = useSession();
@@ -100,8 +103,9 @@ const Upload = () => {
 
                 const res = await axios.post("/api/products", data);
                 if (res.status == 200) {
-                    router.push('/arts')
+                    router.push('/arts/recent')
                     toast.success("Upload success!")
+
                 }
                 else {
                     console.error("Failed................................")
@@ -119,7 +123,7 @@ const Upload = () => {
                 }
             } finally {
                 setLoading(false);
-                
+
             }
         }
     };

@@ -256,7 +256,7 @@ function Navbar() {
 
       {
         showNav ? ( // showing only logo in pages like auth/login and auth/signup
-          <Link className='mt-7 ml-4 xxs:3 xs:ml-7 block' href={"/"}>
+          <Link className='mt-7 ml-4 xxs:3 xs:ml-7 flex' href={"/"}>
             <Image height={25} width={25} src="/logo.svg" alt="logo" />
             <span className='saman text-4xl  text-[#222] font-semibold'>HITRAKALA</span>
           </Link>
