@@ -90,7 +90,7 @@ export const DELETE = async (req, res) => {
         const product = await Products.findByIdAndDelete(productId)
 
         if (product) {
-            return new NextResponse(JSON.stringify({ ...product, message: "delete success" }))
+            return new NextResponse(JSON.stringify({ ...product, message: "delete success" }), {status: 200})
         } else {
             return new NextResponse(JSON.stringify({ error: "product doesn't exist" }), { status: 400, })
         }

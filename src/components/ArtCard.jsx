@@ -1,30 +1,39 @@
 "use client"
 import { motion } from "framer-motion";
-import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsBookmark, BsHeart, BsHeartFill } from "react-icons/bs";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Fragment } from "react";
 import 'react-loading-skeleton/dist/skeleton.css'
 import { BiDotsVertical } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 import { formatNumberWithLetter } from "@/lib/utils";
 import ContentLoader from "react-content-loader";
-import { deletePopularArts, togglePopularArtsLike } from "@/redux/features/gallerySlice/popularSlice";
-import { deleteFollowingArts, toggleFollowingArtsLike } from "@/redux/features/gallerySlice/followingSlice";
-import { deleteRecentArts, toggleRecentArtsLike } from "@/redux/features/gallerySlice/recentSlice";
-import { addWishList,deleteWishList } from "@/redux/features/wishListSlice";
+import { appendPopularArts, deletePopularArts, togglePopularArtsLike } from "@/redux/features/gallerySlice/popularSlice";
+import { appendFollowingArts, deleteFollowingArts, toggleFollowingArtsLike } from "@/redux/features/gallerySlice/followingSlice";
+import { appendRecentArts, deleteRecentArts, toggleRecentArtsLike } from "@/redux/features/gallerySlice/recentSlice";
+import { addWishList, deleteWishList } from "@/redux/features/wishListSlice";
+import { FiEdit } from "react-icons/fi"
 
 import { useSession } from 'next-auth/react';
+import { Menu, Transition } from "@headlessui/react";
+import { AiOutlineDelete } from "react-icons/ai";
+import { IoEyeOutline } from "react-icons/io5";
+import { CiShoppingCart } from "react-icons/ci"
+import { CgDetailsMore } from "react-icons/cg"
+
+
+
 const ArtCard = ({ item }) => {
     const { data: session } = useSession();
     const router = useRouter()
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
     const [artData, setArtData] = useState(item);
-    const [dotOpen, setDotOpen] = useState(false);
+    // const [dotOpen, setDotOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [isOwner, setIsOwner] = useState(false);
     const [addToWishlistLoading, setAddToWishlistLoading] = useState(false);
@@ -35,12 +44,21 @@ const ArtCard = ({ item }) => {
         try {
             if (session?.user?.id) {
                 setLoading(true);
-                await axios.delete(`/api/products/${pid}`);
+
+                const promise = axios.delete(`/api/products/${pid}`);
                 // router.push(`/arts/popular`)
-                toast.info(`Deleted ${artData.name}`);
-                dispatch(deleteFollowingArts(artData._id))
-                dispatch(deleteRecentArts(artData._id))
-                dispatch(deletePopularArts(artData._id))
+                toast.promise(promise, {
+                    pending: `Deleting the art.`,
+                    success: `Successfully Deleted!`,
+                    error: `Unable to Delete. Please try again later!`
+                });
+                const res = await promise;
+                if (res.status == 200) {
+                    dispatch(deleteFollowingArts(artData._id))
+                    dispatch(deleteRecentArts(artData._id))
+                    dispatch(deletePopularArts(artData._id))
+                }
+
             }
         } catch (error) {
             console.error("Error deleting:", error);
@@ -87,6 +105,7 @@ const ArtCard = ({ item }) => {
         setIsOwner(session?.user?.id === artData?.artist?.user || session?.user?.id === artData?.artist?.user._id);
 
     }, [item])
+
 
 
 
@@ -201,31 +220,116 @@ const ArtCard = ({ item }) => {
 
                                 {formatNumberWithLetter(artData?.likes?.length) || 0}
                             </span>
-                            <span onClick={() => setDotOpen(prev => !prev)} className="opencloseHandler text-sm hover:bg-gray-200 flex justify-center items-center float-right font-semibold text-gray-800 ml-5 w-5 h-5 rounded-full "><BiDotsVertical /></span>
+
+
+
+                            <div className=" top-16  text-right">
+                                <Menu as="div" className="relative z-50 inline-block text-left">
+                                    <div>
+                                        <Menu.Button className="inline-flex justify-center rounded-full p-[.15rem] text-gray-400 hover:bg-gray-200 hover:text-gray-500 transition duration-300 cursor-pointer">
+                                            <BiDotsVertical
+                                                className="h-5 w-5"
+                                                aria-hidden="true"
+                                            />
+                                        </Menu.Button>
+                                    </div>
+                                    <Transition
+                                        as={Fragment}
+                                        enter="transition ease-out duration-100"
+                                        enterFrom="transform opacity-0 scale-95"
+                                        enterTo="transform opacity-100 scale-100"
+                                        leave="transition ease-in duration-75"
+                                        leaveFrom="transform opacity-100 scale-100"
+                                        leaveTo="transform opacity-0 scale-95"
+                                    >
+                                        <Menu.Items style={{ minWidth: "200px", width: "fit-content" }} className="absolute right-0 mt-2  origin-top-right divide-y-8 divide-gray-800 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+                                            <div className="px-1 py-1">
+                                                {isOwner ? (
+                                                    <>
+                                                        <Menu.Item>
+                                                            <Link
+                                                                href={`/arts/edit?pid=${artData?._id}`}
+                                                                className={`text-gray-900 hover:bg-gray-100 transition duration-300 
+                                                        group flex gap-10 w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
+                                                            >
+                                                                Edit
+                                                                <FiEdit fontSize={"1rem"} className="text-green-600" />
+                                                            </Link>
+                                                        </Menu.Item>
+
+                                                        <Menu.Item>
+                                                            <button
+                                                                onClick={() => { handleDelete(artData?._id) }}
+                                                                className={`text-gray-900 hover:bg-gray-100 transition duration-300 
+                                                        group flex gap-10 w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
+                                                            >
+                                                                {loading ? (
+                                                                    "Deleting..."
+                                                                ) : (
+                                                                    <>
+                                                                        Delete
+                                                                        <AiOutlineDelete fontSize={"1.2rem"} className="text-red-600" />
+                                                                    </>
+                                                                )}
+                                                            </button>
+                                                        </Menu.Item>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <Menu.Item>
+                                                            <Link
+                                                                href={`/arts/${artData?._id}`}
+                                                                className={`text-gray-900 hover:bg-gray-100 transition duration-300 
+                                                        group flex gap-10 w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
+                                                            >
+                                                                View
+                                                                <CgDetailsMore fontSize={"1rem"} className="text-gray-500" />
+                                                            </Link>
+                                                        </Menu.Item>
+                                                        <Menu.Item>
+                                                            <button
+                                                                onClick={addToWishlist}
+                                                                className={`text-gray-900 hover:bg-gray-100 transition duration-300 
+                                                        group inline-flex gap-10 w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
+                                                            >
+                                                                {addToWishlistLoading ? "Adding to Wishlist..." : "Add to Wishlist"}
+                                                                <BsBookmark fontSize={".8rem"} />
+                                                            </button>
+                                                        </Menu.Item>
+                                                        <Menu.Item>
+                                                            <Link
+                                                                href={"#"}
+                                                                className={`text-gray-900 hover:bg-gray-100 transition duration-300 
+                                                        group flex gap-10 w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
+                                                            >
+                                                                Order
+                                                                <CiShoppingCart fontSize={"1.05rem"} />
+                                                            </Link>
+                                                        </Menu.Item>
+
+                                                    </>
+                                                )}
+
+                                            </div>
+
+                                        </Menu.Items>
+                                    </Transition>
+                                </Menu>
+                            </div>
+
+
+
+
+
+                            {/* ---------------------------------------- */}
                         </div>
                     </div>
-                    <div className={`absolute right-0 z-10 ${!dotOpen ? 'hidden' : 'block'}`}>
+                    {/* <div className={`absolute right-0 z-10 ${!dotOpen ? 'hidden' : 'block'}`}>
                         <div className="ppHover mt-4 w-48 origin-top-right rounded-md flex flex-col gap-1 bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
-                            {isOwner ? (
-                                <>
-                                    <Link href={`/arts/edit?pid=${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Edit</Link>
-                                    {loading ? (
-                                        <span className="profileMenuItem bg-red-700 w-full cursor-pointer block px-4 py-2 text-sm text-gray-100">Deleting...</span>
-                                    ) : (
-                                        <span onClick={() => { handleDelete(artData?._id) }} href="/" className="profileMenuItem hover:bg-gray-100 w-full cursor-pointer block px-4 py-2 text-sm text-red-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Delete</span>
-                                    )}
-                                </>
-                            ) : (
-                                <>
-                                    <Link href={`/arts/${artData?._id}`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">View</Link>
-                                    <Link href={`#`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" onClick={addToWishlist}>
-                                        {addToWishlistLoading ? "Adding to Wishlist..." : "Add to Wishlist"}
-                                    </Link>
-                                    <Link href={`#`} className="profileMenuItem hover:bg-gray-100 w-full block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">Order</Link>
-                                </>
-                            )}
+                            
                         </div>
-                    </div>
+                    </div> */}
+
                 </div>
             </div >
 
