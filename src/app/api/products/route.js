@@ -1,5 +1,5 @@
 import dbConnect from "../../../services/dbConnect.service";
-import { pageSize as documentPerPage } from "../../../../utils/utils";
+import { pageSize as documentPerPage } from "@/configs/api.config";
 import Products from "@/models/users/products";
 import UsersDetails from "@/models/users/usersDetail";
 import Follows from "@/models/users/follows";

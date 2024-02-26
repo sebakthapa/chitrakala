@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { BsArrowRight } from "react-icons/bs";
-import { categories, categoriesColor } from "@/configs/artCategories.config";
+import { categories, categoriesColor } from "@/configs/art.config";
 const Categories = () => {
   const cardVariant = {
     visible: {

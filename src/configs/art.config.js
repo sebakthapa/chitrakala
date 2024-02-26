@@ -32,3 +32,5 @@ export const categories = [
     link: `/arts?category=sketch`,
   },
 ];
+
+export const discoverTypes = ["popular", "recent", "following"];

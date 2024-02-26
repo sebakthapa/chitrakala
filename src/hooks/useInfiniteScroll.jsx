@@ -1,4 +1,4 @@
-import { pageSize } from "../../utils/utils";
+import { pageSize } from "@/configs/api.config";
 import { useState, useEffect } from "react";
 
 const useInfiniteScroll = ({

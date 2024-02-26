@@ -6,6 +6,7 @@ import { addRecentArts } from "@/redux/features/gallerySlice/recentSlice";
 import Individual from "@/components/arts/IndividualArts";
 import { useSelector } from "react-redux";
 import Link from "next/link";
+import { discoverTypes } from "@/configs/art.config";
 
 export const generateStaticParams = async () => {
   const cats = discoverTypes.map((type) => ({

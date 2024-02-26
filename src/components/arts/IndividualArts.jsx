@@ -29,7 +29,7 @@ const IndividualArts = ({ productId }) => {
   return (
     <>
       <div className="text-center ">
-        <button onClick={() => router.back()} passHref>
+        <button onClick={() => router.back()}>
           <span className="text-[#1f2937] absolute left-0  m-5">
             <BiSolidLeftArrowCircle fontSize={"2rem"} />
           </span>

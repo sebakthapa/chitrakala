@@ -1,16 +1,15 @@
 "use client";
-import CategoryCard from "@/components/home/Categories";
 import { classNames } from "../../../utils/utils";
 import { Menu, Transition } from "@headlessui/react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { BiChevronDown } from "react-icons/bi";
-import { IoCaretForward, IoFilter } from "react-icons/io5";
+import { IoFilter } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { toast } from "react-toastify";
-import { categories } from "@/configs/artCategories.config";
+import { categories } from "@/configs/art.config";
+import { BiChevronDown } from "react-icons/bi";
 
 const GalleryHeader = ({ slug }) => {
   const { status: sessionStatus } = useSession();

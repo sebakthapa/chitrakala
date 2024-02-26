@@ -14,19 +14,6 @@ export const showNavigationMenu = (pathname) => {
   return isAuthPage;
 };
 
-export const typingEffect = (string, setState, option) => {
-  let count = 0;
-  const wordInterval = setInterval(() => {
-    if (string[count]) {
-      setState((prev) => prev + string[count]);
-      count++;
-    } else {
-      clearInterval(wordInterval);
-      return;
-    }
-  }, option?.speed || 500);
-};
-
 var unitlist = ["", "k", "m", "b", "t"];
 export function formatNumberWithLetter(number) {
   let sign = Math.sign(number);
@@ -42,7 +29,3 @@ export function formatNumberWithLetter(number) {
 export function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
-export const discoverTypes = ["popular", "recent", "following"];
-
-export const pageSize = 12;

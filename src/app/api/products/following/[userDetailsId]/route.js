@@ -1,5 +1,5 @@
-import dbConnect from "../../../../../services/dbConnect.service";
-import { pageSize } from "../../../../../../utils/utils";
+import dbConnect from "@/services/dbConnect.service";
+import { pageSize } from "@/configs/api.config";
 import Follows from "@/models/users/follows";
 import Products from "@/models/users/products";
 import UsersDetails from "@/models/users/usersDetail";

@@ -1,4 +1,4 @@
-import { categories, discoverTypes } from "../../../../../utils/utils";
+import { categories } from "@/configs/art.config";
 import Gallery from "../../../../components/arts/Gallery";
 
 export const generateStaticParams = async () => {
