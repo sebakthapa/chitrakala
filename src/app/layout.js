@@ -1,24 +1,28 @@
-import './globals.css';
-import ReduxProvider from '@/components/ReduxProvider';
-import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
-import { ToastContainer, Zoom } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
-import SessionProvider from '../../context/SessionProvider';
-import Notification from '@/components/Notification';
-
+import "./globals.css";
+import ReduxProvider from "@/components/contextProviders/ReduxProvider";
+import Footer from "@/components/Commons/Footer";
+import Navbar from "@/components/Commons/Navbar";
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import SessionProvider from "../../context/SessionProvider";
+import Notification from "@/components/Commons/Notification";
 
 export const metadata = {
   manifest: "/manifest.json",
-  title: 'Chitrakala - Art Marketplace & Gallery',
-  description: 'Art gallery and marketplace.',
-}
+  title: "Chitrakala - Art Marketplace & Gallery",
+  description: "Art gallery and marketplace.",
+};
 
 export default function RootLayout({ children, ...props }) {
   return (
     <html lang="en">
-      <link rel="icon" href="/brand/smLogo.png" type="image/png" sizes="32x32" />
-      <body className=''>
+      <link
+        rel="icon"
+        href="/brand/smLogo.png"
+        type="image/png"
+        sizes="32x32"
+      />
+      <body className="">
         <ReduxProvider>
           <SessionProvider>
             <ToastContainer
@@ -39,15 +43,14 @@ export default function RootLayout({ children, ...props }) {
             />
             <Notification />
             <Navbar />
-            < div className='max-w-[2000px] m-auto min-h-screen'>
+            <div className="max-w-[2000px] m-auto min-h-screen">
               {children}
               {/* <Notification /> */}
-
             </div>
             <Footer />
           </SessionProvider>
         </ReduxProvider>
       </body>
     </html>
-  )
+  );
 }
