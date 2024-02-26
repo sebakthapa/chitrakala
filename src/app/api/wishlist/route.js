@@ -38,7 +38,9 @@ export const POST = async (request) => {
     await dbConnect();
 
     // Find the userData by user
-    const userData = await UsersDetails.findOne({ user }).populate("wishLists");
+    const userData = await UsersDetails.findOne({ user });
+    console.log("user, productID", user, productId);
+    console.log("userdata.whishlists", userData.wishLists);
 
     if (userData) {
       // Check if productId already exists in the wishLists to avoid duplicates

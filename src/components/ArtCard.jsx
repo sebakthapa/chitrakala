@@ -101,7 +101,12 @@ const ArtCard = ({ item }) => {
         toast.info("Login to add to Wishlist");
       }
     } catch (error) {
+      const res = error.response;
       // Handle any unexpected errors
+      if (res) {
+        const { data } = res;
+        data && toast.error(`${data.error}`);
+      }
       console.error("Error adding to Wishlist:", error);
     } finally {
       setAddToWishlistLoading(false);
