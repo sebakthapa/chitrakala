@@ -13,16 +13,12 @@ import {
 } from "@/redux/features/notificationSlice";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 export default function Notification({ userId }) {
   const dispatch = useDispatch();
   const notifications = useSelector((state) => state.notification);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Fetch notifications when the component mounts
-    fetchNotifications();
-  }, []);
 
   const fetchNotifications = async () => {
     try {
@@ -41,6 +37,11 @@ export default function Notification({ userId }) {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    // Fetch notifications when the component mounts
+    fetchNotifications();
+  }, []);
 
   const handleDelete = async (notificationId) => {
     try {
@@ -115,7 +116,12 @@ export default function Notification({ userId }) {
                             className="-m-3 mb-5 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50"
                           >
                             <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
-                              <img src={notification?.image} alt="" srcSet="" />
+                              <Image
+                                src={notification?.image}
+                                alt="image"
+                                width={500}
+                                height={500}
+                              />
                             </div>
                             <div className="ml-4">
                               <p className="text-sm font-medium text-gray-900">

@@ -135,6 +135,7 @@ const OpenedExhibitions = () => {
                                 src={item?.photo}
                                 width={300}
                                 height={200}
+                                alt="Exhibition photo"
                               />
                             </div>
 

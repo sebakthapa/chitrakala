@@ -136,9 +136,7 @@ const MiniCarousel = () => {
   );
 };
 
-export default MiniCarousel;
-
-const CarouselLoader = () => {
+export const CarouselLoader = () => {
   return (
     <ContentLoader
       speed={2}
@@ -156,3 +154,5 @@ const CarouselLoader = () => {
     </ContentLoader>
   );
 };
+
+export default MiniCarousel;
