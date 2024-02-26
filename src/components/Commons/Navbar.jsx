@@ -10,25 +10,15 @@ import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { showNavigationMenu } from "../../../utils/utils";
-import { BsPlusCircle, BsBookmarks, BsBookmarksFill } from "react-icons/bs";
-import { FaHouse } from "react-icons/fa6";
+import { BsPlusCircle } from "react-icons/bs";
 import { SiIconfinder } from "react-icons/si";
-import {
-  AiFillPicture,
-  AiFillHome,
-  AiFillInfoCircle,
-  AiFillAccountBook,
-} from "react-icons/ai";
+import { AiFillPicture, AiFillHome } from "react-icons/ai";
 import { AiOutlineLogin } from "react-icons/ai";
 import { ImInfo, ImProfile } from "react-icons/im";
-import { FaBell, FaRegBell } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import {
-  addFollowingData,
-  toggleFollowing,
-} from "@/redux/features/followingSlice";
-import Notification from "../home/Notification";
-import Wishlist from "../home/Wishlist";
+import { addFollowingData } from "@/redux/features/followingSlice";
+import Notification from "./Notification";
+import Wishlist from "./Wishlist";
 
 function Navbar() {
   const [visible, setVisible] = useState(false);

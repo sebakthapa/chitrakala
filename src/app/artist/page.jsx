@@ -1,5 +1,5 @@
+import Artist from "@/components/Artist/Artist";
 import React from "react";
-import Artist from "../../components/artist/Artist";
 
 export const metadata = {
   title: "Artists - Chitrakala",

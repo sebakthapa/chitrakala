@@ -1,13 +1,13 @@
-import { Popover, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
-import { BsBookmarks } from 'react-icons/bs';
-import ContentLoader from 'react-content-loader';
-import Link from 'next/link';
-import axios from 'axios';
-import { addWishList, deleteWishList } from '@/redux/features/wishListSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import { MdDelete } from 'react-icons/md';
+import { Popover, Transition } from "@headlessui/react";
+import { Fragment, useEffect, useState } from "react";
+import { BsBookmarks } from "react-icons/bs";
+import ContentLoader from "react-content-loader";
+import Link from "next/link";
+import axios from "axios";
+import { addWishList, deleteWishList } from "@/redux/features/wishListSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { MdDelete } from "react-icons/md";
 
 export default function Wishlist({ userId }) {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export default function Wishlist({ userId }) {
         dispatch(addWishList(response.data));
       }
     } catch (error) {
-      console.error('Error fetching wishlists:', error);
+      console.error("Error fetching wishlists:", error);
     } finally {
       setLoading(false);
     }
@@ -35,16 +35,14 @@ export default function Wishlist({ userId }) {
           user: userId,
           productId,
         },
-      }
-      );
+      });
 
       if (response.status === 200) {
-        toast.done("Cleared")
+        toast.done("Cleared");
       }
     } catch (error) {
-      console.error('Error deleting wishlist item:', error);
-      toast.error("error")
-
+      console.error("Error deleting wishlist item:", error);
+      toast.error("error");
     } finally {
       setLoading(false);
     }
@@ -81,9 +79,9 @@ export default function Wishlist({ userId }) {
                   <div className="bg-gray-50 p-4">
                     {loading ? (
                       <WishlistLoadingSkeleton />
-                    ) :wishlists.length === 0 ?(
+                    ) : wishlists.length === 0 ? (
                       <p className="text-gray-500">Your wishlist is empty.</p>
-                    ): (
+                    ) : (
                       wishlists.map((wishlist) => (
                         <div key={wishlist._id} className="mb-5 flex">
                           <Link
@@ -105,8 +103,11 @@ export default function Wishlist({ userId }) {
                               </p>
                             </div>
                           </Link>
-                          <button className='text-red-600  hover:text-red-300' onClick={() => deleteWishlistItem(wishlist._id)}>
-                            <MdDelete/>
+                          <button
+                            className="text-red-600  hover:text-red-300"
+                            onClick={() => deleteWishlistItem(wishlist._id)}
+                          >
+                            <MdDelete />
                           </button>
                         </div>
                       ))

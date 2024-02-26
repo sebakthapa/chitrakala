@@ -52,7 +52,7 @@ const GalleryHeader = ({ slug }) => {
   let showMenuScroll = false;
   useEffect(() => {
     const menu = categoriesContainerRef.current;
-    console.log(menu.scrollWidth, menu.clientWidth);
+    // console.log(menu.scrollWidth, menu.clientWidth);
     if (menu.scrollWidth > menu.clientWidth) showMenuScroll = true;
   }, []);
 
