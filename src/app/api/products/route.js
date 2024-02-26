@@ -214,7 +214,7 @@ export const POST = async (request) => {
     });
 
     const { followers } = await Follows.findOne({ userDetails: artist });
-    console.log(followers);
+    // console.log(followers);
 
     await Promise.all(
       followers.map(async (id) => {

@@ -57,22 +57,22 @@ const GalleryHeader = ({ slug }) => {
   }, []);
 
   const handleLeftScroll = () => {
-    console.log(
-      categoriesContainerRef.current.scrollLeft +
-        categoriesContainerRef.current.clientWidth,
-      categoriesContainerRef.current.scrollWidth,
-      categoriesContainerRef.current.scrollLeft,
-    );
+    // console.log(
+    //   categoriesContainerRef.current.scrollLeft +
+    //     categoriesContainerRef.current.clientWidth,
+    //   categoriesContainerRef.current.scrollWidth,
+    //   categoriesContainerRef.current.scrollLeft,
+    // );
 
     categoriesContainerRef.current.scrollLeft -=
       categoriesContainerRef.current.clientWidth - 10;
   };
   const handleRightScroll = () => {
-    console.log(
-      categoriesContainerRef.current.scrollLeft +
-        categoriesContainerRef.current.clientWidth,
-      categoriesContainerRef.current.scrollWidth,
-    );
+    // console.log(
+    //   categoriesContainerRef.current.scrollLeft +
+    //     categoriesContainerRef.current.clientWidth,
+    //   categoriesContainerRef.current.scrollWidth,
+    // );
     categoriesContainerRef.current.scrollLeft +=
       categoriesContainerRef.current.clientWidth - 10;
   };

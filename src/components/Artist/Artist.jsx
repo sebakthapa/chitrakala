@@ -60,13 +60,13 @@ const Artist = () => {
     <>
       <main className=" bg-white m-5 p-10 flex flex-col ">
         <div
-          class="searchBar flex   items-center max-w-md my-5 bg-white rounded-full border border-gray-800 "
+          className="searchBar flex   items-center max-w-md my-5 bg-white rounded-full border border-gray-800 "
           x-data="{ search: '' }"
         >
-          <div class="w-full">
+          <div className="w-full">
             <input
               type="search"
-              class="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none"
+              className="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none"
               placeholder="Search"
               x-model="search"
               value={search}
@@ -79,10 +79,10 @@ const Artist = () => {
             <button
               onClick={filterSearchHandle}
               type="submit"
-              class="flex items-center  justify-center w-12 h-12 text-gray-800 rounded-r-lg"
+              className="flex items-center  justify-center w-12 h-12 text-gray-800 rounded-r-lg"
             >
               <svg
-                class="w-5 h-5"
+                className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

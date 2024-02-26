@@ -1,18 +1,22 @@
-import { Popover, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
-import { FaRegBell } from 'react-icons/fa';
-import ContentLoader from 'react-content-loader';
+import { Popover, Transition } from "@headlessui/react";
+import { Fragment, useEffect, useState } from "react";
+import { FaRegBell } from "react-icons/fa";
+import ContentLoader from "react-content-loader";
 import { RxCross2 } from "react-icons/rx";
-import Link from 'next/link';
-import moment from 'moment';
-import { useDispatch, useSelector } from 'react-redux';
-import { addNotification, deleteNotification, clearAllNotification } from '@/redux/features/notificationSlice';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import Link from "next/link";
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addNotification,
+  deleteNotification,
+  clearAllNotification,
+} from "@/redux/features/notificationSlice";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function Notification({ userId }) {
   const dispatch = useDispatch();
-  const notifications = useSelector(state => state.notification);
+  const notifications = useSelector((state) => state.notification);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -26,52 +30,43 @@ export default function Notification({ userId }) {
       const { data, message } = await response.json();
 
       if (response.ok) {
-        console.log(data.notifications)
+        // console.log(data.notifications)
         dispatch(addNotification(data.notifications));
-
       } else {
         console.error(message);
       }
     } catch (error) {
-      console.error('Error fetching notifications:', error.message);
+      console.error("Error fetching notifications:", error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = async(notificationId) => {
-    
+  const handleDelete = async (notificationId) => {
     try {
       dispatch(deleteNotification(notificationId));
-      const response = await axios.delete(`/api/notifications`,{
-        data:{userId,
-        notificationId}
+      const response = await axios.delete(`/api/notifications`, {
+        data: { userId, notificationId },
       });
-
-      
     } catch (error) {
-      console.error('Error fetching notifications:', error.message);
-    } 
-  
-
+      console.error("Error fetching notifications:", error.message);
+    }
   };
 
-  const handleClearAll = async() => {
+  const handleClearAll = async () => {
     dispatch(clearAllNotification());
     try {
-      const response = await axios.delete(`/api/notifications/clearAll`,{
-        data:{userId}
-      })
+      const response = await axios.delete(`/api/notifications/clearAll`, {
+        data: { userId },
+      });
 
       if (response.ok) {
-        toast("Notification deleted")
-
-      } 
+        toast("Notification deleted");
+      }
     } catch (error) {
-      console.error('Error fetching notifications:', error.message);
-    } 
+      console.error("Error fetching notifications:", error.message);
+    }
   };
-  
 
   return (
     <>
@@ -106,10 +101,15 @@ export default function Notification({ userId }) {
                       </>
                     ) : notifications.length === 0 ? (
                       // Check for an empty array when not loading
-                      <p className="text-gray-500">No notifications to display.</p>
+                      <p className="text-gray-500">
+                        No notifications to display.
+                      </p>
                     ) : (
                       notifications.map((notification) => (
-                        <div className='flex justify-between' key={notification._id}>
+                        <div
+                          className="flex justify-between"
+                          key={notification._id}
+                        >
                           <Link
                             href={notification?.redirect}
                             className="-m-3 mb-5 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50"
@@ -121,18 +121,34 @@ export default function Notification({ userId }) {
                               <p className="text-sm font-medium text-gray-900">
                                 {notification.title}
                               </p>
-                              <p className="text-sm text-gray-500">{notification.body}</p>
-                              <span className='text-sm text-gray-500  float-right absolute '>
+                              <p className="text-sm text-gray-500">
+                                {notification.body}
+                              </p>
+                              <span className="text-sm text-gray-500  float-right absolute ">
                                 {moment(notification.createdAt).calendar()}
                               </span>
                             </div>
                           </Link>
-                          <span onClick={() => handleDelete(notification._id)} title='Clear this notification 😲' className='text-red-500 hover:text-red-50 hover:bg-red-500 w-fit h-min rounded-full text-lg'> <RxCross2 /> </span>
+                          <span
+                            onClick={() => handleDelete(notification._id)}
+                            title="Clear this notification 😲"
+                            className="text-red-500 hover:text-red-50 hover:bg-red-500 w-fit h-min rounded-full text-lg"
+                          >
+                            {" "}
+                            <RxCross2 />{" "}
+                          </span>
                         </div>
                       ))
                     )}
                     {notifications.length > 0 && (
-                      <span onClick={handleClearAll} title='Clear All notification 😆' className='text-red-500 cursor-pointer hover:underline w-fit h-min rounded-full text-xs'> Clear All </span>
+                      <span
+                        onClick={handleClearAll}
+                        title="Clear All notification 😆"
+                        className="text-red-500 cursor-pointer hover:underline w-fit h-min rounded-full text-xs"
+                      >
+                        {" "}
+                        Clear All{" "}
+                      </span>
                     )}
                   </div>
                 </div>

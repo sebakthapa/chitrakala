@@ -110,7 +110,7 @@ const Upload = () => {
       } catch (error) {
         console.error("Error uploading image:", error);
         const res = error?.response;
-        console.log(res);
+        // console.log(res);
         if (res?.data?.message) {
           toast.error(res.data.message);
         }

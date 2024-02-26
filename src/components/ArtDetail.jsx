@@ -21,7 +21,6 @@ const ArtDetail = ({ artdata, status }) => {
         if (res.status === 200) {
           const data = await res.json();
           setArtistArtData(data);
-          console.log(data);
         }
       }
     } catch (error) {

@@ -15,73 +15,73 @@ const Page = () => {
             <div className="md:flex justify-between ">
               <ul
                 role="list"
-                class="p-5  divide-y divide-gray-200 flex-1 w-full"
+                className="p-5  divide-y divide-gray-200 flex-1 w-full"
               >
-                <li class="py-3 sm:py-4">
-                  <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <div class="flex-shrink-0">
+                <li className="py-3 sm:py-4">
+                  <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                    <div className="flex-shrink-0">
                       <img
-                        class="w-8 h-8 rounded-full"
+                        className="w-8 h-8 rounded-full"
                         src="/default-profile.png"
                         alt="Neil image"
                       />
                     </div>
-                    <div class="flex-1 min-w-0">
-                      <p class="text-sm font-semibold text-gray-900 truncate ">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-gray-900 truncate ">
                         Neil Sims
                       </p>
-                      <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                      <p className="text-sm text-gray-500 truncate dark:text-gray-400">
                         email@flowbite.com
                       </p>
                     </div>
-                    <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                      <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                    <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                      <span className="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
                       Completed
                     </span>
                   </div>
                 </li>
-                <li class="py-3 sm:py-4">
-                  <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <div class="flex-shrink-0">
+                <li className="py-3 sm:py-4">
+                  <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                    <div className="flex-shrink-0">
                       <img
-                        class="w-8 h-8 rounded-full"
+                        className="w-8 h-8 rounded-full"
                         src="/default-profile.png"
                         alt="Neil image"
                       />
                     </div>
-                    <div class="flex-1 min-w-0">
-                      <p class="text-sm font-semibold text-gray-900 truncate ">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-gray-900 truncate ">
                         Bonnie Green
                       </p>
-                      <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                      <p className="text-sm text-gray-500 truncate dark:text-gray-400">
                         email@flowbite.com
                       </p>
                     </div>
-                    <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
-                      <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                    <span className="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                      <span className="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
                       Rejected
                     </span>
                   </div>
                 </li>
-                <li class="py-3 sm:py-4">
-                  <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <div class="flex-shrink-0">
+                <li className="py-3 sm:py-4">
+                  <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                    <div className="flex-shrink-0">
                       <img
-                        class="w-8 h-8 rounded-full"
+                        className="w-8 h-8 rounded-full"
                         src="/default-profile.png"
                         alt="Neil image"
                       />
                     </div>
-                    <div class="flex-1 min-w-0">
-                      <p class="text-sm font-semibold text-gray-900 truncate ">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-gray-900 truncate ">
                         Bonnie Green
                       </p>
-                      <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                      <p className="text-sm text-gray-500 truncate dark:text-gray-400">
                         email@flowbite.com
                       </p>
                     </div>
-                    <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                      <span class="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
+                    <span className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                      <span className="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
                       pending
                     </span>
                   </div>

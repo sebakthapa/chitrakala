@@ -21,7 +21,7 @@ const Notification = () => {
     const messaging = IS_CLIENT && getMessaging(app);
     IS_CLIENT &&
       onMessage(messaging, (payload) => {
-        console.log("Message received. vayo hai ", payload);
+        // console.log("Message received. vayo hai ", payload);
         toast(payload.notification.title, { transition: Bounce });
       });
   }, []);

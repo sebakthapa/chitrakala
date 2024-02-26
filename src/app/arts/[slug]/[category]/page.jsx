@@ -5,7 +5,7 @@ export const generateStaticParams = async () => {
   const cats = categories.map(({ type: categoryType }) => {
     return { category: categoryType };
   });
-  console.log(cats);
+  // console.log(cats);
   return cats;
 };
 
@@ -14,7 +14,7 @@ const Page = ({ params: { category, slug } }) => {
   return (
     <>
       {categories.map(({ type }) => {
-        type == category && console.log(type, category);
+        // type == category && console.log(type, category);
         return (
           type == category && (
             <Gallery

@@ -99,8 +99,8 @@ export const PATCH = async (req, res) => {
         updatedNotification,
       );
       // Handle the result if needed
-      console.log(res.message);
-      console.log(res.data);
+      // console.log(res.message);
+      // console.log(res.data);
     } catch (error) {
       console.error(error.message);
     }

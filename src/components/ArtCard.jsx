@@ -90,7 +90,7 @@ const ArtCard = ({ item }) => {
         if (res.status === 200) {
           // Display a toast message indicating success
           toast.success("Added to Wishlist!");
-          console.log(res.data);
+          // console.log(res.data);
           dispatch(addWishList(res.data));
         } else {
           // Handle the case when adding to the wishlist fails

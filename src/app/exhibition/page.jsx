@@ -9,8 +9,8 @@ export const metadata = {
 const Page = () => {
   return (
     <>
-      <main class="py-4">
-        <div class="px-4">
+      <main className="py-4">
+        <div className="px-4">
           <Exhibition />
         </div>
       </main>

@@ -124,7 +124,7 @@ export function EmailVerifyHtml(params) {
         }
       </style>
     </head>
-    <body class="dark-bg-gray-900" style="margin: 0; width: 100%; padding: 0; word-break: break-word; -webkit-font-smoothing: antialiased; background-color: #F7F8FA">
+    <body className="dark-bg-gray-900" style="margin: 0; width: 100%; padding: 0; word-break: break-word; -webkit-font-smoothing: antialiased; background-color: #F7F8FA">
       <div style="display: none">
         Let's get you Verified
         &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;
@@ -139,28 +139,28 @@ export function EmailVerifyHtml(params) {
                 <v:textbox inset="0,0,0,0">
               <![endif]-->
               <div style="max-height: 40px">
-                <div class="dark-bg-gray-900" style="height: 300px; background-color: #DEE2E9"></div>
+                <div className="dark-bg-gray-900" style="height: 300px; background-color: #DEE2E9"></div>
               </div>
               <!--[if mso]>
                 </v:textbox>
               </v:rect>
               <![endif]-->
-              <table class="sm-w-full" style="position: relative; max-height: 0; width: 568px; opacity: 0.999" cellpadding="0" cellspacing="0" role="presentation">
+              <table className="sm-w-full" style="position: relative; max-height: 0; width: 568px; opacity: 0.999" cellpadding="0" cellspacing="0" role="presentation">
                 <tr>
                   <td style="vertical-align: top" valign="top">
-                    <div class="sm-px-6">
+                    <div className="sm-px-6">
                       <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
                         <tr>
-                          <td class="sm-px-6" style="padding-left: 40px; padding-right: 40px">
+                          <td className="sm-px-6" style="padding-left: 40px; padding-right: 40px">
                             <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
                               <tr>
                                 <td>
-                                  <a href="#" class="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #191847">
+                                  <a href="#" className="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #191847">
                                     CHITRAKALA
                                   </a>
                                 </td>
                                 <td align="right">
-                                  <!-- <a href="#" class="dark-text-gray-900 dark-bg-gray-50 hover-bg-slate-100" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #f9fafb; padding: 7px 12px; text-align: center; font-size: 12px; font-weight: 700; color: #191847; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.06), 0px 1px 3px rgba(0, 0, 0, 0.1)">
+                                  <!-- <a href="#" className="dark-text-gray-900 dark-bg-gray-50 hover-bg-slate-100" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #f9fafb; padding: 7px 12px; text-align: center; font-size: 12px; font-weight: 700; color: #191847; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.06), 0px 1px 3px rgba(0, 0, 0, 0.1)">
                                     <!--[if mso
                                       ]><i
                                         style="
@@ -197,19 +197,19 @@ export function EmailVerifyHtml(params) {
                         </tr>
                       </table>
                       <div role="separator" style="line-height: 40px">&zwnj;</div>
-                      <table class="dark-bg-gray-600" style="width: 100%; border-radius: 8px; background-color: #fff; box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1)" cellpadding="0" cellspacing="0" role="presentation">
+                      <table className="dark-bg-gray-600" style="width: 100%; border-radius: 8px; background-color: #fff; box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1)" cellpadding="0" cellspacing="0" role="presentation">
                         <tr>
-                          <td class="sm-px-6" style="padding: 40px">
+                          <td className="sm-px-6" style="padding: 40px">
                             <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
                               <tr>
                                 <td>
-                                  <h1 class="dark-text-gray-50" style="margin: 0; font-size: 36px; font-weight: 700; line-height: 1; letter-spacing: -0.025em; color: #191847">
+                                  <h1 className="dark-text-gray-50" style="margin: 0; font-size: 36px; font-weight: 700; line-height: 1; letter-spacing: -0.025em; color: #191847">
                                     Let's get you Verified
                                   </h1>
                                   <div role="separator" style="line-height: 24px">
                                     &zwnj;
                                   </div>
-                                  <p class="dark-text-gray-50" style="margin: 0; font-size: 16px; line-height: 26px; color: #191847">
+                                  <p className="dark-text-gray-50" style="margin: 0; font-size: 16px; line-height: 26px; color: #191847">
                                    <!-- Hi [Customer Name],
                                     <br>
                                     <br>
@@ -223,7 +223,7 @@ export function EmailVerifyHtml(params) {
                               </tr>
                               <tr>
                                 <td>
-                                  <a href="${url}" class="sm-block dark-text-primary-500 hover-bg-primary-600 dark-bg-gray-50 dark-hover-bg-gray-50" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #0047FF; padding: 14px 24px; text-align: center; font-size: 16px; font-weight: 700; color: #f9fafb; box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.06), 0px 4px 6px -1px rgba(0, 0, 0, 0.1)">
+                                  <a href="${url}" className="sm-block dark-text-primary-500 hover-bg-primary-600 dark-bg-gray-50 dark-hover-bg-gray-50" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #0047FF; padding: 14px 24px; text-align: center; font-size: 16px; font-weight: 700; color: #f9fafb; box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.06), 0px 4px 6px -1px rgba(0, 0, 0, 0.1)">
                                     <!--[if mso
                                       ]><i
                                         style="
@@ -250,7 +250,7 @@ export function EmailVerifyHtml(params) {
                                     <span style="font-weight: 700">Or copy and paste the following URL into your
                                       browser:</span>
                                     <br>
-                                    <a href="${url}" class="hover-text-primary-600 dark-text-primary-200 dark-hover-text-primary-100" style="text-decoration: none; font-size: 11px; line-height: 26px; color: #0047FF">
+                                    <a href="${url}" className="hover-text-primary-600 dark-text-primary-200 dark-hover-text-primary-100" style="text-decoration: none; font-size: 11px; line-height: 26px; color: #0047FF">
                                       ${url}
                                     </a>
                                   </p>
@@ -264,50 +264,50 @@ export function EmailVerifyHtml(params) {
                   </td>
                 </tr>
               </table>
-              <div class="sm-leading-10" role="separator" style="line-height: 64px">&zwnj;</div>
-              <table class="sm-w-full dark-text-gray-200" style="width: 568px; color: #767E9D" cellpadding="0" cellspacing="0" role="presentation">
+              <div className="sm-leading-10" role="separator" style="line-height: 64px">&zwnj;</div>
+              <table className="sm-w-full dark-text-gray-200" style="width: 568px; color: #767E9D" cellpadding="0" cellspacing="0" role="presentation">
                 <tr>
                   <td style="padding-left: 40px; padding-right: 40px">
-                    <a href="#" class="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #767E9D">
+                    <a href="#" className="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #767E9D">
                       CHITRAKALA
                     </a>
                     <div style="line-height: 16px">&zwnj;</div>
-                    <table class="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
+                    <table className="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
                       <tr>
                         
-                        <td class="sm-block sm-px-0" style=" padding-right: 12px">
-                          <table class="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
+                        <td className="sm-block sm-px-0" style=" padding-right: 12px">
+                          <table className="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
                             <tr>
-                              <td class="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
+                              <td className="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
                             </tr>
                           </table>
                           <!--[if !mso]><!-->
-                            <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                            <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                           <!--<![endif]-->
                         </td>
-                        <td class="sm-block sm-w-full">
-                          <a href="https://twitter.com/example" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                        <td className="sm-block sm-w-full">
+                          <a href="https://twitter.com/example" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                             Twitter
                           </a>
                         </td>
-                        <td class="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
-                          <table class="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
+                        <td className="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
+                          <table className="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
                             <tr>
-                              <td class="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
+                              <td className="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
                             </tr>
                           </table>
                           <!--[if !mso]><!-->
-                            <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                            <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                           <!--<![endif]-->
                         </td>
-                        <td class="sm-block sm-w-full">
-                          <a href="https://instagram.com/example" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                        <td className="sm-block sm-w-full">
+                          <a href="https://instagram.com/example" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                             Instagram
                           </a>
                         </td>
                       </tr>
                     </table>
-                    <hr class="sm-mt-0 dark-bg-gray-800 dark-text-gray-800" style="margin-top: 12px; margin-bottom: 16px; height: 1px; border-width: 0px; background-color: #DEE2E9; color: #DEE2E9">
+                    <hr className="sm-mt-0 dark-bg-gray-800 dark-text-gray-800" style="margin-top: 12px; margin-bottom: 16px; height: 1px; border-width: 0px; background-color: #DEE2E9; color: #DEE2E9">
                     <p style="margin: 0; font-size: 12px; line-height: 16px">
                       If you have questions or need help, don't hesitate to contact our
                       support team!
@@ -318,46 +318,46 @@ export function EmailVerifyHtml(params) {
                      -->
                     </p>
                     <div style="line-height: 16px">&zwnj;</div>
-                    <table class="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
+                    <table className="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
                       <tr>
-                        <td class="sm-block sm-w-full">
-                          <a href="#" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                        <td className="sm-block sm-w-full">
+                          <a href="#" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                             Terms &amp; conditions
                           </a>
                         </td>
-                        <td class="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
-                          <table class="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
+                        <td className="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
+                          <table className="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
                             <tr>
-                              <td class="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
+                              <td className="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
                             </tr>
                           </table>
                           <!--[if !mso]><!-->
-                            <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                            <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                           <!--<![endif]-->
                         </td>
-                        <td class="sm-block sm-w-full">
-                          <a href="#" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                        <td className="sm-block sm-w-full">
+                          <a href="#" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                             Privacy policy
                           </a>
                         </td>
-                        <td class="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
-                          <table class="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
+                        <td className="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
+                          <table className="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
                             <tr>
-                              <td class="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
+                              <td className="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
                             </tr>
                           </table>
                           <!--[if !mso]><!-->
-                            <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                            <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                           <!--<![endif]-->
                         </td>
-                        <td class="sm-block sm-w-full">
-                          <a href="#" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                        <td className="sm-block sm-w-full">
+                          <a href="#" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                             Contact us
                           </a>
                         </td>
-                        <td class="sm-block sm-px-0" style="mso-hide: all; display: none; padding-left: 12px; padding-right: 12px">
+                        <td className="sm-block sm-px-0" style="mso-hide: all; display: none; padding-left: 12px; padding-right: 12px">
                           <!--[if !mso]><!-->
-                            <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                            <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                           <!--<![endif]-->
                         </td>
                       </tr>
@@ -509,7 +509,7 @@ export const passwordResetHtml = (params) => {
       }
     </style>
   </head>
-  <body class="dark-bg-gray-900" style="margin: 0; width: 100%; padding: 0; word-break: break-word; -webkit-font-smoothing: antialiased; background-color: #F7F8FA">
+  <body className="dark-bg-gray-900" style="margin: 0; width: 100%; padding: 0; word-break: break-word; -webkit-font-smoothing: antialiased; background-color: #F7F8FA">
     <div style="display: none">
       Reset your password
       &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;
@@ -524,28 +524,28 @@ export const passwordResetHtml = (params) => {
               <v:textbox inset="0,0,0,0">
             <![endif]-->
             <div style="max-height: 40px">
-              <div class="dark-bg-gray-900" style="height: 300px; background-color: #DEE2E9"></div>
+              <div className="dark-bg-gray-900" style="height: 300px; background-color: #DEE2E9"></div>
             </div>
             <!--[if mso]>
               </v:textbox>
             </v:rect>
             <![endif]-->
-            <table class="sm-w-full" style="position: relative; max-height: 0; width: 568px; opacity: 0.999" cellpadding="0" cellspacing="0" role="presentation">
+            <table className="sm-w-full" style="position: relative; max-height: 0; width: 568px; opacity: 0.999" cellpadding="0" cellspacing="0" role="presentation">
               <tr>
                 <td style="vertical-align: top" valign="top">
-                  <div class="sm-px-6">
+                  <div className="sm-px-6">
                     <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
                       <tr>
-                        <td class="sm-px-6" style="padding-left: 40px; padding-right: 40px">
+                        <td className="sm-px-6" style="padding-left: 40px; padding-right: 40px">
                           <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
                             <tr>
                               <td>
-                                <a href="#" class="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #191847">
+                                <a href="#" className="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #191847">
                                   CHITRAKALA
                                 </a>
                               </td>
                               <td align="right">
-                                <!-- <a href="#" class="dark-text-gray-900 dark-bg-gray-50 hover-bg-slate-100" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #f9fafb; padding: 7px 12px; text-align: center; font-size: 12px; font-weight: 700; color: #191847; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.06), 0px 1px 3px rgba(0, 0, 0, 0.1)">
+                                <!-- <a href="#" className="dark-text-gray-900 dark-bg-gray-50 hover-bg-slate-100" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #f9fafb; padding: 7px 12px; text-align: center; font-size: 12px; font-weight: 700; color: #191847; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.06), 0px 1px 3px rgba(0, 0, 0, 0.1)">
                                   <!--[if mso
                                     ]><i
                                       style="
@@ -582,19 +582,19 @@ export const passwordResetHtml = (params) => {
                       </tr>
                     </table>
                     <div role="separator" style="line-height: 40px">&zwnj;</div>
-                    <table class="dark-bg-gray-600" style="width: 100%; border-radius: 8px; background-color: #fff; box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1)" cellpadding="0" cellspacing="0" role="presentation">
+                    <table className="dark-bg-gray-600" style="width: 100%; border-radius: 8px; background-color: #fff; box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1)" cellpadding="0" cellspacing="0" role="presentation">
                       <tr>
-                        <td class="sm-px-6" style="padding: 40px">
+                        <td className="sm-px-6" style="padding: 40px">
                           <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
                             <tr>
                               <td>
-                                <h1 class="dark-text-gray-50" style="margin: 0; font-size: 36px; font-weight: 700; line-height: 1; letter-spacing: -0.025em; color: #191847">
+                                <h1 className="dark-text-gray-50" style="margin: 0; font-size: 36px; font-weight: 700; line-height: 1; letter-spacing: -0.025em; color: #191847">
                                   Reset your password
                                 </h1>
                                 <div role="separator" style="line-height: 24px">
                                   &zwnj;
                                 </div>
-                                <p class="dark-text-gray-50" style="margin: 0; font-size: 16px; line-height: 26px; color: #191847">
+                                <p className="dark-text-gray-50" style="margin: 0; font-size: 16px; line-height: 26px; color: #191847">
                                  <!-- Hi [Customer Name],
                                   <br>
                                   <br>
@@ -608,7 +608,7 @@ export const passwordResetHtml = (params) => {
                             </tr>
                             <tr>
                               <td>
-                                <a href="${url}" class="sm-block dark-text-primary-500 hover-bg-primary-600 dark-bg-gray-50 dark-hover-bg-gray-50" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #0047FF; padding: 14px 24px; text-align: center; font-size: 16px; font-weight: 700; color: #f9fafb; box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.06), 0px 4px 6px -1px rgba(0, 0, 0, 0.1)">
+                                <a href="${url}" className="sm-block dark-text-primary-500 hover-bg-primary-600 dark-bg-gray-50 dark-hover-bg-gray-50" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #0047FF; padding: 14px 24px; text-align: center; font-size: 16px; font-weight: 700; color: #f9fafb; box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.06), 0px 4px 6px -1px rgba(0, 0, 0, 0.1)">
                                   <!--[if mso
                                     ]><i
                                       style="
@@ -631,7 +631,7 @@ export const passwordResetHtml = (params) => {
                                 <div role="separator" style="line-height: 24px">
                                   &zwnj;
                                 </div>
-                                 <p class="dark-text-gray-50" style="margin: 0; font-size: 16px; line-height: 26px; color: #191847">
+                                 <p className="dark-text-gray-50" style="margin: 0; font-size: 16px; line-height: 26px; color: #191847">
                                  <!-- Hi [Customer Name],
                                   <br>
                                   <br>
@@ -642,7 +642,7 @@ export const passwordResetHtml = (params) => {
                                   <span style="font-weight: 700">Or copy and paste the following URL into your
                                     browser:</span>
                                   <br>
-                                  <a href="${url}" class="hover-text-primary-600 dark-text-primary-200 dark-hover-text-primary-100" style="text-decoration: none; font-size: 11px; line-height: 26px; color: #0047FF">
+                                  <a href="${url}" className="hover-text-primary-600 dark-text-primary-200 dark-hover-text-primary-100" style="text-decoration: none; font-size: 11px; line-height: 26px; color: #0047FF">
                                     ${url}
                                   </a>
                                 </p>
@@ -656,50 +656,50 @@ export const passwordResetHtml = (params) => {
                 </td>
               </tr>
             </table>
-            <div class="sm-leading-10" role="separator" style="line-height: 64px">&zwnj;</div>
-            <table class="sm-w-full dark-text-gray-200" style="width: 568px; color: #767E9D" cellpadding="0" cellspacing="0" role="presentation">
+            <div className="sm-leading-10" role="separator" style="line-height: 64px">&zwnj;</div>
+            <table className="sm-w-full dark-text-gray-200" style="width: 568px; color: #767E9D" cellpadding="0" cellspacing="0" role="presentation">
               <tr>
                 <td style="padding-left: 40px; padding-right: 40px">
-                  <a href="#" class="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #767E9D">
+                  <a href="#" className="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #767E9D">
                     CHITRAKALA
                   </a>
                   <div style="line-height: 16px">&zwnj;</div>
-                  <table class="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
+                  <table className="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
                     <tr>
                       
-                      <td class="sm-block sm-px-0" style=" padding-right: 12px">
-                        <table class="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
+                      <td className="sm-block sm-px-0" style=" padding-right: 12px">
+                        <table className="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
-                            <td class="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
+                            <td className="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
                           </tr>
                         </table>
                         <!--[if !mso]><!-->
-                          <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                          <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                         <!--<![endif]-->
                       </td>
-                      <td class="sm-block sm-w-full">
-                        <a href="https://twitter.com/example" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                      <td className="sm-block sm-w-full">
+                        <a href="https://twitter.com/example" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                           Twitter
                         </a>
                       </td>
-                      <td class="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
-                        <table class="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
+                      <td className="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
+                        <table className="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
-                            <td class="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
+                            <td className="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
                           </tr>
                         </table>
                         <!--[if !mso]><!-->
-                          <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                          <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                         <!--<![endif]-->
                       </td>
-                      <td class="sm-block sm-w-full">
-                        <a href="https://instagram.com/example" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                      <td className="sm-block sm-w-full">
+                        <a href="https://instagram.com/example" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                           Instagram
                         </a>
                       </td>
                     </tr>
                   </table>
-                  <hr class="sm-mt-0 dark-bg-gray-800 dark-text-gray-800" style="margin-top: 12px; margin-bottom: 16px; height: 1px; border-width: 0px; background-color: #DEE2E9; color: #DEE2E9">
+                  <hr className="sm-mt-0 dark-bg-gray-800 dark-text-gray-800" style="margin-top: 12px; margin-bottom: 16px; height: 1px; border-width: 0px; background-color: #DEE2E9; color: #DEE2E9">
                   <p style="margin: 0; font-size: 12px; line-height: 16px">
                     If you have questions or need help, don't hesitate to contact our
                     support team!
@@ -710,46 +710,46 @@ export const passwordResetHtml = (params) => {
                    -->
                   </p>
                   <div style="line-height: 16px">&zwnj;</div>
-                  <table class="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
+                  <table className="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
                     <tr>
-                      <td class="sm-block sm-w-full">
-                        <a href="#" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                      <td className="sm-block sm-w-full">
+                        <a href="#" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                           Terms &amp; conditions
                         </a>
                       </td>
-                      <td class="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
-                        <table class="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
+                      <td className="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
+                        <table className="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
-                            <td class="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
+                            <td className="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
                           </tr>
                         </table>
                         <!--[if !mso]><!-->
-                          <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                          <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                         <!--<![endif]-->
                       </td>
-                      <td class="sm-block sm-w-full">
-                        <a href="#" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                      <td className="sm-block sm-w-full">
+                        <a href="#" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                           Privacy policy
                         </a>
                       </td>
-                      <td class="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
-                        <table class="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
+                      <td className="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
+                        <table className="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
-                            <td class="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
+                            <td className="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
                           </tr>
                         </table>
                         <!--[if !mso]><!-->
-                          <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                          <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                         <!--<![endif]-->
                       </td>
-                      <td class="sm-block sm-w-full">
-                        <a href="#" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                      <td className="sm-block sm-w-full">
+                        <a href="#" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                           Contact us
                         </a>
                       </td>
-                      <td class="sm-block sm-px-0" style="mso-hide: all; display: none; padding-left: 12px; padding-right: 12px">
+                      <td className="sm-block sm-px-0" style="mso-hide: all; display: none; padding-left: 12px; padding-right: 12px">
                         <!--[if !mso]><!-->
-                          <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                          <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                         <!--<![endif]-->
                       </td>
                     </tr>
@@ -899,7 +899,7 @@ export const passwordResetSuccessHtml = (params) => {
       }
     </style>
   </head>
-  <body class="dark-bg-gray-900" style="margin: 0; width: 100%; padding: 0; word-break: break-word; -webkit-font-smoothing: antialiased; background-color: #F7F8FA">
+  <body className="dark-bg-gray-900" style="margin: 0; width: 100%; padding: 0; word-break: break-word; -webkit-font-smoothing: antialiased; background-color: #F7F8FA">
     <div style="display: none">
       Your password has been changed.
       &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;
@@ -914,28 +914,28 @@ export const passwordResetSuccessHtml = (params) => {
               <v:textbox inset="0,0,0,0">
             <![endif]-->
             <div style="max-height: 40px">
-              <div class="dark-bg-gray-900" style="height: 300px; background-color: #DEE2E9"></div>
+              <div className="dark-bg-gray-900" style="height: 300px; background-color: #DEE2E9"></div>
             </div>
             <!--[if mso]>
               </v:textbox>
             </v:rect>
             <![endif]-->
-            <table class="sm-w-full" style="position: relative; max-height: 0; width: 568px; opacity: 0.999" cellpadding="0" cellspacing="0" role="presentation">
+            <table className="sm-w-full" style="position: relative; max-height: 0; width: 568px; opacity: 0.999" cellpadding="0" cellspacing="0" role="presentation">
               <tr>
                 <td style="vertical-align: top" valign="top">
-                  <div class="sm-px-6">
+                  <div className="sm-px-6">
                     <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
                       <tr>
-                        <td class="sm-px-6" style="padding-left: 40px; padding-right: 40px">
+                        <td className="sm-px-6" style="padding-left: 40px; padding-right: 40px">
                           <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
                             <tr>
                               <td>
-                                <a href="#" class="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #191847">
+                                <a href="#" className="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #191847">
                                   CHITRAKALA
                                 </a>
                               </td>
                               <td align="right">
-                                <!-- <a href="#" class="dark-text-gray-900 dark-bg-gray-50 hover-bg-slate-100" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #f9fafb; padding: 7px 12px; text-align: center; font-size: 12px; font-weight: 700; color: #191847; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.06), 0px 1px 3px rgba(0, 0, 0, 0.1)">
+                                <!-- <a href="#" className="dark-text-gray-900 dark-bg-gray-50 hover-bg-slate-100" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #f9fafb; padding: 7px 12px; text-align: center; font-size: 12px; font-weight: 700; color: #191847; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.06), 0px 1px 3px rgba(0, 0, 0, 0.1)">
                                   <!--[if mso
                                     ]><i
                                       style="
@@ -972,19 +972,19 @@ export const passwordResetSuccessHtml = (params) => {
                       </tr>
                     </table>
                     <div role="separator" style="line-height: 40px">&zwnj;</div>
-                    <table class="dark-bg-gray-600" style="width: 100%; border-radius: 8px; background-color: #fff; box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1)" cellpadding="0" cellspacing="0" role="presentation">
+                    <table className="dark-bg-gray-600" style="width: 100%; border-radius: 8px; background-color: #fff; box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1)" cellpadding="0" cellspacing="0" role="presentation">
                       <tr>
-                        <td class="sm-px-6" style="padding: 40px">
+                        <td className="sm-px-6" style="padding: 40px">
                           <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
                             <tr>
                               <td>
-                                <h1 class="dark-text-gray-50" style="margin: 0; font-size: 36px; font-weight: 700; line-height: 1; letter-spacing: -0.025em; color: #191847">
+                                <h1 className="dark-text-gray-50" style="margin: 0; font-size: 36px; font-weight: 700; line-height: 1; letter-spacing: -0.025em; color: #191847">
                                   Password Change Successful.
                                 </h1>
                                 <div role="separator" style="line-height: 24px">
                                   &zwnj;
                                 </div>
-                                <p class="dark-text-gray-50" style="margin: 0; font-size: 16px; line-height: 26px; color: #191847">
+                                <p className="dark-text-gray-50" style="margin: 0; font-size: 16px; line-height: 26px; color: #191847">
                                  <!-- Hi [Customer Name],
                                   <br>
                                   <br>
@@ -999,7 +999,7 @@ export const passwordResetSuccessHtml = (params) => {
                             </tr>
                             <tr>
                               <td>
-                                <a href="${host}/auth/login" class="sm-block dark-text-primary-500 hover-bg-primary-600 dark-bg-gray-50 dark-hover-bg-gray-50" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #0047FF; padding: 14px 24px; text-align: center; font-size: 16px; font-weight: 700; color: #f9fafb; box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.06), 0px 4px 6px -1px rgba(0, 0, 0, 0.1)">
+                                <a href="${host}/auth/login" className="sm-block dark-text-primary-500 hover-bg-primary-600 dark-bg-gray-50 dark-hover-bg-gray-50" style="text-decoration: none; display: inline-block; border-radius: 8px; background-color: #0047FF; padding: 14px 24px; text-align: center; font-size: 16px; font-weight: 700; color: #f9fafb; box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.06), 0px 4px 6px -1px rgba(0, 0, 0, 0.1)">
                                   <!--[if mso
                                     ]><i
                                       style="
@@ -1034,50 +1034,50 @@ export const passwordResetSuccessHtml = (params) => {
                 </td>
               </tr>
             </table>
-            <div class="sm-leading-10" role="separator" style="line-height: 64px">&zwnj;</div>
-            <table class="sm-w-full dark-text-gray-200" style="width: 568px; color: #767E9D" cellpadding="0" cellspacing="0" role="presentation">
+            <div className="sm-leading-10" role="separator" style="line-height: 64px">&zwnj;</div>
+            <table className="sm-w-full dark-text-gray-200" style="width: 568px; color: #767E9D" cellpadding="0" cellspacing="0" role="presentation">
               <tr>
                 <td style="padding-left: 40px; padding-right: 40px">
-                  <a href="#" class="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #767E9D">
+                  <a href="#" className="dark-text-gray-50" style="text-decoration: none; font-weight: 700; color: #767E9D">
                     CHITRAKALA
                   </a>
                   <div style="line-height: 16px">&zwnj;</div>
-                  <table class="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
+                  <table className="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
                     <tr>
                       
-                      <td class="sm-block sm-px-0" style=" padding-right: 12px">
-                        <table class="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
+                      <td className="sm-block sm-px-0" style=" padding-right: 12px">
+                        <table className="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
-                            <td class="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
+                            <td className="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
                           </tr>
                         </table>
                         <!--[if !mso]><!-->
-                          <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                          <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                         <!--<![endif]-->
                       </td>
-                      <td class="sm-block sm-w-full">
-                        <a href="https://twitter.com/example" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                      <td className="sm-block sm-w-full">
+                        <a href="https://twitter.com/example" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                           Twitter
                         </a>
                       </td>
-                      <td class="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
-                        <table class="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
+                      <td className="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
+                        <table className="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
-                            <td class="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
+                            <td className="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
                           </tr>
                         </table>
                         <!--[if !mso]><!-->
-                          <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                          <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                         <!--<![endif]-->
                       </td>
-                      <td class="sm-block sm-w-full">
-                        <a href="https://instagram.com/example" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                      <td className="sm-block sm-w-full">
+                        <a href="https://instagram.com/example" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                           Instagram
                         </a>
                       </td>
                     </tr>
                   </table>
-                  <hr class="sm-mt-0 dark-bg-gray-800 dark-text-gray-800" style="margin-top: 12px; margin-bottom: 16px; height: 1px; border-width: 0px; background-color: #DEE2E9; color: #DEE2E9">
+                  <hr className="sm-mt-0 dark-bg-gray-800 dark-text-gray-800" style="margin-top: 12px; margin-bottom: 16px; height: 1px; border-width: 0px; background-color: #DEE2E9; color: #DEE2E9">
                   <p style="margin: 0; font-size: 12px; line-height: 16px">
                     If you have questions or need help, don't hesitate to contact our
                     support team!
@@ -1088,46 +1088,46 @@ export const passwordResetSuccessHtml = (params) => {
                    -->
                   </p>
                   <div style="line-height: 16px">&zwnj;</div>
-                  <table class="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
+                  <table className="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0" cellspacing="0" role="presentation">
                     <tr>
-                      <td class="sm-block sm-w-full">
-                        <a href="#" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                      <td className="sm-block sm-w-full">
+                        <a href="#" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                           Terms &amp; conditions
                         </a>
                       </td>
-                      <td class="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
-                        <table class="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
+                      <td className="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
+                        <table className="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
-                            <td class="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
+                            <td className="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
                           </tr>
                         </table>
                         <!--[if !mso]><!-->
-                          <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                          <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                         <!--<![endif]-->
                       </td>
-                      <td class="sm-block sm-w-full">
-                        <a href="#" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                      <td className="sm-block sm-w-full">
+                        <a href="#" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                           Privacy policy
                         </a>
                       </td>
-                      <td class="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
-                        <table class="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
+                      <td className="sm-block sm-px-0" style="padding-left: 12px; padding-right: 12px">
+                        <table className="sm-hidden" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
-                            <td class="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
+                            <td className="dark-bg-gray-800" style="height: 24px; width: 1px; background-color: #DEE2E9"></td>
                           </tr>
                         </table>
                         <!--[if !mso]><!-->
-                          <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                          <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                         <!--<![endif]-->
                       </td>
-                      <td class="sm-block sm-w-full">
-                        <a href="#" class="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
+                      <td className="sm-block sm-w-full">
+                        <a href="#" className="sm-py-3 hover-text-slate-600 dark-text-gray-200 dark-hover-text-gray-100" style="text-decoration: none; display: block; font-weight: 700; color: #767E9D">
                           Contact us
                         </a>
                       </td>
-                      <td class="sm-block sm-px-0" style="mso-hide: all; display: none; padding-left: 12px; padding-right: 12px">
+                      <td className="sm-block sm-px-0" style="mso-hide: all; display: none; padding-left: 12px; padding-right: 12px">
                         <!--[if !mso]><!-->
-                          <div class="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
+                          <div className="sm-block sm-h-px dark-bg-gray-800" style="mso-hide: all; display: none; background-color: #DEE2E9"></div>
                         <!--<![endif]-->
                       </td>
                     </tr>

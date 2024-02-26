@@ -77,11 +77,11 @@ export const sendEmailVerificationLink = async () => {
 export function requestPermission() {
   if (!IS_CLIENT) return;
   const messaging = IS_CLIENT && getMessaging(app);
-  console.log("Requesting permission...");
+  // console.log("Requesting permission...");
   Notification.requestPermission().then((permission) => {
-    console.log("insider req");
+    // console.log("insider req");
     if (permission === "granted") {
-      console.log("Notification permission granted.");
+      // console.log("Notification permission granted.");
 
       getToken(messaging, {
         vapidKey:
@@ -89,14 +89,12 @@ export function requestPermission() {
       })
         .then((currentToken) => {
           if (currentToken) {
-            console.log("Token Generated", currentToken);
+            // console.log("Token Generated", currentToken);
             // Send the token to your server and update the UI if necessary
             // ...
           } else {
             // Show permission request UI
-            console.log(
-              "No registration token available. Request permission to generate one.",
-            );
+            // console.log( "No registration token available. Request permission to generate one.", );
             // ...
           }
         })

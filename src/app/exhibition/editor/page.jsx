@@ -12,7 +12,7 @@ const editorEmails = [
 
 const ExhibitionEditor = () => {
   const user = useSelector((state) => state.user);
-  console.log(user);
+  // console.log(user);
   const email = editorEmails.find(
     (email) => email + "@gmail.com" === user?.user?.email,
   );
