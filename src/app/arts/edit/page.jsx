@@ -1,11 +1,11 @@
-import React from 'react'
-import Edit from '../components/Edit'
+import React from "react";
+import Edit from "../../../components/arts/Edit";
 const Page = () => {
   return (
     <>
-    <Edit></Edit>
+      <Edit></Edit>
     </>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;

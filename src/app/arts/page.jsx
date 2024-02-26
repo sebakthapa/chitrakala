@@ -1,4 +1,4 @@
-import Gallery from "./components/Gallery";
+import Gallery from "../../components/arts/Gallery";
 
 export const metadata = {
   title: "Gallery - Chitrakala",
@@ -11,7 +11,6 @@ const Page = async ({ searchParams }) => {
       <main className="py-4">
         <div className="px-4">
           <Gallery />
-
         </div>
       </main>
     </>

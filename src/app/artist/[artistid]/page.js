@@ -1,20 +1,17 @@
-import React from 'react'
-import Individual from '../components/Individual';
+import React from "react";
+import Individual from "../../../components/artist/IndividualArtist";
 export const metadata = {
-  title: 'Profile setup - Chitrakala',
-  description: 'Art marketplace and showcase.',
-}
+  title: "Profile setup - Chitrakala",
+  description: "Art marketplace and showcase.",
+};
 const Page = () => {
-
-
   return (
     <>
-   <div className=''>
-
-   <Individual/>
-   </div>
+      <div className="">
+        <Individual />
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;

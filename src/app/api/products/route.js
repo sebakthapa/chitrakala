@@ -1,11 +1,11 @@
-import dbConnect from "@/lib/dbConnect";
-import { pageSize as documentPerPage } from "@/lib/utils";
+import dbConnect from "../../../services/dbConnect.service";
+import { pageSize as documentPerPage } from "../../../../utils/utils";
 import Products from "@/models/users/products";
 import UsersDetails from "@/models/users/usersDetail";
 import Follows from "@/models/users/follows";
 import { getToken } from "next-auth/jwt";
 import { NextResponse, NextRequest } from "next/server";
-import sendNotification from "@/lib/sendNotification";
+import sendNotification from "../../../services/sendNotification.service";
 
 // GET => get all products
 export const GET = async (req) => {
@@ -151,7 +151,7 @@ export const POST = async (request) => {
     if (!token?.user.id) {
       return NextResponse.json(
         { message: "You must be logged in to upload!" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -171,20 +171,20 @@ export const POST = async (request) => {
     if (!token?.user.isArtist) {
       return NextResponse.json(
         { message: "You aren't registered as artist!" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!artist || !name || !category || !photo || (!notForSale && !price)) {
       return NextResponse.json(
         { message: "Some required fields are missing!" },
-        { status: 403 }
+        { status: 403 },
       );
     }
     if ((height && !width) || (!height && width)) {
       return NextResponse.json(
         { message: "Enter both height and width or skip both!" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -194,7 +194,7 @@ export const POST = async (request) => {
     if (token.user.id != userDetails?.user._id) {
       return NextResponse.json(
         { message: "You can't post as other artist." },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -213,7 +213,7 @@ export const POST = async (request) => {
       $push: { artWorks: savedProduct._id },
     });
 
-    const  {followers}= await Follows.findOne({"userDetails": artist});
+    const { followers } = await Follows.findOne({ userDetails: artist });
     console.log(followers);
 
     await Promise.all(
@@ -226,8 +226,7 @@ export const POST = async (request) => {
         };
 
         await sendNotification(id, updatedNotification);
-        
-      })
+      }),
     );
 
     return new NextResponse(JSON.stringify(savedProduct));
