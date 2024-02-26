@@ -1,9 +1,9 @@
 import React from "react";
 import Landing from "@/components/home/Landing";
-import OpenedExhibition from "@/components/home/OpenedExhibition";
 import RatedArtists from "@/components/home/RatedArtists";
 import Categories from "@/components/home/Categories";
 import MiniCarousel from "@/components/home/MiniCarousel";
+import OpenedExhibitions from "@/components/home/OpenedExhibition";
 export const metadata = {
   title: "Home - Chitrakala",
   description: "Art marketplace and showcase.",
@@ -50,7 +50,7 @@ const Page = () => {
               Check out our current exhibitions.
             </p>
           </h1>
-          <OpenedExhibition />
+          <OpenedExhibitions />
         </div>
 
         <div className="sm:mx-5 flex flex-col flex-1  ">

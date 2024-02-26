@@ -9,7 +9,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ContentLoader from "react-content-loader";
 
-const LatestExhibition = () => {
+const OpenedExhibitions = () => {
   const [exhibitions, setExhibitions] = useState([]);
   let [isOpen, setIsOpen] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -208,7 +208,7 @@ const LatestExhibition = () => {
   );
 };
 
-export default LatestExhibition;
+export default OpenedExhibitions;
 
 const getStatusText = (openDatetime, closeDatetime) => {
   const now = moment();
